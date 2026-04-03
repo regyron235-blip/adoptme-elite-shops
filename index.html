@@ -3,48 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adopt Me Elite Shop — Быстрая загрузка</title>
+    <title>Adopt Me Elite Shop — Full Catalog</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header>
-        <h1>Adopt Me Elite Shop</h1>
-        <p>Каталог редких питомцев</p>
-        <input type="text" id="searchInput" placeholder="Поиск питомца...">
-    </header>
+    <div class="sidebar">
+        <div class="logo">🐾 EliteStore</div>
+        <nav>
+            <a href="#" onclick="displayPets('')">🏠 Все петы</a>
+            <a href="#" onclick="displayPets('Legendary')">🔥 Легендарные</a>
+            <a href="#" onclick="displayPets('Ultra-Rare')">✨ Ультра-редкие</a>
+            <a href="#" onclick="displayPets('Rare')">💎 Редкие</a>
+        </nav>
+        <div class="footer-sidebar">2026 © Adopt Me Elite</div>
+    </div>
 
-    <main id="petContainer" class="pets-grid">
-        </main>
+    <div class="main-content">
+        <header>
+            <h1>Adopt Me Elite Shop</h1>
+            <input type="text" id="searchInput" placeholder="Поиск питомца...">
+        </header>
+        <main id="petContainer" class="pets-grid"></main>
+    </div>
 
     <script>
         const petData = [
+            // ЛЕГЕНДАРНЫЕ
             { name: "Shadow Dragon", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/0/0b/Shadow_Dragon.png" },
             { name: "Frost Dragon", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/d/d3/Frost_Dragon.png" },
             { name: "Bat Dragon", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/a/a2/Bat_Dragon.png" },
             { name: "Giraffe", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/1/13/Giraffe.png" },
             { name: "Owl", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/0/0c/Owl.png" },
             { name: "Parrot", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/c/c5/Parrot.png" },
-            { name: "Crow", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/7/70/Crow.png" },
             { name: "Evil Unicorn", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/2/22/Evil_Unicorn.png" },
-            { name: "2025 Butterfly", rarity: "Ultra-Rare", img: "https://static.wikia.nocookie.net/adoptme/images/0/08/2025_Birthday_Butterfly.png" },
-            { name: "2D Kitty", rarity: "Common", img: "https://static.wikia.nocookie.net/adoptme/images/0/03/2D_Kitty.png" }
+            { name: "Crow", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/7/70/Crow.png" },
+            { name: "Arctic Reindeer", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/5/52/Arctic_Reindeer.png" },
+            { name: "Monkey King", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/d/d5/Monkey_King.png" },
+            { name: "Turtle", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/4/45/Turtle.png" },
+            { name: "Kangaroo", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/3/31/Kangaroo.png" },
+            { name: "Frost Fury", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/c/ca/Frost_Fury.png" },
+            { name: "Albino Monkey", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/a/a3/Albino_Monkey.png" },
+            { name: "Diamond Butterfly", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/c/c1/Diamond_Butterfly.png" },
+            { name: "Strawberry Shortcake Bat Dragon", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/0/0a/Strawberry_Shortcake_Bat_Dragon.png" },
+            { name: "Lavender Dragon", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/a/a3/Lavender_Dragon.png" },
+            { name: "Dancing Dragon", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/4/4e/Dancing_Dragon.png" },
+            { name: "Ghost Dragon", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/e/e0/Ghost_Dragon.png" },
+            { name: "Goldhorn", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/e/e6/Goldhorn.png" },
+            { name: "Phoenix", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/8/87/Phoenix.png" },
+            { name: "Dodo", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/f/f6/Dodo.png" },
+            { name: "T-Rex", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/0/05/T-Rex.png" },
+            { name: "Snow Owl", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/c/ca/Snow_Owl.png" },
+
+            // УЛЬТРА-РЕДКИЕ
+            { name: "Dalmatian", rarity: "Ultra-Rare", img: "https://static.wikia.nocookie.net/adoptme/images/3/30/Dalmatian.png" },
+            { name: "Flamingo", rarity: "Ultra-Rare", img: "https://static.wikia.nocookie.net/adoptme/images/a/af/Flamingo.png" },
+            { name: "Lion", rarity: "Ultra-Rare", img: "https://static.wikia.nocookie.net/adoptme/images/c/c6/Lion.png" },
+            { name: "Hedgehog", rarity: "Ultra-Rare", img: "https://static.wikia.nocookie.net/adoptme/images/c/c0/Hedgehog.png" },
+            { name: "Crocodile", rarity: "Ultra-Rare", img: "https://static.wikia.nocookie.net/adoptme/images/4/4b/Crocodile.png" },
+            { name: "Zombie Buffalo", rarity: "Ultra-Rare", img: "https://static.wikia.nocookie.net/adoptme/images/d/d1/Zombie_Buffalo.png" },
+            { name: "Llama", rarity: "Ultra-Rare", img: "https://static.wikia.nocookie.net/adoptme/images/2/23/Llama.png" },
+            { name: "Turkey", rarity: "Ultra-Rare", img: "https://static.wikia.nocookie.net/adoptme/images/e/ef/Turkey.png" },
+            { name: "Platypus", rarity: "Ultra-Rare", img: "https://static.wikia.nocookie.net/adoptme/images/c/c6/Platypus.png" },
+            { name: "Puffin", rarity: "Ultra-Rare", img: "https://static.wikia.nocookie.net/adoptme/images/2/2e/Puffin.png" },
+            { name: "Yeti", rarity: "Ultra-Rare", img: "https://static.wikia.nocookie.net/adoptme/images/c/c5/Yeti.png" },
+            { name: "Red Panda", rarity: "Ultra-Rare", img: "https://static.wikia.nocookie.net/adoptme/images/c/ca/Red_Panda.png" },
+            { name: "Shiba Inu", rarity: "Ultra-Rare", img: "https://static.wikia.nocookie.net/adoptme/images/a/a5/Shiba_Inu.png" },
+            { name: "2025 Butterfly", rarity: "Ultra-Rare", img: "https://static.wikia.nocookie.net/adoptme/images/0/08/2025_Birthday_Butterfly.png" }
         ];
 
         const container = document.getElementById('petContainer');
         const searchInput = document.getElementById('searchInput');
 
-        function displayPets(filter = "") {
+        function displayPets(rarityFilter = "", searchFilter = "") {
             container.innerHTML = "";
-            const filtered = petData.filter(pet => pet.name.toLowerCase().includes(filter.toLowerCase()));
-            
+            let filtered = petData;
+            if (rarityFilter) filtered = filtered.filter(p => p.rarity === rarityFilter);
+            if (searchFilter) filtered = filtered.filter(p => p.name.toLowerCase().includes(searchFilter.toLowerCase()));
+
             filtered.forEach(pet => {
                 const card = document.createElement('div');
                 card.className = 'pet-card';
                 card.innerHTML = `
-                    <div class="img-frame">
-                        <img src="${pet.img}" alt="${pet.name}">
-                    </div>
+                    <div class="img-box"><img src="${pet.img}" alt="${pet.name}" loading="lazy"></div>
                     <h3>${pet.name}</h3>
                     <p class="rarity">${pet.rarity}</p>
                     <button onclick="window.location.href='https://t.me/твій_нік'">КУПИТЬ</button>
@@ -53,7 +94,7 @@
             });
         }
 
-        searchInput.addEventListener('input', (e) => displayPets(e.target.value));
+        searchInput.addEventListener('input', (e) => displayPets("", e.target.value));
         displayPets();
     </script>
 </body>
