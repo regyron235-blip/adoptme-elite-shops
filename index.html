@@ -22,8 +22,8 @@
     </footer>
 
     <script>
-        // Твій повний список петів з картинками
         const petData = [
+            // ЛЕГЕНДАРНІ
             { name: "Shadow Dragon", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/0/0b/Shadow_Dragon.png" },
             { name: "Frost Dragon", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/d/d3/Frost_Dragon.png" },
             { name: "Bat Dragon", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/a/a2/Bat_Dragon.png" },
@@ -32,8 +32,15 @@
             { name: "Parrot", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/c/c5/Parrot.png" },
             { name: "Evil Unicorn", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/2/22/Evil_Unicorn.png" },
             { name: "Crow", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/7/70/Crow.png" },
+            // УЛЬТРА-РІДКІ ТА ІНШІ (Додавай сюди всіх, кого не вистачає)
             { name: "Arctic Reindeer", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/5/52/Arctic_Reindeer.png" },
-            { name: "Monkey King", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/d/d5/Monkey_King.png" }
+            { name: "Monkey King", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/d/d5/Monkey_King.png" },
+            { name: "Albino Monkey", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/a/a3/Albino_Monkey.png" },
+            { name: "Turtle", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/4/45/Turtle.png" },
+            { name: "Kangaroo", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/3/31/Kangaroo.png" },
+            { name: "Pink Cat", rarity: "Uncommon", img: "https://static.wikia.nocookie.net/adoptme/images/0/01/Pink_Cat.png" },
+            { name: "Blue Dog", rarity: "Uncommon", img: "https://static.wikia.nocookie.net/adoptme/images/2/22/Blue_Dog.png" },
+            { name: "Cow", rarity: "Rare", img: "https://static.wikia.nocookie.net/adoptme/images/1/14/Cow.png" }
         ];
 
         const container = document.getElementById('petContainer');
@@ -48,8 +55,8 @@
                 card.className = 'pet-card';
                 card.innerHTML = `
                     <h3>${pet.name}</h3>
-                    <img src="${pet.img}" alt="${pet.name}">
-                    <p class="rarity-text">${pet.rarity}</p>
+                    <div class="img-box"><img src="${pet.img}" alt="${pet.name}"></div>
+                    <p class="rarity">${pet.rarity}</p>
                     <button onclick="window.location.href='https://t.me/твій_нік'">КУПИТЬ</button>
                 `;
                 container.appendChild(card);
