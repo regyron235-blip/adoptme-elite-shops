@@ -1,35 +1,35 @@
-.pets-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 15px;
-    padding: 10px;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { display: flex; font-family: 'Segoe UI', sans-serif; background: #fdfcfb; min-height: 100vh; }
 
-.pet-card {
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 10px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+.sidebar {
+    width: 260px;
+    background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
+    padding: 25px;
+    position: fixed;
+    height: 100vh;
+    color: white;
+    box-shadow: 4px 0 15px rgba(0,0,0,0.05);
 }
+.logo { font-size: 24px; font-weight: bold; margin-bottom: 40px; }
+nav a { display: block; padding: 15px; margin: 10px 0; color: white; text-decoration: none; background: rgba(255,255,255,0.2); border-radius: 12px; font-weight: 600; transition: 0.3s; }
+nav a:hover { background: rgba(255,255,255,0.4); transform: scale(1.05); }
 
-.img-frame {
-    background: #f9f9f9;
-    height: 120px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 5px;
-    margin-bottom: 10px;
-}
+.main-content { margin-left: 260px; flex: 1; padding: 40px; width: 100%; }
+header h1 { font-size: 38px; color: #333; margin-bottom: 20px; }
+#searchInput { width: 100%; max-width: 500px; padding: 15px 25px; border-radius: 30px; border: 2px solid #eee; margin-bottom: 40px; outline: none; font-size: 16px; }
 
-.img-frame img {
-    max-width: 90%;
-    max-height: 90%;
-    object-fit: contain;
-}
+.pets-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 20px; }
+.pet-card { background: white; padding: 20px; border-radius: 20px; text-align: center; box-shadow: 0 10px 20px rgba(0,0,0,0.05); transition: 0.3s; }
+.pet-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+.img-box { height: 120px; display: flex; align-items: center; justify-content: center; margin-bottom: 15px; }
+.img-box img { max-width: 100px; max-height: 100px; object-fit: contain; }
+.rarity { color: #ff8e8e; font-weight: bold; font-size: 13px; margin-bottom: 10px; text-transform: uppercase; }
+button { background: #6c5ce7; color: white; border: none; padding: 12px; border-radius: 12px; width: 100%; cursor: pointer; font-weight: bold; transition: 0.2s; }
+button:hover { background: #5849be; }
 
-/* На телефоні по 2 в ряд */
-@media (max-width: 400px) {
-    .pets-grid { grid-template-columns: 1fr 1fr; }
+@media (max-width: 900px) {
+    .sidebar { width: 100%; height: auto; position: relative; padding: 15px; }
+    .main-content { margin-left: 0; padding: 15px; }
+    .pets-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    header h1 { font-size: 24px; }
 }
