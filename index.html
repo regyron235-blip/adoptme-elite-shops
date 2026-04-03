@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adopt Me Elite Shop — Official</title>
+    <title>Adopt Me Elite — Продать питомца</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -19,15 +19,16 @@
 
     <div class="main-content">
         <header>
-            <h1>Adopt Me Elite Shop</h1>
-            <input type="text" id="searchInput" placeholder="Поиск питомца...">
+            <h1>Скупка питомцев Adopt Me</h1>
+            <p>Выбери пета, которого хочешь продать нам</p>
+            <input type="text" id="searchInput" placeholder="Поиск по названию...">
         </header>
         <main id="petContainer" class="pets-grid"></main>
     </div>
 
     <script>
         const petData = [
-            // Твої файли з папки pets (уважно з назвами!)
+            // Твої файли з Dell Latitude E6510
             { name: "Shadow Dragon", rarity: "Legendary", img: "shadow_dragon.png" },
             { name: "Frost Dragon", rarity: "Legendary", img: "frost_dragon.png" },
             { name: "Bat Dragon", rarity: "Legendary", img: "bat_dragon.png" },
@@ -60,11 +61,11 @@
                 card.className = 'pet-card';
                 card.innerHTML = `
                     <div class="img-box">
-                        <img src="${pet.img}" alt="${pet.name}" loading="lazy">
+                        <img src="${pet.img}" alt="${pet.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/150?text=Pet'">
                     </div>
                     <h3>${pet.name}</h3>
                     <p class="rarity">${pet.rarity}</p>
-                    <button onclick="window.location.href='https://t.me/твій_нік'">КУПИТЬ</button>
+                    <button onclick="window.location.href='https://t.me/твій_нік'">ПРОДАТЬ</button>
                 `;
                 container.appendChild(card);
             });
