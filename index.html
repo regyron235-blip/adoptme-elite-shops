@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Adopt Me Elite Shop - Full Catalog</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="logo-container">
+            <div class="logo-icon">🐾</div>
+            <div class="logo-text">AdoptMe<span>Store</span></div>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#" class="nav-item active">👤 Главная</a></li>
+            <li><a href="#legendary" class="nav-item">🔥 Легендарные</a></li>
+            <li><a href="#ultrarare" class="nav-item">✨ Ультра-редкие</a></li>
+            <li><a href="#rare" class="nav-item">💎 Редкие</a></li>
+            <li><a href="#uncommon" class="nav-item">🎈 Необычные</a></li>
+            <li><a href="https://t.me/твій_нік" target="_blank" class="nav-item">❓ Как купить</a></li>
+        </ul>
+        <div class="footer-credits">Powered by Gradients</div>
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <h1>Adopt Me Elite Shop</h1>
+            <p>Полный каталог всех питомцев</p>
+        </div>
+
+        <div class="search-container">
+            <input type="text" id="petSearch" class="search-input" placeholder="Введите название питомца для поиска...">
+        </div>
+
+        <div id="catalog-container">
+            </div>
+    </div>
+
+    <script>
+        const petData = {
+            "legendary": {
+                title: "🔥 Легендарные (Legendary)",
+                pets: [
+                    { name: "Shadow Dragon", icon: "🐉" }, { name: "Frost Dragon", icon: "❄️" },
+                    { name: "Bat Dragon", icon: "🦇" }, { name: "Giraffe", icon: "🦒" },
+                    { name: "Owl", icon: "🦉" }, { name: "Parrot", icon: "Parrot 🦜" },
+                    { name: "Evil Unicorn", icon: "🦄" }, { name: "Crow", icon: "🐦" },
+                    { name: "Arctic Reindeer", icon: "🦌" }, { name: "Monkey King", icon: "🐒" },
+                    { name: "Albino Monkey", icon: "🦍" }, { name: "Turtle", icon: "🐢" },
+                    { name: "Kangaroo", icon: "🦘" }, { name: "Diamond Butterfly", icon: "🦋" },
+                    { name: "Strawberry Shortcake Bat Dragon", icon: "🍓" }, { name: "Frost Fury", icon: "🧊" },
+                    { name: "Dancing Dragon", icon: "🐲" }, { name: "Ghost Dragon", icon: "👻" },
+                    { name: "Ice Moth Dragon", icon: "🦋" }, { name: "Nessie", icon: "🦕" }
+                ]
+            },
+            "ultrarare": {
+                title: "✨ Ультра-редкие (Ultra-Rare)",
+                pets: [
+                    { name: "Arctic Fox", icon: "🦊" }, { name: "Flamingo", icon: "🦩" },
+                    { name: "Dalmatian", icon: "🐶" }, { name: "Blue Dog", icon: "🐕" },
+                    { name: "Pink Cat", icon: "🐱" }, { name: "Hedgehog", icon: "🦔" },
+                    { name: "Crocodile", icon: "🐊" }, { name: "Puffin", icon: "🐧" },
+                    { name: "Lion", icon: "🦁" }, { name: "Zombie Buffalo", icon: "🐃" },
+                    { name: "Platypus", icon: "🦆" }, { name: "Llama", icon: "🦙" },
+                    { name: "Turkey", icon: "🦃" }, { name: "Yeti", icon: "❄️" }
+                ]
+            },
+            "rare": {
+                title: "💎 Редкие (Rare)",
+                pets: [
+                    { name: "Cow", icon: "🐮" }, { name: "Elephant", icon: "🐘" },
+                    { name: "Hyena", icon: "🦓" }, { name: "Shrew", icon: "🐭" },
+                    { name: "Brown Bear", icon: "🐻" }, { name: "Pig", icon: "🐷" },
+                    { name: "Polar Bear", icon: "🐻‍❄️" }, { name: "Rhino", icon: "🦏" },
+                    { name: "Meerkat", icon: "🦦" }, { name: "Wild Boar", icon: "🐗" }
+                ]
+            },
+            "uncommon": {
+                title: "🎈 Необычные (Uncommon)",
+                pets: [
+                    { name: "Blue Beetle", icon: "🪲" }, { name: "Dingo", icon: "🐕" },
+                    { name: "Drake", icon: "🦆" }, { name: "Silly Duck", icon: "🦆" },
+                    { name: "Wolf", icon: "🐺" }, { name: "Capybara", icon: "🐹" }
+                ]
+            }
+        };
+
+        const tgLink = "https://t.me/твій_нік"; // ЗАМЕНИ НА СВОЙ ТЕЛЕГРАМ
+
+        function renderCatalog() {
+            const container = document.getElementById('catalog-container');
+            container.innerHTML = '';
+            
+            for (let category in petData) {
+                let section = document.createElement('div');
+                section.id = category;
+                section.innerHTML = `<div class="section-header">${petData[category].title}</div>`;
+                
+                let grid = document.createElement('div');
+                grid.className = 'pet-grid';
+                
+                petData[category].pets.forEach(pet => {
+                    grid.innerHTML += `
+                        <div class="pet-card">
+                            <h3 class="pet-name">${pet.name}</h3>
+                            <div class="element-icon">${pet.icon}</div>
+                            <a href="${tgLink}" target="_blank" class="btn-dm">
+                                <span class="btn-text">КУПИТЬ</span><br>
+                                <span class="sub-text">Написать в ЛС</span>
+                            </a>
+                        </div>
+                    `;
+                });
+                
+                section.appendChild(grid);
+                container.appendChild(section);
+            }
+        }
+
+        renderCatalog();
+
+        document.getElementById('petSearch').addEventListener('input', function(e) {
+            const val = e.target.value.toLowerCase();
+            const cards = document.querySelectorAll('.pet-card');
+            cards.forEach(card => {
+                const name = card.querySelector('.pet-name').innerText.toLowerCase();
+                card.style.display = name.includes(val) ? "flex" : "none";
+            });
+        });
+    </script>
+</body>
+</html>
