@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adopt Me Elite Shop</title>
+    <title>Adopt Me Elite Shop — Official</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -27,35 +27,23 @@
 
     <script>
         const petData = [
-            // ЛЕГЕНДАРНЫЕ
-            { name: "Shadow Dragon", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/0/0b/Shadow_Dragon.png/revision/latest/scale-to-width-down/200" },
-            { name: "Frost Dragon", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/d/d3/Frost_Dragon.png/revision/latest/scale-to-width-down/200" },
-            { name: "Bat Dragon", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/a/a2/Bat_Dragon.png/revision/latest/scale-to-width-down/200" },
-            { name: "Giraffe", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/1/13/Giraffe.png/revision/latest/scale-to-width-down/200" },
-            { name: "Owl", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/0/0c/Owl.png/revision/latest/scale-to-width-down/200" },
-            { name: "Parrot", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/c/c5/Parrot.png/revision/latest/scale-to-width-down/200" },
-            { name: "Evil Unicorn", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/2/22/Evil_Unicorn.png/revision/latest/scale-to-width-down/200" },
-            { name: "Crow", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/7/70/Crow.png/revision/latest/scale-to-width-down/200" },
-            { name: "Arctic Reindeer", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/5/52/Arctic_Reindeer.png/revision/latest/scale-to-width-down/200" },
-            { name: "Turtle", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/4/45/Turtle.png/revision/latest/scale-to-width-down/200" },
-            { name: "Kangaroo", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/3/31/Kangaroo.png/revision/latest/scale-to-width-down/200" },
-            { name: "Strawberry Bat Dragon", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/0/0a/Strawberry_Shortcake_Bat_Dragon.png/revision/latest/scale-to-width-down/200" },
-            { name: "Frost Fury", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/c/ca/Frost_Fury.png/revision/latest/scale-to-width-down/200" },
-            { name: "Diamond Butterfly", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/c/c1/Diamond_Butterfly.png/revision/latest/scale-to-width-down/200" },
-            { name: "Albino Monkey", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/a/a3/Albino_Monkey.png/revision/latest/scale-to-width-down/200" },
-            { name: "Monkey King", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/d/d5/Monkey_King.png/revision/latest/scale-to-width-down/200" },
-            
-            // УЛЬТРА-РЕДКИЕ
-            { name: "Dalmatian", rarity: "Ultra-Rare", img: "https://static.wikia.nocookie.net/adoptme/images/3/30/Dalmatian.png/revision/latest/scale-to-width-down/200" },
-            { name: "Flamingo", rarity: "Ultra-Rare", img: "https://static.wikia.nocookie.net/adoptme/images/a/af/Flamingo.png/revision/latest/scale-to-width-down/200" },
-            { name: "Lion", rarity: "Ultra-Rare", img: "https://static.wikia.nocookie.net/adoptme/images/c/c6/Lion.png/revision/latest/scale-to-width-down/200" },
-            { name: "Hedgehog", rarity: "Ultra-Rare", img: "https://static.wikia.nocookie.net/adoptme/images/c/c0/Hedgehog.png/revision/latest/scale-to-width-down/200" },
-            { name: "Crocodile", rarity: "Ultra-Rare", img: "https://static.wikia.nocookie.net/adoptme/images/4/4b/Crocodile.png/revision/latest/scale-to-width-down/200" },
-            { name: "Zombie Buffalo", rarity: "Ultra-Rare", img: "https://static.wikia.nocookie.net/adoptme/images/d/d1/Zombie_Buffalo.png/revision/latest/scale-to-width-down/200" },
-            { name: "Blue Dog", rarity: "Uncommon", img: "https://static.wikia.nocookie.net/adoptme/images/2/22/Blue_Dog.png/revision/latest/scale-to-width-down/200" },
-            { name: "Pink Cat", rarity: "Uncommon", img: "https://static.wikia.nocookie.net/adoptme/images/0/01/Pink_Cat.png/revision/latest/scale-to-width-down/200" },
-            { name: "Cow", rarity: "Rare", img: "https://static.wikia.nocookie.net/adoptme/images/1/14/Cow.png/revision/latest/scale-to-width-down/200" },
-            { name: "2025 Butterfly", rarity: "Ultra-Rare", img: "https://static.wikia.nocookie.net/adoptme/images/0/08/2025_Birthday_Butterfly.png/revision/latest/scale-to-width-down/200" }
+            // Твої файли з папки pets (уважно з назвами!)
+            { name: "Shadow Dragon", rarity: "Legendary", img: "shadow_dragon.png" },
+            { name: "Frost Dragon", rarity: "Legendary", img: "frost_dragon.png" },
+            { name: "Bat Dragon", rarity: "Legendary", img: "bat_dragon.png" },
+            { name: "Giraffe", rarity: "Legendary", img: "giraffe.png" },
+            { name: "Owl", rarity: "Legendary", img: "owl.png" },
+            { name: "Parrot", rarity: "Legendary", img: "parrot.png" },
+            { name: "Evil Unicorn", rarity: "Legendary", img: "evil_unicorn.png" },
+            { name: "Crow", rarity: "Legendary", img: "crow.png" },
+            { name: "Turtle", rarity: "Legendary", img: "turtle.png" },
+            { name: "Kangaroo", rarity: "Legendary", img: "kangaroo.png" },
+            { name: "Frost Fury", rarity: "Legendary", img: "frost_fury.png" },
+            { name: "Arctic Reindeer", rarity: "Legendary", img: "arctic_reindeer.png" },
+            { name: "Albino Monkey", rarity: "Legendary", img: "albino_monkey.png" },
+            { name: "Monkey King", rarity: "Legendary", img: "monkey_king.png" },
+            { name: "Diamond Butterfly", rarity: "Legendary", img: "sanctuary_2022_diamond_premium_butterfly.png" },
+            { name: "SS Bat Dragon", rarity: "Legendary", img: "winter_2022_strawberry_shortcake_bat_dragon.png" }
         ];
 
         const container = document.getElementById('petContainer');
@@ -72,7 +60,7 @@
                 card.className = 'pet-card';
                 card.innerHTML = `
                     <div class="img-box">
-                        <img src="${pet.img}" alt="${pet.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/150?text=Adopt+Me'">
+                        <img src="${pet.img}" alt="${pet.name}" loading="lazy">
                     </div>
                     <h3>${pet.name}</h3>
                     <p class="rarity">${pet.rarity}</p>
