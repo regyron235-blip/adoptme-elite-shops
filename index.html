@@ -3,44 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adopt Me Elite Shop — Магазин редких петтов</title>
+    <title>Adopt Me Elite Shop — Быстрая загрузка</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <header>
         <h1>Adopt Me Elite Shop</h1>
-        <p>Полный каталог всех питомцев</p>
-        <input type="text" id="searchInput" placeholder="Введите название питомца для поиска...">
+        <p>Каталог редких питомцев</p>
+        <input type="text" id="searchInput" placeholder="Поиск питомца...">
     </header>
 
-    <main id="petContainer" class="pets-container">
+    <main id="petContainer" class="pets-grid">
         </main>
-
-    <footer>
-        <p>Powered by Gradients | Adopt Me Elite Store 2026</p>
-    </footer>
 
     <script>
         const petData = [
-            // ЛЕГЕНДАРНІ
             { name: "Shadow Dragon", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/0/0b/Shadow_Dragon.png" },
             { name: "Frost Dragon", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/d/d3/Frost_Dragon.png" },
             { name: "Bat Dragon", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/a/a2/Bat_Dragon.png" },
             { name: "Giraffe", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/1/13/Giraffe.png" },
             { name: "Owl", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/0/0c/Owl.png" },
             { name: "Parrot", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/c/c5/Parrot.png" },
-            { name: "Evil Unicorn", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/2/22/Evil_Unicorn.png" },
             { name: "Crow", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/7/70/Crow.png" },
-            // УЛЬТРА-РІДКІ ТА ІНШІ (Додавай сюди всіх, кого не вистачає)
-            { name: "Arctic Reindeer", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/5/52/Arctic_Reindeer.png" },
-            { name: "Monkey King", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/d/d5/Monkey_King.png" },
-            { name: "Albino Monkey", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/a/a3/Albino_Monkey.png" },
-            { name: "Turtle", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/4/45/Turtle.png" },
-            { name: "Kangaroo", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/3/31/Kangaroo.png" },
-            { name: "Pink Cat", rarity: "Uncommon", img: "https://static.wikia.nocookie.net/adoptme/images/0/01/Pink_Cat.png" },
-            { name: "Blue Dog", rarity: "Uncommon", img: "https://static.wikia.nocookie.net/adoptme/images/2/22/Blue_Dog.png" },
-            { name: "Cow", rarity: "Rare", img: "https://static.wikia.nocookie.net/adoptme/images/1/14/Cow.png" }
+            { name: "Evil Unicorn", rarity: "Legendary", img: "https://static.wikia.nocookie.net/adoptme/images/2/22/Evil_Unicorn.png" },
+            { name: "2025 Butterfly", rarity: "Ultra-Rare", img: "https://static.wikia.nocookie.net/adoptme/images/0/08/2025_Birthday_Butterfly.png" },
+            { name: "2D Kitty", rarity: "Common", img: "https://static.wikia.nocookie.net/adoptme/images/0/03/2D_Kitty.png" }
         ];
 
         const container = document.getElementById('petContainer');
@@ -54,8 +42,10 @@
                 const card = document.createElement('div');
                 card.className = 'pet-card';
                 card.innerHTML = `
+                    <div class="img-frame">
+                        <img src="${pet.img}" alt="${pet.name}">
+                    </div>
                     <h3>${pet.name}</h3>
-                    <div class="img-box"><img src="${pet.img}" alt="${pet.name}"></div>
                     <p class="rarity">${pet.rarity}</p>
                     <button onclick="window.location.href='https://t.me/твій_нік'">КУПИТЬ</button>
                 `;
