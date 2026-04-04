@@ -3,37 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EliteStore — Магазин петів Adopt Me</title>
     
-    <title>EliteStore — Купити петів Adopt Me | Shadow Dragon & Bat Dragon</title>
-    <meta name="description" content="EliteStore — твій надійний магазин легендарних петів Adopt Me. У наявності Shadow Dragon, Frost Dragon, Giraffe та багато інших!">
+    <meta name="description" content="EliteStore — твій надійний магазин легендарних петів Adopt Me. Shadow Dragon, Bat Dragon, Frost Dragon та інші у наявності!">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; margin: 0; padding: 0; text-align: center; }
-        header { background: linear-gradient(135deg, #d8b4fe, #818cf8); padding: 30px; color: white; }
-        .catalog { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; padding: 30px; max-width: 1200px; margin: 0 auto; }
-        .pet-card { background: white; border-radius: 15px; padding: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: 1px solid #eee; }
-        .pet-card img { width: 100%; border-radius: 10px; background: #fafafa; }
-        .pet-name { font-weight: bold; font-size: 18px; margin: 10px 0 2px; }
-        .rarity { color: #ef4444; font-size: 12px; font-weight: bold; text-transform: uppercase; display: block; margin-bottom: 12px; }
-        .buy-btn { background: #818cf8; color: white; text-decoration: none; padding: 10px; border-radius: 10px; display: block; font-weight: bold; }
+        :root {
+            --primary: #7d5fff;
+            --bg: #f8f9fa;
+            --card-bg: #ffffff;
+            --radius: 16px;
+        }
+
+        body { font-family: 'Inter', sans-serif; background: var(--bg); margin: 0; padding: 0; }
+
+        /* Шапка з мовами */
+        header {
+            background: white;
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+            position: sticky; top: 0; z-index: 100;
+        }
+
+        .logo { font-size: 22px; font-weight: 800; color: var(--primary); }
+
+        .lang-switcher { display: flex; gap: 8px; }
+        .lang-btn {
+            background: #eee;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .lang-btn.active { background: var(--primary); color: white; }
+
+        /* Контейнер */
+        .catalog {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+            padding: 25px;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .pet-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            text-align: center;
+            transition: 0.3s;
+        }
+        .pet-card:hover { transform: translateY(-5px); }
+
+        .pet-card img { width: 100%; height: 160px; object-fit: contain; border-radius: 12px; background: #fafafa; }
+        .pet-name { font-weight: bold; font-size: 18px; margin: 10px 0 5px; }
+        .rarity { color: #ff4757; font-size: 11px; font-weight: 800; text-transform: uppercase; display: block; margin-bottom: 10px; }
+        
+        .buy-btn {
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 10px;
+            display: block;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>🐾 EliteStore</h1>
-    <p>Повний каталог легендарних вихованців</p>
+    <div class="logo">🐾 ELITESTORE</div>
+    <div class="lang-switcher">
+        <button class="lang-btn active">UA</button>
+        <button class="lang-btn">RU</button>
+        <button class="lang-btn">EN</button>
+    </div>
 </header>
 
-<div class="catalog" id="petContainer">
-    </div>
+<div class="catalog" id="petContainer"></div>
 
 <script>
+    // ТУТ УСІ ТВОЇ ПЕТІ
     const petData = [
-        // ТВОЇ ОРИГІНАЛЬНІ ПЕТІ
         { name: "Shadow Dragon", rarity: "Legendary", img: "shadow_dragon.png" },
-        { name: "Frost Dragon", rarity: "Legendary", img: "frost_dragon.png" },
         { name: "Bat Dragon", rarity: "Legendary", img: "bat_dragon.png" },
+        { name: "Frost Dragon", rarity: "Legendary", img: "frost_dragon.png" },
         { name: "Giraffe", rarity: "Legendary", img: "giraffe.png" },
         { name: "Owl", rarity: "Legendary", img: "owl.png" },
         { name: "Parrot", rarity: "Legendary", img: "parrot.png" },
@@ -45,9 +110,7 @@
         { name: "Arctic Reindeer", rarity: "Legendary", img: "arctic_reindeer.png" },
         { name: "Albino Monkey", rarity: "Legendary", img: "albino_monkey.png" },
         { name: "Monkey King", rarity: "Legendary", img: "monkey_king.png" },
-        { name: "Diamond Butterfly", rarity: "Legendary", img: "sanctuary_2022_diamond_premium_butterfly.png" },
-        
-        // ПЕТІ З ПРЯМИМИ НАЗВАМИ
+        { name: "Diamond Butterfly", rarity: "Legendary", img: "diamond_butterfly.png" },
         { name: "Axolotl", rarity: "Legendary", img: "axolotl.png" },
         { name: "Cerberus", rarity: "Legendary", img: "cerberus.png" },
         { name: "Cobra", rarity: "Legendary", img: "cobra.png" },
@@ -74,7 +137,7 @@
                 <img src="${pet.img}" alt="${pet.name}">
                 <div class="pet-name">${pet.name}</div>
                 <span class="rarity">${pet.rarity}</span>
-                <a href="#" class="buy-btn">ПРОДАТИ</a>
+                <a href="https://t.me/твій_нік" class="buy-btn">КУПИТИ</a>
             </div>
         `;
         container.innerHTML += card;
