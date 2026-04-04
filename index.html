@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EliteStore — Mobile Optimized</title>
+    <title>EliteStore — Full Mobile Edition</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
@@ -24,12 +24,12 @@
             display: flex; height: 100vh; overflow: hidden;
         }
 
-        /* Кнопка відкриття меню (тільки для мобілок) */
+        /* Кнопка МЕНЮ для мобілок */
         .menu-toggle {
             display: none;
             position: fixed; top: 15px; left: 15px; z-index: 1001;
             background: var(--accent); border: none; color: white;
-            padding: 10px 15px; border-radius: 10px; cursor: pointer;
+            padding: 12px 20px; border-radius: 12px; cursor: pointer;
             font-weight: 900; box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
         }
 
@@ -54,37 +54,34 @@
         .l-btn { background: #161b22; border: 1px solid var(--glass-border); color: #fff; padding: 8px; border-radius: 8px; cursor: pointer; flex: 1; }
         .l-btn.active { background: var(--accent-solid); }
 
-        /* MAIN CONTENT */
-        .main { flex: 1; overflow-y: auto; padding: 40px; transition: 0.3s; }
+        /* MAIN */
+        .main { flex: 1; overflow-y: auto; padding: 40px; }
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; }
 
         .card { background: var(--card-bg); border: 1px solid var(--glass-border); border-radius: 30px; padding: 30px; text-align: center; transition: 0.4s; cursor: pointer; }
         .card:hover { transform: translateY(-10px); border-color: #6c5ce7; box-shadow: 0 15px 30px rgba(0,0,0,0.5); }
-        .card img { width: 140px; height: 140px; object-fit: contain; margin-bottom: 15px; }
+        .card img { width: 140px; height: 140px; object-fit: contain; margin-bottom: 15px; pointer-events: none; }
         .pet-name { font-size: 19px; font-weight: 900; margin-bottom: 20px; }
 
-        .tg-btn { background: #0088cc; color: #fff !important; text-decoration: none; padding: 14px; width: 100%; border-radius: 12px; display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 800; font-size: 10px; text-transform: uppercase; }
+        .tg-btn { background: #0088cc; color: #fff !important; text-decoration: none; padding: 14px; width: 100%; border-radius: 12px; display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 800; font-size: 10px; text-transform: uppercase; transition: 0.3s; }
 
-        /* АДАПТАЦІЯ ДЛЯ ТЕЛЕФОНІВ */
+        /* MODALS */
+        .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: none; justify-content: center; align-items: center; z-index: 2000; backdrop-filter: blur(8px); }
+        .modal { background: #161b22; color: #fff; width: 90%; max-width: 450px; border-radius: 35px; padding: 40px; position: relative; text-align: center; border: 1px solid var(--glass-border); }
+        .modal img { width: 180px; margin-bottom: 20px; }
+        .info-tag { background: rgba(255,255,255,0.05); padding: 12px; border-radius: 12px; margin: 15px 0; font-size: 14px; color: #a29bfe; font-weight: 700; border: 1px solid rgba(162, 155, 254, 0.2); }
+        .close-btn { position: absolute; top: 20px; right: 20px; font-size: 24px; cursor: pointer; color: #444; }
+
+        /* MOBILE */
         @media (max-width: 768px) {
-            .menu-toggle { display: block; } /* Показуємо кнопку */
-
-            .sidebar {
-                position: fixed;
-                left: 0; top: 0; bottom: 0;
-                transform: translateX(-100%); /* Ховаємо меню за лівий край */
-                box-shadow: 10px 0 30px rgba(0,0,0,0.8);
-            }
-
-            /* Клас, який JS буде додавати для відкриття */
-            .sidebar.open {
-                transform: translateX(0);
-            }
-
-            .main { padding: 70px 20px 20px 20px; } /* Відступ зверху для кнопки */
-            .grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; }
+            .menu-toggle { display: block; }
+            .sidebar { position: fixed; left: 0; top: 0; bottom: 0; transform: translateX(-100%); box-shadow: 10px 0 30px rgba(0,0,0,0.8); }
+            .sidebar.open { transform: translateX(0); }
+            .main { padding: 80px 20px 20px 20px; }
+            .grid { grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 15px; }
             .card { padding: 20px; border-radius: 20px; }
             .card img { width: 100px; height: 100px; }
+            .pet-name { font-size: 15px; }
         }
     </style>
 </head>
@@ -101,7 +98,7 @@
         <input type="text" id="searchInput" oninput="handleSearch()" placeholder="Пошук...">
     </div>
     <div class="nav-link active" onclick="toggleSidebar()"><span>Усі пети</span></div>
-    <div class="nav-link support-link" onclick="openSupport(); toggleSidebar();"><span>Підтримка</span></div>
+    <div class="nav-link support-link" onclick="openSupport(); toggleSidebar();"><span id="sidebar-sup-txt">Підтримка</span></div>
     
     <div class="lang-switcher">
         <button onclick="setL('ua')" id="ua-btn" class="l-btn active">UA</button>
@@ -113,56 +110,126 @@
     <div class="grid" id="catalog"></div>
 </div>
 
-<script>
-    // Функція для приховування/показу меню
-    function toggleSidebar() {
-        const sb = document.getElementById('sidebar');
-        sb.classList.toggle('open');
-    }
+<div class="overlay" id="petOverlay" onclick="if(event.target==this) closePet()">
+    <div class="modal">
+        <i class="fa-solid fa-xmark close-btn" onclick="closePet()"></i>
+        <img id="m-img" src="">
+        <h2 id="m-name"></h2>
+        <div class="info-tag" id="m-info"></div>
+        <p id="m-desc" style="color:#8b949e; margin-bottom:25px; font-size:14px; line-height:1.6;"></p>
+        <a href="https://t.me/your_tg" target="_blank" class="tg-btn" id="m-btn"></a>
+    </div>
+</div>
 
-    // Решта логіки (мови, пошук, рендер) залишається як була
-    const pets = [
-        { name: "Shadow Dragon", img: "shadow_dragon.png", year: "2019", event: "Halloween" },
-        { name: "Frost Dragon", img: "frost_dragon.png", year: "2019", event: "Christmas" },
-        { name: "Diamond Butterfly", img: "sanctuary_2022_diamond_premium_butterfly.png", year: "2022", event: "Leaf Event" },
-        { name: "Albino Monkey", img: "albino_monkey.png", year: "2020", event: "Monkey Fair" }
-        // Додай сюди інших 31 петів...
-    ];
+<div class="overlay" id="supOverlay" onclick="if(event.target==this) closeSupport()">
+    <div class="modal">
+        <i class="fa-solid fa-xmark close-btn" onclick="closeSupport()"></i>
+        <div style="font-size: 50px; margin-bottom: 15px;">💬</div>
+        <h2 id="sup-title"></h2>
+        <p id="sup-text" style="margin: 20px 0; color:#8b949e; line-height:1.5;"></p>
+        <a href="https://t.me/your_tg" target="_blank" class="tg-btn">TELEGRAM</a>
+    </div>
+</div>
+
+<script>
+    const lang = {
+        ua: { all: "Усі пети", sell: "Написати нам в ТГ", sup: "Підтримка", supTitle: "Маєте питання?", supText: "Напишіть нам у Telegram, якщо хочете продати пета або маєте запитання!", search: "Пошук...", year: "Рік", event: "Івент", menu: "МЕНЮ" },
+        ru: { all: "Все петы", sell: "Написать нам в ТГ", sup: "Поддержка", supTitle: "Есть вопросы?", supText: "Напишите нам в Telegram, если хотите продать пета или есть вопросы!", search: "Поиск...", year: "Год", event: "Ивент", menu: "МЕНЮ" }
+    };
 
     let cur = 'ua';
 
+    const pets = [
+        { name: "Shadow Dragon", img: "shadow_dragon.png", year: "2019", event: "Halloween", ua: "Найрідкісніший дракон.", ru: "Самый редкий дракон." },
+        { name: "Frost Dragon", img: "frost_dragon.png", year: "2019", event: "Christmas", ua: "Крижаний володар.", ru: "Ледяной повелитель." },
+        { name: "Diamond Butterfly", img: "sanctuary_2022_diamond_premium_butterfly.png", year: "2022", event: "Leaf Event", ua: "Сяючий метелик.", ru: "Сияющая бабочка." },
+        { name: "Albino Monkey", img: "albino_monkey.png", year: "2020", event: "Monkey Fair", ua: "Унікальна біла мавпа.", ru: "Уникальная белая обезьяна." },
+        { name: "Monkey King", img: "monkey_king.png", year: "2020", event: "Monkey Fair", ua: "Король серед мавп.", ru: "Король среди обезьян." },
+        { name: "Axolotl", img: "axolotl.png", year: "2021", event: "Robux Pet", ua: "Милий аксолотль.", ru: "Милый аксолотль." },
+        { name: "Cerberus", img: "cerberus.png", year: "2020", event: "Halloween", ua: "Триголовий пес.", ru: "Трехголовый пес." },
+        { name: "Cobra", img: "cobra.png", year: "2021", event: "Premium", ua: "Швидка кобра.", ru: "Быстрая кобра." },
+        { name: "Dodo", img: "dodo.png", year: "2020", event: "Fossil Egg", ua: "Доісторичний птах.", ru: "Доисторическая птица." },
+        { name: "Diamond Dragon", img: "diamond_dragon.png", year: "2020", event: "Star Rewards", ua: "Діамантовий дракон.", ru: "Бриллиантовый дракон." },
+        { name: "Diamond Griffin", img: "diamond_griffin.png", year: "2020", event: "Star Rewards", ua: "Діамантовий грифон.", ru: "Бриллиантовый грифон." },
+        { name: "Diamond Unicorn", img: "diamond_unicorn.png", year: "2020", event: "Star Rewards", ua: "Діамантовий єдиноріг.", ru: "Бриллиантовый единорог." },
+        { name: "Golden Dragon", img: "golden_dragon.png", year: "2020", event: "Star Rewards", ua: "Золотий дракон.", ru: "Золотой дракон." },
+        { name: "Golden Griffin", img: "golden_griffin.png", year: "2020", event: "Star Rewards", ua: "Золотий грифон.", ru: "Золотой грифон." },
+        { name: "Golden Unicorn", img: "golden_unicorn.png", year: "2020", event: "Star Rewards", ua: "Золотий єдиноріг.", ru: "Золотой единорог." },
+        { name: "Goldhorn", img: "goldhorn.png", year: "2021", event: "Mythic Egg", ua: "Чарівний олень.", ru: "Волшебный олень." },
+        { name: "Guardian Lion", img: "guardian_lion.png", year: "2021", event: "Lunar Event", ua: "Захисник року.", ru: "Защитник года." },
+        { name: "Vampire Dragon", img: "halloween_2023_vampire_dragon.png", year: "2023", event: "Halloween", ua: "Вампірський дракон.", ru: "Вампирский дракон." },
+        { name: "King Bee", img: "king_bee.png", year: "2019", event: "Honey", ua: "Король вулика.", ru: "Король улья." },
+        { name: "Kitsune", img: "kitsune.png", year: "2020", event: "Robux Shop", ua: "Міфічна лисиця.", ru: "Мифическая лиса." },
+        { name: "Midnight Dragon", img: "lunar_2024_midnight_dragon.png", year: "2024", event: "Lunar Event", ua: "Дракон ночі.", ru: "Дракон ночи." },
+        { name: "Octopus", img: "octopus.png", year: "2021", event: "Ocean Egg", ua: "Розумний восьминіг.", ru: "Умный осьминог." },
+        { name: "Peacock", img: "peacock.png", year: "2021", event: "Robux Shop", ua: "Яскравий павич.", ru: "Яркий павлин." },
+        { name: "Phoenix", img: "phoenix.png", year: "2021", event: "Mythic Egg", ua: "Птах фенікс.", ru: "Птица феникс." },
+        { name: "Queen Bee", img: "queen_bee.png", year: "2019", event: "Honey", ua: "Бджолина королева.", ru: "Пчелиная королева." },
+        { name: "Diamond Amazon", img: "rain_2023_diamond_amazon.png", year: "2023", event: "Rain Event", ua: "Діамантовий папуга.", ru: "Бриллиантовый попугай." },
+        { name: "Robo Dog", img: "robo_dog.png", year: "2020", event: "Robux Shop", ua: "Механічний пес.", ru: "Механический пес." },
+        { name: "Shark", img: "shark.png", year: "2021", event: "Ocean Egg", ua: "Король морів.", ru: "Король морей." },
+        { name: "Capricorn", img: "space_house_2022_capricorn.png", year: "2022", event: "Space Event", ua: "Космічний козеріг.", ru: "Космический козерог." },
+        { name: "Corn Doggo", img: "summerfest_2024_corn_doggo.png", year: "2024", event: "Summerfest", ua: "Літній пес.", ru: "Летний пес." },
+        { name: "T-Rex", img: "trex.png", year: "2020", event: "Fossil Egg", ua: "Тиранозавр.", ru: "Тираннозавр." }
+    ];
+
+    function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
+
     function render(data = pets) {
+        document.getElementById('sidebar-sup-txt').innerText = lang[cur].sup;
+        document.getElementById('searchInput').placeholder = lang[cur].search;
+        document.getElementById('menu-btn-txt').innerText = lang[cur].menu;
         const c = document.getElementById('catalog');
         c.innerHTML = '';
         data.forEach(p => {
             const card = document.createElement('div');
             card.className = 'card';
+            card.onclick = () => openPet(p.name);
             card.innerHTML = `
-                <div class="rarity" style="color:#ff7675; font-size:10px; font-weight:900; margin-bottom:5px;">LEGENDARY</div>
-                <div style="font-size:11px; color:#8b949e; margin-bottom:15px;">${p.year} | ${p.event}</div>
+                <div style="color:#ff7675; font-size:10px; font-weight:900; margin-bottom:5px;">LEGENDARY</div>
+                <div style="font-size:10px; color:#8b949e; margin-bottom:15px;">${lang[cur].year}: ${p.year} | ${p.event}</div>
                 <img src="${p.img}" onerror="this.src='https://via.placeholder.com/140/161b22/fff?text=PET'">
                 <div class="pet-name">${p.name}</div>
-                <a href="https://t.me/your_tg" class="tg-btn">Telegram</a>
+                <a href="https://t.me/your_tg" target="_blank" class="tg-btn" onclick="event.stopPropagation()">
+                    <i class="fa-brands fa-telegram"></i> <span>${lang[cur].sell}</span>
+                </a>
             `;
             c.appendChild(card);
         });
     }
 
-    function setL(l) {
-        cur = l;
-        document.getElementById('menu-btn-txt').innerText = l === 'ua' ? 'МЕНЮ' : 'МЕНЮ';
-        document.getElementById('ua-btn').classList.toggle('active', l === 'ua');
-        document.getElementById('ru-btn').classList.toggle('active', l === 'ru');
-        render();
+    function openPet(name) {
+        const p = pets.find(x => x.name === name);
+        if(!p) return;
+        document.getElementById('m-img').src = p.img;
+        document.getElementById('m-name').innerText = p.name;
+        document.getElementById('m-info').innerText = `${lang[cur].year}: ${p.year} | ${lang[cur].event}: ${p.event}`;
+        document.getElementById('m-desc').innerText = cur === 'ua' ? p.ua : p.ru;
+        document.getElementById('m-btn').innerHTML = `<i class="fa-brands fa-telegram"></i> ${lang[cur].sell}`;
+        document.getElementById('petOverlay').style.display = 'flex';
     }
+
+    function closePet() { document.getElementById('petOverlay').style.display = 'none'; }
+    function openSupport() { 
+        document.getElementById('sup-title').innerText = lang[cur].supTitle;
+        document.getElementById('sup-text').innerText = lang[cur].supText;
+        document.getElementById('supOverlay').style.display = 'flex'; 
+    }
+    function closeSupport() { document.getElementById('supOverlay').style.display = 'none'; }
 
     function handleSearch() {
         const v = document.getElementById('searchInput').value.toLowerCase();
         render(pets.filter(p => p.name.toLowerCase().includes(v)));
     }
 
+    function setL(l) {
+        cur = l;
+        document.getElementById('ua-btn').classList.toggle('active', l === 'ua');
+        document.getElementById('ru-btn').classList.toggle('active', l === 'ru');
+        render();
+    }
+
     render();
 </script>
-
 </body>
 </html>
