@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EliteStore — Full Legendary Collection</title>
+    <title>EliteStore — Adopt Me</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
@@ -25,18 +25,10 @@
             display: flex; height: 100vh; overflow: hidden;
         }
 
-        .menu-toggle {
-            display: none;
-            position: fixed; top: 15px; left: 15px; z-index: 1001;
-            background: var(--accent); border: none; color: white;
-            padding: 12px 20px; border-radius: 12px; cursor: pointer;
-            font-weight: 900; box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
-        }
-
+        /* --- SIDEBAR --- */
         .sidebar {
             width: 300px; background: #0d1117; border-right: 1px solid var(--glass-border);
             padding: 40px 25px; display: flex; flex-direction: column; z-index: 1000;
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .logo { 
@@ -48,32 +40,33 @@
         .search-box { position: relative; margin-bottom: 25px; }
         .search-box input { 
             width: 100%; background: #05060a; border: 1px solid var(--glass-border); 
-            padding: 14px 14px 14px 45px; border-radius: 12px; color: #fff; outline: none; 
+            padding: 12px 12px 12px 40px; border-radius: 12px; color: #fff; outline: none; 
         }
-        .search-box i { position: absolute; left: 15px; top: 15px; color: var(--accent-solid); }
+        .search-box i { position: absolute; left: 15px; top: 14px; color: var(--accent-solid); }
 
         .nav-link { 
             padding: 15px 20px; border-radius: 12px; color: #8b949e; 
             text-decoration: none; font-weight: 700; margin-bottom: 10px; 
             display: flex; align-items: center; gap: 12px; cursor: pointer; transition: 0.3s; 
         }
+        .nav-link:hover { background: rgba(255,255,255,0.05); color: #fff; }
         .nav-link.active { background: var(--accent); color: #fff; }
 
         .lang-switcher { margin-top: auto; display: flex; gap: 10px; padding-top: 20px; }
         .l-btn { background: #161b22; border: 1px solid var(--glass-border); color: #fff; padding: 10px; border-radius: 8px; cursor: pointer; flex: 1; font-weight: 700; }
         .l-btn.active { background: var(--accent-solid); }
 
+        /* --- MAIN CONTENT --- */
         .main { flex: 1; overflow-y: auto; padding: 40px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 25px; }
 
         .card { 
             background: var(--card-bg); border: 1px solid var(--glass-border); 
-            border-radius: 30px; padding: 30px; text-align: center; 
-            transition: 0.4s; cursor: pointer; position: relative;
+            border-radius: 30px; padding: 25px; text-align: center; transition: 0.4s; cursor: pointer;
         }
         .card:hover { transform: translateY(-10px); border-color: #6c5ce7; }
-        .card img { width: 140px; height: 140px; object-fit: contain; margin-bottom: 15px; }
-        .pet-name { font-size: 17px; font-weight: 900; margin-bottom: 15px; height: 40px; display: flex; align-items: center; justify-content: center; }
+        .card img { width: 120px; height: 120px; object-fit: contain; margin-bottom: 15px; }
+        .pet-name { font-weight: 900; margin-bottom: 15px; font-size: 15px; height: 35px; display: flex; align-items: center; justify-content: center; }
 
         .tg-btn { 
             background: #0088cc; color: #fff !important; text-decoration: none; 
@@ -82,46 +75,36 @@
             font-weight: 800; font-size: 11px; text-transform: uppercase; 
         }
 
+        /* --- MODALS --- */
         .overlay { 
             position: fixed; inset: 0; background: rgba(0,0,0,0.85); 
             display: none; justify-content: center; align-items: center; 
-            z-index: 2000; backdrop-filter: blur(8px); 
+            z-index: 2000; backdrop-filter: blur(10px); 
         }
         .modal { 
-            background: #161b22; color: #fff; width: 90%; max-width: 450px; 
+            background: #161b22; color: #fff; width: 90%; max-width: 400px; 
             border-radius: 35px; padding: 40px; position: relative; text-align: center; 
             border: 1px solid var(--glass-border); 
         }
-        .info-tag { 
-            background: rgba(255,255,255,0.05); padding: 12px; border-radius: 12px; 
-            margin: 15px 0; font-size: 14px; color: #a29bfe; font-weight: 700; 
-        }
-        .close-btn { position: absolute; top: 20px; right: 20px; font-size: 24px; cursor: pointer; }
-
-        @media (max-width: 768px) {
-            .menu-toggle { display: block; }
-            .sidebar { position: fixed; left: 0; top: 0; bottom: 0; transform: translateX(-100%); }
-            .sidebar.open { transform: translateX(0); }
-            .main { padding: 80px 20px 20px 20px; }
-            .grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; }
-            .pet-name { font-size: 14px; }
-        }
+        .close-btn { position: absolute; top: 20px; right: 20px; font-size: 24px; cursor: pointer; color: #8b949e; }
+        .info-tag { background: rgba(255,255,255,0.05); padding: 10px; border-radius: 10px; margin: 15px 0; font-size: 13px; color: #a29bfe; }
     </style>
 </head>
 <body>
 
-<button class="menu-toggle" onclick="toggleSidebar()">
-    <i class="fa-solid fa-bars"></i> <span id="menu-btn-txt">МЕНЮ</span>
-</button>
-
-<div class="sidebar" id="sidebar">
+<div class="sidebar">
     <div class="logo">ELITE STORE</div>
+    
     <div class="search-box">
         <i class="fa-solid fa-magnifying-glass"></i>
         <input type="text" id="searchInput" oninput="handleSearch()" placeholder="Пошук...">
     </div>
-    <div class="nav-link active" onclick="toggleSidebar()"><span>Усі пети</span></div>
-    <div class="nav-link" style="border: 1px solid #6c5ce7; color: #6c5ce7;" onclick="openSupport()"><span>Підтримка</span></div>
+
+    <div class="nav-link active" onclick="render(pets)"><span>Усі пети</span></div>
+    
+    <div class="nav-link" style="border: 1px solid #6c5ce7; color: #6c5ce7;" onclick="openSupport()">
+        <i class="fa-solid fa-headset"></i> <span id="side-sup">Підтримка</span>
+    </div>
     
     <div class="lang-switcher">
         <button onclick="setL('ua')" id="ua-btn" class="l-btn active">UA</button>
@@ -133,10 +116,20 @@
     <div class="grid" id="catalog"></div>
 </div>
 
+<div class="overlay" id="supportOverlay" onclick="if(event.target==this) closeSupport()">
+    <div class="modal">
+        <i class="fa-solid fa-xmark close-btn" onclick="closeSupport()"></i>
+        <div style="font-size: 50px; color: #6c5ce7; margin-bottom: 20px;"><i class="fa-solid fa-circle-question"></i></div>
+        <h2 id="sup-title">Підтримка</h2>
+        <p id="sup-desc" style="color: #8b949e; margin: 15px 0 25px; line-height: 1.5;"></p>
+        <a href="https://t.me/your_tg" target="_blank" class="tg-btn" id="sup-btn"></a>
+    </div>
+</div>
+
 <div class="overlay" id="petOverlay" onclick="if(event.target==this) closePet()">
     <div class="modal">
         <i class="fa-solid fa-xmark close-btn" onclick="closePet()"></i>
-        <img id="m-img" src="" style="width:160px;">
+        <img id="m-img" src="" style="width:150px;">
         <h2 id="m-name" style="margin-top:15px;"></h2>
         <div class="info-tag" id="m-info"></div>
         <p id="m-desc" style="color:#8b949e; margin-bottom:25px; font-size:14px;"></p>
@@ -146,79 +139,84 @@
 
 <script>
     const lang = {
-        ua: { sell: "КУПИТИ / ПРОДАТИ", search: "Пошук...", year: "Рік", event: "Івент", menu: "МЕНЮ" },
-        ru: { sell: "КУПИТЬ / ПРОДАТЬ", search: "Поиск...", year: "Год", event: "Ивент", menu: "МЕНЮ" }
+        ua: { 
+            sell: "КУПИТИ / ПРОДАТИ", search: "Пошук...", year: "Рік", event: "Івент", 
+            sup: "Підтримка", supTitle: "Підтримка", supBtn: "Написати в Telegram",
+            supDesc: "Маєш питання? Напиши нам у Telegram, і ми допоможемо з покупкою чи продажем петів!"
+        },
+        ru: { 
+            sell: "КУПИТЬ / ПРОДАТЬ", search: "Поиск...", year: "Год", event: "Ивент", 
+            sup: "Поддержка", supTitle: "Поддержка", supBtn: "Написать в Telegram",
+            supDesc: "Есть вопросы? Напиши нам в Telegram, и мы поможем с покупкой или продажей петов!"
+        }
     };
 
     let cur = 'ua';
 
     const pets = [
-        // --- 31 ПЕТ З ПОПЕРЕДНІХ СПИСКІВ ---
-        { name: "Shadow Dragon", img: "shadow_dragon.png", year: "2019", event: "Halloween", ua: "Найрідкісніший дракон.", ru: "Самый редкий дракон." },
-        { name: "Frost Dragon", img: "frost_dragon.png", year: "2019", event: "Christmas", ua: "Крижаний володар.", ru: "Ледяной повелитель." },
-        { name: "Diamond Butterfly", img: "sanctuary_2022_diamond_premium_butterfly.png", year: "2022", event: "Leaf Event", ua: "Сяючий метелик.", ru: "Сияющая бабочка." },
-        { name: "Albino Monkey", img: "albino_monkey.png", year: "2020", event: "Monkey Fair", ua: "Унікальна біла мавпа.", ru: "Уникальная белая обезьяна." },
-        { name: "Monkey King", img: "monkey_king.png", year: "2020", event: "Monkey Fair", ua: "Король серед мавп.", ru: "Король среди обезьян." },
-        { name: "Axolotl", img: "axolotl.png", year: "2021", event: "Robux Pet", ua: "Милий аксолотль.", ru: "Милый аксолотль." },
-        { name: "Cerberus", img: "cerberus.png", year: "2020", event: "Halloween", ua: "Триголовий пес.", ru: "Трехголовый пес." },
-        { name: "Cobra", img: "cobra.png", year: "2021", event: "Premium", ua: "Швидка кобра.", ru: "Быстрая кобра." },
-        { name: "Dodo", img: "dodo.png", year: "2020", event: "Fossil Egg", ua: "Доісторичний птах.", ru: "Доисторическая птица." },
-        { name: "Diamond Dragon", img: "diamond_dragon.png", year: "2020", event: "Star Rewards", ua: "Діамантовий дракон.", ru: "Бриллиантовый дракон." },
-        { name: "Diamond Griffin", img: "diamond_griffin.png", year: "2020", event: "Star Rewards", ua: "Діамантовий грифон.", ru: "Бриллиантовый грифон." },
-        { name: "Diamond Unicorn", img: "diamond_unicorn.png", year: "2020", event: "Star Rewards", ua: "Діамантовий єдиноріг.", ru: "Бриллиантовый единорог." },
-        { name: "Golden Dragon", img: "golden_dragon.png", year: "2020", event: "Star Rewards", ua: "Золотий дракон.", ru: "Золотой дракон." },
-        { name: "Golden Griffin", img: "golden_griffin.png", year: "2020", event: "Star Rewards", ua: "Золотий грифон.", ru: "Золотой грифон." },
-        { name: "Golden Unicorn", img: "golden_unicorn.png", year: "2020", event: "Star Rewards", ua: "Золотий єдиноріг.", ru: "Золотой единорог." },
-        { name: "Goldhorn", img: "goldhorn.png", year: "2021", event: "Mythic Egg", ua: "Чарівний олень.", ru: "Волшебный олень." },
-        { name: "Guardian Lion", img: "guardian_lion.png", year: "2021", event: "Lunar Event", ua: "Захисник року.", ru: "Защитник года." },
-        { name: "Vampire Dragon", img: "halloween_2023_vampire_dragon.png", year: "2023", event: "Halloween", ua: "Вампірський дракон.", ru: "Вампирский дракон." },
-        { name: "King Bee", img: "king_bee.png", year: "2019", event: "Honey", ua: "Король вулика.", ru: "Король улья." },
-        { name: "Kitsune", img: "kitsune.png", year: "2020", event: "Robux Shop", ua: "Міфічна лисиця.", ru: "Мифическая лиса." },
-        { name: "Midnight Dragon", img: "lunar_2024_midnight_dragon.png", year: "2024", event: "Lunar Event", ua: "Дракон ночі.", ru: "Дракон ночи." },
-        { name: "Octopus", img: "octopus.png", year: "2021", event: "Ocean Egg", ua: "Розумний восьминіг.", ru: "Умный осьминог." },
-        { name: "Peacock", img: "peacock.png", year: "2021", event: "Robux Shop", ua: "Яскравий павич.", ru: "Яркий павлин." },
-        { name: "Phoenix", img: "phoenix.png", year: "2021", event: "Mythic Egg", ua: "Птах фенікс.", ru: "Птица феникс." },
-        { name: "Queen Bee", img: "queen_bee.png", year: "2019", event: "Honey", ua: "Бджолина королева.", ru: "Пчелиная королева." },
-        { name: "Diamond Amazon", img: "rain_2023_diamond_amazon.png", year: "2023", event: "Rain Event", ua: "Діамантова птаха.", ru: "Бриллиантовая птица." },
-        { name: "Robo Dog", img: "robo_dog.png", year: "2020", event: "Robux Shop", ua: "Механічний пес.", ru: "Механический пес." },
-        { name: "Shark", img: "shark.png", year: "2021", event: "Ocean Egg", ua: "Король морів.", ru: "Король морей." },
-        { name: "Capricorn", img: "space_house_2022_capricorn.png", year: "2022", event: "Space Event", ua: "Космічний козеріг.", ru: "Космический козерог." },
-        { name: "Corn Doggo", img: "summerfest_2024_corn_doggo.png", year: "2024", event: "Summerfest", ua: "Літній пес.", ru: "Летний пес." },
-        { name: "T-Rex", img: "trex.png", year: "2020", event: "Fossil Egg", ua: "Тиранозавр.", ru: "Тираннозавр." },
+        // --- 24 ПЕТИ З ПАПКИ pets.3 ---
+        { name: "Strawberry Shortcake Bat Dragon", file: "pets.3/winter_2022_strawberry_shortcake_bat_dragon.png", year: "2022", event: "Winter", ua: "Легендарний полуничний дракон.", ru: "Легендарный клубничный дракон." },
+        { name: "Billy Goat", file: "pets.3/urban_2023_billy_goat.png", year: "2023", event: "Urban Egg", ua: "Легендарний цап.", ru: "Легендарный козел." },
+        { name: "Ice Moth Dragon", file: "pets.3/winter_2022_ice_moth_dragon.png", year: "2022", event: "Winter", ua: "Крижана моль-дракон.", ru: "Ледяная моль-дракон." },
+        { name: "Leviathan", file: "pets.3/summerfest_2023_leviathan.png", year: "2023", event: "Summerfest", ua: "Морське чудовисько.", ru: "Морское чудовище." },
+        { name: "Naga Dragon", file: "pets.3/seasia_2023_naga_dragon.png", year: "2023", event: "SE Asia Egg", ua: "Змій-дракон.", ru: "Змей-дракон." },
+        { name: "Tree Kangaroo", file: "pets.3/seasia_2023_tree_kangaroo.png", year: "2023", event: "SE Asia Egg", ua: "Деревний кенгуру.", ru: "Древесный кенгуру." },
+        { name: "Winged Horse", file: "pets.3/random_pets_2022_winged_horse.png", year: "2022", event: "Robux", ua: "Крилатий кінь.", ru: "Крылатый конь." },
+        { name: "Sugar Glider", file: "pets.3/easter_2022_sugar_glider.png", year: "2022", event: "Easter", ua: "Мила цукрова летяга.", ru: "Милая сахарная летяга." },
+        { name: "Dancing Dragon", file: "pets.3/lny_2022_dragon.png", year: "2022", event: "Lunar New Year", ua: "Танцюючий дракон.", ru: "Танцующий дракон." },
+        { name: "Ghost Dragon", file: "pets.3/halloween_2021_ghost_dragon.png", year: "2021", event: "Halloween", ua: "Примарний дракон.", ru: "Призрачный дракон." },
+        { name: "Lava Dragon", file: "pets.3/halloween_2022_lava_dragon.png", year: "2022", event: "Halloween", ua: "Дракон з лави.", ru: "Дракон из лавы." },
+        { name: "Alicorn", file: "pets.3/basic_egg_2022_alicron.png", year: "2022", event: "Royal Egg", ua: "Чарівний алікорн.", ru: "Волшебный аликорн." },
+        { name: "Ancient Dragon", file: "pets.3/basic_egg_2022_ancient_dragon.png", year: "2022", event: "Royal Egg", ua: "Стародавній дракон.", ru: "Древний дракон." },
+        { name: "Mechapup", file: "pets.3/april_fools_2022_mechapup.png", year: "2022", event: "April Fools", ua: "Кібер-пес.", ru: "Кибер-пес." },
+        { name: "Arctic Reindeer", file: "pets.3/arctic_reindeer.png", year: "2019", event: "Christmas", ua: "Північний олень.", ru: "Северный олень." },
+        { name: "Bat Dragon", file: "pets.3/bat_dragon.png", year: "2019", event: "Halloween", ua: "Кажан-дракон.", ru: "Летучий дракон." },
+        { name: "Crow", file: "pets.3/crow.png", year: "2019", event: "Farm Egg", ua: "Чорний крук.", ru: "Черный ворон." },
+        { name: "Evil Unicorn", file: "pets.3/evil_unicorn.png", year: "2019", event: "Halloween", ua: "Злий єдиноріг.", ru: "Злой единорог." },
+        { name: "Frost Fury", file: "pets.3/frost_fury.png", year: "2020", event: "Winter", ua: "Крижана лють.", ru: "Ледяная ярость." },
+        { name: "Giraffe", file: "pets.3/giraffe.png", year: "2019", event: "Safari Egg", ua: "Легендарний жираф.", ru: "Легендарный жираф." },
+        { name: "Owl", file: "pets.3/owl.png", year: "2019", event: "Farm Egg", ua: "Мудра сова.", ru: "Мудрая сова." },
+        { name: "Parrot", file: "pets.3/parrot.png", year: "2019", event: "Jungle Egg", ua: "Яскравий папуга.", ru: "Яркий попугай." },
+        { name: "Skele-Rex", file: "pets.3/skele_rex.png", year: "2020", event: "Halloween", ua: "Скелет динозавра.", ru: "Скелет динозавра." },
+        { name: "Snow Owl", file: "pets.3/snow_owl.png", year: "2020", event: "Winter", ua: "Сніжна сова.", ru: "Снежная сова." },
 
-        // --- 24 ПЕТИ З ТВОЇХ СКРИНШОТІВ (ПАПКА pets.3) ---
-        { name: "Strawberry Shortcake Bat Dragon", img: "pets.3/winter_2022_strawberry_shortcake_bat_dragon.png", year: "2022", event: "Winter", ua: "Легендарний полуничний дракон.", ru: "Легендарный клубничный дракон." },
-        { name: "Billy Goat", img: "pets.3/urban_2023_billy_goat.png", year: "2023", event: "Urban Egg", ua: "Легендарний цап.", ru: "Легендарный козел." },
-        { name: "Ice Moth Dragon", img: "pets.3/winter_2022_ice_moth_dragon.png", year: "2022", event: "Winter", ua: "Крижана моль-дракон.", ru: "Ледяная моль-дракон." },
-        { name: "Leviathan", img: "pets.3/summerfest_2023_leviathan.png", year: "2023", event: "Summerfest", ua: "Морське чудовисько.", ru: "Морское чудовище." },
-        { name: "Naga Dragon", img: "pets.3/seasia_2023_naga_dragon.png", year: "2023", event: "SE Asia Egg", ua: "Змій-дракон.", ru: "Змей-дракон." },
-        { name: "Tree Kangaroo", img: "pets.3/seasia_2023_tree_kangaroo.png", year: "2023", event: "SE Asia Egg", ua: "Деревний кенгуру.", ru: "Древесный кенгуру." },
-        { name: "Winged Horse", img: "pets.3/random_pets_2022_winged_horse.png", year: "2022", event: "Robux", ua: "Крилатий кінь.", ru: "Крылатый конь." },
-        { name: "Sugar Glider", img: "pets.3/easter_2022_sugar_glider.png", year: "2022", event: "Easter", ua: "Мила цукрова летяга.", ru: "Милая сахарная летяга." },
-        { name: "Dancing Dragon", img: "pets.3/lny_2022_dragon.png", year: "2022", event: "Lunar New Year", ua: "Танцюючий дракон.", ru: "Танцующий дракон." },
-        { name: "Ghost Dragon", img: "pets.3/halloween_2021_ghost_dragon.png", year: "2021", event: "Halloween", ua: "Примарний дракон.", ru: "Призрачный дракон." },
-        { name: "Lava Dragon", img: "pets.3/halloween_2022_lava_dragon.png", year: "2022", event: "Halloween", ua: "Дракон з лави.", ru: "Дракон из лавы." },
-        { name: "Alicorn", img: "pets.3/basic_egg_2022_alicron.png", year: "2022", event: "Royal Egg", ua: "Чарівний алікорн.", ru: "Волшебный аликорн." },
-        { name: "Ancient Dragon", img: "pets.3/basic_egg_2022_ancient_dragon.png", year: "2022", event: "Royal Egg", ua: "Стародавній дракон.", ru: "Древний дракон." },
-        { name: "Mechapup", img: "pets.3/april_fools_2022_mechapup.png", year: "2022", event: "April Fools", ua: "Кібер-пес.", ru: "Кибер-пес." },
-        { name: "Arctic Reindeer", img: "pets.3/arctic_reindeer.png", year: "2019", event: "Christmas", ua: "Північний олень.", ru: "Северный олень." },
-        { name: "Bat Dragon", img: "pets.3/bat_dragon.png", year: "2019", event: "Halloween", ua: "Кажан-дракон.", ru: "Летучий дракон." },
-        { name: "Crow", img: "pets.3/crow.png", year: "2019", event: "Farm Egg", ua: "Чорний крук.", ru: "Черный ворон." },
-        { name: "Evil Unicorn", img: "pets.3/evil_unicorn.png", year: "2019", event: "Halloween", ua: "Злий єдиноріг.", ru: "Злой единорог." },
-        { name: "Frost Fury", img: "pets.3/frost_fury.png", year: "2020", event: "Winter", ua: "Крижана лють.", ru: "Ледяная ярость." },
-        { name: "Giraffe", img: "pets.3/giraffe.png", year: "2019", event: "Safari Egg", ua: "Легендарний жираф.", ru: "Легендарный жираф." },
-        { name: "Owl", img: "pets.3/owl.png", year: "2019", event: "Farm Egg", ua: "Мудра сова.", ru: "Мудрая сова." },
-        { name: "Parrot", img: "pets.3/parrot.png", year: "2019", event: "Jungle Egg", ua: "Яскравий папуга.", ru: "Яркий попугай." },
-        { name: "Skele-Rex", img: "pets.3/skele_rex.png", year: "2020", event: "Halloween", ua: "Скелет динозавра.", ru: "Скелет динозавра." },
-        { name: "Snow Owl", img: "pets.3/snow_owl.png", year: "2020", event: "Winter", ua: "Сніжна сова.", ru: "Снежная сова." }
+        // --- ТВОЇ ПОПЕРЕДНІ ПЕТИ (31 шт) ---
+        { name: "Shadow Dragon", file: "shadow_dragon.png", year: "2019", event: "Halloween", ua: "Тіньовий дракон.", ru: "Теневой дракон." },
+        { name: "Frost Dragon", file: "frost_dragon.png", year: "2019", event: "Christmas", ua: "Фрост дракон.", ru: "Фрост дракон." },
+        { name: "Diamond Butterfly", file: "sanctuary_2022_diamond_premium_butterfly.png", year: "2022", event: "Leaf Event", ua: "Діамантовий метелик.", ru: "Алмазная бабочка." },
+        { name: "Albino Monkey", file: "albino_monkey.png", year: "2020", event: "Monkey Fair", ua: "Мавпа альбінос.", ru: "Обезьяна альбинос." },
+        { name: "Monkey King", file: "monkey_king.png", year: "2020", event: "Monkey Fair", ua: "Король мавп.", ru: "Король обезьян." },
+        { name: "Axolotl", file: "axolotl.png", year: "2021", event: "Robux Pet", ua: "Аксолотль.", ru: "Аксолотль." },
+        { name: "Cerberus", file: "cerberus.png", year: "2020", event: "Halloween", ua: "Цербер.", ru: "Цербер." },
+        { name: "Cobra", file: "cobra.png", year: "2021", event: "Premium", ua: "Кобра.", ru: "Кобра." },
+        { name: "Dodo", file: "dodo.png", year: "2020", event: "Fossil Egg", ua: "Додо.", ru: "Додо." },
+        { name: "Diamond Dragon", file: "diamond_dragon.png", year: "2020", event: "Star Rewards", ua: "Діамантовий дракон.", ru: "Алмазный дракон." },
+        { name: "Diamond Griffin", file: "diamond_griffin.png", year: "2020", event: "Star Rewards", ua: "Діамантовий грифон.", ru: "Алмазный грифон." },
+        { name: "Diamond Unicorn", file: "diamond_unicorn.png", year: "2020", event: "Star Rewards", ua: "Діамантовий єдиноріг.", ru: "Алмазный единорог." },
+        { name: "Golden Dragon", file: "golden_dragon.png", year: "2020", event: "Star Rewards", ua: "Золотий дракон.", ru: "Золотой дракон." },
+        { name: "Golden Griffin", file: "golden_griffin.png", year: "2020", event: "Star Rewards", ua: "Золотий грифон.", ru: "Золотой грифон." },
+        { name: "Golden Unicorn", file: "golden_unicorn.png", year: "2020", event: "Star Rewards", ua: "Золотий єдиноріг.", ru: "Золотой единорог." },
+        { name: "Goldhorn", file: "goldhorn.png", year: "2021", event: "Mythic Egg", ua: "Золоторіг.", ru: "Голдхорн." },
+        { name: "Guardian Lion", file: "guardian_lion.png", year: "2021", event: "Lunar Event", ua: "Лев захисник.", ru: "Лев защитник." },
+        { name: "Vampire Dragon", file: "halloween_2023_vampire_dragon.png", year: "2023", event: "Halloween", ua: "Вампірський дракон.", ru: "Вампирский дракон." },
+        { name: "King Bee", file: "king_bee.png", year: "2019", event: "Honey", ua: "Королівська бджола.", ru: "Королевская пчела." },
+        { name: "Kitsune", file: "kitsune.png", year: "2020", event: "Robux Shop", ua: "Кіцуне.", ru: "Кицунэ." },
+        { name: "Midnight Dragon", file: "lunar_2024_midnight_dragon.png", year: "2024", event: "Lunar Event", ua: "Дракон опівночі.", ru: "Полночный дракон." },
+        { name: "Octopus", file: "octopus.png", year: "2021", event: "Ocean Egg", ua: "Восьминіг.", ru: "Осьминог." },
+        { name: "Peacock", file: "peacock.png", year: "2021", event: "Robux Shop", ua: "Павич.", ru: "Павлин." },
+        { name: "Phoenix", file: "phoenix.png", year: "2021", event: "Mythic Egg", ua: "Фенікс.", ru: "Феникс." },
+        { name: "Queen Bee", file: "queen_bee.png", year: "2019", event: "Honey", ua: "Королева бджола.", ru: "Пчела королева." },
+        { name: "Diamond Amazon", file: "rain_2023_diamond_amazon.png", year: "2023", event: "Rain Event", ua: "Амазон.", ru: "Амазон." },
+        { name: "Robo Dog", file: "robo_dog.png", year: "2020", event: "Robux Shop", ua: "Робо-пес.", ru: "Робо-пес." },
+        { name: "Shark", file: "shark.png", year: "2021", event: "Ocean Egg", ua: "Акула.", ru: "Акула." },
+        { name: "Capricorn", file: "space_house_2022_capricorn.png", year: "2022", event: "Space Event", ua: "Козеріг.", ru: "Козерог." },
+        { name: "Corn Doggo", file: "summerfest_2024_corn_doggo.png", year: "2024", event: "Summerfest", ua: "Корн дог.", ru: "Корн дог." },
+        { name: "T-Rex", file: "trex.png", year: "2020", event: "Fossil Egg", ua: "Т-Рекс.", ru: "Т-Рекс." }
     ];
 
-    function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
-
-    function render(data = pets) {
+    function render(data) {
         document.getElementById('searchInput').placeholder = lang[cur].search;
-        document.getElementById('menu-btn-txt').innerText = lang[cur].menu;
-        
+        document.getElementById('side-sup').innerText = lang[cur].sup;
         const c = document.getElementById('catalog');
         c.innerHTML = '';
         data.forEach(p => {
@@ -226,15 +224,10 @@
             card.className = 'card';
             card.onclick = () => openPet(p.name);
             card.innerHTML = `
-                <div style="color:#ff7675; font-size:10px; font-weight:900; margin-bottom:5px;">LEGENDARY</div>
-                <div style="font-size:10px; color:#8b949e; margin-bottom:15px;">
-                    ${lang[cur].year}: ${p.year} | ${lang[cur].event}: ${p.event}
-                </div>
-                <img src="${p.img}" onerror="this.src='https://via.placeholder.com/140/161b22/fff?text=PET'">
+                <div style="font-size:10px; color:#8b949e; margin-bottom:10px;">${lang[cur].year}: ${p.year}</div>
+                <img src="${p.file}" onerror="this.src='https://via.placeholder.com/120/161b22/fff?text=PET'">
                 <div class="pet-name">${p.name}</div>
-                <a href="https://t.me/your_tg" target="_blank" class="tg-btn" onclick="event.stopPropagation()">
-                    <i class="fa-brands fa-telegram"></i> <span>${lang[cur].sell}</span>
-                </a>
+                <div class="tg-btn"><i class="fa-brands fa-telegram"></i> ${lang[cur].sell}</div>
             `;
             c.appendChild(card);
         });
@@ -242,8 +235,7 @@
 
     function openPet(name) {
         const p = pets.find(x => x.name === name);
-        if(!p) return;
-        document.getElementById('m-img').src = p.img;
+        document.getElementById('m-img').src = p.file;
         document.getElementById('m-name').innerText = p.name;
         document.getElementById('m-info').innerText = `${lang[cur].year}: ${p.year} | ${lang[cur].event}: ${p.event}`;
         document.getElementById('m-desc').innerText = cur === 'ua' ? p.ua : p.ru;
@@ -252,7 +244,15 @@
     }
 
     function closePet() { document.getElementById('petOverlay').style.display = 'none'; }
-    function openSupport() { alert("Напишіть нам в Telegram: @your_tg"); }
+
+    function openSupport() {
+        document.getElementById('sup-title').innerText = lang[cur].supTitle;
+        document.getElementById('sup-desc').innerText = lang[cur].supDesc;
+        document.getElementById('sup-btn').innerHTML = `<i class="fa-brands fa-telegram"></i> ${lang[cur].supBtn}`;
+        document.getElementById('supportOverlay').style.display = 'flex';
+    }
+
+    function closeSupport() { document.getElementById('supportOverlay').style.display = 'none'; }
 
     function handleSearch() {
         const v = document.getElementById('searchInput').value.toLowerCase();
@@ -263,10 +263,10 @@
         cur = l;
         document.getElementById('ua-btn').classList.toggle('active', l === 'ua');
         document.getElementById('ru-btn').classList.toggle('active', l === 'ru');
-        render();
+        render(pets);
     }
 
-    render();
+    render(pets);
 </script>
 </body>
 </html>
