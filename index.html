@@ -5,172 +5,157 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EliteStore — Premium Adopt Me Shop</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --primary: #7d5fff; --bg-gradient: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab); }
+        :root { --primary: #7d5fff; --bg-main: #f0f2f5; --sidebar-bg: #ffffff; }
         
-        @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        body { font-family: 'Montserrat', sans-serif; margin: 0; display: flex; height: 100vh; background: var(--bg-main); overflow: hidden; }
 
-        body { 
-            font-family: 'Montserrat', sans-serif; margin: 0; 
-            background: var(--bg-gradient); background-size: 400% 400%; animation: gradientBG 15s ease infinite;
-            color: #fff; min-height: 100vh; 
-        }
+        /* БОКОВЕ МЕНЮ */
+        .sidebar { width: 280px; background: var(--sidebar-bg); padding: 30px 20px; display: flex; flex-direction: column; box-shadow: 5px 0 15px rgba(0,0,0,0.05); z-index: 10; }
+        .logo { font-weight: 900; font-size: 26px; color: #ff7675; margin-bottom: 40px; display: flex; align-items: center; gap: 10px; }
+        .nav-group { display: flex; flex-direction: column; gap: 10px; }
+        .nav-btn { border: none; padding: 15px 20px; border-radius: 15px; background: #f8f9fa; cursor: pointer; text-align: left; font-weight: 700; transition: 0.3s; color: #636e72; font-size: 15px; }
+        .nav-btn:hover { background: #eee; }
+        .nav-btn.active { background: var(--primary); color: white; box-shadow: 0 4px 12px rgba(125, 95, 255, 0.3); }
 
-        header { 
-            background: rgba(0,0,0,0.7); backdrop-filter: blur(15px); 
-            padding: 20px 5%; display: flex; justify-content: space-between; align-items: center;
-            position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
+        /* ОСНОВНИЙ КОНТЕНТ */
+        .main-content { flex: 1; overflow-y: auto; padding: 40px; }
+        .catalog { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 30px; }
 
-        .lang-btn { 
-            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); 
-            color: #fff; padding: 8px 16px; border-radius: 12px; cursor: pointer; font-weight: bold; transition: 0.3s;
-        }
-        .lang-btn.active { background: var(--primary); border-color: var(--primary); box-shadow: 0 0 15px rgba(125,95,255,0.5); }
+        /* КАРТКА ПЕТА */
+        .pet-card { background: white; border-radius: 25px; padding: 25px; text-align: center; box-shadow: 0 8px 20px rgba(0,0,0,0.04); transition: 0.4s; border: 1px solid rgba(0,0,0,0.02); cursor: pointer; position: relative; }
+        .pet-card:hover { transform: translateY(-10px); box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
+        .pet-card img { width: 100%; height: 160px; object-fit: contain; filter: drop-shadow(0 5px 10px rgba(0,0,0,0.1)); }
+        .pet-card h3 { margin: 15px 0 5px; font-size: 20px; font-weight: 800; color: #2d3436; }
+        .rarity { color: #ff7675; font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; }
+        .buy-btn-small { background: var(--primary); color: white; border: none; padding: 12px; width: 100%; border-radius: 12px; margin-top: 15px; font-weight: 800; cursor: pointer; transition: 0.3s; }
 
-        .catalog { 
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
-            gap: 25px; padding: 40px 5%; max-width: 1400px; margin: 0 auto;
-        }
+        /* МОДАЛЬНЕ ВІКНО */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); backdrop-filter: blur(8px); display: none; justify-content: center; align-items: center; z-index: 1000; }
+        .modal { background: white; width: 90%; max-width: 500px; border-radius: 35px; padding: 40px; position: relative; text-align: center; animation: pop 0.3s cubic-bezier(0.17, 0.89, 0.32, 1.49); }
+        @keyframes pop { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .close-btn { position: absolute; top: 25px; right: 25px; font-size: 28px; cursor: pointer; border: none; background: none; color: #b2bec3; }
 
-        .pet-card { 
-            background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border-radius: 25px; 
-            padding: 25px; border: 1px solid rgba(255,255,255,0.15); transition: 0.4s; text-align: center; cursor: pointer;
-        }
-        .pet-card:hover { transform: translateY(-10px); background: rgba(255,255,255,0.2); box-shadow: 0 15px 30px rgba(0,0,0,0.3); }
-        .pet-card img { width: 100%; height: 200px; object-fit: contain; filter: drop-shadow(0 5px 15px rgba(0,0,0,0.4)); margin-bottom: 15px; }
-
-        /* ВІКНО ОПИСУ */
-        .modal-overlay { 
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(0,0,0,0.85); backdrop-filter: blur(20px); 
-            display: none; justify-content: center; align-items: center; z-index: 2000; 
-        }
-        .modal { 
-            background: #fff; color: #333; width: 90%; max-width: 550px; border-radius: 35px; 
-            padding: 40px; position: relative; text-align: center; animation: modalAnim 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        @keyframes modalAnim { from { transform: scale(0.7); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-
-        .close-btn { position: absolute; top: 20px; right: 25px; font-size: 30px; cursor: pointer; color: #ccc; border: none; background: none; transition: 0.3s; }
-        .close-btn:hover { color: #333; transform: rotate(90deg); }
-
-        .modal img { width: 220px; height: 220px; object-fit: contain; margin-bottom: 20px; }
-        .modal h2 { font-size: 32px; font-weight: 900; margin: 0 0 10px 0; }
-        .modal-rarity { color: #ff4757; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px; display: block; }
-        .modal-desc { font-size: 16px; line-height: 1.6; color: #666; margin-bottom: 30px; }
-
-        .buy-btn { 
-            background: var(--primary); color: #fff; text-decoration: none; padding: 18px; 
-            border-radius: 20px; display: flex; align-items: center; justify-content: center; 
-            gap: 12px; font-weight: 800; font-size: 20px; transition: 0.3s;
-        }
-        .buy-btn:hover { background: #6745ff; transform: translateY(-3px); box-shadow: 0 10px 20px rgba(125,95,255,0.4); }
+        /* ПЕРЕМИКАЧ МОВ */
+        .lang-box { margin-top: auto; display: flex; gap: 8px; }
+        .lang-s { padding: 8px 12px; border-radius: 10px; border: 1px solid #ddd; background: none; cursor: pointer; font-weight: 700; font-size: 12px; }
+        .lang-s.active { background: #2d3436; color: white; border-color: #2d3436; }
     </style>
 </head>
 <body>
 
-<header>
-    <div class="logo" style="font-weight:900; font-size:24px;">🐾 ELITESTORE</div>
-    <div class="lang-switcher">
-        <button class="lang-btn active" onclick="changeLang('ua')">UA</button>
-        <button class="lang-btn" onclick="changeLang('ru')">RU</button>
-        <button class="lang-btn" onclick="changeLang('en')">EN</button>
+<div class="sidebar">
+    <div class="logo">🐾 EliteStore</div>
+    <div class="nav-group">
+        <button class="nav-btn active">🏠 Все петы</button>
+        <button class="nav-btn">🔥 Легендарные</button>
+        <button class="nav-btn">✨ Ультра-редкие</button>
     </div>
-</header>
+    
+    <div class="lang-box">
+        <button class="lang-s active" onclick="setL('ua')">UA</button>
+        <button class="lang-s" onclick="setL('ru')">RU</button>
+        <button class="lang-s" onclick="setL('en')">EN</button>
+    </div>
+</div>
 
-<div class="catalog" id="petContainer"></div>
+<div class="main-content">
+    <div class="catalog" id="petContainer"></div>
+</div>
 
-<div class="modal-overlay" id="overlay" onclick="if(event.target==this) closePet()">
+<div class="modal-overlay" id="overlay" onclick="if(event.target==this) closeP()">
     <div class="modal">
-        <button class="close-btn" onclick="closePet()">✕</button>
-        <img id="m-img" src="" alt="">
-        <h2 id="m-name"></h2>
-        <span class="modal-rarity" id="m-rarity"></span>
-        <p class="modal-desc" id="m-desc"></p>
-        <a href="https://t.me/your_username" class="buy-btn">
-            <i class="fa-solid fa-cart-shopping"></i> <span id="m-btn">КУПИТИ</span>
-        </a>
+        <button class="close-btn" onclick="closeP()">✕</button>
+        <img id="m-img" src="" style="width:200px; margin-bottom:20px;">
+        <h2 id="m-name" style="font-size:32px; margin:0;"></h2>
+        <p id="m-rar" class="rarity" style="font-size:14px; margin-bottom:15px;"></p>
+        <p id="m-desc" style="color: #636e72; line-height: 1.6;"></p>
+        <button class="buy-btn-small" style="padding: 18px; font-size: 18px;">КУПИТИ ЗАРАЗ</button>
     </div>
 </div>
 
 <script>
     const tr = {
-        ua: { buy: "КУПИТИ", rarity: "Легендарний", info: "Найкращий вибір для вашої колекції!" },
-        ru: { buy: "КУПИТЬ", rarity: "Легендарный", info: "Лучший выбор для вашей коллекции!" },
-        en: { buy: "BUY NOW", rarity: "Legendary", info: "The best choice for your collection!" }
+        ua: { btn: "ПРОДАТИ", buy: "КУПИТИ", info: "Найкращий вибір для вашої колекції!" },
+        ru: { btn: "ПРОДАТЬ", buy: "КУПИТЬ", info: "Лучший выбор для вашей коллекции!" },
+        en: { btn: "SELL", buy: "BUY NOW", info: "The best choice for your collection!" }
     };
 
     let curL = 'ua';
 
-    // ВЕСЬ СПИСОК ПЕТІВ (31 шт)
-    const pets = [
-        { n: "Shadow Dragon", i: "shadow_dragon.png", d: { ua: "Король драконів.", ru: "Король драконов.", en: "The Shadow King." } },
-        { n: "Frost Dragon", i: "frost_dragon.png" },
-        { n: "Bat Dragon", i: "bat_dragon.png" },
-        { n: "Giraffe", i: "giraffe.png" },
-        { n: "Owl", i: "owl.png" },
-        { n: "Parrot", i: "parrot.png" },
-        { n: "Evil Unicorn", i: "evil_unicorn.png" },
-        { n: "Crow", i: "crow.png" },
-        { n: "Turtle", i: "turtle.png" },
-        { n: "Kangaroo", i: "kangaroo.png" },
-        { n: "Frost Fury", i: "frost_fury.png" },
-        { n: "Arctic Reindeer", i: "arctic_reindeer.png" },
-        { n: "Albino Monkey", i: "albino_monkey.png" },
-        { n: "Monkey King", i: "monkey_king.png" },
-        { n: "Diamond Butterfly", i: "sanctuary_2022_diamond_premium_butterfly.png" }, // Виправлено!
-        { n: "SS Bat Dragon", i: "winter_2022_strawberry_shortcake_bat_dragon.png" },
-        { n: "Mechapup", i: "mechapup.png" },
-        { n: "Hippogriff", i: "urban_2023_gargoyle.png" },
-        { n: "Diamond Amazon", i: "diamond_amazon.png" },
-        { n: "Nessie", i: "nessie.png" },
-        { n: "Capricorn", i: "capricorn.png" },
-        { n: "Balloon Unicorn", i: "balloon_unicorn.png" },
-        { n: "Corn Doggo", i: "corn_doggo.png" },
-        { n: "Gargoyle", i: "urban_2023_gargoyle.png" },
-        { n: "Axolotl", i: "axolotl.png" },
-        { n: "Cerberus", i: "cerberus.png" },
-        { n: "Cobra", i: "cobra.png" },
-        { n: "Diamond Dragon", i: "diamond_dragon.png" },
-        { n: "Diamond Griffin", i: "diamond_griffin.png" },
-        { n: "Diamond Unicorn", i: "diamond_unicorn.png" },
-        { n: "T-Rex", i: "trex.png" }
+    // ПОВНИЙ СПИСОК (31 ПЕТ)
+    const petData = [
+        { name: "Shadow Dragon", img: "shadow_dragon.png", rar: "Legendary" },
+        { name: "Frost Dragon", img: "frost_dragon.png", rar: "Legendary" },
+        { name: "Bat Dragon", img: "bat_dragon.png", rar: "Legendary" },
+        { name: "Giraffe", img: "giraffe.png", rar: "Legendary" },
+        { name: "Owl", img: "owl.png", rar: "Legendary" },
+        { name: "Parrot", img: "parrot.png", rar: "Legendary" },
+        { name: "Evil Unicorn", img: "evil_unicorn.png", rar: "Legendary" },
+        { name: "Crow", img: "crow.png", rar: "Legendary" },
+        { name: "Turtle", img: "turtle.png", rar: "Legendary" },
+        { name: "Kangaroo", img: "kangaroo.png", rar: "Legendary" },
+        { name: "Frost Fury", img: "frost_fury.png", rar: "Legendary" },
+        { name: "Arctic Reindeer", img: "arctic_reindeer.png", rar: "Legendary" },
+        { name: "Albino Monkey", img: "albino_monkey.png", rar: "Legendary" },
+        { name: "Monkey King", img: "monkey_king.png", rar: "Legendary" },
+        // ВИПРАВЛЕНО ШЛЯХ ДО КАРТИНКИ ТУТ
+        { name: "Diamond Butterfly", img: "sanctuary_2022_diamond_premium_butterfly.png", rar: "Legendary" },
+        { name: "SS Bat Dragon", img: "winter_2022_strawberry_shortcake_bat_dragon.png", rar: "Legendary" },
+        { name: "Mechapup", img: "mechapup.png", rar: "Legendary" },
+        { name: "Hippogriff", img: "urban_2023_gargoyle.png", rar: "Legendary" },
+        { name: "Diamond Amazon", img: "diamond_amazon.png", rar: "Legendary" },
+        { name: "Nessie", img: "nessie.png", rar: "Legendary" },
+        { name: "Capricorn", img: "capricorn.png", rar: "Legendary" },
+        { name: "Balloon Unicorn", img: "balloon_unicorn.png", rar: "Legendary" },
+        { name: "Corn Doggo", img: "corn_doggo.png", rar: "Legendary" },
+        { name: "Gargoyle", img: "urban_2023_gargoyle.png", rar: "Legendary" },
+        { name: "Axolotl", img: "axolotl.png", rar: "Legendary" },
+        { name: "Cerberus", img: "cerberus.png", rar: "Legendary" },
+        { name: "Cobra", img: "cobra.png", rar: "Legendary" },
+        { name: "Diamond Dragon", img: "diamond_dragon.png", rar: "Legendary" },
+        { name: "Diamond Griffin", img: "diamond_griffin.png", rar: "Legendary" },
+        { name: "Diamond Unicorn", img: "diamond_unicorn.png", rar: "Legendary" },
+        { name: "Golden Dragon", img: "golden_dragon.png", rar: "Legendary" },
+        { name: "Golden Griffin", img: "golden_griffin.png", rar: "Legendary" },
+        { name: "Golden Unicorn", img: "golden_unicorn.png", rar: "Legendary" },
+        { name: "Dodo", img: "dodo.png", rar: "Legendary" },
+        { name: "Octopus", img: "octopus.png", rar: "Legendary" },
+        { name: "Shark", img: "shark.png", rar: "Legendary" },
+        { name: "Phoenix", img: "phoenix.png", rar: "Legendary" },
+        { name: "Peacock", img: "peacock.png", rar: "Legendary" },
+        { name: "Queen Bee", img: "queen_bee.png", rar: "Legendary" },
+        { name: "T-Rex", img: "trex.png", rar: "Legendary" }
     ];
 
     function render() {
-        const cont = document.getElementById('petContainer');
-        cont.innerHTML = '';
-        pets.forEach(p => {
-            cont.innerHTML += `
-                <div class="pet-card" onclick="showPet('${p.n}')">
-                    <img src="${p.i}" alt="${p.n}" onerror="this.src='https://via.placeholder.com/200?text=Pet'">
-                    <h3 style="margin:0; font-size:22px;">${p.n}</h3>
-                    <p style="color:#ffeaa7; font-weight:700; margin-top:5px;">${tr[curL].rarity}</p>
+        const c = document.getElementById('petContainer');
+        c.innerHTML = '';
+        petData.forEach(p => {
+            c.innerHTML += `
+                <div class="pet-card" onclick="openP('${p.name}')">
+                    <img src="${p.img}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/150?text=Pet'">
+                    <div class="rarity">${p.rar}</div>
+                    <h3>${p.name}</h3>
+                    <button class="buy-btn-small">${tr[curL].btn}</button>
                 </div>`;
         });
     }
 
-    function showPet(name) {
-        const p = pets.find(x => x.n === name);
-        document.getElementById('m-img').src = p.i;
-        document.getElementById('m-name').innerText = p.n;
-        document.getElementById('m-rarity').innerText = tr[curL].rarity;
-        document.getElementById('m-desc').innerText = (p.d && p.d[curL]) ? p.d[curL] : tr[curL].info;
-        document.getElementById('m-btn').innerText = tr[curL].buy;
+    function openP(n) {
+        const p = petData.find(x => x.name === n);
+        document.getElementById('m-img').src = p.img;
+        document.getElementById('m-name').innerText = p.name;
+        document.getElementById('m-rar').innerText = p.rar;
+        document.getElementById('m-desc').innerText = tr[curL].info;
         document.getElementById('overlay').style.display = 'flex';
-        document.body.style.overflow = 'hidden';
     }
 
-    function closePet() {
-        document.getElementById('overlay').style.display = 'none';
-        document.body.style.overflow = 'auto';
-    }
+    function closeP() { document.getElementById('overlay').style.display = 'none'; }
 
-    function changeLang(l) {
+    function setL(l) {
         curL = l;
-        document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.innerText.toLowerCase() === l));
+        document.querySelectorAll('.lang-s').forEach(b => b.classList.toggle('active', b.innerText.toLowerCase() === l));
         render();
     }
 
