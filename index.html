@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EliteStore — Elite Adopt Me Trading Portal</title>
+    <title>EliteStore — Premium Adopt Me Trading</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
@@ -16,108 +16,90 @@
             --glass-border: rgba(255, 255, 255, 0.08);
         }
 
-        @keyframes bgFlow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
         body {
             font-family: 'Montserrat', sans-serif;
             margin: 0; display: flex; height: 100vh;
-            background: linear-gradient(-45deg, #0b0e14, #1a1a2e, #0f172a, #0b0e14);
-            background-size: 400% 400%;
-            animation: bgFlow 12s ease infinite;
-            color: #fff; overflow: hidden;
+            background: #0b0e14; color: #fff; overflow: hidden;
         }
 
         /* SIDEBAR */
         .sidebar {
-            width: 300px;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(30px);
-            border-right: 1px solid var(--glass-border);
-            padding: 40px 25px;
-            display: flex; flex-direction: column; z-index: 100;
+            width: 300px; background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(40px); border-right: 1px solid var(--glass-border);
+            padding: 40px 25px; display: flex; flex-direction: column; z-index: 100;
         }
 
         .logo {
-            font-weight: 900; font-size: 28px;
-            background: linear-gradient(45deg, #ff7675, #7d5fff);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            margin-bottom: 50px; text-align: center;
+            font-weight: 900; font-size: 26px; color: #ff75c3;
+            margin-bottom: 50px; text-align: center; letter-spacing: 1px;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
         }
 
         .nav-link {
-            padding: 16px 20px; border-radius: 20px;
-            background: var(--glass); color: #94a3b8;
-            text-decoration: none; font-weight: 700; margin-bottom: 12px;
-            transition: 0.3s; display: flex; align-items: center; gap: 12px;
-            border: 1px solid transparent; cursor: pointer;
+            padding: 16px 20px; border-radius: 15px; color: #fff;
+            text-decoration: none; font-weight: 600; margin-bottom: 10px;
+            transition: 0.3s; display: flex; align-items: center; gap: 15px;
+            cursor: pointer; background: transparent;
         }
 
-        .nav-link:hover, .nav-link.active {
-            background: var(--accent); color: #fff;
-            transform: translateX(10px); box-shadow: 0 10px 20px rgba(125, 95, 255, 0.3);
-        }
+        .nav-link.active { background: var(--accent); }
+        .nav-link:hover:not(.active) { background: var(--glass); }
 
-        .nav-link.support { margin-top: auto; border: 1px solid rgba(125, 95, 255, 0.3); color: #fff; }
+        .nav-link.support { margin-top: auto; background: var(--glass); border: 1px solid var(--glass-border); }
 
-        /* CATALOG */
-        .main { flex: 1; overflow-y: auto; padding: 40px; scroll-behavior: smooth; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 25px; }
+        /* MAIN CONTENT */
+        .main { flex: 1; overflow-y: auto; padding: 40px; background: #0b0e14; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; }
 
-        /* LUXURY CARD */
+        /* КАРТКА ПЕТА */
         .card {
-            background: var(--glass); border: 1px solid var(--glass-border);
-            border-radius: 35px; padding: 25px; text-align: center;
-            transition: 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); cursor: pointer;
+            background: rgba(255, 255, 255, 0.03); border: 1px solid var(--glass-border);
+            border-radius: 30px; padding: 30px; text-align: center;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .card:hover { transform: translateY(-15px); background: rgba(255, 255, 255, 0.08); border-color: var(--accent); }
-        .card img { width: 100%; height: 160px; object-fit: contain; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5)); }
+        .card:hover { transform: scale(1.05); border-color: var(--accent); background: rgba(125, 95, 255, 0.05); }
+        .card img { width: 160px; height: 160px; object-fit: contain; margin-bottom: 15px; }
         
+        .rarity { color: #ff7675; font-size: 10px; font-weight: 800; letter-spacing: 1px; margin-bottom: 5px; }
+        .pet-name { font-size: 20px; font-weight: 800; margin: 10px 0; }
+
         .sell-btn {
-            background: var(--accent); color: #fff; border: none; padding: 15px;
-            width: 100%; border-radius: 18px; margin-top: 15px; font-weight: 800;
-            cursor: pointer; transition: 0.3s;
+            background: var(--accent); color: #fff; border: none; padding: 14px;
+            width: 100%; border-radius: 15px; font-weight: 800;
+            cursor: pointer; transition: 0.3s; font-size: 14px; text-transform: uppercase;
         }
+        .sell-btn:hover { filter: brightness(1.2); box-shadow: 0 5px 15px rgba(125, 95, 255, 0.4); }
 
         /* MODALS */
         .overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9); backdrop-filter: blur(15px);
+            background: rgba(0,0,0,0.85); backdrop-filter: blur(15px);
             display: none; justify-content: center; align-items: center; z-index: 1000;
         }
         .modal {
-            background: #fff; color: #0f172a; width: 90%; max-width: 500px;
-            border-radius: 45px; padding: 50px; position: relative; text-align: center;
-            animation: modalIn 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+            background: #161b22; color: #fff; width: 90%; max-width: 500px;
+            border-radius: 35px; padding: 40px; position: relative; text-align: center;
+            border: 1px solid var(--glass-border);
         }
-        @keyframes modalIn { from { transform: scale(0.8) translateY(30px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
+        .close-btn { position: absolute; top: 20px; right: 25px; font-size: 28px; cursor: pointer; color: #444; border: none; background: none; }
 
-        .tg-btn {
-            background: var(--tg-color); color: white; text-decoration: none;
-            padding: 20px 30px; border-radius: 25px; display: inline-flex;
-            align-items: center; gap: 15px; font-weight: 900; font-size: 18px;
-            margin-top: 25px; transition: 0.3s; box-shadow: 0 10px 25px rgba(0, 136, 204, 0.4);
-        }
-        .tg-btn:hover { transform: scale(1.05); box-shadow: 0 15px 35px rgba(0, 136, 204, 0.6); }
-
-        .close-btn { position: absolute; top: 30px; right: 30px; font-size: 32px; cursor: pointer; color: #cbd5e1; border: none; background: none; }
+        .lang-switcher { margin-top: 20px; display: flex; gap: 10px; justify-content: center; }
+        .l-btn { background: var(--glass); border: 1px solid var(--glass-border); color: #888; padding: 5px 12px; border-radius: 8px; cursor: pointer; font-size: 12px; }
+        .l-btn.active { border-color: var(--accent); color: #fff; }
     </style>
 </head>
 <body>
 
 <div class="sidebar">
-    <div class="logo">ELITE🐾STORE</div>
-    <div class="nav-link active"><i class="fa-solid fa-ghost"></i> Усі пети</div>
-    <div class="nav-link"><i class="fa-solid fa-fire"></i> Легендарні</div>
+    <div class="logo">ELITE <i class="fa-solid fa-cloud"></i> STORE</div>
+    <div class="nav-link active" id="menu-all"><i class="fa-solid fa-ghost"></i> Усі пети</div>
+    <div class="nav-link" id="menu-leg"><i class="fa-solid fa-fire"></i> Легендарні</div>
     
-    <div class="nav-link support" onclick="openSupport()"><i class="fa-solid fa-headset"></i> Допомога та підтримка</div>
+    <div class="nav-link support" onclick="openSupport()" id="menu-sup"><i class="fa-solid fa-headset"></i> Допомога та підтримка</div>
     
-    <div style="margin-top: 20px; display: flex; gap: 10px; justify-content: center;">
-        <button onclick="setL('ua')" style="background:none; border:1px solid #444; color:white; cursor:pointer; padding:8px 12px; border-radius:12px;">UA</button>
-        <button onclick="setL('ru')" style="background:none; border:1px solid #444; color:white; cursor:pointer; padding:8px 12px; border-radius:12px;">RU</button>
+    <div class="lang-switcher">
+        <button onclick="setL('ua')" id="btn-ua" class="l-btn active">UA</button>
+        <button onclick="setL('ru')" id="btn-ru" class="l-btn">RU</button>
     </div>
 </div>
 
@@ -125,79 +107,99 @@
     <div class="grid" id="catalog"></div>
 </div>
 
-<div class="overlay" id="overlay" onclick="if(event.target==this) closePet()">
-    <div class="modal">
-        <button class="close-btn" onclick="closePet()">✕</button>
-        <img id="m-img" src="">
-        <h2 id="m-name"></h2>
-        <div style="color: #ff7675; font-weight: 900; letter-spacing: 1px; margin-top: 10px;">LEGENDARY RARITY</div>
-        <p id="m-desc" style="color: #475569; line-height: 1.6; margin-top: 20px; text-align: left; background: #f8fafc; padding: 20px; border-radius: 20px;"></p>
-        <button class="sell-btn" style="padding: 20px; font-size: 20px;">ПРОДАТИ ЗАРАЗ</button>
-    </div>
-</div>
-
 <div class="overlay" id="supportModal" onclick="if(event.target==this) closeSupport()">
     <div class="modal">
         <button class="close-btn" onclick="closeSupport()">✕</button>
-        <div style="font-size: 60px; margin-bottom: 20px;">💬</div>
-        <h2 style="font-size: 32px;">Виникли питання?</h2>
-        <p style="color: #64748b; font-size: 18px; margin-top: 15px;">Наша команда підтримки готова допомогти вам у будь-який час. Напишіть нам прямо у Telegram!</p>
-        <a href="https://t.me/your_telegram_username" target="_blank" class="tg-btn">
-            <i class="fa-brands fa-telegram" style="font-size: 30px;"></i> НАПИСАТИ В ТЕЛЕГРАМ
+        <h2 id="sup-title" style="font-size: 28px;"></h2>
+        <p id="sup-text" style="color: #8b949e; line-height: 1.6; font-size: 16px; margin: 20px 0;"></p>
+        <a href="https://t.me/your_tg" target="_blank" style="background:#0088cc; color:#fff; text-decoration:none; padding:15px 30px; border-radius:15px; display:inline-block; font-weight:800;">
+            <i class="fa-brands fa-telegram"></i> TELEGRAM
         </a>
     </div>
 </div>
 
 <script>
-    let curL = 'ua';
+    const lang = {
+        ua: {
+            all: "Усі пети", leg: "Легендарні", sup: "Допомога та підтримка",
+            sell: "ПРОДАТЬ", supTitle: "Маєте питання?", 
+            supText: "Напишіть нам у Telegram, і ми допоможемо вам з трейдом або покупкою!"
+        },
+        ru: {
+            all: "Все петы", leg: "Легендарные", sup: "Помощь и поддержка",
+            sell: "ПРОДАТЬ", supTitle: "Есть вопросы?", 
+            supText: "Напишите нам в Telegram, и мы поможем вам с трейдом или покупкой!"
+        }
+    };
+
+    let cur = 'ua';
 
     const pets = [
-        { 
-            name: "Shadow Dragon", img: "shadow_dragon.png", 
-            ua: "Shadow Dragon — справжній символ багатства в Adopt Me. Випущений на Хелловін 2019, він має унікальний темний ефект та вважається найціннішим петом у грі.",
-            ru: "Shadow Dragon — истинный символ богатства в Adopt Me. Выпущенный на Хэллоуин 2019, он имеет уникальный темный эффект и считается самым ценным петом."
-        },
-        { 
-            name: "Frost Dragon", img: "frost_dragon.png", 
-            ua: "Frost Dragon з'явився у зимовому оновленні 2019. Він дихає кригою та має неймовірне блакитне світіння в темряві.",
-            ru: "Frost Dragon появился в зимнем обновлении 2019. Он дышит льдом и имеет невероятное голубое свечение в темноте."
-        },
-        { 
-            name: "Diamond Butterfly", img: "sanctuary_2022_diamond_premium_butterfly.png", 
-            ua: "Diamond Butterfly — ексклюзивний діамантовий метелик. Один із найрідкісніших преміум-вихованців, якого важко знайти на ринку.",
-            ru: "Diamond Butterfly — эксклюзивная бриллиантовая бабочка. Один из самых редких премиум-питомцев, которого сложно найти на рынке."
-        }
-        // ... додай тут інших петів за аналогією
+        { name: "Shadow Dragon", img: "shadow_dragon.png" },
+        { name: "Frost Dragon", img: "frost_dragon.png" },
+        { name: "Diamond Butterfly", img: "sanctuary_2022_diamond_premium_butterfly.png" },
+        { name: "Albino Monkey", img: "albino_monkey.png" },
+        { name: "Monkey King", img: "monkey_king.png" },
+        { name: "Axolotl", img: "axolotl.png" },
+        { name: "Cerberus", img: "cerberus.png" },
+        { name: "Cobra", img: "cobra.png" },
+        { name: "Dodo", img: "dodo.png" },
+        { name: "Diamond Dragon", img: "diamond_dragon.png" },
+        { name: "Diamond Griffin", img: "diamond_griffin.png" },
+        { name: "Diamond Unicorn", img: "diamond_unicorn.png" },
+        { name: "Golden Dragon", img: "golden_dragon.png" },
+        { name: "Golden Griffin", img: "golden_griffin.png" },
+        { name: "Golden Unicorn", img: "golden_unicorn.png" },
+        { name: "Goldhorn", img: "goldhorn.png" },
+        { name: "Guardian Lion", img: "guardian_lion.png" },
+        { name: "Vampire Dragon", img: "halloween_2023_vampire_dragon.png" },
+        { name: "King Bee", img: "king_bee.png" },
+        { name: "Kitsune", img: "kitsune.png" },
+        { name: "Midnight Dragon", img: "lunar_2024_midnight_dragon.png" },
+        { name: "Octopus", img: "octopus.png" },
+        { name: "Peacock", img: "peacock.png" },
+        { name: "Phoenix", img: "phoenix.png" },
+        { name: "Queen Bee", img: "queen_bee.png" },
+        { name: "Diamond Amazon", img: "rain_2023_diamond_amazon.png" },
+        { name: "Robo Dog", img: "robo_dog.png" },
+        { name: "Shark", img: "shark.png" },
+        { name: "Capricorn", img: "space_house_2022_capricorn.png" },
+        { name: "Corn Doggo", img: "summerfest_2024_corn_doggo.png" },
+        { name: "T-Rex", img: "trex.png" }
     ];
 
     function render() {
+        // Оновлення тексту меню
+        document.getElementById('menu-all').innerHTML = `<i class="fa-solid fa-ghost"></i> ${lang[cur].all}`;
+        document.getElementById('menu-sup').innerHTML = `<i class="fa-solid fa-headset"></i> ${lang[cur].sup}`;
+
         const c = document.getElementById('catalog');
         c.innerHTML = '';
         pets.forEach(p => {
             c.innerHTML += `
-                <div class="card" onclick="openPet('${p.name}')">
-                    <img src="${p.img}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/200?text=Pet'">
-                    <div style="color: #ff7675; font-size: 11px; font-weight: 900; margin-bottom: 10px;">LEGENDARY</div>
-                    <h3>${p.name}</h3>
-                    <button class="sell-btn">${curL === 'ua' ? 'ПРОДАТИ' : 'ПРОДАТЬ'}</button>
+                <div class="card">
+                    <div class="rarity">LEGENDARY</div>
+                    <img src="${p.img}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/160?text=Pet'">
+                    <div class="pet-name">${p.name}</div>
+                    <button class="sell-btn">${lang[cur].sell}</button>
                 </div>`;
         });
     }
 
-    function openPet(name) {
-        const p = pets.find(x => x.name === name);
-        document.getElementById('m-img').src = p.img;
-        document.getElementById('m-name').innerText = p.name;
-        document.getElementById('m-desc').innerText = p[curL] || "Професійний опис для цього пета готується. Це рідкісний екземпляр!";
-        document.getElementById('overlay').style.display = 'flex';
+    function openSupport() {
+        document.getElementById('sup-title').innerText = lang[cur].supTitle;
+        document.getElementById('sup-text').innerText = lang[cur].supText;
+        document.getElementById('supportModal').style.display = 'flex';
     }
 
-    function closePet() { document.getElementById('overlay').style.display = 'none'; }
-    
-    function openSupport() { document.getElementById('supportModal').style.display = 'flex'; }
     function closeSupport() { document.getElementById('supportModal').style.display = 'none'; }
 
-    function setL(l) { curL = l; render(); }
+    function setL(l) { 
+        cur = l; 
+        document.querySelectorAll('.l-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById('btn-' + l).classList.add('active');
+        render(); 
+    }
 
     render();
 </script>
