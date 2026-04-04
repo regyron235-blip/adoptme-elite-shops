@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EliteStore — Premium Adopt Me Trading</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
         :root {
@@ -68,7 +68,6 @@
             width: 100%; border-radius: 15px; font-weight: 800;
             cursor: pointer; transition: 0.3s; font-size: 14px; text-transform: uppercase;
         }
-        .sell-btn:hover { filter: brightness(1.2); box-shadow: 0 5px 15px rgba(125, 95, 255, 0.4); }
 
         /* MODALS */
         .overlay {
@@ -91,9 +90,8 @@
 <body>
 
 <div class="sidebar">
-    <div class="logo">ELITE <i class="fa-solid fa-cloud"></i> STORE</div>
-    <div class="nav-link active" id="menu-all"><i class="fa-solid fa-ghost"></i> Усі пети</div>
-    <div class="nav-link" id="menu-leg"><i class="fa-solid fa-fire"></i> Легендарні</div>
+    <div class="logo">ELITE <i class="fa-solid fa-paw"></i> STORE</div>
+    <div class="nav-link active" id="menu-all"><i class="fa-solid fa-dog"></i> Усі пети</div>
     
     <div class="nav-link support" onclick="openSupport()" id="menu-sup"><i class="fa-solid fa-headset"></i> Допомога та підтримка</div>
     
@@ -110,8 +108,8 @@
 <div class="overlay" id="supportModal" onclick="if(event.target==this) closeSupport()">
     <div class="modal">
         <button class="close-btn" onclick="closeSupport()">✕</button>
-        <h2 id="sup-title" style="font-size: 28px;"></h2>
-        <p id="sup-text" style="color: #8b949e; line-height: 1.6; font-size: 16px; margin: 20px 0;"></p>
+        <h2 id="sup-title"></h2>
+        <p id="sup-text" style="color: #8b949e; line-height: 1.6; margin: 20px 0;"></p>
         <a href="https://t.me/your_tg" target="_blank" style="background:#0088cc; color:#fff; text-decoration:none; padding:15px 30px; border-radius:15px; display:inline-block; font-weight:800;">
             <i class="fa-brands fa-telegram"></i> TELEGRAM
         </a>
@@ -121,19 +119,20 @@
 <script>
     const lang = {
         ua: {
-            all: "Усі пети", leg: "Легендарні", sup: "Допомога та підтримка",
-            sell: "ПРОДАТЬ", supTitle: "Маєте питання?", 
-            supText: "Напишіть нам у Telegram, і ми допоможемо вам з трейдом або покупкою!"
+            all: "Усі пети", sup: "Допомога та підтримка",
+            sell: "ПРОДАТИ", supTitle: "Маєте питання?", 
+            supText: "Напишіть нам у Telegram, і ми допоможемо вам!"
         },
         ru: {
-            all: "Все петы", leg: "Легендарные", sup: "Помощь и поддержка",
+            all: "Все петы", sup: "Помощь и поддержка",
             sell: "ПРОДАТЬ", supTitle: "Есть вопросы?", 
-            supText: "Напишите нам в Telegram, и мы поможем вам с трейдом или покупкой!"
+            supText: "Напишите нам в Telegram, и мы вам поможем!"
         }
     };
 
     let cur = 'ua';
 
+    // Твої 31 петів (назви фото ти вже сам поправив)
     const pets = [
         { name: "Shadow Dragon", img: "shadow_dragon.png" },
         { name: "Frost Dragon", img: "frost_dragon.png" },
@@ -169,8 +168,7 @@
     ];
 
     function render() {
-        // Оновлення тексту меню
-        document.getElementById('menu-all').innerHTML = `<i class="fa-solid fa-ghost"></i> ${lang[cur].all}`;
+        document.getElementById('menu-all').innerHTML = `<i class="fa-solid fa-dog"></i> ${lang[cur].all}`;
         document.getElementById('menu-sup').innerHTML = `<i class="fa-solid fa-headset"></i> ${lang[cur].sup}`;
 
         const c = document.getElementById('catalog');
