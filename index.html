@@ -3,198 +3,186 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EliteStore — Fixed Cards</title>
+    <title>EliteStore — Neo-Premium Fixed</title>
+    
+    <link rel="icon" type="image/png" href="favicon.png">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --color1: #7d5fff;
-            --color2: #ff4dff;
-            --bg: #050505;
+            --accent: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+            --accent-solid: #6c5ce7;
+            --bg-dark: #090b10;
+            --bg-panel: #11141b;
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.07);
+            --text-main: #fff;
+            --text-muted: #8b949e;
+            --card-grad: linear-gradient(145deg, rgba(20, 24, 33, 0.9) 0%, rgba(10, 12, 18, 0.95) 100%);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * { box-sizing: border-box; outline: none; }
+        
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent-solid); }
+
         body {
             font-family: 'Montserrat', sans-serif;
-            background: var(--bg); color: white; min-height: 100vh;
+            margin: 0; display: flex; height: 100vh;
+            background: var(--bg-dark); color: var(--text-main);
+            overflow: hidden;
         }
 
-        /* ФОН */
-        .bg-wrapper {
-            position: fixed; inset: 0; z-index: -1; background: #000; overflow: hidden;
+        /* --- SIDEBAR --- */
+        .sidebar {
+            width: 320px; background: var(--bg-panel);
+            border-right: 1px solid var(--glass-border);
+            padding: 40px 30px; display: flex; flex-direction: column;
+            z-index: 100; flex-shrink: 0;
         }
-        .blob {
-            position: absolute; width: 600px; height: 600px; filter: blur(120px);
-            border-radius: 50%; opacity: 0.3; background: var(--color1);
-            animation: move 15s infinite alternate;
-        }
-        @keyframes move { from { transform: translate(-10%, -10%); } to { transform: translate(20%, 20%); } }
 
-        /* HEADER */
-        .header { padding: 40px 20px; text-align: center; }
-        h1 {
-            font-size: clamp(40px, 8vw, 70px); margin-bottom: 25px;
-            background: linear-gradient(to bottom, #fff 40%, #555 100%);
+        .logo {
+            font-weight: 900; font-size: 28px; text-align: center; margin-bottom: 50px;
+            background: linear-gradient(to right, #ff75c3, #ffa647);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
 
-        .controls {
-            max-width: 500px; margin: 0 auto 40px; display: flex; flex-direction: column; gap: 15px;
-        }
-
-        .search-box { position: relative; }
+        .search-box { position: relative; margin-bottom: 30px; }
         .search-box input {
-            width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
-            padding: 15px 15px 15px 45px; border-radius: 12px; color: #fff; outline: none;
+            width: 100%; background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border);
+            padding: 15px 20px 15px 50px; border-radius: 15px; color: #fff;
+            font-weight: 600;
         }
-        .search-box i { position: absolute; left: 15px; top: 16px; color: var(--color1); }
+        .search-box i { position: absolute; left: 18px; top: 18px; color: var(--accent-solid); }
 
-        .btn-row { display: flex; justify-content: center; gap: 10px; }
-        .btn-ui {
-            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
-            color: #fff; padding: 10px 20px; border-radius: 10px; cursor: pointer;
-            font-weight: 900; font-size: 11px; text-transform: uppercase;
+        .nav-link {
+            padding: 18px 25px; border-radius: 18px; color: var(--text-muted);
+            text-decoration: none; font-weight: 700; margin-bottom: 12px;
+            display: flex; align-items: center; gap: 15px; cursor: pointer;
+            transition: 0.3s;
         }
-        .btn-ui.active { background: var(--color1); border-color: var(--color1); }
+        .nav-link.active { background: var(--accent); color: #fff; }
+        .nav-link.support { margin-top: auto; border: 1px solid var(--accent-solid); color: var(--accent-solid); }
 
-        /* КАРТКИ */
-        .main { padding: 0 20px 60px; max-width: 1300px; margin: 0 auto; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 25px; }
+        /* --- MAIN --- */
+        .main { flex: 1; overflow-y: auto; padding: 60px; background: var(--bg-dark); }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; }
 
+        /* --- CARD --- */
         .card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 30px;
-            padding: 30px;
-            text-align: center;
-            transition: 0.3s;
-            position: relative;
-            z-index: 1;
+            background: var(--card-grad); border: 1px solid var(--glass-border);
+            border-radius: 40px; padding: 35px; text-align: center;
+            cursor: pointer; position: relative;
+            transition: 0.4s;
         }
-        .card:hover { transform: translateY(-10px); border-color: var(--color2); background: rgba(255, 255, 255, 0.06); }
+        .card:hover { transform: translateY(-10px); border-color: var(--accent-solid); }
 
-        .card img {
-            width: 140px; height: 140px; object-fit: contain;
-            margin-bottom: 15px; pointer-events: none; /* Щоб картинка не заважала кліку */
+        .card img { width: 150px; height: 150px; object-fit: contain; margin-bottom: 20px; }
+        .rarity { color: #ff7675; font-size: 10px; font-weight: 900; letter-spacing: 2px; margin-bottom: 10px; }
+        .pet-name { font-size: 20px; font-weight: 800; margin-bottom: 20px; }
+
+        /* КНОПКА ТГ */
+        .tg-btn {
+            background: #0088cc; color: #fff; text-decoration: none;
+            padding: 14px; width: 100%; border-radius: 15px;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            font-weight: 800; font-size: 11px; text-transform: uppercase;
+            transition: 0.3s; position: relative; z-index: 50; /* Кнопка ПОВИННА бути вище за все */
         }
+        .tg-btn:hover { background: #00aaff; transform: scale(1.05); }
 
-        .rarity { color: var(--color2); font-size: 9px; font-weight: 900; margin-bottom: 10px; letter-spacing: 1px; }
-        .pet-name { font-size: 17px; font-weight: 900; margin-bottom: 20px; color: #fff; }
-
-        /* КНОПКА */
-        .tg-button {
-            display: block;
-            width: 100%;
-            padding: 16px;
-            background: linear-gradient(90deg, #7d5fff, #ff4dff);
-            border-radius: 15px;
-            color: white;
-            text-decoration: none;
-            font-size: 10px;
-            font-weight: 900;
-            text-transform: uppercase;
-            position: relative;
-            z-index: 10; /* Найвищий пріоритет кліку */
-            transition: 0.3s;
-        }
-        .tg-button:hover { transform: scale(1.05); box-shadow: 0 10px 20px rgba(125, 95, 255, 0.4); }
-
-        /* MODAL */
-        .modal {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.9);
+        /* MODALS */
+        .overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); backdrop-filter: blur(10px);
             display: none; justify-content: center; align-items: center; z-index: 1000;
         }
-        .modal.active { display: flex; }
-        .modal-box { background: #111; padding: 40px; border-radius: 30px; text-align: center; border: 1px solid #333; width: 90%; max-width: 400px; }
+        .modal { background: #fff; color: #111; width: 90%; max-width: 500px; border-radius: 35px; padding: 40px; position: relative; text-align: center; }
+        .modal h2 { font-size: 30px; font-weight: 900; }
+        .modal p { background: #f0f0f0; padding: 20px; border-radius: 15px; margin: 20px 0; }
+        .close-btn { position: absolute; top: 20px; right: 20px; font-size: 25px; cursor: pointer; color: #ccc; }
+
+        .lang-switcher { margin-top: 20px; display: flex; gap: 10px; justify-content: center; border-top: 1px solid var(--glass-border); padding-top: 20px; }
+        .l-btn { background: var(--glass); border: 1px solid var(--glass-border); color: #fff; padding: 8px 15px; border-radius: 10px; cursor: pointer; }
+        .l-btn.active { border-color: var(--accent-solid); background: var(--accent); }
+
+        @media (max-width: 768px) {
+            body { flex-direction: column; overflow-y: auto; height: auto; }
+            .sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--glass-border); position: sticky; top: 0; padding: 20px; }
+            .main { padding: 20px; }
+        }
     </style>
 </head>
 <body>
 
-    <div class="bg-wrapper"><div class="blob"></div></div>
-
-    <div class="header">
-        <h1>ELITE STORE</h1>
-        <div class="controls">
-            <div class="search-box">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" id="searchInput" oninput="handleSearch()" placeholder="Пошук...">
-            </div>
-            <div class="btn-row">
-                <button class="btn-ui" onclick="toggleM(true)" id="supBtn">Підтримка</button>
-                <button class="btn-ui active" onclick="setL('ua')" id="uaBtn">UA</button>
-                <button class="btn-ui" onclick="setL('ru')" id="ruBtn">RU</button>
-            </div>
-        </div>
+<div class="sidebar">
+    <div class="logo">ELITE <i class="fa-solid fa-gem"></i> STORE</div>
+    <div class="search-box">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="searchInput" oninput="handleSearch()" placeholder="Пошук...">
     </div>
-
-    <div class="main"><div class="grid" id="catalog"></div></div>
-
-    <div class="modal" id="modal">
-        <div class="modal-box">
-            <h2 id="mTitle" style="margin-bottom: 10px;">SUPPORT</h2>
-            <p id="mText" style="color: #888; margin-bottom: 25px;">Пишіть нам в Telegram</p>
-            <a href="https://t.me/your_tg" target="_blank" class="tg-button">Telegram</a>
-            <div onclick="toggleM(false)" style="margin-top: 20px; cursor: pointer; color: #444; font-size: 11px;">ЗАКРИТИ</div>
-        </div>
+    <div class="nav-link active" id="btn-all-txt"><i class="fa-solid fa-paw"></i> <span>Усі пети</span></div>
+    <div class="nav-link support" onclick="openSupport()" id="btn-sup-txt"><i class="fa-solid fa-headset"></i> <span>Допомога</span></div>
+    <div class="lang-switcher">
+        <button onclick="setL('ua')" id="btn-ua" class="l-btn active">UA</button>
+        <button onclick="setL('ru')" id="btn-ru" class="l-btn">RU</button>
     </div>
+</div>
+
+<div class="main">
+    <div class="grid" id="catalog"></div>
+</div>
+
+<div class="overlay" id="overlay" onclick="if(event.target==this) closePet()">
+    <div class="modal">
+        <i class="fa-solid fa-xmark close-btn" onclick="closePet()"></i>
+        <img id="m-img" src="" style="width:150px">
+        <h2 id="m-name"></h2>
+        <p id="m-desc"></p>
+        <a href="https://t.me/your_tg" target="_blank" class="tg-btn" id="m-btn-txt" style="background:#0088cc; color:white"></a>
+    </div>
+</div>
+
+<div class="overlay" id="supportModal" onclick="if(event.target==this) closeSupport()">
+    <div class="modal">
+        <i class="fa-solid fa-xmark close-btn" onclick="closeSupport()"></i>
+        <h2 id="sup-title"></h2>
+        <p id="sup-text"></p>
+        <a href="https://t.me/your_tg" target="_blank" class="tg-btn">TELEGRAM</a>
+    </div>
+</div>
 
 <script>
     const lang = {
-        ua: { search: "Пошук...", support: "Підтримка", buy: "По поводу продажи написать нам в тг", mTitle: "ПІДТРИМКА", mText: "Є питання? Пиши нам!" },
-        ru: { search: "Поиск...", support: "Поддержка", buy: "По поводу продажи написать нам в тг", mTitle: "ПОДДЕРЖКА", mText: "Есть вопросы? Пиши нам!" }
+        ua: { all: "Усі пети", sup: "Допомога", sell: "По поводу продажи написать нам в тг", supTitle: "Маєте питання?", supText: "Напишіть нам у Telegram!" },
+        ru: { all: "Все петы", sup: "Помощь", sell: "По поводу продажи написать нам в тг", supTitle: "Есть вопросы?", supText: "Напишите нам в Telegram!" }
     };
-    let curL = 'ua';
+    let cur = 'ua';
 
-    const pets = [
-        { name: "Shadow Dragon", img: "shadow_dragon.png" },
-        { name: "Frost Dragon", img: "frost_dragon.png" },
-        { name: "Diamond Butterfly", img: "sanctuary_2022_diamond_premium_butterfly.png" },
-        { name: "Albino Monkey", img: "albino_monkey.png" },
-        { name: "Monkey King", img: "monkey_king.png" },
-        { name: "Axolotl", img: "axolotl.png" },
-        { name: "Mechapup", img: "april_fools_2022_mechapup.png" },
-        { name: "Cerberus", img: "cerberus.png" },
-        { name: "Cobra", img: "cobra.png" },
-        { name: "Dodo", img: "dodo.png" },
-        { name: "Diamond Dragon", img: "diamond_dragon.png" },
-        { name: "Diamond Griffin", img: "diamond_griffin.png" },
-        { name: "Diamond Unicorn", img: "diamond_unicorn.png" },
-        { name: "Golden Dragon", img: "golden_dragon.png" },
-        { name: "Golden Griffin", img: "golden_griffin.png" },
-        { name: "Golden Unicorn", img: "golden_unicorn.png" },
-        { name: "Goldhorn", img: "goldhorn.png" },
-        { name: "Guardian Lion", img: "guardian_lion.png" },
-        { name: "Vampire Dragon", img: "halloween_2023_vampire_dragon.png" },
-        { name: "King Bee", img: "king_bee.png" },
-        { name: "Kitsune", img: "kitsune.png" },
-        { name: "Midnight Dragon", img: "lunar_2024_midnight_dragon.png" },
-        { name: "Octopus", img: "octopus.png" },
-        { name: "Peacock", img: "peacock.png" },
-        { name: "Phoenix", img: "phoenix.png" },
-        { name: "Queen Bee", img: "queen_bee.png" },
-        { name: "Diamond Amazon", img: "rain_2023_diamond_amazon.png" },
-        { name: "Robo Dog", img: "robo_dog.png" },
-        { name: "Shark", img: "shark.png" },
-        { name: "Capricorn", img: "space_house_2022_capricorn.png" },
-        { name: "Corn Doggo", img: "summerfest_2024_corn_doggo.png" },
-        { name: "T-Rex", img: "trex.png" }
-    ];
+    const pets = [{ name: "Shadow Dragon", img: "shadow_dragon.png", ua: "Shadow Dragon — король Adopt Me з Хелловіну 2019.", ru: "Shadow Dragon — король Adopt Me из Хэллоуина 2019." },{ name: "Frost Dragon", img: "frost_dragon.png", ua: "Frost Dragon — легендарний крижаний дракон.", ru: "Frost Dragon — легендарный ледяной дракон." },{ name: "Diamond Butterfly", img: "sanctuary_2022_diamond_premium_butterfly.png", ua: "Діамантовий метелик — ексклюзив 2021 року.", ru: "Бриллиантовая бабочка — эксклюзив 2021 года." },{ name: "Albino Monkey", img: "albino_monkey.png", ua: "Рідкісна біла мавпа.", ru: "Редкая белая обезьяна." },{ name: "Monkey King", img: "monkey_king.png", ua: "Король мавп.", ru: "Король обезьян." },{ name: "Axolotl", img: "axolotl.png", ua: "Милий аксолотль.", ru: "Милый аксолотль." },{ name: "Cerberus", img: "cerberus.png", ua: "Триголовий пес.", ru: "Трехголовый пес." },{ name: "Cobra", img: "cobra.png", ua: "Швидка кобра.", ru: "Быстрая кобра." },{ name: "Dodo", img: "dodo.png", ua: "Птах Додо.", ru: "Птица Додо." },{ name: "Diamond Dragon", img: "diamond_dragon.png", ua: "Діамантовий дракон.", ru: "Бриллиантовый дракон." },{ name: "Diamond Griffin", img: "diamond_griffin.png", ua: "Діамантовий грифон.", ru: "Бриллиантовый грифон." },{ name: "Diamond Unicorn", img: "diamond_unicorn.png", ua: "Діамантовий єдиноріг.", ru: "Бриллиантовый единорог." },{ name: "Golden Dragon", img: "golden_dragon.png", ua: "Золотий дракон.", ru: "Золотой дракон." },{ name: "Golden Griffin", img: "golden_griffin.png", ua: "Золотий грифон.", ru: "Золотой грифон." },{ name: "Golden Unicorn", img: "golden_unicorn.png", ua: "Золотий єдиноріг.", ru: "Золотой единорог." },{ name: "Goldhorn", img: "goldhorn.png", ua: "Магічний златоріг.", ru: "Магический златорог." },{ name: "Guardian Lion", img: "guardian_lion.png", ua: "Лев-охоронець.", ru: "Лев-хранитель." },{ name: "Halloween Dragon", img: "halloween_2023_vampire_dragon.png", ua: "Вампірський дракон.", ru: "Вампирский дракон." },{ name: "King Bee", img: "king_bee.png", ua: "Король бджіл.", ru: "Король пчел." },{ name: "Kitsune", img: "kitsune.png", ua: "Магічна лисиця.", ru: "Магическая лиса." },{ name: "Midnight Dragon", img: "lunar_2024_midnight_dragon.png", ua: "Нічний дракон.", ru: "Ночной дракон." },{ name: "Octopus", img: "octopus.png", ua: "Восьминіг.", ru: "Осьминог." },{ name: "Peacock", img: "peacock.png", ua: "Яскравий павич.", ru: "Яркий павлин." },{ name: "Phoenix", img: "phoenix.png", ua: "Вогняний фенікс.", ru: "Огненный феникс." },{ name: "Queen Bee", img: "queen_bee.png", ua: "Королева бджіл.", ru: "Королева пчел." },{ name: "Diamond Amazon", img: "rain_2023_diamond_amazon.png", ua: "Діамантовий амазон.", ru: "Бриллиантовый амазон." },{ name: "Robo Dog", img: "robo_dog.png", ua: "Робо-пес.", ru: "Робо-пес." },{ name: "Shark", img: "shark.png", ua: "Морська акула.", ru: "Морская акула." },{ name: "Capricorn", img: "space_house_2022_capricorn.png", ua: "Козеріг.", ru: "Козерог." },{ name: "Corn Doggo", img: "summerfest_2024_corn_doggo.png", ua: "Корн-догго.", ru: "Корн-догго." },{ name: "T-Rex", img: "trex.png", ua: "Тиранозавр.", ru: "Тираннозавр." }];
 
     function render(data = pets) {
-        const cat = document.getElementById('catalog');
-        cat.innerHTML = '';
+        document.querySelector('#btn-all-txt span').innerText = lang[cur].all;
+        document.querySelector('#btn-sup-txt span').innerText = lang[cur].sup;
+        const c = document.getElementById('catalog');
+        c.innerHTML = '';
         data.forEach(p => {
-            const d = document.createElement('div');
-            d.className = 'card';
-            d.innerHTML = `
-                <div class="rarity">LEGENDARY ITEM</div>
-                <img src="${p.img}" onerror="this.src='https://via.placeholder.com/140/111/fff?text=PET'">
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.onclick = () => openPet(p.name);
+            card.innerHTML = `
+                <div class="rarity">LEGENDARY</div>
+                <img src="${p.img}" onerror="this.src='https://via.placeholder.com/150'">
                 <div class="pet-name">${p.name}</div>
-                <a href="https://t.me/your_tg" target="_blank" class="tg-button">${lang[curL].buy}</a>
+                <a href="https://t.me/your_tg" target="_blank" class="tg-btn" onclick="event.stopPropagation()">
+                    <i class="fa-brands fa-telegram"></i> <span>${lang[cur].sell}</span>
+                </a>
             `;
-            cat.appendChild(d);
+            c.appendChild(card);
         });
     }
 
@@ -203,18 +191,23 @@
         render(pets.filter(p => p.name.toLowerCase().includes(v)));
     }
 
-    function setL(l) {
-        curL = l;
-        document.getElementById('uaBtn').classList.toggle('active', l === 'ua');
-        document.getElementById('ruBtn').classList.toggle('active', l === 'ru');
-        document.getElementById('searchInput').placeholder = lang[l].search;
-        document.getElementById('supBtn').innerText = lang[l].support;
-        document.getElementById('mTitle').innerText = lang[l].mTitle;
-        document.getElementById('mText').innerText = lang[l].mText;
-        render();
+    function openPet(name) {
+        const p = pets.find(x => x.name === name);
+        document.getElementById('m-img').src = p.img;
+        document.getElementById('m-name').innerText = p.name;
+        document.getElementById('m-desc').innerText = cur === 'ua' ? p.ua : p.ru;
+        document.getElementById('m-btn-txt').innerText = lang[cur].sell;
+        document.getElementById('overlay').style.display = 'flex';
     }
 
-    function toggleM(s) { document.getElementById('modal').classList.toggle('active', s); }
+    function closePet() { document.getElementById('overlay').style.display = 'none'; }
+    function openSupport() {
+        document.getElementById('sup-title').innerText = lang[cur].supTitle;
+        document.getElementById('sup-text').innerText = lang[cur].supText;
+        document.getElementById('supportModal').style.display = 'flex';
+    }
+    function closeSupport() { document.getElementById('supportModal').style.display = 'none'; }
+    function setL(l) { cur = l; document.querySelectorAll('.l-btn').forEach(b => b.classList.toggle('active', b.id === 'btn-'+l)); render(); }
 
     render();
 </script>
