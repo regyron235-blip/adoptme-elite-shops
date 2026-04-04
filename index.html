@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EliteStore — Final Version</title>
+    <title>EliteStore — Fixed Cards</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap" rel="stylesheet">
@@ -18,118 +18,101 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: 'Montserrat', sans-serif;
-            background: var(--bg); color: white; min-height: 100vh; overflow-x: hidden;
+            background: var(--bg); color: white; min-height: 100vh;
         }
 
-        /* ФОНОВИЙ ГРАДІЄНТ (ВАЖКИЙ) */
+        /* ФОН */
         .bg-wrapper {
             position: fixed; inset: 0; z-index: -1; background: #000; overflow: hidden;
         }
         .blob {
-            position: absolute; width: 700px; height: 700px; filter: blur(120px);
-            border-radius: 50%; opacity: 0.35; animation: move 18s infinite alternate ease-in-out;
+            position: absolute; width: 600px; height: 600px; filter: blur(120px);
+            border-radius: 50%; opacity: 0.3; background: var(--color1);
+            animation: move 15s infinite alternate;
         }
-        .blob-1 { background: var(--color1); top: -15%; left: -10%; }
-        .blob-2 { background: var(--color2); bottom: -15%; right: -10%; animation-delay: -4s; }
-
-        @keyframes move {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(15vw, 15vh) scale(1.1); }
-        }
+        @keyframes move { from { transform: translate(-10%, -10%); } to { transform: translate(20%, 20%); } }
 
         /* HEADER */
-        .header { padding: 50px 20px; text-align: center; }
+        .header { padding: 40px 20px; text-align: center; }
         h1 {
-            font-size: clamp(45px, 9vw, 80px); margin-bottom: 25px;
+            font-size: clamp(40px, 8vw, 70px); margin-bottom: 25px;
             background: linear-gradient(to bottom, #fff 40%, #555 100%);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            letter-spacing: -2px;
         }
 
         .controls {
-            max-width: 550px; margin: 0 auto 45px; display: flex; flex-direction: column; gap: 18px;
+            max-width: 500px; margin: 0 auto 40px; display: flex; flex-direction: column; gap: 15px;
         }
 
         .search-box { position: relative; }
         .search-box input {
-            width: 100%; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
-            padding: 16px 16px 16px 50px; border-radius: 15px; color: #fff; outline: none; font-weight: 600;
-            transition: 0.3s;
+            width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            padding: 15px 15px 15px 45px; border-radius: 12px; color: #fff; outline: none;
         }
-        .search-box input:focus { border-color: var(--color1); background: rgba(255,255,255,0.1); }
-        .search-box i { position: absolute; left: 18px; top: 18px; color: #7d5fff; }
+        .search-box i { position: absolute; left: 15px; top: 16px; color: var(--color1); }
 
-        .btn-row { display: flex; justify-content: center; gap: 12px; }
-        .btn {
+        .btn-row { display: flex; justify-content: center; gap: 10px; }
+        .btn-ui {
             background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
-            color: #fff; padding: 12px 25px; border-radius: 12px; cursor: pointer;
-            font-weight: 900; font-size: 11px; text-transform: uppercase; transition: 0.3s;
+            color: #fff; padding: 10px 20px; border-radius: 10px; cursor: pointer;
+            font-weight: 900; font-size: 11px; text-transform: uppercase;
         }
-        .btn:hover, .btn.active { background: var(--color1); border-color: var(--color1); transform: translateY(-2px); }
+        .btn-ui.active { background: var(--color1); border-color: var(--color1); }
 
         /* КАРТКИ */
-        .main { padding: 0 20px 80px; max-width: 1400px; margin: 0 auto; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 30px; }
+        .main { padding: 0 20px 60px; max-width: 1300px; margin: 0 auto; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 25px; }
 
         .card {
-            background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.08); border-radius: 35px;
-            padding: 35px 25px; text-align: center; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 30px;
+            padding: 30px;
+            text-align: center;
+            transition: 0.3s;
+            position: relative;
+            z-index: 1;
         }
-
-        .card:hover {
-            transform: translateY(-12px);
-            background: rgba(255, 255, 255, 0.07);
-            border-color: var(--color2);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-        }
+        .card:hover { transform: translateY(-10px); border-color: var(--color2); background: rgba(255, 255, 255, 0.06); }
 
         .card img {
-            width: 150px; height: 150px; object-fit: contain;
-            margin-bottom: 18px; filter: drop-shadow(0 12px 20px rgba(0,0,0,0.6));
-            transition: 0.4s;
-        }
-        .card:hover img { transform: scale(1.1) rotate(3deg); }
-
-        .rarity {
-            color: var(--color2); font-size: 9px; font-weight: 900;
-            margin-bottom: 12px; letter-spacing: 2px; text-transform: uppercase;
+            width: 140px; height: 140px; object-fit: contain;
+            margin-bottom: 15px; pointer-events: none; /* Щоб картинка не заважала кліку */
         }
 
-        .pet-name {
-            font-size: 17px; font-weight: 900; margin-bottom: 25px;
-            color: #fff; text-transform: uppercase; letter-spacing: 1px;
-        }
+        .rarity { color: var(--color2); font-size: 9px; font-weight: 900; margin-bottom: 10px; letter-spacing: 1px; }
+        .pet-name { font-size: 17px; font-weight: 900; margin-bottom: 20px; color: #fff; }
 
-        /* КНОПКА З ПЕРЕКЛАДОМ */
-        .offer-btn {
-            display: block; width: 100%; padding: 16px;
-            background: linear-gradient(135deg, #7d5fff, #ff4dff);
-            border-radius: 18px; color: white; text-decoration: none;
-            font-size: 11px; font-weight: 900; text-transform: uppercase;
-            transition: 0.3s; box-shadow: 0 5px 15px rgba(125, 95, 255, 0.2);
+        /* КНОПКА */
+        .tg-button {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(90deg, #7d5fff, #ff4dff);
+            border-radius: 15px;
+            color: white;
+            text-decoration: none;
+            font-size: 10px;
+            font-weight: 900;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 10; /* Найвищий пріоритет кліку */
+            transition: 0.3s;
         }
-        .offer-btn:hover { transform: scale(1.03); box-shadow: 0 10px 25px rgba(125, 95, 255, 0.4); }
+        .tg-button:hover { transform: scale(1.05); box-shadow: 0 10px 20px rgba(125, 95, 255, 0.4); }
 
         /* MODAL */
         .modal {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.95);
-            display: none; justify-content: center; align-items: center; z-index: 2000;
-            backdrop-filter: blur(25px);
+            position: fixed; inset: 0; background: rgba(0,0,0,0.9);
+            display: none; justify-content: center; align-items: center; z-index: 1000;
         }
         .modal.active { display: flex; }
-        .modal-box { 
-            background: #0a0a0a; padding: 50px; border-radius: 40px; 
-            text-align: center; border: 1px solid #222; width: 90%; max-width: 420px; 
-        }
+        .modal-box { background: #111; padding: 40px; border-radius: 30px; text-align: center; border: 1px solid #333; width: 90%; max-width: 400px; }
     </style>
 </head>
 <body>
 
-    <div class="bg-wrapper">
-        <div class="blob blob-1"></div>
-        <div class="blob blob-2"></div>
-    </div>
+    <div class="bg-wrapper"><div class="blob"></div></div>
 
     <div class="header">
         <h1>ELITE STORE</h1>
@@ -139,30 +122,28 @@
                 <input type="text" id="searchInput" oninput="handleSearch()" placeholder="Пошук...">
             </div>
             <div class="btn-row">
-                <button class="btn" onclick="toggleM(true)" id="supBtn">Підтримка</button>
-                <button class="btn active" onclick="setL('ua')" id="uaBtn">UA</button>
-                <button class="btn" onclick="setL('ru')" id="ruBtn">RU</button>
+                <button class="btn-ui" onclick="toggleM(true)" id="supBtn">Підтримка</button>
+                <button class="btn-ui active" onclick="setL('ua')" id="uaBtn">UA</button>
+                <button class="btn-ui" onclick="setL('ru')" id="ruBtn">RU</button>
             </div>
         </div>
     </div>
 
-    <div class="main">
-        <div class="grid" id="catalog"></div>
-    </div>
+    <div class="main"><div class="grid" id="catalog"></div></div>
 
     <div class="modal" id="modal">
         <div class="modal-box">
-            <h2 id="mTitle" style="font-size: 30px; margin-bottom: 15px;">SUPPORT</h2>
-            <p id="mText" style="color: #777; margin-bottom: 30px; line-height: 1.5;">Маєте питання або хочете зробити обмін?</p>
-            <a href="https://t.me/your_tg" target="_blank" class="offer-btn" id="mBtn">Написати в TG</a>
-            <div onclick="toggleM(false)" style="margin-top: 25px; cursor: pointer; color: #444; font-size: 11px; font-weight: 800;">[ ЗАКРИТИ ]</div>
+            <h2 id="mTitle" style="margin-bottom: 10px;">SUPPORT</h2>
+            <p id="mText" style="color: #888; margin-bottom: 25px;">Пишіть нам в Telegram</p>
+            <a href="https://t.me/your_tg" target="_blank" class="tg-button">Telegram</a>
+            <div onclick="toggleM(false)" style="margin-top: 20px; cursor: pointer; color: #444; font-size: 11px;">ЗАКРИТИ</div>
         </div>
     </div>
 
 <script>
     const lang = {
-        ua: { search: "Пошук...", support: "Підтримка", buy: "написати в tg", mTitle: "ПІДТРИМКА", mText: "Маєте питання або хочете продати пета? Пишіть нам!" },
-        ru: { search: "Поиск...", support: "Поддержка", buy: "написать в tg", mTitle: "ПОДДЕРЖКА", mText: "Есть вопросы или хотите продать пета? Пишите нам!" }
+        ua: { search: "Пошук...", support: "Підтримка", buy: "По поводу продажи написать нам в тг", mTitle: "ПІДТРИМКА", mText: "Є питання? Пиши нам!" },
+        ru: { search: "Поиск...", support: "Поддержка", buy: "По поводу продажи написать нам в тг", mTitle: "ПОДДЕРЖКА", mText: "Есть вопросы? Пиши нам!" }
     };
     let curL = 'ua';
 
@@ -209,9 +190,9 @@
             d.className = 'card';
             d.innerHTML = `
                 <div class="rarity">LEGENDARY ITEM</div>
-                <img src="${p.img}" onerror="this.src='https://via.placeholder.com/150/111/fff?text=PET'">
+                <img src="${p.img}" onerror="this.src='https://via.placeholder.com/140/111/fff?text=PET'">
                 <div class="pet-name">${p.name}</div>
-                <a href="https://t.me/your_tg" target="_blank" class="offer-btn">${lang[curL].buy}</a>
+                <a href="https://t.me/your_tg" target="_blank" class="tg-button">${lang[curL].buy}</a>
             `;
             cat.appendChild(d);
         });
@@ -230,7 +211,6 @@
         document.getElementById('supBtn').innerText = lang[l].support;
         document.getElementById('mTitle').innerText = lang[l].mTitle;
         document.getElementById('mText').innerText = lang[l].mText;
-        document.getElementById('mBtn').innerText = lang[l].buy;
         render();
     }
 
