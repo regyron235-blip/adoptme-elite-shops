@@ -3,81 +3,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EliteStore — Магазин петів Adopt Me</title>
+    <title>EliteStore — Premium Adopt Me Shop</title>
     
-    <meta name="description" content="EliteStore — твій надійний магазин легендарних петів Adopt Me. Shadow Dragon, Bat Dragon, Frost Dragon та інші у наявності!">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
-        :root {
-            --primary: #7d5fff;
-            --bg: #f8f9fa;
-            --card-bg: #ffffff;
-            --radius: 16px;
+        :root { --primary: #7d5fff; --tg: #229ED9; }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
-        body { font-family: 'Inter', sans-serif; background: var(--bg); margin: 0; padding: 0; }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: #fff;
+            min-height: 100vh;
+        }
 
-        /* Шапка з мовами */
         header {
-            background: white;
-            padding: 15px 25px;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(15px);
+            padding: 15px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid #eee;
-            position: sticky; top: 0; z-index: 100;
+            position: sticky; top: 0; z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
-        .logo { font-size: 22px; font-weight: 800; color: var(--primary); }
+        .logo { font-weight: 900; font-size: 26px; letter-spacing: 1px; color: #fff; }
+        .logo span { color: var(--primary); }
 
-        .lang-switcher { display: flex; gap: 8px; }
+        .lang-switcher { display: flex; gap: 10px; }
         .lang-btn {
-            background: #eee;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 8px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 12px;
             cursor: pointer;
-            font-size: 12px;
             font-weight: bold;
             transition: 0.3s;
         }
-        .lang-btn.active { background: var(--primary); color: white; }
+        .lang-btn.active { background: var(--primary); border-color: var(--primary); box-shadow: 0 0 15px rgba(125, 95, 255, 0.5); }
 
-        /* Контейнер */
+        .container { max-width: 1400px; margin: 40px auto; padding: 0 20px; }
+        
         .catalog {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 20px;
-            padding: 25px;
-            max-width: 1300px;
-            margin: 0 auto;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
         }
 
         .pet-card {
-            background: var(--card-bg);
-            border-radius: var(--radius);
-            padding: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding: 20px;
+            border: 1px solid rgba(255,255,255,0.15);
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
             text-align: center;
-            transition: 0.3s;
+            cursor: pointer;
         }
-        .pet-card:hover { transform: translateY(-5px); }
 
-        .pet-card img { width: 100%; height: 160px; object-fit: contain; border-radius: 12px; background: #fafafa; }
-        .pet-name { font-weight: bold; font-size: 18px; margin: 10px 0 5px; }
-        .rarity { color: #ff4757; font-size: 11px; font-weight: 800; text-transform: uppercase; display: block; margin-bottom: 10px; }
-        
+        .pet-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        }
+
+        .pet-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: contain;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.3));
+        }
+
+        .pet-name { font-size: 22px; font-weight: 800; margin-bottom: 5px; }
+        .rarity { color: #ffeaa7; font-size: 12px; font-weight: 700; text-transform: uppercase; margin-bottom: 12px; }
+        .pet-desc-short { font-size: 13px; opacity: 0.9; margin-bottom: 20px; min-height: 40px; line-height: 1.4; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+
+        /* ВІКНО ОПИСУ (МОДАЛЬНЕ) */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(20px);
+            display: none; justify-content: center; align-items: center;
+            z-index: 2000;
+        }
+        .modal {
+            background: #fff; color: #333;
+            width: 90%; max-width: 600px;
+            border-radius: 30px;
+            padding: 30px;
+            position: relative;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+            animation: modalIn 0.4s ease-out;
+        }
+        @keyframes modalIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        .close-btn {
+            position: absolute; top: 20px; right: 20px;
+            background: #eee; border: none; font-size: 20px;
+            width: 40px; height: 40px; border-radius: 50%;
+            cursor: pointer; transition: 0.3s;
+        }
+        .close-btn:hover { background: #ddd; transform: rotate(90deg); }
+
+        .modal-header { font-size: 24px; font-weight: 900; color: #333; margin-bottom: 10px; }
+        .modal-rarity { color: #ff4757; font-size: 14px; font-weight: 700; text-transform: uppercase; margin-bottom: 20px; }
+        .modal-desc { font-size: 16px; color: #555; line-height: 1.8; margin-bottom: 30px; }
+
         .buy-btn {
             background: var(--primary);
-            color: white;
+            color: #fff;
             text-decoration: none;
-            padding: 10px;
-            border-radius: 10px;
-            display: block;
-            font-weight: bold;
+            padding: 15px;
+            border-radius: 15px;
+            font-weight: 800;
+            display: flex; align-items: center; justify-content: center;
+            gap: 10px; font-size: 18px;
+            transition: 0.3s;
         }
+        .buy-btn:hover { background: #6745ff; transform: scale(1.02); }
+
+        footer { text-align: center; padding: 40px; font-size: 12px; opacity: 0.6; }
     </style>
 </head>
 <body>
@@ -85,32 +145,58 @@
 <header>
     <div class="logo">🐾 ELITESTORE</div>
     <div class="lang-switcher">
-        <button class="lang-btn active">UA</button>
-        <button class="lang-btn">RU</button>
-        <button class="lang-btn">EN</button>
+        <button class="lang-btn active" onclick="setLang('ua')">UA</button>
+        <button class="lang-btn" onclick="setLang('ru')">RU</button>
+        <button class="lang-btn" onclick="setLang('en')">EN</button>
     </div>
 </header>
 
-<div class="catalog" id="petContainer"></div>
+<div class="container">
+    <div class="catalog" id="petContainer"></div>
+</div>
+
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+    <div class="modal" id="modalContent">
+        <button class="close-btn" onclick="closeModal()">✕</button>
+        <div class="modal-header" id="modalName">Інформація про вихованця</div>
+        <div class="modal-rarity" id="modalRarity">Legendary</div>
+        <div class="modal-desc" id="modalDesc">Тут буде детальний опис.</div>
+        <a href="https://t.me/твій_нік" class="buy-btn">
+            <i class="fa-solid fa-cart-shopping"></i> <span id="buyBtnText">КУПИТИ</span>
+        </a>
+    </div>
+</div>
+
+<footer>
+    <p>© 2026 EliteStore. Усі права захищено.</p>
+</footer>
 
 <script>
-    // ТУТ УСІ ТВОЇ ПЕТІ
+    const globalTr = {
+        ua: { buy: "КУПИТИ", rarity: "Легендарний", origin: "Походження" },
+        ru: { buy: "КУПИТЬ", rarity: "Легендарный", origin: "Происхождение" },
+        en: { buy: "BUY NOW", rarity: "Legendary", origin: "Origin" }
+    };
+
+    let currentLang = 'ua';
+
+    // УСІ ТВОЇ ПЕТІ (31 пет!)
     const petData = [
-        { name: "Shadow Dragon", rarity: "Legendary", img: "shadow_dragon.png" },
-        { name: "Bat Dragon", rarity: "Legendary", img: "bat_dragon.png" },
-        { name: "Frost Dragon", rarity: "Legendary", img: "frost_dragon.png" },
-        { name: "Giraffe", rarity: "Legendary", img: "giraffe.png" },
-        { name: "Owl", rarity: "Legendary", img: "owl.png" },
-        { name: "Parrot", rarity: "Legendary", img: "parrot.png" },
-        { name: "Evil Unicorn", rarity: "Legendary", img: "evil_unicorn.png" },
-        { name: "Crow", rarity: "Legendary", img: "crow.png" },
+        { name: "Shadow Dragon", img: "shadow_dragon.png", ua: "Король драконів з унікальним чорним світінням.", ru: "Король драконов с уникальным черным свечением.", en: "The Dragon King with unique black glow." },
+        { name: "Bat Dragon", img: "bat_dragon.png", ua: "Ексклюзивний пет з Хелловіну 2019.", ru: "Эксклюзивный пет из Хэллоуина 2019.", en: "Exclusive Halloween 2019 pet." },
+        { name: "Frost Dragon", img: "frost_dragon.png", ua: "Крижаний дракон з сафарі яйця.", ru: "Ледяной дракон из сафари яйца.", en: "Icy Dragon from the Safari Egg." },
+        { name: "Giraffe", img: "giraffe.png", ua: "Олдскульна класика з перших яєць.", ru: "Олдскульная классика из первых яиц.", en: "Old-school classic from the first eggs." },
+        { name: "Owl", img: "owl.png", ua: "Розумна та рідкісна сова з яйця джунглів.", ru: "Умная и редкая сова из яйца джунглей.", en: "Smart and rare owl from the jungle egg." },
+        { name: "Parrot", img: "parrot.png", ua: "Яскравий пет з тропічних яєць.", ru: "Яркий пет из тропических яиц.", en: "Bright pet from tropical eggs." },
+        { name: "Evil Unicorn", img: "evil_unicorn.png", ua: "Злий єдиноріг з Хелловіну.", ru: "Злой единорог из Хэллоуина.", en: "Evil Unicorn from Halloween." },
+        { name: "Crow", img: "crow.png", ua: "Рідкісна та похмура ворона.", ru: "Редкая и мрачная ворона.", en: "Rare and gloomy crow." },
         { name: "Turtle", rarity: "Legendary", img: "turtle.png" },
         { name: "Kangaroo", rarity: "Legendary", img: "kangaroo.png" },
         { name: "Frost Fury", rarity: "Legendary", img: "frost_fury.png" },
         { name: "Arctic Reindeer", rarity: "Legendary", img: "arctic_reindeer.png" },
         { name: "Albino Monkey", rarity: "Legendary", img: "albino_monkey.png" },
         { name: "Monkey King", rarity: "Legendary", img: "monkey_king.png" },
-        { name: "Diamond Butterfly", rarity: "Legendary", img: "diamond_butterfly.png" },
+        { name: "Diamond Butterfly", img: "diamond_butterfly.png", ua: "Преміальний алмазний метелик.", ru: "Премиальная алмазная бабочка.", en: "Premium Diamond Butterfly." },
         { name: "Axolotl", rarity: "Legendary", img: "axolotl.png" },
         { name: "Cerberus", rarity: "Legendary", img: "cerberus.png" },
         { name: "Cobra", rarity: "Legendary", img: "cobra.png" },
@@ -129,19 +215,48 @@
         { name: "T-Rex", rarity: "Legendary", img: "trex.png" }
     ];
 
-    const container = document.getElementById('petContainer');
+    function setLang(lang) {
+        currentLang = lang;
+        document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.toggle('active', btn.innerText.toLowerCase() === lang));
+        renderCatalog();
+        document.getElementById('buyBtnText').innerText = globalTr[currentLang].buy;
+    }
 
-    petData.forEach(pet => {
-        const card = `
-            <div class="pet-card">
-                <img src="${pet.img}" alt="${pet.name}">
-                <div class="pet-name">${pet.name}</div>
-                <span class="rarity">${pet.rarity}</span>
-                <a href="https://t.me/твій_нік" class="buy-btn">КУПИТИ</a>
-            </div>
-        `;
-        container.innerHTML += card;
-    });
+    function renderCatalog() {
+        const container = document.getElementById('petContainer');
+        container.innerHTML = '';
+        petData.forEach(pet => {
+            const card = `
+                <div class="pet-card" onclick="openModal('${pet.name}')">
+                    <img src="${pet.img}" alt="${pet.name}">
+                    <div class="pet-name">${pet.name}</div>
+                    <span class="rarity">${globalTr[currentLang].rarity}</span>
+                    <div class="pet-desc-short">${pet[currentLang] || "Найкращий вибір для колекції!"}</div>
+                </div>
+            `;
+            container.innerHTML += card;
+        });
+    }
+
+    // ЛОГІКА ВІКНА
+    const overlay = document.getElementById('modalOverlay');
+
+    function openModal(petName) {
+        const pet = petData.find(p => p.name === petName);
+        document.getElementById('modalName').innerText = pet.name;
+        document.getElementById('modalRarity').innerText = globalTr[currentLang].rarity;
+        document.getElementById('modalDesc').innerText = pet[currentLang] || "Детальний опис цього чудового вихованця.";
+        overlay.style.display = 'flex';
+    }
+
+    function closeModal(event) {
+        if (!event || event.target === overlay || event.target.innerText === '✕') {
+            overlay.style.display = 'none';
+        }
+    }
+
+    // Запуск
+    setLang('ua');
 </script>
 
 </body>
