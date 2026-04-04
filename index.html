@@ -1,107 +1,85 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="uk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adopt Me Elite — Скупка легендарок</title>
-    <link rel="icon" type="image/png" href="favicon.png">
-    <link rel="stylesheet" href="style.css">
+    
+    <title>EliteStore — Купити петів Adopt Me | Shadow Dragon & Bat Dragon</title>
+    <meta name="description" content="EliteStore — твій надійний магазин легендарних петів Adopt Me. У наявності Shadow Dragon, Frost Dragon, Giraffe та багато інших!">
+
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; margin: 0; padding: 0; text-align: center; }
+        header { background: linear-gradient(135deg, #d8b4fe, #818cf8); padding: 30px; color: white; }
+        .catalog { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; padding: 30px; max-width: 1200px; margin: 0 auto; }
+        .pet-card { background: white; border-radius: 15px; padding: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: 1px solid #eee; }
+        .pet-card img { width: 100%; border-radius: 10px; background: #fafafa; }
+        .pet-name { font-weight: bold; font-size: 18px; margin: 10px 0 2px; }
+        .rarity { color: #ef4444; font-size: 12px; font-weight: bold; text-transform: uppercase; display: block; margin-bottom: 12px; }
+        .buy-btn { background: #818cf8; color: white; text-decoration: none; padding: 10px; border-radius: 10px; display: block; font-weight: bold; }
+    </style>
 </head>
 <body>
 
-    <div class="sidebar">
-        <div class="logo">🐾 EliteStore</div>
-        <nav>
-            <a href="#" onclick="displayPets('')">🏠 Все петы</a>
-            <a href="#" onclick="displayPets('Legendary')">🔥 Легендарные</a>
-            <a href="#" onclick="displayPets('Ultra-Rare')">✨ Ультра-редкие</a>
-        </nav>
+<header>
+    <h1>🐾 EliteStore</h1>
+    <p>Повний каталог легендарних вихованців</p>
+</header>
+
+<div class="catalog" id="petContainer">
     </div>
 
-    <div class="main-content">
-        <header>
-            <h1>Скупка питомцев Adopt Me</h1>
-            <p>Выбери легендарного питомца, которого хочешь продать</p>
-            <input type="text" id="searchInput" placeholder="Поиск питомца по названию...">
-        </header>
-        <main id="petContainer" class="pets-grid"></main>
-    </div>
+<script>
+    const petData = [
+        // ТВОЇ ОРИГІНАЛЬНІ ПЕТІ
+        { name: "Shadow Dragon", rarity: "Legendary", img: "shadow_dragon.png" },
+        { name: "Frost Dragon", rarity: "Legendary", img: "frost_dragon.png" },
+        { name: "Bat Dragon", rarity: "Legendary", img: "bat_dragon.png" },
+        { name: "Giraffe", rarity: "Legendary", img: "giraffe.png" },
+        { name: "Owl", rarity: "Legendary", img: "owl.png" },
+        { name: "Parrot", rarity: "Legendary", img: "parrot.png" },
+        { name: "Evil Unicorn", rarity: "Legendary", img: "evil_unicorn.png" },
+        { name: "Crow", rarity: "Legendary", img: "crow.png" },
+        { name: "Turtle", rarity: "Legendary", img: "turtle.png" },
+        { name: "Kangaroo", rarity: "Legendary", img: "kangaroo.png" },
+        { name: "Frost Fury", rarity: "Legendary", img: "frost_fury.png" },
+        { name: "Arctic Reindeer", rarity: "Legendary", img: "arctic_reindeer.png" },
+        { name: "Albino Monkey", rarity: "Legendary", img: "albino_monkey.png" },
+        { name: "Monkey King", rarity: "Legendary", img: "monkey_king.png" },
+        { name: "Diamond Butterfly", rarity: "Legendary", img: "sanctuary_2022_diamond_premium_butterfly.png" },
+        
+        // ПЕТІ З ПРЯМИМИ НАЗВАМИ
+        { name: "Axolotl", rarity: "Legendary", img: "axolotl.png" },
+        { name: "Cerberus", rarity: "Legendary", img: "cerberus.png" },
+        { name: "Cobra", rarity: "Legendary", img: "cobra.png" },
+        { name: "Diamond Dragon", rarity: "Legendary", img: "diamond_dragon.png" },
+        { name: "Diamond Griffin", rarity: "Legendary", img: "diamond_griffin.png" },
+        { name: "Diamond Unicorn", rarity: "Legendary", img: "diamond_unicorn.png" },
+        { name: "Golden Dragon", rarity: "Legendary", img: "golden_dragon.png" },
+        { name: "Golden Griffin", rarity: "Legendary", img: "golden_griffin.png" },
+        { name: "Golden Unicorn", rarity: "Legendary", img: "golden_unicorn.png" },
+        { name: "Dodo", rarity: "Legendary", img: "dodo.png" },
+        { name: "Octopus", rarity: "Legendary", img: "octopus.png" },
+        { name: "Shark", rarity: "Legendary", img: "shark.png" },
+        { name: "Phoenix", rarity: "Legendary", img: "phoenix.png" },
+        { name: "Peacock", rarity: "Legendary", img: "peacock.png" },
+        { name: "Queen Bee", rarity: "Legendary", img: "queen_bee.png" },
+        { name: "T-Rex", rarity: "Legendary", img: "trex.png" }
+    ];
 
-    <script>
-        const petData = [
-            // ТВОЇ ОРИГІНАЛЬНІ ПЕТИ
-            { name: "Shadow Dragon", rarity: "Legendary", img: "shadow_dragon.png" },
-            { name: "Frost Dragon", rarity: "Legendary", img: "frost_dragon.png" },
-            { name: "Bat Dragon", rarity: "Legendary", img: "bat_dragon.png" },
-            { name: "Giraffe", rarity: "Legendary", img: "giraffe.png" },
-            { name: "Owl", rarity: "Legendary", img: "owl.png" },
-            { name: "Parrot", rarity: "Legendary", img: "parrot.png" },
-            { name: "Evil Unicorn", rarity: "Legendary", img: "evil_unicorn.png" },
-            { name: "Crow", rarity: "Legendary", img: "crow.png" },
-            { name: "Turtle", rarity: "Legendary", img: "turtle.png" },
-            { name: "Kangaroo", rarity: "Legendary", img: "kangaroo.png" },
-            { name: "Frost Fury", rarity: "Legendary", img: "frost_fury.png" },
-            { name: "Arctic Reindeer", rarity: "Legendary", img: "arctic_reindeer.png" },
-            { name: "Albino Monkey", rarity: "Legendary", img: "albino_monkey.png" },
-            { name: "Monkey King", rarity: "Legendary", img: "monkey_king.png" },
-            { name: "Diamond Butterfly", rarity: "Legendary", img: "sanctuary_2022_diamond_premium_butterfly.png" },
-            { name: "SS Bat Dragon", rarity: "Legendary", img: "winter_2022_strawberry_shortcake_bat_dragon.png" },
+    const container = document.getElementById('petContainer');
 
-            // ПЕТИ З ДОВГИМИ НАЗВАМИ ЯК У ТЕБЕ НА GITHUB
-            { name: "Mechapup", rarity: "Legendary", img: "april_fools_2022_mechapup.png" },
-            { name: "Hippogriff", rarity: "Legendary", img: "gifthat_november_2024_hippogriff.png" },
-            { name: "Diamond Amazon", rarity: "Legendary", img: "rain_2023_diamond_amazon.png" },
-            { name: "Nessie", rarity: "Legendary", img: "scottish_2023_nessie.png" },
-            { name: "Capricorn", rarity: "Legendary", img: "space_house_2022_capricorn.png" },
-            { name: "Balloon Unicorn", rarity: "Legendary", img: "summerfest_2024_balloon_unicorn.png" },
-            { name: "Corn Doggo", rarity: "Legendary", img: "summerfest_2024_corn_doggo.png" },
-            { name: "Gargoyle", rarity: "Legendary", img: "urban_2023_gargoyle.png" },
-            
-            // ПЕТИ З ПРЯМИМИ НАЗВАМИ
-            { name: "Axolotl", rarity: "Legendary", img: "axolotl.png" },
-            { name: "Cerberus", rarity: "Legendary", img: "cerberus.png" },
-            { name: "Cobra", rarity: "Legendary", img: "cobra.png" },
-            { name: "Diamond Dragon", rarity: "Legendary", img: "diamond_dragon.png" },
-            { name: "Diamond Griffin", rarity: "Legendary", img: "diamond_griffin.png" },
-            { name: "Diamond Unicorn", rarity: "Legendary", img: "diamond_unicorn.png" },
-            { name: "Golden Dragon", rarity: "Legendary", img: "golden_dragon.png" },
-            { name: "Golden Griffin", rarity: "Legendary", img: "golden_griffin.png" },
-            { name: "Golden Unicorn", rarity: "Legendary", img: "golden_unicorn.png" },
-            { name: "Dodo", rarity: "Legendary", img: "dodo.png" },
-            { name: "Octopus", rarity: "Legendary", img: "octopus.png" },
-            { name: "Shark", rarity: "Legendary", img: "shark.png" },
-            { name: "Phoenix", rarity: "Legendary", img: "phoenix.png" },
-            { name: "Peacock", rarity: "Legendary", img: "peacock.png" },
-            { name: "Queen Bee", rarity: "Legendary", img: "queen_bee.png" },
-            { name: "T-Rex", rarity: "Legendary", img: "trex.png" }
-        ];
+    petData.forEach(pet => {
+        const card = `
+            <div class="pet-card">
+                <img src="${pet.img}" alt="${pet.name}">
+                <div class="pet-name">${pet.name}</div>
+                <span class="rarity">${pet.rarity}</span>
+                <a href="#" class="buy-btn">ПРОДАТИ</a>
+            </div>
+        `;
+        container.innerHTML += card;
+    });
+</script>
 
-        const container = document.getElementById('petContainer');
-        const searchInput = document.getElementById('searchInput');
-
-        function displayPets(rarityFilter = "", searchFilter = "") {
-            container.innerHTML = "";
-            let filtered = petData;
-            if (rarityFilter) filtered = filtered.filter(p => p.rarity === rarityFilter);
-            if (searchFilter) filtered = filtered.filter(p => p.name.toLowerCase().includes(searchFilter.toLowerCase()));
-
-            filtered.forEach(pet => {
-                const card = document.createElement('div');
-                card.className = 'pet-card';
-                card.innerHTML = `
-                    <div class="img-box">
-                        <img src="${pet.img}" alt="${pet.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/150?text=Adopt+Me'">
-                    </div>
-                    <h3>${pet.name}</h3>
-                    <p class="rarity">${pet.rarity}</p>
-                    <button onclick="window.location.href='https://t.me/твій_нік'">ПРОДАТЬ</button>
-                `;
-                container.appendChild(card);
-            });
-        }
-
-        searchInput.addEventListener('input', (e) => displayPets("", e.target.value));
-        displayPets();
-    </script>
 </body>
 </html>
