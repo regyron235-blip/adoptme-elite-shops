@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>EliteStore — Final Edition</title>
+    <title>EliteStore — Final Fixed</title>
     
     <link rel="icon" type="image/png" href="favicon.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -25,14 +25,12 @@
             background: var(--bg-dark); color: #fff; overflow: hidden;
         }
 
-        /* SIDEBAR */
         .sidebar {
             width: 280px; background: rgba(0, 0, 0, 0.95);
             backdrop-filter: blur(30px); border-right: 1px solid var(--glass-border);
             padding: 25px; display: flex; flex-direction: column; z-index: 100; flex-shrink: 0;
         }
 
-        /* МОБІЛЬНА ВЕРСІЯ — КОМПАКТНІША */
         @media (max-width: 768px) {
             body { flex-direction: column; overflow-y: auto; height: auto; display: block; }
             .sidebar { 
@@ -43,18 +41,15 @@
             .search-box { margin-bottom: 10px !important; }
             .nav-link { padding: 10px !important; font-size: 13px; margin-bottom: 5px; }
             .main { padding: 15px !important; height: auto; overflow: visible; display: block; }
-            
-            /* Картки на телефоні тепер по 2 в ряд або 1, якщо екран зовсім малий */
             .grid { 
                 display: grid !important; 
-                grid-template-columns: repeat(auto-fill, minmax(145px, 1fr)) !important; 
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)) !important; 
                 gap: 12px !important; 
             }
             .card { padding: 15px !important; border-radius: 20px !important; transform: none !important; }
             .card img { width: 100px !important; height: 100px !important; }
-            .pet-name { font-size: 14px !important; }
-            .tg-btn { padding: 10px !important; font-size: 9px !important; border-radius: 10px !important; }
-            .rarity-tag { font-size: 8px !important; }
+            .pet-name { font-size: 13px !important; }
+            .tg-btn { padding: 10px !important; font-size: 8px !important; border-radius: 8px !important; }
         }
 
         .logo {
@@ -67,9 +62,7 @@
         .search-box input {
             width: 100%; background: rgba(255,255,255,0.07); border: 1px solid var(--glass-border);
             padding: 12px 15px 12px 40px; border-radius: 12px; color: #fff; outline: none;
-            transition: 0.3s;
         }
-        .search-box input:focus { border-color: #7d5fff; background: rgba(255,255,255,0.1); }
         .search-box i { position: absolute; left: 15px; top: 14px; color: #7d5fff; }
 
         .nav-link {
@@ -79,11 +72,9 @@
         }
         .nav-link.active { background: var(--accent); color: #fff; }
 
-        /* GRID */
-        .main { flex: 1; overflow-y: auto; padding: 40px; scroll-behavior: smooth; }
+        .main { flex: 1; overflow-y: auto; padding: 40px; }
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 25px; }
 
-        /* КАРТКА ПЕТА */
         .card {
             background: var(--card-bg); border: 1px solid var(--glass-border);
             border-radius: 30px; padding: 25px; text-align: center;
@@ -99,10 +90,9 @@
             padding: 14px; width: 100%; border-radius: 12px;
             display: flex; align-items: center; justify-content: center; gap: 8px;
             font-weight: 800; font-size: 10px; text-transform: uppercase;
-            position: relative; z-index: 5;
+            position: relative; z-index: 10; /* Кнопка поверх 3D шару */
         }
 
-        /* МОДАЛКА ПІДТРИМКИ */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.85); backdrop-filter: blur(10px);
@@ -111,15 +101,14 @@
         .modal-overlay.active { display: flex; }
         .support-modal {
             background: #111; border: 1px solid #333;
-            width: 90%; max-width: 400px; padding: 35px; border-radius: 25px;
+            width: 90%; max-width: 400px; padding: 40px 30px; border-radius: 25px;
             text-align: center; position: relative;
-            box-shadow: 0 0 30px rgba(125, 95, 255, 0.3);
         }
-        .support-modal h2 { 
-            font-size: 28px; font-weight: 900; 
-            background: linear-gradient(90deg, #7d5fff, #ff75c3);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        .close-x {
+            position: absolute; top: 15px; right: 20px; font-size: 24px;
+            color: #555; cursor: pointer; transition: 0.3s;
         }
+        .close-x:hover { color: #fff; transform: scale(1.2); }
 
         .lang-switcher { margin-top: auto; display: flex; gap: 5px; justify-content: center; padding: 10px 0; }
         .l-btn { background: none; border: 1px solid #333; color: #555; padding: 5px 10px; border-radius: 8px; cursor: pointer; font-size: 12px; }
@@ -134,8 +123,8 @@
         <i class="fa-solid fa-magnifying-glass"></i>
         <input type="text" id="searchInput" oninput="handleSearch()" placeholder="Пошук...">
     </div>
-    <div class="nav-link active" onclick="render(pets)"><i class="fa-solid fa-paw"></i> <span>Усі пети</span></div>
-    <div class="nav-link" onclick="toggleSupport(true)"><i class="fa-solid fa-headset"></i> <span>Підтримка</span></div>
+    <div class="nav-link active" id="nav-all" onclick="clearSearch()"><i class="fa-solid fa-paw"></i> <span>Усі пети</span></div>
+    <div class="nav-link" id="nav-sup" onclick="toggleSupport(true)"><i class="fa-solid fa-headset"></i> <span>Підтримка</span></div>
 
     <div class="lang-switcher">
         <button onclick="setL('ua')" id="btn-ua" class="l-btn active">UA</button>
@@ -147,10 +136,11 @@
 
 <div class="modal-overlay" id="modalSupport" onclick="if(event.target==this) toggleSupport(false)">
     <div class="support-modal">
-        <div style="font-size: 50px; margin-bottom: 15px;">💎</div>
+        <div class="close-x" onclick="toggleSupport(false)">✕</div>
+        <div style="font-size: 50px; margin-bottom: 15px;">💬</div>
         <h2 id="sup-title">ПІДТРИМКА</h2>
         <p id="sup-text" style="color:#8b949e; font-size:14px; margin-bottom:25px;"></p>
-        <a href="https://t.me/your_tg" target="_blank" class="tg-btn" style="padding:16px;">
+        <a href="https://t.me/your_tg" target="_blank" class="tg-btn" style="padding:18px;">
             <i class="fa-brands fa-telegram"></i> TELEGRAM
         </a>
     </div>
@@ -158,8 +148,8 @@
 
 <script>
     const lang = {
-        ua: { buy: "написать по поводу продажи в tg", search: "Пошук...", supText: "Маєте питання? Напишіть нам прямо зараз!" },
-        ru: { buy: "написать по поводу продажи в tg", search: "Поиск...", supText: "Есть вопросы? Напишите нам прямо сейчас!" }
+        ua: { all: "Усі пети", sup: "Підтримка", buy: "написать по поводу продажи в tg", search: "Пошук...", supTitle: "ПІДТРИМКА", supText: "Маєте питання? Напишіть нам прямо зараз!" },
+        ru: { all: "Все петы", sup: "Поддержка", buy: "написать по поводу продажи в tg", search: "Поиск...", supTitle: "ПОДДЕРЖКА", supText: "Есть вопросы? Напишите нам прямо сейчас!" }
     };
     let cur = 'ua';
 
@@ -204,7 +194,7 @@
         data.forEach(p => {
             c.innerHTML += `
                 <div class="card">
-                    <div class="rarity-tag" style="color:#ff7675; font-size:9px; font-weight:900; margin-bottom:8px; letter-spacing:1px;">LEGENDARY</div>
+                    <div style="color:#ff7675; font-size:9px; font-weight:900; margin-bottom:8px;">LEGENDARY</div>
                     <img src="${p.img}" onerror="this.src='https://via.placeholder.com/140'">
                     <div class="pet-name">${p.name}</div>
                     <a href="https://t.me/your_tg" target="_blank" class="tg-btn" onclick="event.stopPropagation()">
@@ -212,20 +202,33 @@
                     </a>
                 </div>`;
         });
+        // Переклад інтерфейсу
+        document.querySelector('#nav-all span').innerText = lang[cur].all;
+        document.querySelector('#nav-sup span').innerText = lang[cur].sup;
         document.getElementById('searchInput').placeholder = lang[cur].search;
+        document.getElementById('sup-title').innerText = lang[cur].supTitle;
         document.getElementById('sup-text').innerText = lang[cur].supText;
     }
 
-    // ВИПРАВЛЕНИЙ ПОШУК
     function handleSearch() {
         const val = document.getElementById('searchInput').value.toLowerCase();
-        const filtered = pets.filter(p => p.name.toLowerCase().includes(val));
-        render(filtered);
+        render(pets.filter(p => p.name.toLowerCase().includes(val)));
+    }
+
+    function clearSearch() {
+        document.getElementById('searchInput').value = '';
+        render(pets);
     }
 
     function toggleSupport(s) { document.getElementById('modalSupport').classList.toggle('active', s); }
 
-    // 3D ТІЛЬКИ ДЛЯ ПК
+    function setL(l) { 
+        cur = l; 
+        document.querySelectorAll('.l-btn').forEach(b => b.classList.toggle('active', b.id === 'btn-'+l)); 
+        render(); 
+    }
+
+    // 3D ефект (тільки для ПК)
     document.addEventListener('mousemove', (e) => {
         if (window.innerWidth < 768) return;
         document.querySelectorAll('.card').forEach(card => {
@@ -233,16 +236,10 @@
             const x = e.clientX - r.left;
             const y = e.clientY - r.top;
             if (x > 0 && x < r.width && y > 0 && y < r.height) {
-                card.style.transform = `rotateX(${(r.height/2 - y)/10}deg) rotateY(${(x - r.width/2)/10}deg)`;
+                card.style.transform = `rotateX(${(r.height/2 - y)/12}deg) rotateY(${(x - r.width/2)/12}deg)`;
             } else { card.style.transform = `rotateX(0) rotateY(0)`; }
         });
     });
-
-    function setL(l) { 
-        cur = l; 
-        document.querySelectorAll('.l-btn').forEach(b => b.classList.toggle('active', b.id === 'btn-'+l)); 
-        render(); 
-    }
 
     render();
 </script>
