@@ -3,34 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EliteStore Premium — Professional Marketplace</title>
+    <title>EliteStore v3.0 | Professional Asset Management</title>
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Orbitron:wght@400;500;700;900&family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
-        /* ELITE STORE CUSTOM CSS FRAMEWORK 
-           VERSION: 2.1.0 
-        */
-
-        :root {
-            --primary-bg: #0a0b10;
-            --secondary-bg: #12141d;
-            --accent-color: #7b61ff;
-            --accent-glow: rgba(123, 97, 255, 0.4);
-            --card-bg: #1a1d29;
-            --card-border: rgba(255, 255, 255, 0.05);
-            --text-main: #ffffff;
-            --text-secondary: #949ba4;
-            --success-color: #00c2a8;
-            --danger-color: #ff4d4d;
-            --tg-button: #0088cc;
-            --gradient-sidebar: linear-gradient(180deg, #12141d 0%, #0a0b10 100%);
-            --transition-speed: 0.3s;
-        }
-
-        /* Reset & Base Styles */
-        * {
+        /* --- SECTION 1: GLOBAL CSS RESET & NORMALIZE --- */
+        *, *::before, *::after {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -38,874 +18,1063 @@
             -webkit-tap-highlight-color: transparent;
         }
 
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+            -webkit-text-size-adjust: 100%;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
         body {
-            background-color: var(--primary-bg);
-            color: var(--text-main);
-            font-family: 'Montserrat', sans-serif;
+            background-color: #020408;
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
             overflow-x: hidden;
+            line-height: 1.6;
             display: flex;
             min-height: 100vh;
         }
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--primary-bg); }
-        ::-webkit-scrollbar-thumb { 
-            background: var(--secondary-bg); 
-            border-radius: 10px;
-            border: 2px solid var(--primary-bg);
+        button {
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-family: inherit;
+            transition: all 0.3s ease;
         }
-        ::-webkit-scrollbar-thumb:hover { background: var(--accent-color); }
 
-        /* --- SIDEBAR LAYOUT --- */
+        input {
+            font-family: inherit;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        /* --- SECTION 2: DESIGN SYSTEM VARIABLES --- */
+        :root {
+            /* Colors */
+            --p-accent: #7b61ff;
+            --p-accent-rgb: 123, 97, 255;
+            --p-accent-glow: rgba(var(--p-accent-rgb), 0.4);
+            --p-accent-soft: rgba(var(--p-accent-rgb), 0.1);
+            
+            --bg-ultra: #020408;
+            --bg-deep: #0a0c12;
+            --bg-panel: #0f121a;
+            --bg-card: #161a24;
+            --bg-glass: rgba(22, 26, 36, 0.7);
+            
+            --text-main: #f5f6f7;
+            --text-dim: #949ba4;
+            --text-muted: #4e5058;
+            
+            /* Gradients */
+            --grad-leg: linear-gradient(135deg, #ff8a00 0%, #da1b1b 100%);
+            --grad-ultra: linear-gradient(135deg, #7b61ff 0%, #00d1ff 100%);
+            --grad-rare: linear-gradient(135deg, #007aff 0%, #00c6ff 100%);
+            --grad-btn: linear-gradient(90deg, #0088cc 0%, #00aaff 100%);
+            --grad-surface: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 100%);
+            
+            /* Borders & Shadows */
+            --border-light: 1px solid rgba(255, 255, 255, 0.08);
+            --border-accent: 1px solid var(--p-accent);
+            --shadow-sm: 0 4px 12px rgba(0,0,0,0.4);
+            --shadow-md: 0 12px 24px rgba(0,0,0,0.6);
+            --shadow-lg: 0 24px 48px rgba(0,0,0,0.8);
+            
+            /* Typography Scale */
+            --fs-xs: 0.75rem;
+            --fs-sm: 0.875rem;
+            --fs-base: 1rem;
+            --fs-lg: 1.125rem;
+            --fs-xl: 1.25rem;
+            --fs-2xl: 1.5rem;
+            --fs-3xl: 2rem;
+            
+            /* Timings */
+            --t-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            --t-normal: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --t-slow: 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        /* --- SECTION 3: ADVANCED KEYFRAME ENGINE --- */
+        @keyframes ultraSlideIn {
+            0% { transform: translateX(-100px); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes ultraFadeUp {
+            0% { transform: translateY(40px) scale(0.95); opacity: 0; }
+            100% { transform: translateY(0) scale(1); opacity: 1; }
+        }
+
+        @keyframes neonPulse {
+            0% { box-shadow: 0 0 10px var(--p-accent-glow); }
+            50% { box-shadow: 0 0 30px var(--p-accent-glow), 0 0 10px var(--p-accent); }
+            100% { box-shadow: 0 0 10px var(--p-accent-glow); }
+        }
+
+        @keyframes rotate3D {
+            0% { transform: perspective(1000px) rotateY(0deg); }
+            50% { transform: perspective(1000px) rotateY(10deg); }
+            100% { transform: perspective(1000px) rotateY(0deg); }
+        }
+
+        @keyframes floatingPet {
+            0% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-15px) rotate(2deg); }
+            66% { transform: translateY(-5px) rotate(-2deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        @keyframes shimmerEffect {
+            0% { transform: translateX(-150%); }
+            100% { transform: translateX(150%); }
+        }
+
+        @keyframes modalEnter {
+            0% { opacity: 0; backdrop-filter: blur(0px); }
+            100% { opacity: 1; backdrop-filter: blur(12px); }
+        }
+
+        @keyframes contentEnter {
+            0% { opacity: 0; transform: scale(0.8) translateY(100px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        @keyframes headerGlow {
+            from { text-shadow: 0 0 5px #fff; }
+            to { text-shadow: 0 0 20px var(--p-accent), 0 0 30px var(--p-accent); }
+        }
+
+        /* --- SECTION 4: SCROLLBAR CUSTOMIZATION --- */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-ultra);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--bg-card);
+            border-radius: 100px;
+            border: 2px solid var(--bg-ultra);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--p-accent);
+        }
+
+        /* --- SECTION 5: SIDEBAR ARCHITECTURE --- */
         .sidebar {
-            width: 300px;
-            background: var(--gradient-sidebar);
+            width: 320px;
             height: 100vh;
+            background-color: var(--bg-panel);
             position: fixed;
             left: 0;
             top: 0;
-            border-right: 1px solid var(--card-border);
             display: flex;
             flex-direction: column;
-            padding: 35px 25px;
+            padding: 40px 24px;
+            border-right: var(--border-light);
             z-index: 1000;
-            transition: transform var(--transition-speed);
+            animation: ultraSlideIn 0.8s var(--t-slow);
         }
 
-        .sidebar-header {
+        /* Brand Identity */
+        .brand-container {
             display: flex;
             align-items: center;
-            gap: 15px;
-            margin-bottom: 50px;
-            padding: 0 10px;
+            gap: 16px;
+            margin-bottom: 60px;
+            padding-left: 8px;
         }
 
-        .logo-box {
-            width: 42px;
-            height: 42px;
-            background: var(--accent-color);
-            border-radius: 12px;
+        .brand-logo {
+            width: 52px;
+            height: 52px;
+            background: var(--grad-ultra);
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 22px;
-            box-shadow: 0 0 20px var(--accent-glow);
+            font-size: 24px;
+            color: #fff;
+            box-shadow: 0 10px 25px var(--p-accent-glow);
+            animation: neonPulse 3s infinite;
         }
 
-        .logo-text {
-            font-size: 20px;
-            font-weight: 800;
-            letter-spacing: 1.5px;
+        .brand-name {
+            font-family: var(--font-header);
+            font-size: 26px;
+            font-weight: 900;
+            letter-spacing: 2px;
             text-transform: uppercase;
-            background: linear-gradient(to right, #fff, var(--accent-color));
+            background: linear-gradient(to right, #fff, var(--p-accent));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        /* --- NAVIGATION --- */
-        .nav-group {
-            margin-bottom: 30px;
-        }
-
+        /* Navigation Menu System */
         .nav-label {
             font-size: 11px;
-            color: var(--text-secondary);
+            font-weight: 900;
+            color: var(--text-muted);
             text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 15px;
-            display: block;
-            padding-left: 10px;
+            letter-spacing: 3px;
+            margin-bottom: 24px;
+            padding-left: 12px;
         }
 
-        .menu-item {
+        .nav-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 40px;
+        }
+
+        .nav-item {
             width: 100%;
-            padding: 14px 20px;
-            margin-bottom: 10px;
-            border: none;
-            border-radius: 16px;
-            background: transparent;
-            color: var(--text-secondary);
-            font-size: 15px;
-            font-weight: 600;
+            padding: 16px 20px;
+            border-radius: 18px;
             display: flex;
             align-items: center;
-            cursor: pointer;
-            transition: all var(--transition-speed);
-            text-decoration: none;
+            gap: 16px;
+            color: var(--text-dim);
+            font-weight: 700;
+            font-size: 15px;
+            transition: var(--t-normal);
+            border: 1px solid transparent;
+            position: relative;
+            overflow: hidden;
         }
 
-        .menu-item i {
-            margin-right: 15px;
+        .nav-item i {
             font-size: 18px;
-            transition: transform 0.3s;
+            width: 24px;
+            text-align: center;
+            transition: var(--t-fast);
         }
 
-        .menu-item:hover {
+        .nav-item:hover {
             background: rgba(255, 255, 255, 0.03);
             color: var(--text-main);
-            transform: translateX(5px);
+            transform: translateX(8px);
         }
 
-        .menu-item.active {
-            background: var(--accent-color);
-            color: white;
-            box-shadow: 0 10px 25px var(--accent-glow);
+        .nav-item:hover i {
+            color: var(--p-accent);
+            transform: scale(1.2);
         }
 
-        .menu-item.active i { transform: scale(1.1); }
+        .nav-item.active {
+            background: var(--p-accent);
+            color: #fff;
+            box-shadow: 0 12px 24px var(--p-accent-glow);
+        }
 
-        /* --- THEME CUSTOMIZER --- */
-        .sidebar-bottom {
+        .nav-item.active i {
+            color: #fff;
+        }
+
+        /* Configuration Panel */
+        .sidebar-footer {
             margin-top: auto;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 28px;
+            padding: 24px;
+            border: var(--border-light);
         }
 
-        .theme-picker {
-            background: var(--secondary-bg);
-            border-radius: 20px;
-            padding: 20px;
-            margin-bottom: 25px;
-            border: 1px solid var(--card-border);
-        }
-
-        .theme-title {
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--text-main);
-            margin-bottom: 15px;
+        .config-title {
+            font-size: 10px;
+            font-weight: 900;
+            color: var(--text-muted);
+            margin-bottom: 18px;
             text-align: center;
             display: block;
+            letter-spacing: 2px;
         }
 
-        .colors-row {
+        .theme-selector {
             display: flex;
             justify-content: space-between;
-            gap: 8px;
+            margin-bottom: 28px;
         }
 
         .color-dot {
-            width: 28px;
-            height: 28px;
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
             cursor: pointer;
-            border: 2px solid transparent;
-            transition: 0.2s;
+            border: 3px solid transparent;
+            transition: var(--t-fast);
+            position: relative;
         }
 
-        .color-dot:hover { transform: scale(1.2); }
-        .color-dot.active { border-color: white; transform: scale(1.1); }
-
-        /* --- LANGUAGE SELECTOR --- */
-        .lang-switcher {
-            display: flex;
-            gap: 10px;
+        .color-dot:hover {
+            transform: scale(1.25);
         }
 
-        .lang-btn {
-            flex: 1;
-            padding: 12px;
-            border: 1px solid var(--card-border);
-            border-radius: 14px;
-            background: var(--secondary-bg);
-            color: white;
-            cursor: pointer;
-            font-weight: 700;
-            font-size: 13px;
+        .color-dot.active::after {
+            content: '✓';
+            position: absolute;
+            inset: 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            transition: 0.3s;
+            font-size: 12px;
+            color: #fff;
+            font-weight: 900;
+        }
+
+        .lang-switcher {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background: var(--bg-ultra);
+            padding: 6px;
+            border-radius: 14px;
+            gap: 6px;
+        }
+
+        .lang-btn {
+            padding: 10px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--text-muted);
+            transition: var(--t-fast);
         }
 
         .lang-btn.active {
-            border-color: var(--accent-color);
-            background: rgba(123, 97, 255, 0.1);
+            background: var(--bg-card);
+            color: #fff;
+            box-shadow: var(--shadow-sm);
         }
 
-        /* --- MAIN CONTENT AREA --- */
-        .main-content {
-            margin-left: 300px;
-            padding: 50px;
-            width: calc(100% - 300px);
-            transition: margin-left 0.3s;
+        /* --- SECTION 6: MAIN CONTENT STAGE --- */
+        .main-stage {
+            margin-left: 320px;
+            width: calc(100% - 320px);
+            padding: 60px 80px;
+            position: relative;
+            min-height: 100vh;
         }
 
-        /* Top Bar */
-        .top-header {
+        /* Header Engine */
+        .top-navigation {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 50px;
+            margin-bottom: 60px;
+            animation: ultraFadeUp 0.8s var(--t-slow);
         }
 
-        .search-container {
+        .search-engine {
             position: relative;
-            width: 100%;
-            max-width: 500px;
+            width: 500px;
         }
 
-        .search-container i {
+        .search-engine i {
             position: absolute;
-            left: 20px;
+            left: 24px;
             top: 50%;
             transform: translateY(-50%);
-            color: var(--text-secondary);
-            font-size: 18px;
+            color: var(--text-muted);
+            font-size: 20px;
+            transition: var(--t-fast);
         }
 
-        .search-input {
+        .search-bar {
             width: 100%;
-            padding: 18px 25px 18px 55px;
-            border-radius: 20px;
-            border: 1px solid var(--card-border);
-            background: var(--secondary-bg);
-            color: white;
+            background-color: var(--bg-panel);
+            border: var(--border-light);
+            padding: 22px 22px 22px 68px;
+            border-radius: 24px;
+            color: #fff;
             font-size: 16px;
-            font-family: inherit;
-            transition: 0.3s;
+            font-weight: 500;
+            transition: var(--t-normal);
         }
 
-        .search-input:focus {
-            border-color: var(--accent-color);
-            box-shadow: 0 0 20px rgba(123, 97, 255, 0.15);
+        .search-bar:focus {
+            background-color: var(--bg-card);
+            border-color: var(--p-accent);
+            box-shadow: 0 0 40px var(--p-accent-soft);
         }
 
-        /* Product Grid */
-        .pet-grid {
+        .search-bar:focus + i {
+            color: var(--p-accent);
+        }
+
+        /* --- SECTION 7: PET CARD COMPONENT --- */
+        .asset-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 40px;
         }
 
-        /* Pet Card Styles */
         .pet-card {
-            background: var(--card-bg);
-            border-radius: 30px;
-            padding: 30px;
-            text-align: center;
-            border: 1px solid var(--card-border);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: var(--bg-card);
+            border-radius: 48px;
+            padding: 48px;
             position: relative;
+            border: var(--border-light);
+            transition: var(--t-slow);
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            height: 100%;
+            animation: ultraFadeUp 0.8s backwards;
+            cursor: default;
         }
 
         .pet-card::before {
             content: '';
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at center, var(--accent-glow) 0%, transparent 70%);
-            opacity: 0;
-            transition: 0.4s;
-            z-index: 1;
-        }
-
-        .pet-card:hover {
-            transform: translateY(-15px);
-            border-color: var(--accent-color);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
-        }
-
-        .pet-card:hover::before { opacity: 0.3; }
-
-        .rarity-tag {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            padding: 6px 14px;
-            border-radius: 10px;
-            font-size: 10px;
-            font-weight: 800;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            z-index: 5;
-        }
-
-        .rarity-legendary { background: rgba(255, 170, 0, 0.1); color: #ffaa00; }
-        .rarity-common { background: rgba(150, 150, 150, 0.1); color: #969696; }
-
-        .pet-img {
-            width: 180px;
-            height: 180px;
-            object-fit: contain;
-            margin: 15px auto 25px;
-            z-index: 5;
-            filter: drop-shadow(0 15px 25px rgba(0,0,0,0.5));
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.05),
+                transparent
+            );
             transition: 0.5s;
         }
 
-        .pet-card:hover .pet-img { transform: scale(1.1) rotate(5deg); }
+        .pet-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            border-color: var(--p-accent);
+            box-shadow: var(--shadow-lg);
+        }
 
-        .pet-title {
-            font-size: 20px;
+        .pet-card:hover::before {
+            left: 100%;
+            transition: 0.8s;
+        }
+
+        /* Card Content Hierarchy */
+        .rarity-badge {
+            align-self: flex-start;
+            padding: 10px 20px;
+            border-radius: 14px;
+            font-size: 11px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #fff;
+            margin-bottom: 12px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .rarity-leg { background: var(--grad-leg); }
+        .rarity-ultra { background: var(--grad-ultra); }
+        .rarity-rare { background: var(--grad-rare); }
+
+        .pet-year-info {
+            font-size: 12px;
+            color: var(--text-muted);
             font-weight: 700;
-            margin-bottom: 25px;
-            z-index: 5;
-            min-height: 48px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .pet-year-info i { font-size: 10px; color: var(--p-accent); }
+
+        .pet-display {
+            width: 100%;
+            height: 240px;
             display: flex;
             align-items: center;
             justify-content: center;
+            margin-bottom: 36px;
+            position: relative;
         }
 
-        /* SELL BUTTON (THE FAMOUS "ПРОДАТЬ") */
-        .sell-button {
-            background: var(--tg-button);
-            color: white;
-            border: none;
+        .pet-display img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            filter: drop-shadow(0 20px 40px rgba(0,0,0,0.6));
+            transition: var(--t-normal);
+            animation: floatingPet 4s ease-in-out infinite;
+        }
+
+        .pet-card:hover .pet-display img {
+            transform: scale(1.15) rotate(5deg);
+            filter: drop-shadow(0 30px 60px rgba(var(--p-accent-rgb), 0.4));
+        }
+
+        .pet-name-h3 {
+            font-family: var(--font-header);
+            font-size: 24px;
+            font-weight: 900;
+            color: #fff;
+            text-align: center;
+            margin-bottom: 40px;
+            min-height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1.2;
+        }
+
+        .btn-action-primary {
             width: 100%;
-            padding: 16px;
-            border-radius: 18px;
+            padding: 22px;
+            border-radius: 24px;
+            background: var(--grad-btn);
+            color: #fff;
+            font-weight: 900;
             font-size: 16px;
-            font-weight: 800;
-            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 12px;
-            transition: 0.3s;
-            z-index: 5;
-            margin-top: auto;
-            text-decoration: none;
-        }
-
-        .sell-button i { font-size: 18px; }
-        .sell-button:hover {
-            filter: brightness(1.1);
-            transform: scale(1.02);
             box-shadow: 0 10px 20px rgba(0, 136, 204, 0.3);
+            transition: var(--t-normal);
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        /* Support Button Animation */
-        .support-pulse {
-            animation: pulse 2s infinite;
+        .btn-action-primary:hover {
+            transform: scale(1.05);
+            filter: brightness(1.2);
+            box-shadow: 0 15px 30px rgba(0, 136, 204, 0.5);
         }
 
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(123, 97, 255, 0.4); }
-            70% { box-shadow: 0 0 0 15px rgba(123, 97, 255, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(123, 97, 255, 0); }
-        }
-
-        /* --- MOBILE MENU --- */
-        .mobile-toggle {
-            display: none;
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            z-index: 2000;
-            background: var(--accent-color);
-            border: none;
-            padding: 12px;
-            border-radius: 12px;
-            color: white;
+        .btn-action-primary i {
             font-size: 20px;
+            transition: var(--t-fast);
         }
 
-        @media (max-width: 1000px) {
-            .sidebar { transform: translateX(-100%); width: 280px; }
-            .sidebar.open { transform: translateX(0); }
-            .main-content { margin-left: 0; width: 100%; padding: 25px; }
-            .mobile-toggle { display: block; }
-            .top-header { flex-direction: column; gap: 20px; align-items: flex-start; margin-top: 50px; }
-            .search-container { max-width: 100%; }
+        .btn-action-primary:hover i {
+            transform: rotate(-15deg) translateX(5px);
+        }
+
+        /* --- SECTION 8: ULTRA MODAL ENGINE --- */
+        .modal-root {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            animation: modalEnter 0.4s forwards;
+        }
+
+        .modal-root.active {
+            display: flex;
+        }
+
+        .modal-backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+        }
+
+        .modal-container {
+            width: 100%;
+            max-width: 580px;
+            background: var(--bg-panel);
+            border: var(--border-accent);
+            border-radius: 40px;
+            padding: 64px;
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            box-shadow: 0 0 100px rgba(var(--p-accent-rgb), 0.2);
+            animation: contentEnter 0.5s var(--t-slow) forwards;
+        }
+
+        .modal-close-trigger {
+            position: absolute;
+            top: 32px;
+            right: 32px;
+            font-size: 30px;
+            color: var(--text-muted);
+            transition: var(--t-fast);
+        }
+
+        .modal-close-trigger:hover {
+            color: #fff;
+            transform: rotate(90deg) scale(1.2);
+        }
+
+        .support-graphic {
+            width: 110px;
+            height: 110px;
+            background: var(--p-accent-soft);
+            border-radius: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 44px;
+            color: var(--p-accent);
+            margin: 0 auto 36px;
+            border: 1px solid var(--p-accent-glow);
+        }
+
+        .modal-headline {
+            font-family: var(--font-header);
+            font-size: 32px;
+            font-weight: 900;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .modal-subtext {
+            color: var(--text-dim);
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 48px;
+        }
+
+        .telegram-cta {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            padding: 26px;
+            background: #24A1DE;
+            border-radius: 24px;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 800;
+            transition: var(--t-normal);
+            box-shadow: 0 10px 25px rgba(36, 161, 222, 0.4);
+        }
+
+        .telegram-cta:hover {
+            transform: scale(1.05) translateY(-5px);
+            filter: brightness(1.1);
+            box-shadow: 0 20px 40px rgba(36, 161, 222, 0.6);
+        }
+
+        /* --- SECTION 9: UTILITY SYSTEM --- */
+        .hidden { display: none !important; }
+        .text-accent { color: var(--p-accent); }
+        .mt-20 { margin-top: 20px; }
+        .glass-effect { backdrop-filter: var(--glass-blur); background: var(--bg-glass); }
+
+        /* --- SECTION 10: RESPONSIVE ADAPTIVITY --- */
+        @media (max-width: 1400px) {
+            .sidebar { width: 100px; padding: 40px 15px; }
+            .brand-name, .nav-label, .nav-item span, .sidebar-footer { display: none; }
+            .nav-item { justify-content: center; padding: 18px; }
+            .nav-item i { font-size: 22px; }
+            .main-stage { margin-left: 100px; width: calc(100% - 100px); padding: 40px; }
+            .search-engine { width: 100%; }
+        }
+
+        @media (max-width: 850px) {
+            body { flex-direction: column; }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                padding: 20px;
+                border-right: none;
+                border-bottom: var(--border-light);
+            }
+            .brand-container { margin-bottom: 0; }
+            .nav-section { display: none; }
+            .main-stage { margin-left: 0; width: 100%; padding: 24px; }
+            .top-navigation { margin-bottom: 32px; }
+            .pet-card { padding: 32px; border-radius: 32px; }
+            .pet-name-h3 { font-size: 20px; margin-bottom: 24px; }
+        }
+
+        @media (max-width: 500px) {
+            .modal-container { padding: 40px 24px; border-radius: 30px; }
+            .modal-headline { font-size: 24px; }
+            .asset-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
-<body>
+<script>
+        /**
+         * ELITE STORE - THEME & STATE ENGINE
+         * Відповідає за стан додатку, фільтрацію та візуальні ефекти
+         */
+        const EliteEngine = {
+            currentLang: 'ua',
+            currentFilter: 'all',
+            searchQuery: '',
+            accentColor: '#7b61ff',
+            isModalOpen: false,
+            version: '3.0.4-ULTRA'
+        };
 
-    <button class="mobile-toggle" id="menuToggle">
-        <i class="fas fa-bars"></i>
-    </button>
-
-    <aside class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <div class="logo-box"><i class="fas fa-paw"></i></div>
-            <div class="logo-text">Elite Store</div>
-        </div>
-
-        <div class="nav-group">
-            <span class="nav-label" data-lang="nav_main">Навігація</span>
-            <button class="menu-item active" onclick="changeCategory('all')">
-                <i class="fas fa-grid-2"></i> <span data-lang="all_pets">Усі пети</span>
-            </button>
-            <button class="menu-item" onclick="openSupport()">
-                <i class="fas fa-headset support-pulse"></i> <span data-lang="support">Підтримка</span>
-            </button>
-        </div>
-
-        <div class="sidebar-bottom">
-            <div class="theme-picker">
-                <span class="theme-title" data-lang="site_color">КОЛІР САЙТУ</span>
-                <div class="colors-row">
-                    <div class="color-dot active" style="background: #7b61ff;" onclick="setAccent('#7b61ff', this)"></div>
-                    <div class="color-dot" style="background: #00c2a8;" onclick="setAccent('#00c2a8', this)"></div>
-                    <div class="color-dot" style="background: #ff765e;" onclick="setAccent('#ff765e', this)"></div>
-                    <div class="color-dot" style="background: #2196f3;" onclick="setAccent('#2196f3', this)"></div>
-                    <div class="color-dot" style="background: #ffc107;" onclick="setAccent('#ffc107', this)"></div>
-                </div>
-            </div>
-
-            <div class="lang-switcher">
-                <button class="lang-btn active" id="btn-ua" onclick="setLang('ua')">
-                    <img src="https://flagcdn.com/w20/ua.png" width="18"> <span>UA</span>
-                </button>
-                <button class="lang-btn" id="btn-ru" onclick="setLang('ru')">
-                    <img src="https://flagcdn.com/w20/ru.png" width="18"> <span>RU</span>
-                </button>
-            </div>
-        </div>
-    </aside>
-
-    <main class="main-content">
-        <header class="top-header">
-            <div class="search-container">
-                <i class="fas fa-search"></i>
-                <input type="text" class="search-input" id="searchPets" placeholder="Пошук пета..." oninput="handleSearch()">
-            </div>
-        </header>
-
-        <div class="pet-grid" id="petGrid">
-            </div>
-    </main>
-
-    <script>
-        // --- DATA ENGINE ---
-        const translations = {
+        /**
+         * GLOBAL TRANSLATION ARCHIVE
+         * Максимально деталізований словник для повної локалізації інтерфейсу
+         */
+        const TRANSLATIONS = {
             ua: {
-                all_pets: "Усі пети",
-                support: "Підтримка",
-                site_color: "КОЛІР САЙТУ",
-                search_placeholder: "Пошук пета...",
-                sell: "ПРОДАТЬ",
-                nav_main: "Навігація",
-                support_msg: "Напишіть нам в Telegram для підтримки!",
-                pets: {
-                    "Strawberry Shortcake Bat Dragon": "Полуничний Бет Дракон",
-                    "Billy Goat": "Цап Біллі",
-                    "Ice Moth Dragon": "Крижана Міль",
-                    "Leviathan": "Левіафан",
-                    "Naga Dragon": "Нага Дракон",
-                    "Tree Kangaroo": "Деревне Кенгуру",
-                    "Ghost Dragon": "Примарний Дракон",
-                    "Lava Dragon": "Лавовий Дракон",
-                    "Alicorn": "Алікорн",
-                    "Winged Horse": "Крилатий Кінь",
-                    "Sugar Glider": "Цукрова Летяга",
-                    "White Amazon": "Біла Амазонка",
-                    "Tortuga de la Isla": "Черепаха Острова",
-                    "Dire Wolf": "Лютововк"
-                }
+                menu_label: "Навігація",
+                nav_all: "Усі активи",
+                nav_leg: "Легендарні",
+                nav_ultra: "Ультра-рідкі",
+                nav_sup: "Підтримка",
+                config_theme: "ПЕРСОНАЛІЗАЦІЯ",
+                search_placeholder: "Пошук екземпляра за назвою або подією...",
+                sell_btn: "ПРОДАТЬ",
+                year_label: "Рік випуску",
+                event_label: "Подія",
+                mod_title: "Центр Підтримки",
+                mod_desc: "Маєте запитання щодо обміну або продажу? Наш модератор допоможе вам у режимі 24/7. Прямий зв'язок через Telegram безпечніше та швидше.",
+                mod_btn: "Зв'язатися в Telegram",
+                trade_msg: "Привіт! Мене цікавить продаж пета: ",
+                system_ready: "СИСТЕМА ГОТОВА",
+                no_results: "Нічого не знайдено за вашим запитом..."
             },
             ru: {
-                all_pets: "Все петы",
-                support: "Поддержка",
-                site_color: "ЦВЕТ САЙТА",
-                search_placeholder: "Поиск пета...",
-                sell: "ПРОДАТЬ",
-                nav_main: "Навигация",
-                support_msg: "Напишите нам в Telegram для поддержки!",
-                pets: {
-                    "Strawberry Shortcake Bat Dragon": "Клубничный Бэт Дракон",
-                    "Billy Goat": "Козел Билли",
-                    "Ice Moth Dragon": "Ледяная Моль",
-                    "Leviathan": "Левиафан",
-                    "Naga Dragon": "Нага Дракон",
-                    "Tree Kangaroo": "Древесное Кенгуру",
-                    "Ghost Dragon": "Призрачный Дракон",
-                    "Lava Dragon": "Лавовый Дракон",
-                    "Alicorn": "Аликорн",
-                    "Winged Horse": "Крылатая Лошадь",
-                    "Sugar Glider": "Сахарный Поссум",
-                    "White Amazon": "Белая Амазонка",
-                    "Tortuga de la Isla": "Черепаха Острова",
-                    "Dire Wolf": "Лютоволк"
-                }
+                menu_label: "Навигация",
+                nav_all: "Все активы",
+                nav_leg: "Легендарные",
+                nav_ultra: "Ультра-редкие",
+                nav_sup: "Поддержка",
+                config_theme: "ПЕРСОНАЛИЗАЦИЯ",
+                search_placeholder: "Поиск экземпляра по названию или событию...",
+                sell_btn: "ПРОДАТЬ",
+                year_label: "Год выпуска",
+                event_label: "Событие",
+                mod_title: "Центр Поддержки",
+                mod_desc: "Есть вопросы по обмену или продаже? Наш модератор поможет вам в режиме 24/7. Прямая связь через Telegram безопаснее и быстрее.",
+                mod_btn: "Связаться в Telegram",
+                trade_msg: "Привет! Меня интересует продажа пета: ",
+                system_ready: "СИСТЕМА ГОТОВА",
+                no_results: "Ничего не найдено по вашему запросу..."
             }
         };
 
-        const petsData = [
-            { id: 1, name: "Strawberry Shortcake Bat Dragon", rarity: "legendary", img: "strawberry_shortcake_bat_dragon.png" },
-            { id: 2, name: "Billy Goat", rarity: "legendary", img: "billy_goat.png" },
-            { id: 3, name: "Ice Moth Dragon", rarity: "legendary", img: "ice_moth_dragon.png" },
-            { id: 4, name: "Leviathan", rarity: "legendary", img: "leviathan.png" },
-            { id: 5, name: "Naga Dragon", rarity: "legendary", img: "naga_dragon.png" },
-            { id: 6, name: "Tree Kangaroo", rarity: "legendary", img: "tree_kangaroo.png" },
-            { id: 7, name: "Ghost Dragon", rarity: "legendary", img: "ghost_dragon.png" },
-            { id: 8, name: "Lava Dragon", rarity: "legendary", img: "lava_dragon.png" },
-            { id: 9, name: "Alicorn", rarity: "legendary", img: "alicorn.png" },
-            { id: 10, name: "Winged Horse", rarity: "legendary", img: "winged_horse.png" },
-            { id: 11, name: "Sugar Glider", rarity: "legendary", img: "sugar_glider.png" },
-            { id: 12, name: "White Amazon", rarity: "legendary", img: "white_amazon.png" },
-            { id: 13, name: "Tortuga de la Isla", rarity: "legendary", img: "tortuga_de_la_isla.png" },
-            { id: 14, name: "Dire Wolf", rarity: "legendary", img: "dire_wolf.png" },
-            // ... тут буде ще +50 петів у другій частині ...
-            { id: 15, name: "Ancient Dragon", rarity: "legendary", img: "ancient_dragon.png" },
-            { id: 16, name: "Axolotl", rarity: "legendary", img: "axolotl.png" },
-            { id: 17, name: "Bakū", rarity: "legendary", img: "baku.png" },
-            { id: 18, name: "Black Chow-Chow", rarity: "legendary", img: "black_chow_chow.png" },
-            { id: 19, name: "Cerberus", rarity: "legendary", img: "cerberus.png" },
-            { id: 20, name: "Chameleon", rarity: "legendary", img: "chameleon.png" },
-            { id: 21, name: "Chimera", rarity: "legendary", img: "chimera.png" },
-            { id: 22, name: "Chocolate Chow-Chow", rarity: "legendary", img: "chocolate_chow_chow.png" },
-            { id: 23, name: "Cobra", rarity: "legendary", img: "cobra.png" },
-            { id: 24, name: "Corn Doggo", rarity: "legendary", img: "corn_doggo.png" },
-            { id: 25, name: "Crimson Dragon", rarity: "legendary", img: "crimson_dragon.png" },
-            { id: 26, name: "Dancing Dragon", rarity: "legendary", img: "dancing_dragon.png" },
-            { id: 27, name: "Diamond Butterfly", rarity: "legendary", img: "diamond_butterfly.png" },
-            { id: 28, name: "Diamond Dragon", rarity: "legendary", img: "diamond_dragon.png" },
-            { id: 29, name: "Diamond Griffin", rarity: "legendary", img: "diamond_griffin.png" },
-            { id: 30, name: "Diamond King Penguin", rarity: "legendary", img: "diamond_king_penguin.png" },
-            { id: 31, name: "Diamond Ladybug", rarity: "legendary", img: "diamond_ladybug.png" },
-            { id: 32, name: "Diamond Unicorn", rarity: "legendary", img: "diamond_unicorn.png" },
-            { id: 33, name: "Dragon", rarity: "legendary", img: "dragon.png" },
-            { id: 34, name: "Fallow Deer", rarity: "legendary", img: "fallow_deer.png" },
-            { id: 35, name: "Field Mouse", rarity: "legendary", img: "field_mouse.png" },
-            { id: 36, name: "Firefly", rarity: "legendary", img: "firefly.png" },
-            { id: 37, name: "Frost Fury", rarity: "legendary", img: "frost_fury.png" },
-            { id: 38, name: "Frost Unicorn", rarity: "legendary", img: "frost_unicorn.png" },
-            { id: 39, name: "Goldhorn", rarity: "legendary", img: "goldhorn.png" },
-            { id: 40, name: "Green Pheasant", rarity: "legendary", img: "green_pheasant.png" },
-            { id: 41, name: "Griffin", rarity: "legendary", img: "griffin.png" },
-            { id: 42, name: "Guardian Lion", rarity: "legendary", img: "guardian_lion.png" },
-            { id: 43, name: "Ice Golem", rarity: "legendary", img: "ice_golem.png" },
-            { id: 44, name: "Jousting Horse", rarity: "legendary", img: "jousting_horse.png" },
-            { id: 45, name: "King Bee", rarity: "legendary", img: "king_bee.png" },
-            { id: 46, name: "Kitsune", rarity: "legendary", img: "kitsune.png" },
-            { id: 47, name: "Lavender Dragon", rarity: "legendary", img: "lavender_dragon.png" },
-            { id: 48, name: "Lunar Moon Bear", rarity: "legendary", img: "lunar_moon_bear.png" },
-            { id: 49, name: "Mechapup", rarity: "legendary", img: "mechapup.png" },
-            { id: 50, name: "Nessie", rarity: "legendary", img: "nessie.png" },
-            { id: 51, name: "Ninja Monkey", rarity: "legendary", img: "ninja_monkey.png" },
-            { id: 52, name: "Octopus", rarity: "legendary", img: "octopus.png" },
-            { id: 53, name: "Peacock", rarity: "legendary", img: "peacock.png" },
-            { id: 54, name: "Phoenix", rarity: "legendary", img: "phoenix.png" },
-            { id: 55, name: "Queen Bee", rarity: "legendary", img: "queen_bee.png" },
-            { id: 56, name: "Robo Dog", rarity: "legendary", img: "robo_dog.png" },
-            { id: 57, name: "Shark", rarity: "legendary", img: "shark.png" },
-            { id: 58, name: "Snow Owl", rarity: "legendary", img: "snow_owl.png" },
-            { id: 59, name: "Squid", rarity: "legendary", img: "squid.png" },
-            { id: 60, name: "Sunrise Duckling", rarity: "legendary", img: "sunrise_duckling.png" },
-            { id: 61, name: "T-Rex", rarity: "legendary", img: "t-rex.png" },
-            { id: 62, name: "Unicorn", rarity: "legendary", img: "unicorn.png" },
-            { id: 63, name: "Vampire Dragon", rarity: "legendary", img: "vampire_dragon.png" },
-            { id: 64, name: "White Sand Dollar", rarity: "legendary", img: "white_sand_dollar.png" }
+        /**
+         * ELITE PETS MASTER DATABASE
+         * Містить повний перелік активів. Кожен об'єкт деталізований для 3D рендерингу.
+         */
+        const PETS_DATABASE = [
+            { id: 101, name: "Shadow Dragon", rarity: "leg", year: "2019", event: "Halloween", img: "shadow.png" },
+            { id: 102, name: "Frost Dragon", rarity: "leg", year: "2019", event: "Winter Holiday", img: "frost.png" },
+            { id: 103, name: "Giraffe", rarity: "leg", year: "2019", event: "Safari Egg", img: "giraffe.png" },
+            { id: 104, name: "Bat Dragon", rarity: "leg", year: "2019", event: "Halloween", img: "bat.png" },
+            { id: 105, name: "Owl", rarity: "leg", year: "2019", event: "Farm Egg", img: "owl.png" },
+            { id: 106, name: "Parrot", rarity: "leg", year: "2019", event: "Jungle Egg", img: "parrot.png" },
+            { id: 107, name: "Evil Unicorn", rarity: "leg", year: "2019", event: "Halloween", img: "evil_uni.png" },
+            { id: 108, name: "Crow", rarity: "leg", year: "2019", event: "Farm Egg", img: "crow.png" },
+            { id: 109, name: "Arctic Reindeer", rarity: "leg", year: "2019", event: "Christmas", img: "arctic.png" },
+            { id: 110, name: "King Monkey", rarity: "leg", year: "2020", event: "Monkey Fairground", img: "king.png" },
+            { id: 111, name: "Albino Monkey", rarity: "leg", year: "2020", event: "Monkey Fairground", img: "albino.png" },
+            { id: 112, name: "Turtle", rarity: "leg", year: "2020", event: "Aussie Egg", img: "turtle.png" },
+            { id: 113, name: "Kangaroo", rarity: "leg", year: "2020", event: "Aussie Egg", img: "kangaroo.png" },
+            { id: 114, name: "Frost Fury", rarity: "leg", year: "2020", event: "Winter Event", img: "fury.png" },
+            { id: 115, name: "Skele-Rex", rarity: "leg", year: "2020", event: "Halloween", img: "skele.png" },
+            { id: 116, name: "Dodo", rarity: "leg", year: "2020", event: "Fossil Egg", img: "dodo.png" },
+            { id: 117, name: "T-Rex", rarity: "leg", year: "2020", event: "Fossil Egg", img: "trex.png" },
+            { id: 118, name: "Snow Owl", rarity: "leg", year: "2020", event: "Winter Holiday", img: "snow_owl.png" },
+            { id: 119, name: "Shark", rarity: "leg", year: "2021", event: "Ocean Egg", img: "shark.png" },
+            { id: 120, name: "Octopus", rarity: "leg", year: "2021", event: "Ocean Egg", img: "octopus.png" },
+            { id: 121, name: "Phoenix", rarity: "leg", year: "2021", event: "Mythic Egg", img: "phoenix.png" },
+            { id: 122, name: "Goldhorn", rarity: "leg", year: "2021", event: "Mythic Egg", img: "goldhorn.png" },
+            { id: 123, name: "Ghost Dragon", rarity: "leg", year: "2021", event: "Halloween", img: "ghost.png" },
+            { id: 124, name: "Ice Golem", rarity: "leg", year: "2021", event: "Winter", img: "ice_golem.png" },
+            { id: 125, name: "Lavender Dragon", rarity: "leg", year: "2022", event: "DJ Gamepass", img: "lavender.png" },
+            { id: 126, name: "Dancing Dragon", rarity: "leg", year: "2022", event: "Lunar New Year", img: "dancing.png" },
+            { id: 127, name: "Chameleon", rarity: "leg", year: "2022", event: "RGB Box", img: "chameleon.png" },
+            { id: 128, name: "Squid", rarity: "leg", year: "2022", event: "RGB Box", img: "squid.png" },
+            { id: 129, name: "Alicorn", rarity: "leg", year: "2022", event: "Royal Egg", img: "alicorn.png" },
+            { id: 130, name: "Ancient Dragon", rarity: "leg", year: "2022", event: "Royal Egg", img: "ancient.png" },
+            { id: 131, name: "Lava Dragon", rarity: "leg", year: "2022", event: "Halloween", img: "lava.png" },
+            { id: 132, name: "SS Bat Dragon", rarity: "leg", year: "2022", event: "Winter Holiday", img: "ssbd.png" },
+            { id: 133, name: "Naga Dragon", rarity: "leg", year: "2023", event: "SE Asia Egg", img: "naga.png" },
+            { id: 134, name: "Billy Goat", rarity: "leg", year: "2023", event: "Standard", img: "billy.png" },
+            { id: 135, name: "Vampire Dragon", rarity: "leg", year: "2023", event: "Halloween", img: "vampire.png" },
+            { id: 136, name: "Glacier Moth", rarity: "ultra", year: "2022", event: "Winter", img: "moth.png" },
+            { id: 137, name: "Puffin", rarity: "ultra", year: "2021", event: "Winter", img: "puffin.png" },
+            { id: 138, name: "Dalmatian", rarity: "ultra", year: "2019", event: "Christmas", img: "dalmatian.png" },
+            { id: 139, name: "Flamingo", rarity: "ultra", year: "2019", event: "Safari Egg", img: "flamingo.png" },
+            { id: 140, name: "Lion", rarity: "ultra", year: "2019", event: "Safari Egg", img: "lion.png" },
+            { id: 141, name: "Blue Dog", rarity: "rare", year: "2019", event: "Blue Egg", img: "blue_dog.png" },
+            { id: 142, name: "Pink Cat", rarity: "rare", year: "2019", event: "Pink Egg", img: "pink_cat.png" },
+            { id: 143, name: "Cow", rarity: "rare", year: "2019", event: "Farm Egg", img: "cow.png" },
+            { id: 144, name: "Elephant", rarity: "rare", year: "2019", event: "Safari Egg", img: "elephant.png" },
+            { id: 145, name: "Hyena", rarity: "rare", year: "2019", event: "Safari Egg", img: "hyena.png" },
+            { id: 146, name: "Zombie Buffalo", rarity: "ultra", year: "2019", event: "Halloween", img: "zombie.png" },
+            { id: 147, name: "Hedgehog", rarity: "ultra", year: "2019", event: "Christmas", img: "hedgehog.png" },
+            { id: 148, name: "Shrew", rarity: "rare", year: "2019", event: "Christmas", img: "shrew.png" },
+            { id: 149, name: "Meerkat", rarity: "uncommon", year: "2019", event: "Safari Egg", img: "meerkat.png" },
+            { id: 150, name: "Wild Boar", rarity: "uncommon", year: "2019", event: "Safari Egg", img: "boar.png" },
+            // ... (Дані можуть бути розширені до 1000+ елементів)
         ];
 
-        let currentLang = 'ua';
-        let currentCategory = 'all';
-        let searchQuery = '';
-
-        // --- CORE FUNCTIONS ---
-
-        function initStore() {
-            renderPets();
-            updateStaticText();
-            console.log("EliteStore Engine Started...");
-        }
-
-        function setLang(lang) {
-            currentLang = lang;
+        /**
+         * UI INITIALIZATION ENGINE
+         * Запускається при завантаженні сторінки
+         */
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log(`%c EliteStore Engine v${EliteEngine.version} Initialized `, "background: #7b61ff; color: #fff; padding: 5px; border-radius: 5px;");
             
-            // UI Feedback
-            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-            document.getElementById(`btn-${lang}`).classList.add('active');
+            // Відновлення налаштувань з LocalStorage
+            loadPersistedState();
             
-            updateStaticText();
-            renderPets();
-        }
-
-        function updateStaticText() {
-            const t = translations[currentLang];
-            document.querySelectorAll('[data-lang]').forEach(el => {
-                const key = el.getAttribute('data-lang');
-                if (t[key]) {
-                    el.innerText = t[key];
-                }
-            });
-            document.getElementById('searchPets').placeholder = t.search_placeholder;
-        }
-
-        function setAccent(color, element) {
-            document.documentElement.style.setProperty('--accent-color', color);
+            // Первинний рендеринг інтерфейсу
+            applyTranslations();
+            renderGrid();
             
-            // Оновлення активної крапки
-            document.querySelectorAll('.color-dot').forEach(dot => dot.classList.remove('active'));
-            element.classList.add('active');
+            // Ініціалізація 3D ефектів миші
+            initGlobalParallax();
+        });
+
+        /**
+         * STATE PERSISTENCE
+         * Зберігає вибір мови та теми користувача
+         */
+        function loadPersistedState() {
+            const savedLang = localStorage.getItem('elite_lang');
+            const savedColor = localStorage.getItem('elite_theme');
             
-            // Ефект світіння
-            const glowColor = color + '66'; // Додаємо прозорість
-            document.documentElement.style.setProperty('--accent-glow', glowColor);
-        }
-
-        function handleSearch() {
-            searchQuery = document.getElementById('searchPets').value.toLowerCase();
-            renderPets();
-        }
-
-        function changeCategory(cat) {
-            currentCategory = cat;
-            
-            // Update Active Class
-            document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
-            event.currentTarget.classList.add('active');
-            
-            renderPets();
-        }
-
-        function renderPets() {
-            const grid = document.getElementById('petGrid');
-            grid.innerHTML = '';
-
-            const filteredPets = petsData.filter(pet => {
-                const translatedName = (translations[currentLang].pets[pet.name] || pet.name).toLowerCase();
-                const matchesSearch = translatedName.includes(searchQuery);
-                const matchesCategory = currentCategory === 'all' || pet.rarity === currentCategory;
-                return matchesSearch && matchesCategory;
-            });
-
-            if (filteredPets.length === 0) {
-                grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 50px; color: var(--text-secondary);">Нічого не знайдено...</div>`;
-                return;
+            if (savedLang) EliteEngine.currentLang = savedLang;
+            if (savedColor) {
+                EliteEngine.accentColor = savedColor;
+                document.documentElement.style.setProperty('--p-accent', savedColor);
+                document.documentElement.style.setProperty('--p-accent-rgb', hexToRgb(savedColor));
             }
+            
+            updateActiveToggles();
+        }
 
-            filteredPets.forEach(pet => {
-                const displayName = translations[currentLang].pets[pet.name] || pet.name;
-                
-                const card = document.createElement('div');
-                card.className = 'pet-card';
-                card.innerHTML = `
-                    <div class="rarity-tag rarity-${pet.rarity}">${pet.rarity}</div>
-                    <img src="pets.3/${pet.img}" class="pet-img" alt="${pet.name}" onerror="this.src='https://via.placeholder.com/150?text=Pet'">
-                    <h3 class="pet-title">${displayName}</h3>
-                    <button class="sell-button" onclick="sendToTelegram('${displayName}')">
-                        <i class="fab fa-telegram-plane"></i> ${translations[currentLang].sell}
-                    </button>
-                `;
-                grid.appendChild(card);
+        function updateActiveToggles() {
+            // Мова
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.innerText.toLowerCase() === EliteEngine.currentLang);
+            });
+            
+            // Тема
+            document.querySelectorAll('.color-dot').forEach(dot => {
+                const dotColor = rgbToHex(dot.style.backgroundColor);
+                dot.classList.toggle('active', dotColor === EliteEngine.accentColor);
             });
         }
 
-        function sendToTelegram(petName) {
-            const myTg = "@your_username"; // ЗАМІНИ НА СВІЙ ТГ
-            const message = currentLang === 'ua' 
-                ? `Привіт! Я хочу продати: ${petName}` 
-                : `Привет! Я хочу продать: ${petName}`;
+        /**
+         * RENDERING CORE
+         * Створює картки петів на основі бази даних та фільтрів
+         */
+        function renderGrid() {
+            const grid = document.getElementById('mainGrid');
+            if (!grid) return;
+
+            // Ефект зникнення перед оновленням
+            grid.style.opacity = '0';
             
-            window.open(`https://t.me/${myTg.replace('@', '')}?text=${encodeURIComponent(message)}`, '_blank');
+            setTimeout(() => {
+                grid.innerHTML = '';
+                
+                const filteredData = PETS_DATABASE.filter(pet => {
+                    const matchesFilter = EliteEngine.currentFilter === 'all' || pet.rarity === EliteEngine.currentFilter;
+                    const matchesSearch = pet.name.toLowerCase().includes(EliteEngine.searchQuery.toLowerCase()) || 
+                                         pet.event.toLowerCase().includes(EliteEngine.searchQuery.toLowerCase());
+                    return matchesFilter && matchesSearch;
+                });
+
+                if (filteredData.length === 0) {
+                    renderEmptyState(grid);
+                } else {
+                    filteredData.forEach((pet, index) => {
+                        const card = createPetCard(pet, index);
+                        grid.appendChild(card);
+                    });
+                }
+                
+                grid.style.opacity = '1';
+            }, 200);
+        }
+
+        /**
+         * COMPONENT CREATOR
+         * Створює HTML-структуру однієї картки
+         */
+        function createPetCard(pet, index) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'pet-card';
+            wrapper.style.animationDelay = `${index * 0.05}s`;
+            
+            const t = TRANSLATIONS[EliteEngine.currentLang];
+            const badgeClass = `rarity-badge rarity-${pet.rarity}`;
+            
+            wrapper.innerHTML = `
+                <div class="${badgeClass}">${pet.rarity}</div>
+                <div class="pet-year-info">
+                    <i class="fas fa-calendar-alt"></i> ${t.year_label}: ${pet.year}
+                </div>
+                <div class="pet-display">
+                    <img src="pets.3/${pet.img}" alt="${pet.name}" onerror="this.src='https://via.placeholder.com/200?text=Pet+Icon'">
+                </div>
+                <h3 class="pet-name-h3">${pet.name}</h3>
+                <button class="btn-action-primary" onclick="initTrade('${pet.name}')">
+                    <i class="fab fa-telegram-plane"></i> ${t.sell_btn}
+                </button>
+            `;
+            
+            return wrapper;
+        }
+
+        function renderEmptyState(container) {
+            const t = TRANSLATIONS[EliteEngine.currentLang];
+            container.innerHTML = `
+                <div style="grid-column: 1/-1; text-align: center; padding: 100px; color: var(--text-muted);">
+                    <i class="fas fa-ghost" style="font-size: 80px; margin-bottom: 20px; opacity: 0.2;"></i>
+                    <p style="font-size: 20px; font-weight: 700;">${t.no_results}</p>
+                </div>
+            `;
+        }
+
+        /**
+         * INTERACTION ENGINE
+         * Обробка модальних вікон та Telegram посилань
+         */
+        function initTrade(petName) {
+            const t = TRANSLATIONS[EliteEngine.currentLang];
+            const admin = "Elite_Admin";
+            const message = encodeURIComponent(`${t.trade_msg} ${petName}`);
+            const url = `https://t.me/${admin}?text=${message}`;
+            
+            // Відкриваємо в новій вкладці
+            window.open(url, '_blank');
         }
 
         function openSupport() {
-            const myTg = "@your_username"; // ЗАМІНИ НА СВІЙ ТГ
-            alert(translations[currentLang].support_msg);
-            window.open(`https://t.me/${myTg.replace('@', '')}`, '_blank');
+            const modal = document.getElementById('supportModal');
+            if (modal) {
+                modal.classList.add('active');
+                EliteEngine.isModalOpen = true;
+                document.body.style.overflow = 'hidden';
+            }
         }
 
-        // Mobile Menu Toggle
-        document.getElementById('menuToggle').addEventListener('click', () => {
-            document.getElementById('sidebar').classList.toggle('open');
-        });
-
-        // Close sidebar on click outside (mobile)
-        document.addEventListener('click', (e) => {
-            const sidebar = document.getElementById('sidebar');
-            const toggle = document.getElementById('menuToggle');
-            if (window.innerWidth <= 1000 && !sidebar.contains(e.target) && !toggle.contains(e.target)) {
-                sidebar.classList.remove('open');
+        function closeSupport() {
+            const modal = document.getElementById('supportModal');
+            if (modal) {
+                modal.classList.remove('active');
+                EliteEngine.isModalOpen = false;
+                document.body.style.overflow = 'auto';
             }
-        });
+        }
 
-        // Run Store
-        window.onload = initStore;
+        /**
+         * LANGUAGE & THEME CONTROLLERS
+         */
+        function switchLang(lang) {
+            EliteEngine.currentLang = lang;
+            localStorage.setItem('elite_lang', lang);
+            
+            applyTranslations();
+            renderGrid();
+            updateActiveToggles();
+        }
 
+        function applyTranslations() {
+            const t = TRANSLATIONS[EliteEngine.currentLang];
+            
+            // Оновлення статичних елементів з data-lang
+            document.querySelectorAll('[data-lang]').forEach(el => {
+                const key = el.getAttribute('data-lang');
+                if (t[key]) el.innerText = t[key];
+            });
+            
+            // Оновлення плейсхолдера пошуку
+            const searchInput = document.getElementById('petSearch');
+            if (searchInput) searchInput.placeholder = t.search_placeholder;
+        }
+
+        function updateTheme(color, el) {
+            EliteEngine.accentColor = color;
+            localStorage.setItem('elite_theme', color);
+            
+            document.documentElement.style.setProperty('--p-accent', color);
+            document.documentElement.style.setProperty('--p-accent-rgb', hexToRgb(color));
+            
+            updateActiveToggles();
+        }
+
+        /**
+         * UTILS: COLOR CONVERSION
+         */
+        function hexToRgb(hex) {
+            const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result ? `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}` : '123, 97, 255';
+        }
+
+        function rgbToHex(rgb) {
+            if (!rgb) return "#7b61ff";
+            const res = rgb.match(/\d+/g);
+            return "#" + ((1 << 24) + (+res[0] << 16) + (+res[1] << 8) + +res[2]).toString(16).slice(1);
+        }
+
+        /**
+         * 3D PARALLAX ENGINE
+         */
+        function initGlobalParallax() {
+            document.addEventListener('mousemove', (e) => {
+                if (window.innerWidth < 1000) return;
+                
+                const cards = document.querySelectorAll('.pet-card');
+                const x = (window.innerWidth / 2 - e.pageX) / 45;
+                const y = (window.innerHeight / 2 - e.pageY) / 45;
+                
+                cards.forEach(card => {
+                    const rect = card.getBoundingClientRect();
+                    // Тільки якщо картка у видимій зоні
+                    if (rect.top < window.innerHeight && rect.bottom > 0) {
+                        card.style.transform = `perspective(1000px) rotateY(${x}deg) rotateX(${-y}deg) translateY(-5px)`;
+                    }
+                });
+            });
+        }
+
+        /**
+         * SEARCH ENGINE WITH DEBOUNCE
+         */
+        let searchTimeout;
+        function runSearch() {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                EliteEngine.searchQuery = document.getElementById('petSearch').value;
+                renderGrid();
+            }, 300);
+        }
+
+        function filterRarity(rarity) {
+            EliteEngine.currentFilter = rarity;
+            
+            // Оновлення стилю кнопок навігації
+            document.querySelectorAll('.nav-item').forEach(btn => {
+                const onClick = btn.getAttribute('onclick');
+                btn.classList.toggle('active', onClick && onClick.includes(rarity));
+            });
+            
+            renderGrid();
+        }
     </script>
 </body>
 </html>
-const petsData = [
-            // --- LEGENDARIES & HIGH VALUE ---
-            { id: 1, name: "Strawberry Shortcake Bat Dragon", rarity: "legendary", img: "strawberry_shortcake_bat_dragon.png" },
-            { id: 2, name: "Billy Goat", rarity: "legendary", img: "billy_goat.png" },
-            { id: 3, name: "Ice Moth Dragon", rarity: "legendary", img: "ice_moth_dragon.png" },
-            { id: 4, name: "Leviathan", rarity: "legendary", img: "leviathan.png" },
-            { id: 5, name: "Naga Dragon", rarity: "legendary", img: "naga_dragon.png" },
-            { id: 6, name: "Tree Kangaroo", rarity: "legendary", img: "tree_kangaroo.png" },
-            { id: 7, name: "Ghost Dragon", rarity: "legendary", img: "ghost_dragon.png" },
-            { id: 8, name: "Lava Dragon", rarity: "legendary", img: "lava_dragon.png" },
-            { id: 9, name: "Alicorn", rarity: "legendary", img: "alicorn.png" },
-            { id: 10, name: "Winged Horse", rarity: "legendary", img: "winged_horse.png" },
-            { id: 11, name: "Sugar Glider", rarity: "legendary", img: "sugar_glider.png" },
-            { id: 12, name: "White Amazon", rarity: "legendary", img: "white_amazon.png" },
-            { id: 13, name: "Tortuga de la Isla", rarity: "legendary", img: "tortuga_de_la_isla.png" },
-            { id: 14, name: "Dire Wolf", rarity: "legendary", img: "dire_wolf.png" },
-            { id: 15, name: "Ancient Dragon", rarity: "legendary", img: "ancient_dragon.png" },
-            { id: 16, name: "Axolotl", rarity: "legendary", img: "axolotl.png" },
-            { id: 17, name: "Baku", rarity: "legendary", img: "baku.png" },
-            { id: 18, name: "Black Chow-Chow", rarity: "legendary", img: "black_chow_chow.png" },
-            { id: 19, name: "Cerberus", rarity: "legendary", img: "cerberus.png" },
-            { id: 20, name: "Chameleon", rarity: "legendary", img: "chameleon.png" },
-            { id: 21, name: "Chimera", rarity: "legendary", img: "chimera.png" },
-            { id: 22, name: "Chocolate Chow-Chow", rarity: "legendary", img: "chocolate_chow_chow.png" },
-            { id: 23, name: "Cobra", rarity: "legendary", img: "cobra.png" },
-            { id: 24, name: "Corn Doggo", rarity: "legendary", img: "corn_doggo.png" },
-            { id: 25, name: "Crimson Dragon", rarity: "legendary", img: "crimson_dragon.png" },
-            { id: 26, name: "Dancing Dragon", rarity: "legendary", img: "dancing_dragon.png" },
-            { id: 27, name: "Diamond Butterfly", rarity: "legendary", img: "diamond_butterfly.png" },
-            { id: 28, name: "Diamond Dragon", rarity: "legendary", img: "diamond_dragon.png" },
-            { id: 29, name: "Diamond Griffin", rarity: "legendary", img: "diamond_griffin.png" },
-            { id: 30, name: "Diamond King Penguin", rarity: "legendary", img: "diamond_king_penguin.png" },
-            { id: 31, name: "Diamond Ladybug", rarity: "legendary", img: "diamond_ladybug.png" },
-            { id: 32, name: "Diamond Unicorn", rarity: "legendary", img: "diamond_unicorn.png" },
-            { id: 33, name: "Dragon", rarity: "legendary", img: "dragon.png" },
-            { id: 34, name: "Fallow Deer", rarity: "legendary", img: "fallow_deer.png" },
-            { id: 35, name: "Field Mouse", rarity: "legendary", img: "field_mouse.png" },
-            { id: 36, name: "Firefly", rarity: "legendary", img: "firefly.png" },
-            { id: 37, name: "Frost Fury", rarity: "legendary", img: "frost_fury.png" },
-            { id: 38, name: "Frost Unicorn", rarity: "legendary", img: "frost_unicorn.png" },
-            { id: 39, name: "Goldhorn", rarity: "legendary", img: "goldhorn.png" },
-            { id: 40, name: "Green Pheasant", rarity: "legendary", img: "green_pheasant.png" },
-            { id: 41, name: "Griffin", rarity: "legendary", img: "griffin.png" },
-            { id: 42, name: "Guardian Lion", rarity: "legendary", img: "guardian_lion.png" },
-            { id: 43, name: "Ice Golem", rarity: "legendary", img: "ice_golem.png" },
-            { id: 44, name: "Jousting Horse", rarity: "legendary", img: "jousting_horse.png" },
-            { id: 45, name: "King Bee", rarity: "legendary", img: "king_bee.png" },
-            { id: 46, name: "Kitsune", rarity: "legendary", img: "kitsune.png" },
-            { id: 47, name: "Lavender Dragon", rarity: "legendary", img: "lavender_dragon.png" },
-            { id: 48, name: "Lunar Moon Bear", rarity: "legendary", img: "lunar_moon_bear.png" },
-            { id: 49, name: "Mechapup", rarity: "legendary", img: "mechapup.png" },
-            { id: 50, name: "Nessie", rarity: "legendary", img: "nessie.png" },
-            { id: 51, name: "Ninja Monkey", rarity: "legendary", img: "ninja_monkey.png" },
-            { id: 52, name: "Octopus", rarity: "legendary", img: "octopus.png" },
-            { id: 53, name: "Peacock", rarity: "legendary", img: "peacock.png" },
-            { id: 54, name: "Phoenix", rarity: "legendary", img: "phoenix.png" },
-            { id: 55, name: "Queen Bee", rarity: "legendary", img: "queen_bee.png" },
-            { id: 60, name: "Robo Dog", rarity: "legendary", img: "robo_dog.png" },
-            { id: 61, name: "Shark", rarity: "legendary", img: "shark.png" },
-            { id: 62, name: "Snow Owl", rarity: "legendary", img: "snow_owl.png" },
-            { id: 63, name: "Squid", rarity: "legendary", img: "squid.png" },
-            { id: 64, name: "Sunrise Duckling", rarity: "legendary", img: "sunrise_duckling.png" },
-            { id: 65, name: "T-Rex", rarity: "legendary", img: "t-rex.png" },
-            { id: 66, name: "Unicorn", rarity: "legendary", img: "unicorn.png" },
-            { id: 67, name: "Vampire Dragon", rarity: "legendary", img: "vampire_dragon.png" },
-            { id: 68, name: "White Sand Dollar", rarity: "legendary", img: "white_sand_dollar.png" },
-            { id: 69, name: "Shadow Dragon", rarity: "legendary", img: "shadow_dragon.png" },
-            { id: 70, name: "Frost Dragon", rarity: "legendary", img: "frost_dragon.png" },
-            { id: 71, name: "Giraffe", rarity: "legendary", img: "giraffe.png" },
-            { id: 72, name: "Bat Dragon", rarity: "legendary", img: "bat_dragon.png" },
-            { id: 73, name: "Owl", rarity: "legendary", img: "owl.png" },
-            { id: 74, name: "Parrot", rarity: "legendary", img: "parrot.png" },
-            { id: 75, name: "Evil Unicorn", rarity: "legendary", img: "evil_unicorn.png" },
-            { id: 76, name: "Crow", rarity: "legendary", img: "crow.png" },
-            { id: 77, name: "Arctic Reindeer", rarity: "legendary", img: "arctic_reindeer.png" },
-            { id: 78, name: "Monkey King", rarity: "legendary", img: "monkey_king.png" },
-            { id: 79, name: "Albino Monkey", rarity: "legendary", img: "albino_monkey.png" },
-            { id: 80, name: "Blue Dog", rarity: "rare", img: "blue_dog.png" },
-            { id: 81, name: "Pink Cat", rarity: "rare", img: "pink_cat.png" },
-            { id: 82, name: "Hedgehog", rarity: "ultra-rare", img: "hedgehog.png" },
-            { id: 83, name: "Dalmatian", rarity: "ultra-rare", img: "dalmatian.png" },
-            { id: 84, name: "Flamingo", rarity: "ultra-rare", img: "flamingo.png" },
-            { id: 85, name: "Lion", rarity: "ultra-rare", img: "lion.png" },
-            { id: 86, name: "Elephant", rarity: "rare", img: "elephant.png" },
-            { id: 87, name: "Hyena", rarity: "rare", img: "hyena.png" },
-            { id: 88, name: "Shrew", rarity: "rare", img: "shrew.png" },
-            { id: 89, name: "Turkey", rarity: "ultra-rare", img: "turkey.png" },
-            { id: 90, name: "Llama", rarity: "ultra-rare", img: "llama.png" },
-            { id: 91, name: "Zombie Buffalo", rarity: "ultra-rare", img: "zombie_buffalo.png" },
-            { id: 92, name: "Platypus", rarity: "ultra-rare", img: "platypus.png" },
-            { id: 93, name: "Crocodile", rarity: "ultra-rare", img: "crocodile.png" },
-            { id: 94, name: "Cow", rarity: "rare", img: "cow.png" },
-            { id: 95, name: "Pig", rarity: "rare", img: "pig.png" },
-            { id: 96, name: "Brown Bear", rarity: "rare", img: "brown_bear.png" },
-            { id: 97, name: "Polar Bear", rarity: "rare", img: "polar_bear.png" },
-            { id: 98, name: "Arctic Fox", rarity: "ultra-rare", img: "arctic_fox.png" },
-            { id: 99, name: "Swan", rarity: "rare", img: "swan.png" },
-            { id: 100, name: "Puffin", rarity: "ultra-rare", img: "puffin.png" }
-            // Можна додати ще 50+ штук за таким же шаблоном
-        ];
-
-        // --- ТРАНСЛЕЙТЕР (РОЗШИРЕНИЙ) ---
-        // Сюди дописуй переклади для id вище
-        Object.assign(translations.ua.pets, {
-            "Ancient Dragon": "Стародавній Дракон",
-            "Axolotl": "Аксолотль",
-            "Baku": "Баку",
-            "Black Chow-Chow": "Чорний Чау-чау",
-            "Cerberus": "Цербер",
-            "Chameleon": "Хамелеон",
-            "Chimera": "Хімера",
-            "Chocolate Chow-Chow": "Шоколадний Чау-чау",
-            "Cobra": "Кобра",
-            "Corn Doggo": "Кукурудзяний Пес",
-            "Crimson Dragon": "Багряний Дракон",
-            "Dancing Dragon": "Танцюючий Дракон",
-            "Diamond Butterfly": "Алмазний Метелик",
-            "Diamond Dragon": "Алмазний Дракон",
-            "Diamond Griffin": "Алмазний Гриффон",
-            "Diamond Unicorn": "Алмазний Юнікорн",
-            "Dragon": "Дракон",
-            "Fallow Deer": "Лань",
-            "Field Mouse": "Польова Миша",
-            "Firefly": "Світлячок",
-            "Frost Fury": "Фрост Фурія",
-            "Frost Unicorn": "Фрост Юнікорн",
-            "Goldhorn": "Золоторіг",
-            "Griffin": "Гриффон",
-            "Ice Golem": "Крижаний Голем",
-            "King Bee": "Король Бджіл",
-            "Kitsune": "Кіцуне",
-            "Octopus": "Восьминіг",
-            "Phoenix": "Фенікс",
-            "Shark": "Акула",
-            "Snow Owl": "Сніжна Сова",
-            "T-Rex": "Ті-Рекс",
-            "Unicorn": "Юнікорн",
-            "Shadow Dragon": "Тіньовий Дракон",
-            "Frost Dragon": "Фрост Дракон",
-            "Giraffe": "Жираф",
-            "Bat Dragon": "Бет Дракон",
-            "Owl": "Сова",
-            "Cow": "Корова"
-        });
-
-        Object.assign(translations.ru.pets, {
-            "Ancient Dragon": "Древний Дракон",
-            "Axolotl": "Аксолотль",
-            "Baku": "Баку",
-            "Black Chow-Chow": "Черный Чау-чау",
-            "Cerberus": "Цербер",
-            "Chameleon": "Хамелеон",
-            "Chimera": "Химера",
-            "Chocolate Chow-Chow": "Шоколадный Чау-чау",
-            "Cobra": "Кобра",
-            "Corn Doggo": "Кукурузный Пес",
-            "Crimson Dragon": "Багровый Дракон",
-            "Dancing Dragon": "Танцующий Дракон",
-            "Diamond Butterfly": "Алмазная Бабочка",
-            "Diamond Dragon": "Алмазный Дракон",
-            "Diamond Griffin": "Алмазный Гриффон",
-            "Diamond Unicorn": "Алмазный Юникорн",
-            "Dragon": "Дракон",
-            "Fallow Deer": "Лань",
-            "Field Mouse": "Полевая Мышь",
-            "Firefly": "Светлячок",
-            "Frost Fury": "Фрост Фурия",
-            "Frost Unicorn": "Фрост Юникорн",
-            "Goldhorn": "Золоторог",
-            "Griffin": "Гриффон",
-            "Ice Golem": "Ледяной Голем",
-            "King Bee": "Король Пчел",
-            "Kitsune": "Кицунэ",
-            "Octopus": "Осьминог",
-            "Phoenix": "Феникс",
-            "Shark": "Акула",
-            "Snow Owl": "Снежная Сова",
-            "T-Rex": "Ти-Рекс",
-            "Unicorn": "Юникорн",
-            "Shadow Dragon": "Теневой Дракон",
-            "Frost Dragon": "Фрост Дракон",
-            "Giraffe": "Жираф",
-            "Bat Dragon": "Бэт Дракон",
-            "Owl": "Сова",
-            "Cow": "Корова"
-        });
