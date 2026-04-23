@@ -3,160 +3,214 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EliteStore Ultimate — Adopt Me Marketplace</title>
+    <title>EliteStore Premium — Professional Marketplace</title>
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Roboto:wght@300;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet">
     
     <style>
-        /* --- СИСТЕМНІ ЗМІННІ (THEMING) --- */
+        /* ELITE STORE CUSTOM CSS FRAMEWORK 
+           VERSION: 2.1.0 
+        */
+
         :root {
-            --bg-deep: #080a10;
-            --bg-side: #0f121d;
-            --bg-card: #161a26;
-            --accent: #7b61ff;
+            --primary-bg: #0a0b10;
+            --secondary-bg: #12141d;
+            --accent-color: #7b61ff;
             --accent-glow: rgba(123, 97, 255, 0.4);
-            --text-white: #ffffff;
-            --text-gray: #8b92a5;
-            --green: #2ecc71;
-            --blue: #3498db;
-            --gold: #f1c40f;
-            --red: #e74c3c;
-            --gradient-primary: linear-gradient(135deg, #7b61ff 0%, #a289ff 100%);
-            --shadow: 0 10px 30px rgba(0,0,0,0.5);
-            --border: 1px solid rgba(255,255,255,0.05);
+            --card-bg: #1a1d29;
+            --card-border: rgba(255, 255, 255, 0.05);
+            --text-main: #ffffff;
+            --text-secondary: #949ba4;
+            --success-color: #00c2a8;
+            --danger-color: #ff4d4d;
+            --tg-button: #0088cc;
+            --gradient-sidebar: linear-gradient(180deg, #12141d 0%, #0a0b10 100%);
+            --transition-speed: 0.3s;
         }
 
-        /* --- ГЛОБАЛЬНІ СТИЛІ --- */
-        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
         body {
-            background-color: var(--bg-deep);
-            color: var(--text-white);
+            background-color: var(--primary-bg);
+            color: var(--text-main);
             font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
             display: flex;
             min-height: 100vh;
-            overflow-x: hidden;
         }
 
-        /* --- БОКОВА ПАНЕЛЬ (SIDEBAR) --- */
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--primary-bg); }
+        ::-webkit-scrollbar-thumb { 
+            background: var(--secondary-bg); 
+            border-radius: 10px;
+            border: 2px solid var(--primary-bg);
+        }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent-color); }
+
+        /* --- SIDEBAR LAYOUT --- */
         .sidebar {
-            width: 320px;
-            background: var(--bg-side);
-            padding: 40px 25px;
+            width: 300px;
+            background: var(--gradient-sidebar);
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            border-right: 1px solid var(--card-border);
             display: flex;
             flex-direction: column;
-            position: fixed;
-            height: 100vh;
-            border-right: var(--border);
+            padding: 35px 25px;
             z-index: 1000;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: transform var(--transition-speed);
         }
 
-        .sidebar .brand {
+        .sidebar-header {
             display: flex;
             align-items: center;
             gap: 15px;
             margin-bottom: 50px;
-            padding-left: 10px;
+            padding: 0 10px;
         }
 
-        .brand-logo {
-            width: 45px;
-            height: 45px;
-            background: var(--gradient-primary);
+        .logo-box {
+            width: 42px;
+            height: 42px;
+            background: var(--accent-color);
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
+            font-size: 22px;
             box-shadow: 0 0 20px var(--accent-glow);
         }
 
-        .brand-name {
-            font-size: 22px;
+        .logo-text {
+            font-size: 20px;
             font-weight: 800;
-            letter-spacing: 1px;
-            background: var(--gradient-primary);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            background: linear-gradient(to right, #fff, var(--accent-color));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        .nav-section { margin-bottom: 35px; }
-        .nav-section-title {
+        /* --- NAVIGATION --- */
+        .nav-group {
+            margin-bottom: 30px;
+        }
+
+        .nav-label {
             font-size: 11px;
-            color: var(--text-gray);
+            color: var(--text-secondary);
             text-transform: uppercase;
             letter-spacing: 2px;
             margin-bottom: 15px;
-            padding-left: 15px;
+            display: block;
+            padding-left: 10px;
         }
 
-        .nav-link {
+        .menu-item {
             width: 100%;
-            padding: 14px 18px;
-            margin-bottom: 8px;
+            padding: 14px 20px;
+            margin-bottom: 10px;
             border: none;
-            border-radius: 15px;
+            border-radius: 16px;
             background: transparent;
-            color: var(--text-gray);
+            color: var(--text-secondary);
             font-size: 15px;
             font-weight: 600;
             display: flex;
             align-items: center;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all var(--transition-speed);
+            text-decoration: none;
         }
 
-        .nav-link i { margin-right: 15px; font-size: 18px; width: 25px; text-align: center; }
-        .nav-link:hover { background: rgba(255,255,255,0.03); color: var(--text-white); }
-        .nav-link.active {
-            background: var(--accent);
+        .menu-item i {
+            margin-right: 15px;
+            font-size: 18px;
+            transition: transform 0.3s;
+        }
+
+        .menu-item:hover {
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--text-main);
+            transform: translateX(5px);
+        }
+
+        .menu-item.active {
+            background: var(--accent-color);
             color: white;
-            box-shadow: 0 10px 20px rgba(123, 97, 255, 0.3);
+            box-shadow: 0 10px 25px var(--accent-glow);
         }
 
-        /* --- КАСТОМІЗАЦІЯ --- */
-        .theme-panel {
-            background: rgba(255,255,255,0.03);
+        .menu-item.active i { transform: scale(1.1); }
+
+        /* --- THEME CUSTOMIZER --- */
+        .sidebar-bottom {
+            margin-top: auto;
+        }
+
+        .theme-picker {
+            background: var(--secondary-bg);
             border-radius: 20px;
             padding: 20px;
-            margin-top: auto;
-            border: var(--border);
+            margin-bottom: 25px;
+            border: 1px solid var(--card-border);
         }
 
-        .color-grid {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 10px;
-            margin-top: 12px;
+        .theme-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 15px;
+            text-align: center;
+            display: block;
         }
 
-        .color-option {
-            width: 32px;
-            height: 32px;
-            border-radius: 10px;
-            cursor: pointer;
-            border: 2px solid rgba(255,255,255,0.1);
-            transition: transform 0.2s;
-        }
-
-        .color-option:hover { transform: scale(1.15) rotate(5deg); }
-
-        /* --- МОВНИЙ ПЕРЕМИКАЧ --- */
-        .lang-footer {
+        .colors-row {
             display: flex;
-            gap: 12px;
-            margin-top: 25px;
+            justify-content: space-between;
+            gap: 8px;
         }
 
-        .lang-toggle {
+        .color-dot {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: 0.2s;
+        }
+
+        .color-dot:hover { transform: scale(1.2); }
+        .color-dot.active { border-color: white; transform: scale(1.1); }
+
+        /* --- LANGUAGE SELECTOR --- */
+        .lang-switcher {
+            display: flex;
+            gap: 10px;
+        }
+
+        .lang-btn {
             flex: 1;
             padding: 12px;
-            border-radius: 12px;
-            border: var(--border);
-            background: var(--bg-card);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            background: var(--secondary-bg);
             color: white;
             cursor: pointer;
             font-weight: 700;
+            font-size: 13px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -164,363 +218,694 @@
             transition: 0.3s;
         }
 
-        .lang-toggle:hover { border-color: var(--accent); }
-        .lang-toggle.active { background: rgba(123, 97, 255, 0.15); border-color: var(--accent); }
-
-        /* --- ОСНОВНИЙ КОНТЕНТ --- */
-        .main-wrapper {
-            margin-left: 320px;
-            padding: 60px;
-            width: calc(100% - 320px);
+        .lang-btn.active {
+            border-color: var(--accent-color);
+            background: rgba(123, 97, 255, 0.1);
         }
 
-        .header-tools {
+        /* --- MAIN CONTENT AREA --- */
+        .main-content {
+            margin-left: 300px;
+            padding: 50px;
+            width: calc(100% - 300px);
+            transition: margin-left 0.3s;
+        }
+
+        /* Top Bar */
+        .top-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 50px;
         }
 
-        .search-wrapper {
+        .search-container {
             position: relative;
             width: 100%;
-            max-width: 600px;
+            max-width: 500px;
         }
 
-        .search-wrapper i {
+        .search-container i {
             position: absolute;
             left: 20px;
             top: 50%;
             transform: translateY(-50%);
-            color: var(--text-gray);
+            color: var(--text-secondary);
             font-size: 18px;
         }
 
-        .main-search {
+        .search-input {
             width: 100%;
             padding: 18px 25px 18px 55px;
             border-radius: 20px;
-            border: var(--border);
-            background: var(--bg-side);
+            border: 1px solid var(--card-border);
+            background: var(--secondary-bg);
             color: white;
             font-size: 16px;
-            outline: none;
+            font-family: inherit;
             transition: 0.3s;
         }
 
-        .main-search:focus { border-color: var(--accent); box-shadow: 0 0 15px var(--accent-glow); }
+        .search-input:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 20px rgba(123, 97, 255, 0.15);
+        }
 
-        /* --- ГРІД ТОВАРІВ --- */
+        /* Product Grid */
         .pet-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 35px;
+            gap: 30px;
         }
 
-        .pet-item {
-            background: var(--bg-card);
+        /* Pet Card Styles */
+        .pet-card {
+            background: var(--card-bg);
             border-radius: 30px;
             padding: 30px;
             text-align: center;
-            transition: all 0.4s ease;
-            border: var(--border);
+            border: 1px solid var(--card-border);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
-            animation: fadeIn 0.5s ease backwards;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .pet-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, var(--accent-glow) 0%, transparent 70%);
+            opacity: 0;
+            transition: 0.4s;
+            z-index: 1;
+        }
 
-        .pet-item:hover {
+        .pet-card:hover {
             transform: translateY(-15px);
-            border-color: var(--accent);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            border-color: var(--accent-color);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
         }
 
-        .badge {
+        .pet-card:hover::before { opacity: 0.3; }
+
+        .rarity-tag {
             position: absolute;
             top: 20px;
             right: 20px;
-            padding: 6px 12px;
+            padding: 6px 14px;
             border-radius: 10px;
             font-size: 10px;
             font-weight: 800;
+            letter-spacing: 1px;
             text-transform: uppercase;
+            z-index: 5;
         }
 
-        .badge.leg { background: rgba(241, 196, 15, 0.15); color: var(--gold); }
-        .badge.ultra { background: rgba(123, 97, 255, 0.15); color: var(--accent); }
+        .rarity-legendary { background: rgba(255, 170, 0, 0.1); color: #ffaa00; }
+        .rarity-common { background: rgba(150, 150, 150, 0.1); color: #969696; }
 
-        .item-image {
-            width: 190px;
-            height: 190px;
+        .pet-img {
+            width: 180px;
+            height: 180px;
             object-fit: contain;
-            margin: 0 auto 25px;
-            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
-            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            margin: 15px auto 25px;
+            z-index: 5;
+            filter: drop-shadow(0 15px 25px rgba(0,0,0,0.5));
+            transition: 0.5s;
         }
 
-        .pet-item:hover .item-image { transform: scale(1.1) rotate(5deg); }
+        .pet-card:hover .pet-img { transform: scale(1.1) rotate(5deg); }
 
-        .item-name {
+        .pet-title {
             font-size: 20px;
             font-weight: 700;
             margin-bottom: 25px;
-            min-height: 50px;
-            line-height: 1.3;
+            z-index: 5;
+            min-height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .action-btn {
-            background: var(--gradient-primary);
+        /* SELL BUTTON (THE FAMOUS "ПРОДАТЬ") */
+        .sell-button {
+            background: var(--tg-button);
             color: white;
             border: none;
             width: 100%;
             padding: 16px;
             border-radius: 18px;
-            cursor: pointer;
+            font-size: 16px;
             font-weight: 800;
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 12px;
-            font-size: 15px;
-            box-shadow: 0 5px 15px rgba(123, 97, 255, 0.2);
+            transition: 0.3s;
+            z-index: 5;
+            margin-top: auto;
+            text-decoration: none;
         }
 
-        /* --- ПОВІДОМЛЕННЯ --- */
-        .toast {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: var(--bg-card);
-            border-left: 5px solid var(--accent);
-            padding: 20px 30px;
-            border-radius: 15px;
-            box-shadow: var(--shadow);
+        .sell-button i { font-size: 18px; }
+        .sell-button:hover {
+            filter: brightness(1.1);
+            transform: scale(1.02);
+            box-shadow: 0 10px 20px rgba(0, 136, 204, 0.3);
+        }
+
+        /* Support Button Animation */
+        .support-pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(123, 97, 255, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(123, 97, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(123, 97, 255, 0); }
+        }
+
+        /* --- MOBILE MENU --- */
+        .mobile-toggle {
             display: none;
-            z-index: 9999;
-            animation: slideIn 0.4s ease forwards;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 2000;
+            background: var(--accent-color);
+            border: none;
+            padding: 12px;
+            border-radius: 12px;
+            color: white;
+            font-size: 20px;
         }
 
-        @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
-
-        /* --- АДАПТИВНІСТЬ --- */
-        @media (max-width: 1100px) {
-            .sidebar { width: 100px; padding: 30px 15px; }
-            .brand-name, .nav-link span, .nav-section-title, .theme-panel, .lang-toggle span { display: none; }
-            .main-wrapper { margin-left: 100px; width: calc(100% - 100px); padding: 30px; }
-            .nav-link { justify-content: center; padding: 18px; }
-            .nav-link i { margin: 0; font-size: 22px; }
+        @media (max-width: 1000px) {
+            .sidebar { transform: translateX(-100%); width: 280px; }
+            .sidebar.open { transform: translateX(0); }
+            .main-content { margin-left: 0; width: 100%; padding: 25px; }
+            .mobile-toggle { display: block; }
+            .top-header { flex-direction: column; gap: 20px; align-items: flex-start; margin-top: 50px; }
+            .search-container { max-width: 100%; }
         }
     </style>
 </head>
 <body>
 
-<aside class="sidebar">
-    <div class="brand">
-        <div class="brand-logo"><i class="fas fa-gem"></i></div>
-        <div class="brand-name">ELITE STORE</div>
-    </div>
+    <button class="mobile-toggle" id="menuToggle">
+        <i class="fas fa-bars"></i>
+    </button>
 
-    <div class="nav-section">
-        <div class="nav-section-title" data-tr="menu">Меню</div>
-        <button class="nav-link active" onclick="filterCategory('all')">
-            <i class="fas fa-th-large"></i> <span data-tr="all_pets">Усі пети</span>
-        </button>
-        <button class="nav-link" onclick="filterCategory('legendary')">
-            <i class="fas fa-crown"></i> <span data-tr="legendary">Легендарні</span>
-        </button>
-        <button class="nav-link" onclick="openSupport()">
-            <i class="fas fa-headset"></i> <span data-tr="support">Підтримка</span>
-        </button>
-    </div>
-
-    <div class="theme-panel">
-        <div class="nav-section-title" data-tr="theme">Колір сайту</div>
-        <div class="color-grid">
-            <div class="color-option" style="background: #7b61ff;" onclick="updateTheme('#7b61ff')"></div>
-            <div class="color-option" style="background: #00c2a8;" onclick="updateTheme('#00c2a8')"></div>
-            <div class="color-option" style="background: #ff765e;" onclick="updateTheme('#ff765e')"></div>
-            <div class="color-option" style="background: #2ecc71;" onclick="updateTheme('#2ecc71')"></div>
-            <div class="color-option" style="background: #f1c40f;" onclick="updateTheme('#f1c40f')"></div>
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo-box"><i class="fas fa-paw"></i></div>
+            <div class="logo-text">Elite Store</div>
         </div>
-    </div>
 
-    <div class="lang-footer">
-        <button class="lang-toggle active" id="btn-ua" onclick="setLang('ua')">
-            <img src="https://flagcdn.com/w20/ua.png" alt="UA"> <span>UA</span>
-        </button>
-        <button class="lang-toggle" id="btn-ru" onclick="setLang('ru')">
-            <img src="https://flagcdn.com/w20/ru.png" alt="RU"> <span>RU</span>
-        </button>
-    </div>
-</aside>
-
-<main class="main-wrapper">
-    <div class="header-tools">
-        <div class="search-wrapper">
-            <i class="fas fa-search"></i>
-            <input type="text" class="main-search" id="petSearch" placeholder="Шукати по назві..." oninput="handleSearch()">
+        <div class="nav-group">
+            <span class="nav-label" data-lang="nav_main">Навігація</span>
+            <button class="menu-item active" onclick="changeCategory('all')">
+                <i class="fas fa-grid-2"></i> <span data-lang="all_pets">Усі пети</span>
+            </button>
+            <button class="menu-item" onclick="openSupport()">
+                <i class="fas fa-headset support-pulse"></i> <span data-lang="support">Підтримка</span>
+            </button>
         </div>
-    </div>
 
-    <div class="pet-grid" id="container">
-        </div>
-</main>
+        <div class="sidebar-bottom">
+            <div class="theme-picker">
+                <span class="theme-title" data-lang="site_color">КОЛІР САЙТУ</span>
+                <div class="colors-row">
+                    <div class="color-dot active" style="background: #7b61ff;" onclick="setAccent('#7b61ff', this)"></div>
+                    <div class="color-dot" style="background: #00c2a8;" onclick="setAccent('#00c2a8', this)"></div>
+                    <div class="color-dot" style="background: #ff765e;" onclick="setAccent('#ff765e', this)"></div>
+                    <div class="color-dot" style="background: #2196f3;" onclick="setAccent('#2196f3', this)"></div>
+                    <div class="color-dot" style="background: #ffc107;" onclick="setAccent('#ffc107', this)"></div>
+                </div>
+            </div>
 
-<div class="toast" id="toast">Повідомлення відправлено!</div>
-
-<script>
-    /* --- ВЕЛИКА БАЗА ДАНИХ (60+ позицій) --- */
-    const DATABASE = [
-        // LEGENDARY SECTION
-        { id: 1, type: 'legendary', img: 'april_fools_2022_mechapup.png', ua: 'Мехапап 2022', ru: 'Мехапап 2022' },
-        { id: 2, type: 'legendary', img: 'arctic_reindeer.png', ua: 'Арктичний Олень', ru: 'Арктический Олень' },
-        { id: 3, type: 'legendary', img: 'bat_dragon.png', ua: 'Бет Дракон', ru: 'Бэт Дракон' },
-        { id: 4, type: 'legendary', img: 'crow.png', ua: 'Ворона', ru: 'Ворона' },
-        { id: 5, type: 'legendary', img: 'evil_unicorn.png', ua: 'Злий Юнікорн', ru: 'Злой Юникорн' },
-        { id: 6, type: 'legendary', img: 'frost_fury.png', ua: 'Фрост Фурія', ru: 'Фрост Фурия' },
-        { id: 7, type: 'legendary', img: 'giraffe.png', ua: 'Жираф', ru: 'Жираф' },
-        { id: 8, type: 'legendary', img: 'owl.png', ua: 'Сова', ru: 'Сова' },
-        { id: 9, type: 'legendary', img: 'parrot.png', ua: 'Папуга', ru: 'Попугай' },
-        { id: 10, type: 'legendary', img: 'strawberry_shortcake_bat_dragon.png', ua: 'Полуничний Бет Дракон', ru: 'Клубничный Бэт Дракон' },
-        { id: 11, type: 'legendary', img: 'billy_goat.png', ua: 'Цап Біллі', ru: 'Козел Билли' },
-        { id: 12, type: 'legendary', img: 'ice_moth_dragon.png', ua: 'Крижана Міль', ru: 'Ледяная Моль' },
-        { id: 13, type: 'legendary', img: 'leviathan.png', ua: 'Левіафан', ru: 'Левиафан' },
-        { id: 14, type: 'legendary', img: 'naga_dragon.png', ua: 'Нага Дракон', ru: 'Нага Дракон' },
-        { id: 15, type: 'legendary', img: 'tree_kangaroo.png', ua: 'Деревне Кенгуру', ru: 'Древесное Кенгуру' },
-        { id: 16, type: 'legendary', img: 'ghost_dragon.png', ua: 'Примарний Дракон', ru: 'Призрачный Дракон' },
-        { id: 17, type: 'legendary', img: 'lava_dragon.png', ua: 'Лавовий Дракон', ru: 'Лавовый Дракон' },
-        { id: 18, type: 'legendary', img: 'alicorn.png', ua: 'Алікорн', ru: 'Аликорн' },
-        { id: 19, type: 'legendary', img: 'winged_horse.png', ua: 'Крилатий Кінь', ru: 'Крылатая Лошадь' },
-        { id: 20, type: 'legendary', img: 'sugar_glider.png', ua: 'Цукрова Летяга', ru: 'Сахарный Поссум' },
-        { id: 21, type: 'legendary', img: 'dancing_dragon.png', ua: 'Танцюючий Дракон', ru: 'Танцующий Дракон' },
-        { id: 22, type: 'legendary', img: 'shadow_dragon.png', ua: 'Тіньовий Дракон', ru: 'Теневой Дракон' },
-        { id: 23, type: 'legendary', img: 'frost_dragon.png', ua: 'Фрост Дракон', ru: 'Фрост Дракон' },
-        { id: 24, type: 'legendary', img: 'blue_dog.png', ua: 'Блакитний Пес', ru: 'Голубой Пес' },
-        { id: 25, type: 'legendary', img: 'pink_cat.png', ua: 'Рожевий Кіт', ru: 'Розовая Кошка' },
-        // Повторюємо для масивності
-        { id: 26, type: 'legendary', img: 'phoenix.png', ua: 'Фенікс', ru: 'Феникс' },
-        { id: 27, type: 'legendary', img: 't-rex.png', ua: 'Ті-Рекс', ru: 'Ти-Рекс' },
-        { id: 28, type: 'legendary', img: 'dodo.png', ua: 'Додо', ru: 'Додо' },
-        { id: 29, type: 'legendary', img: 'shark.png', ua: 'Акула', ru: 'Акула' },
-        { id: 30, type: 'legendary', img: 'octopus.png', ua: 'Восьминіг', ru: 'Осьминог' },
-        // Додай ще 30+ об'єктів аналогічно для досягнення 1000 рядків коду в цілому
-    ];
-
-    /* --- ЛОКАЛІЗАЦІЯ --- */
-    const LANG_DATA = {
-        ua: {
-            menu: "Навігація",
-            all_pets: "Усі товари",
-            legendary: "Легендарні",
-            support: "Підтримка",
-            theme: "Колір інтерфейсу",
-            search: "Шукати по назві...",
-            sell_btn: "ПРОДАТЬ",
-            toast_msg: "Перехід в Telegram...",
-            support_alert: "Напишіть нам в Telegram: @your_tg"
-        },
-        ru: {
-            menu: "Навигация",
-            all_pets: "Все товары",
-            legendary: "Легендарные",
-            support: "Поддержка",
-            theme: "Цвет интерфейса",
-            search: "Искать по названию...",
-            sell_btn: "ПРОДАТЬ",
-            toast_msg: "Переход в Telegram...",
-            support_alert: "Напишите нам в Telegram: @your_tg"
-        }
-    };
-
-    let state = {
-        lang: 'ua',
-        category: 'all',
-        searchQuery: ''
-    };
-
-    /* --- ФУНКЦІОНАЛ --- */
-    function render() {
-        const container = document.getElementById('container');
-        container.innerHTML = '';
-
-        const filtered = DATABASE.filter(item => {
-            const matchesCat = state.category === 'all' || item.type === state.category;
-            const matchesSearch = item[state.lang].toLowerCase().includes(state.searchQuery.toLowerCase());
-            return matchesCat && matchesSearch;
-        });
-
-        filtered.forEach((pet, index) => {
-            const el = document.createElement('div');
-            el.className = 'pet-item';
-            el.style.animationDelay = `${index * 0.05}s`;
-            
-            el.innerHTML = `
-                <div class="badge ${pet.type === 'legendary' ? 'leg' : 'ultra'}">${pet.type}</div>
-                <img src="pets.3/${pet.img}" class="item-image" onerror="this.src='https://via.placeholder.com/200?text=Pet'">
-                <div class="item-name">${pet[state.lang]}</div>
-                <button class="action-btn" onclick="processOrder('${pet[state.lang]}')">
-                    <i class="fab fa-telegram-plane"></i> ${LANG_DATA[state.lang].sell_btn}
+            <div class="lang-switcher">
+                <button class="lang-btn active" id="btn-ua" onclick="setLang('ua')">
+                    <img src="https://flagcdn.com/w20/ua.png" width="18"> <span>UA</span>
                 </button>
-            `;
-            container.appendChild(el);
+                <button class="lang-btn" id="btn-ru" onclick="setLang('ru')">
+                    <img src="https://flagcdn.com/w20/ru.png" width="18"> <span>RU</span>
+                </button>
+            </div>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="top-header">
+            <div class="search-container">
+                <i class="fas fa-search"></i>
+                <input type="text" class="search-input" id="searchPets" placeholder="Пошук пета..." oninput="handleSearch()">
+            </div>
+        </header>
+
+        <div class="pet-grid" id="petGrid">
+            </div>
+    </main>
+
+    <script>
+        // --- DATA ENGINE ---
+        const translations = {
+            ua: {
+                all_pets: "Усі пети",
+                support: "Підтримка",
+                site_color: "КОЛІР САЙТУ",
+                search_placeholder: "Пошук пета...",
+                sell: "ПРОДАТЬ",
+                nav_main: "Навігація",
+                support_msg: "Напишіть нам в Telegram для підтримки!",
+                pets: {
+                    "Strawberry Shortcake Bat Dragon": "Полуничний Бет Дракон",
+                    "Billy Goat": "Цап Біллі",
+                    "Ice Moth Dragon": "Крижана Міль",
+                    "Leviathan": "Левіафан",
+                    "Naga Dragon": "Нага Дракон",
+                    "Tree Kangaroo": "Деревне Кенгуру",
+                    "Ghost Dragon": "Примарний Дракон",
+                    "Lava Dragon": "Лавовий Дракон",
+                    "Alicorn": "Алікорн",
+                    "Winged Horse": "Крилатий Кінь",
+                    "Sugar Glider": "Цукрова Летяга",
+                    "White Amazon": "Біла Амазонка",
+                    "Tortuga de la Isla": "Черепаха Острова",
+                    "Dire Wolf": "Лютововк"
+                }
+            },
+            ru: {
+                all_pets: "Все петы",
+                support: "Поддержка",
+                site_color: "ЦВЕТ САЙТА",
+                search_placeholder: "Поиск пета...",
+                sell: "ПРОДАТЬ",
+                nav_main: "Навигация",
+                support_msg: "Напишите нам в Telegram для поддержки!",
+                pets: {
+                    "Strawberry Shortcake Bat Dragon": "Клубничный Бэт Дракон",
+                    "Billy Goat": "Козел Билли",
+                    "Ice Moth Dragon": "Ледяная Моль",
+                    "Leviathan": "Левиафан",
+                    "Naga Dragon": "Нага Дракон",
+                    "Tree Kangaroo": "Древесное Кенгуру",
+                    "Ghost Dragon": "Призрачный Дракон",
+                    "Lava Dragon": "Лавовый Дракон",
+                    "Alicorn": "Аликорн",
+                    "Winged Horse": "Крылатая Лошадь",
+                    "Sugar Glider": "Сахарный Поссум",
+                    "White Amazon": "Белая Амазонка",
+                    "Tortuga de la Isla": "Черепаха Острова",
+                    "Dire Wolf": "Лютоволк"
+                }
+            }
+        };
+
+        const petsData = [
+            { id: 1, name: "Strawberry Shortcake Bat Dragon", rarity: "legendary", img: "strawberry_shortcake_bat_dragon.png" },
+            { id: 2, name: "Billy Goat", rarity: "legendary", img: "billy_goat.png" },
+            { id: 3, name: "Ice Moth Dragon", rarity: "legendary", img: "ice_moth_dragon.png" },
+            { id: 4, name: "Leviathan", rarity: "legendary", img: "leviathan.png" },
+            { id: 5, name: "Naga Dragon", rarity: "legendary", img: "naga_dragon.png" },
+            { id: 6, name: "Tree Kangaroo", rarity: "legendary", img: "tree_kangaroo.png" },
+            { id: 7, name: "Ghost Dragon", rarity: "legendary", img: "ghost_dragon.png" },
+            { id: 8, name: "Lava Dragon", rarity: "legendary", img: "lava_dragon.png" },
+            { id: 9, name: "Alicorn", rarity: "legendary", img: "alicorn.png" },
+            { id: 10, name: "Winged Horse", rarity: "legendary", img: "winged_horse.png" },
+            { id: 11, name: "Sugar Glider", rarity: "legendary", img: "sugar_glider.png" },
+            { id: 12, name: "White Amazon", rarity: "legendary", img: "white_amazon.png" },
+            { id: 13, name: "Tortuga de la Isla", rarity: "legendary", img: "tortuga_de_la_isla.png" },
+            { id: 14, name: "Dire Wolf", rarity: "legendary", img: "dire_wolf.png" },
+            // ... тут буде ще +50 петів у другій частині ...
+            { id: 15, name: "Ancient Dragon", rarity: "legendary", img: "ancient_dragon.png" },
+            { id: 16, name: "Axolotl", rarity: "legendary", img: "axolotl.png" },
+            { id: 17, name: "Bakū", rarity: "legendary", img: "baku.png" },
+            { id: 18, name: "Black Chow-Chow", rarity: "legendary", img: "black_chow_chow.png" },
+            { id: 19, name: "Cerberus", rarity: "legendary", img: "cerberus.png" },
+            { id: 20, name: "Chameleon", rarity: "legendary", img: "chameleon.png" },
+            { id: 21, name: "Chimera", rarity: "legendary", img: "chimera.png" },
+            { id: 22, name: "Chocolate Chow-Chow", rarity: "legendary", img: "chocolate_chow_chow.png" },
+            { id: 23, name: "Cobra", rarity: "legendary", img: "cobra.png" },
+            { id: 24, name: "Corn Doggo", rarity: "legendary", img: "corn_doggo.png" },
+            { id: 25, name: "Crimson Dragon", rarity: "legendary", img: "crimson_dragon.png" },
+            { id: 26, name: "Dancing Dragon", rarity: "legendary", img: "dancing_dragon.png" },
+            { id: 27, name: "Diamond Butterfly", rarity: "legendary", img: "diamond_butterfly.png" },
+            { id: 28, name: "Diamond Dragon", rarity: "legendary", img: "diamond_dragon.png" },
+            { id: 29, name: "Diamond Griffin", rarity: "legendary", img: "diamond_griffin.png" },
+            { id: 30, name: "Diamond King Penguin", rarity: "legendary", img: "diamond_king_penguin.png" },
+            { id: 31, name: "Diamond Ladybug", rarity: "legendary", img: "diamond_ladybug.png" },
+            { id: 32, name: "Diamond Unicorn", rarity: "legendary", img: "diamond_unicorn.png" },
+            { id: 33, name: "Dragon", rarity: "legendary", img: "dragon.png" },
+            { id: 34, name: "Fallow Deer", rarity: "legendary", img: "fallow_deer.png" },
+            { id: 35, name: "Field Mouse", rarity: "legendary", img: "field_mouse.png" },
+            { id: 36, name: "Firefly", rarity: "legendary", img: "firefly.png" },
+            { id: 37, name: "Frost Fury", rarity: "legendary", img: "frost_fury.png" },
+            { id: 38, name: "Frost Unicorn", rarity: "legendary", img: "frost_unicorn.png" },
+            { id: 39, name: "Goldhorn", rarity: "legendary", img: "goldhorn.png" },
+            { id: 40, name: "Green Pheasant", rarity: "legendary", img: "green_pheasant.png" },
+            { id: 41, name: "Griffin", rarity: "legendary", img: "griffin.png" },
+            { id: 42, name: "Guardian Lion", rarity: "legendary", img: "guardian_lion.png" },
+            { id: 43, name: "Ice Golem", rarity: "legendary", img: "ice_golem.png" },
+            { id: 44, name: "Jousting Horse", rarity: "legendary", img: "jousting_horse.png" },
+            { id: 45, name: "King Bee", rarity: "legendary", img: "king_bee.png" },
+            { id: 46, name: "Kitsune", rarity: "legendary", img: "kitsune.png" },
+            { id: 47, name: "Lavender Dragon", rarity: "legendary", img: "lavender_dragon.png" },
+            { id: 48, name: "Lunar Moon Bear", rarity: "legendary", img: "lunar_moon_bear.png" },
+            { id: 49, name: "Mechapup", rarity: "legendary", img: "mechapup.png" },
+            { id: 50, name: "Nessie", rarity: "legendary", img: "nessie.png" },
+            { id: 51, name: "Ninja Monkey", rarity: "legendary", img: "ninja_monkey.png" },
+            { id: 52, name: "Octopus", rarity: "legendary", img: "octopus.png" },
+            { id: 53, name: "Peacock", rarity: "legendary", img: "peacock.png" },
+            { id: 54, name: "Phoenix", rarity: "legendary", img: "phoenix.png" },
+            { id: 55, name: "Queen Bee", rarity: "legendary", img: "queen_bee.png" },
+            { id: 56, name: "Robo Dog", rarity: "legendary", img: "robo_dog.png" },
+            { id: 57, name: "Shark", rarity: "legendary", img: "shark.png" },
+            { id: 58, name: "Snow Owl", rarity: "legendary", img: "snow_owl.png" },
+            { id: 59, name: "Squid", rarity: "legendary", img: "squid.png" },
+            { id: 60, name: "Sunrise Duckling", rarity: "legendary", img: "sunrise_duckling.png" },
+            { id: 61, name: "T-Rex", rarity: "legendary", img: "t-rex.png" },
+            { id: 62, name: "Unicorn", rarity: "legendary", img: "unicorn.png" },
+            { id: 63, name: "Vampire Dragon", rarity: "legendary", img: "vampire_dragon.png" },
+            { id: 64, name: "White Sand Dollar", rarity: "legendary", img: "white_sand_dollar.png" }
+        ];
+
+        let currentLang = 'ua';
+        let currentCategory = 'all';
+        let searchQuery = '';
+
+        // --- CORE FUNCTIONS ---
+
+        function initStore() {
+            renderPets();
+            updateStaticText();
+            console.log("EliteStore Engine Started...");
+        }
+
+        function setLang(lang) {
+            currentLang = lang;
+            
+            // UI Feedback
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`btn-${lang}`).classList.add('active');
+            
+            updateStaticText();
+            renderPets();
+        }
+
+        function updateStaticText() {
+            const t = translations[currentLang];
+            document.querySelectorAll('[data-lang]').forEach(el => {
+                const key = el.getAttribute('data-lang');
+                if (t[key]) {
+                    el.innerText = t[key];
+                }
+            });
+            document.getElementById('searchPets').placeholder = t.search_placeholder;
+        }
+
+        function setAccent(color, element) {
+            document.documentElement.style.setProperty('--accent-color', color);
+            
+            // Оновлення активної крапки
+            document.querySelectorAll('.color-dot').forEach(dot => dot.classList.remove('active'));
+            element.classList.add('active');
+            
+            // Ефект світіння
+            const glowColor = color + '66'; // Додаємо прозорість
+            document.documentElement.style.setProperty('--accent-glow', glowColor);
+        }
+
+        function handleSearch() {
+            searchQuery = document.getElementById('searchPets').value.toLowerCase();
+            renderPets();
+        }
+
+        function changeCategory(cat) {
+            currentCategory = cat;
+            
+            // Update Active Class
+            document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            
+            renderPets();
+        }
+
+        function renderPets() {
+            const grid = document.getElementById('petGrid');
+            grid.innerHTML = '';
+
+            const filteredPets = petsData.filter(pet => {
+                const translatedName = (translations[currentLang].pets[pet.name] || pet.name).toLowerCase();
+                const matchesSearch = translatedName.includes(searchQuery);
+                const matchesCategory = currentCategory === 'all' || pet.rarity === currentCategory;
+                return matchesSearch && matchesCategory;
+            });
+
+            if (filteredPets.length === 0) {
+                grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 50px; color: var(--text-secondary);">Нічого не знайдено...</div>`;
+                return;
+            }
+
+            filteredPets.forEach(pet => {
+                const displayName = translations[currentLang].pets[pet.name] || pet.name;
+                
+                const card = document.createElement('div');
+                card.className = 'pet-card';
+                card.innerHTML = `
+                    <div class="rarity-tag rarity-${pet.rarity}">${pet.rarity}</div>
+                    <img src="pets.3/${pet.img}" class="pet-img" alt="${pet.name}" onerror="this.src='https://via.placeholder.com/150?text=Pet'">
+                    <h3 class="pet-title">${displayName}</h3>
+                    <button class="sell-button" onclick="sendToTelegram('${displayName}')">
+                        <i class="fab fa-telegram-plane"></i> ${translations[currentLang].sell}
+                    </button>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function sendToTelegram(petName) {
+            const myTg = "@your_username"; // ЗАМІНИ НА СВІЙ ТГ
+            const message = currentLang === 'ua' 
+                ? `Привіт! Я хочу продати: ${petName}` 
+                : `Привет! Я хочу продать: ${petName}`;
+            
+            window.open(`https://t.me/${myTg.replace('@', '')}?text=${encodeURIComponent(message)}`, '_blank');
+        }
+
+        function openSupport() {
+            const myTg = "@your_username"; // ЗАМІНИ НА СВІЙ ТГ
+            alert(translations[currentLang].support_msg);
+            window.open(`https://t.me/${myTg.replace('@', '')}`, '_blank');
+        }
+
+        // Mobile Menu Toggle
+        document.getElementById('menuToggle').addEventListener('click', () => {
+            document.getElementById('sidebar').classList.toggle('open');
         });
-    }
 
-    function setLang(lang) {
-        state.lang = lang;
-        document.querySelectorAll('.lang-toggle').forEach(b => b.classList.remove('active'));
-        document.getElementById(`btn-${lang}`).classList.add('active');
-        
-        // Оновлення текстів
-        document.querySelectorAll('[data-tr]').forEach(el => {
-            const key = el.getAttribute('data-tr');
-            el.innerText = LANG_DATA[lang][key];
+        // Close sidebar on click outside (mobile)
+        document.addEventListener('click', (e) => {
+            const sidebar = document.getElementById('sidebar');
+            const toggle = document.getElementById('menuToggle');
+            if (window.innerWidth <= 1000 && !sidebar.contains(e.target) && !toggle.contains(e.target)) {
+                sidebar.classList.remove('open');
+            }
         });
-        document.getElementById('petSearch').placeholder = LANG_DATA[lang].search;
-        
-        render();
-    }
 
-    function handleSearch() {
-        state.searchQuery = document.getElementById('petSearch').value;
-        render();
-    }
+        // Run Store
+        window.onload = initStore;
 
-    function filterCategory(cat) {
-        state.category = cat;
-        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-        event.currentTarget.classList.add('active');
-        render();
-    }
-
-    function updateTheme(color) {
-        document.documentElement.style.setProperty('--accent', color);
-        showToast(`Колір змінено!`);
-    }
-
-    function processOrder(name) {
-        showToast(LANG_DATA[state.lang].toast_msg);
-        setTimeout(() => {
-            window.open(`https://t.me/your_tg?text=Хочу продати: ${name}`, '_blank');
-        }, 800);
-    }
-
-    function openSupport() {
-        alert(LANG_DATA[state.lang].support_alert);
-        window.open('https://t.me/your_tg', '_blank');
-    }
-
-    function showToast(text) {
-        const t = document.getElementById('toast');
-        t.innerText = text;
-        t.style.display = 'block';
-        setTimeout(() => t.style.display = 'none', 3000);
-    }
-
-    // Ініціалізація
-    setLang('ua');
-</script>
-
+    </script>
 </body>
 </html>
+const petsData = [
+            // --- LEGENDARIES & HIGH VALUE ---
+            { id: 1, name: "Strawberry Shortcake Bat Dragon", rarity: "legendary", img: "strawberry_shortcake_bat_dragon.png" },
+            { id: 2, name: "Billy Goat", rarity: "legendary", img: "billy_goat.png" },
+            { id: 3, name: "Ice Moth Dragon", rarity: "legendary", img: "ice_moth_dragon.png" },
+            { id: 4, name: "Leviathan", rarity: "legendary", img: "leviathan.png" },
+            { id: 5, name: "Naga Dragon", rarity: "legendary", img: "naga_dragon.png" },
+            { id: 6, name: "Tree Kangaroo", rarity: "legendary", img: "tree_kangaroo.png" },
+            { id: 7, name: "Ghost Dragon", rarity: "legendary", img: "ghost_dragon.png" },
+            { id: 8, name: "Lava Dragon", rarity: "legendary", img: "lava_dragon.png" },
+            { id: 9, name: "Alicorn", rarity: "legendary", img: "alicorn.png" },
+            { id: 10, name: "Winged Horse", rarity: "legendary", img: "winged_horse.png" },
+            { id: 11, name: "Sugar Glider", rarity: "legendary", img: "sugar_glider.png" },
+            { id: 12, name: "White Amazon", rarity: "legendary", img: "white_amazon.png" },
+            { id: 13, name: "Tortuga de la Isla", rarity: "legendary", img: "tortuga_de_la_isla.png" },
+            { id: 14, name: "Dire Wolf", rarity: "legendary", img: "dire_wolf.png" },
+            { id: 15, name: "Ancient Dragon", rarity: "legendary", img: "ancient_dragon.png" },
+            { id: 16, name: "Axolotl", rarity: "legendary", img: "axolotl.png" },
+            { id: 17, name: "Baku", rarity: "legendary", img: "baku.png" },
+            { id: 18, name: "Black Chow-Chow", rarity: "legendary", img: "black_chow_chow.png" },
+            { id: 19, name: "Cerberus", rarity: "legendary", img: "cerberus.png" },
+            { id: 20, name: "Chameleon", rarity: "legendary", img: "chameleon.png" },
+            { id: 21, name: "Chimera", rarity: "legendary", img: "chimera.png" },
+            { id: 22, name: "Chocolate Chow-Chow", rarity: "legendary", img: "chocolate_chow_chow.png" },
+            { id: 23, name: "Cobra", rarity: "legendary", img: "cobra.png" },
+            { id: 24, name: "Corn Doggo", rarity: "legendary", img: "corn_doggo.png" },
+            { id: 25, name: "Crimson Dragon", rarity: "legendary", img: "crimson_dragon.png" },
+            { id: 26, name: "Dancing Dragon", rarity: "legendary", img: "dancing_dragon.png" },
+            { id: 27, name: "Diamond Butterfly", rarity: "legendary", img: "diamond_butterfly.png" },
+            { id: 28, name: "Diamond Dragon", rarity: "legendary", img: "diamond_dragon.png" },
+            { id: 29, name: "Diamond Griffin", rarity: "legendary", img: "diamond_griffin.png" },
+            { id: 30, name: "Diamond King Penguin", rarity: "legendary", img: "diamond_king_penguin.png" },
+            { id: 31, name: "Diamond Ladybug", rarity: "legendary", img: "diamond_ladybug.png" },
+            { id: 32, name: "Diamond Unicorn", rarity: "legendary", img: "diamond_unicorn.png" },
+            { id: 33, name: "Dragon", rarity: "legendary", img: "dragon.png" },
+            { id: 34, name: "Fallow Deer", rarity: "legendary", img: "fallow_deer.png" },
+            { id: 35, name: "Field Mouse", rarity: "legendary", img: "field_mouse.png" },
+            { id: 36, name: "Firefly", rarity: "legendary", img: "firefly.png" },
+            { id: 37, name: "Frost Fury", rarity: "legendary", img: "frost_fury.png" },
+            { id: 38, name: "Frost Unicorn", rarity: "legendary", img: "frost_unicorn.png" },
+            { id: 39, name: "Goldhorn", rarity: "legendary", img: "goldhorn.png" },
+            { id: 40, name: "Green Pheasant", rarity: "legendary", img: "green_pheasant.png" },
+            { id: 41, name: "Griffin", rarity: "legendary", img: "griffin.png" },
+            { id: 42, name: "Guardian Lion", rarity: "legendary", img: "guardian_lion.png" },
+            { id: 43, name: "Ice Golem", rarity: "legendary", img: "ice_golem.png" },
+            { id: 44, name: "Jousting Horse", rarity: "legendary", img: "jousting_horse.png" },
+            { id: 45, name: "King Bee", rarity: "legendary", img: "king_bee.png" },
+            { id: 46, name: "Kitsune", rarity: "legendary", img: "kitsune.png" },
+            { id: 47, name: "Lavender Dragon", rarity: "legendary", img: "lavender_dragon.png" },
+            { id: 48, name: "Lunar Moon Bear", rarity: "legendary", img: "lunar_moon_bear.png" },
+            { id: 49, name: "Mechapup", rarity: "legendary", img: "mechapup.png" },
+            { id: 50, name: "Nessie", rarity: "legendary", img: "nessie.png" },
+            { id: 51, name: "Ninja Monkey", rarity: "legendary", img: "ninja_monkey.png" },
+            { id: 52, name: "Octopus", rarity: "legendary", img: "octopus.png" },
+            { id: 53, name: "Peacock", rarity: "legendary", img: "peacock.png" },
+            { id: 54, name: "Phoenix", rarity: "legendary", img: "phoenix.png" },
+            { id: 55, name: "Queen Bee", rarity: "legendary", img: "queen_bee.png" },
+            { id: 60, name: "Robo Dog", rarity: "legendary", img: "robo_dog.png" },
+            { id: 61, name: "Shark", rarity: "legendary", img: "shark.png" },
+            { id: 62, name: "Snow Owl", rarity: "legendary", img: "snow_owl.png" },
+            { id: 63, name: "Squid", rarity: "legendary", img: "squid.png" },
+            { id: 64, name: "Sunrise Duckling", rarity: "legendary", img: "sunrise_duckling.png" },
+            { id: 65, name: "T-Rex", rarity: "legendary", img: "t-rex.png" },
+            { id: 66, name: "Unicorn", rarity: "legendary", img: "unicorn.png" },
+            { id: 67, name: "Vampire Dragon", rarity: "legendary", img: "vampire_dragon.png" },
+            { id: 68, name: "White Sand Dollar", rarity: "legendary", img: "white_sand_dollar.png" },
+            { id: 69, name: "Shadow Dragon", rarity: "legendary", img: "shadow_dragon.png" },
+            { id: 70, name: "Frost Dragon", rarity: "legendary", img: "frost_dragon.png" },
+            { id: 71, name: "Giraffe", rarity: "legendary", img: "giraffe.png" },
+            { id: 72, name: "Bat Dragon", rarity: "legendary", img: "bat_dragon.png" },
+            { id: 73, name: "Owl", rarity: "legendary", img: "owl.png" },
+            { id: 74, name: "Parrot", rarity: "legendary", img: "parrot.png" },
+            { id: 75, name: "Evil Unicorn", rarity: "legendary", img: "evil_unicorn.png" },
+            { id: 76, name: "Crow", rarity: "legendary", img: "crow.png" },
+            { id: 77, name: "Arctic Reindeer", rarity: "legendary", img: "arctic_reindeer.png" },
+            { id: 78, name: "Monkey King", rarity: "legendary", img: "monkey_king.png" },
+            { id: 79, name: "Albino Monkey", rarity: "legendary", img: "albino_monkey.png" },
+            { id: 80, name: "Blue Dog", rarity: "rare", img: "blue_dog.png" },
+            { id: 81, name: "Pink Cat", rarity: "rare", img: "pink_cat.png" },
+            { id: 82, name: "Hedgehog", rarity: "ultra-rare", img: "hedgehog.png" },
+            { id: 83, name: "Dalmatian", rarity: "ultra-rare", img: "dalmatian.png" },
+            { id: 84, name: "Flamingo", rarity: "ultra-rare", img: "flamingo.png" },
+            { id: 85, name: "Lion", rarity: "ultra-rare", img: "lion.png" },
+            { id: 86, name: "Elephant", rarity: "rare", img: "elephant.png" },
+            { id: 87, name: "Hyena", rarity: "rare", img: "hyena.png" },
+            { id: 88, name: "Shrew", rarity: "rare", img: "shrew.png" },
+            { id: 89, name: "Turkey", rarity: "ultra-rare", img: "turkey.png" },
+            { id: 90, name: "Llama", rarity: "ultra-rare", img: "llama.png" },
+            { id: 91, name: "Zombie Buffalo", rarity: "ultra-rare", img: "zombie_buffalo.png" },
+            { id: 92, name: "Platypus", rarity: "ultra-rare", img: "platypus.png" },
+            { id: 93, name: "Crocodile", rarity: "ultra-rare", img: "crocodile.png" },
+            { id: 94, name: "Cow", rarity: "rare", img: "cow.png" },
+            { id: 95, name: "Pig", rarity: "rare", img: "pig.png" },
+            { id: 96, name: "Brown Bear", rarity: "rare", img: "brown_bear.png" },
+            { id: 97, name: "Polar Bear", rarity: "rare", img: "polar_bear.png" },
+            { id: 98, name: "Arctic Fox", rarity: "ultra-rare", img: "arctic_fox.png" },
+            { id: 99, name: "Swan", rarity: "rare", img: "swan.png" },
+            { id: 100, name: "Puffin", rarity: "ultra-rare", img: "puffin.png" }
+            // Можна додати ще 50+ штук за таким же шаблоном
+        ];
+
+        // --- ТРАНСЛЕЙТЕР (РОЗШИРЕНИЙ) ---
+        // Сюди дописуй переклади для id вище
+        Object.assign(translations.ua.pets, {
+            "Ancient Dragon": "Стародавній Дракон",
+            "Axolotl": "Аксолотль",
+            "Baku": "Баку",
+            "Black Chow-Chow": "Чорний Чау-чау",
+            "Cerberus": "Цербер",
+            "Chameleon": "Хамелеон",
+            "Chimera": "Хімера",
+            "Chocolate Chow-Chow": "Шоколадний Чау-чау",
+            "Cobra": "Кобра",
+            "Corn Doggo": "Кукурудзяний Пес",
+            "Crimson Dragon": "Багряний Дракон",
+            "Dancing Dragon": "Танцюючий Дракон",
+            "Diamond Butterfly": "Алмазний Метелик",
+            "Diamond Dragon": "Алмазний Дракон",
+            "Diamond Griffin": "Алмазний Гриффон",
+            "Diamond Unicorn": "Алмазний Юнікорн",
+            "Dragon": "Дракон",
+            "Fallow Deer": "Лань",
+            "Field Mouse": "Польова Миша",
+            "Firefly": "Світлячок",
+            "Frost Fury": "Фрост Фурія",
+            "Frost Unicorn": "Фрост Юнікорн",
+            "Goldhorn": "Золоторіг",
+            "Griffin": "Гриффон",
+            "Ice Golem": "Крижаний Голем",
+            "King Bee": "Король Бджіл",
+            "Kitsune": "Кіцуне",
+            "Octopus": "Восьминіг",
+            "Phoenix": "Фенікс",
+            "Shark": "Акула",
+            "Snow Owl": "Сніжна Сова",
+            "T-Rex": "Ті-Рекс",
+            "Unicorn": "Юнікорн",
+            "Shadow Dragon": "Тіньовий Дракон",
+            "Frost Dragon": "Фрост Дракон",
+            "Giraffe": "Жираф",
+            "Bat Dragon": "Бет Дракон",
+            "Owl": "Сова",
+            "Cow": "Корова"
+        });
+
+        Object.assign(translations.ru.pets, {
+            "Ancient Dragon": "Древний Дракон",
+            "Axolotl": "Аксолотль",
+            "Baku": "Баку",
+            "Black Chow-Chow": "Черный Чау-чау",
+            "Cerberus": "Цербер",
+            "Chameleon": "Хамелеон",
+            "Chimera": "Химера",
+            "Chocolate Chow-Chow": "Шоколадный Чау-чау",
+            "Cobra": "Кобра",
+            "Corn Doggo": "Кукурузный Пес",
+            "Crimson Dragon": "Багровый Дракон",
+            "Dancing Dragon": "Танцующий Дракон",
+            "Diamond Butterfly": "Алмазная Бабочка",
+            "Diamond Dragon": "Алмазный Дракон",
+            "Diamond Griffin": "Алмазный Гриффон",
+            "Diamond Unicorn": "Алмазный Юникорн",
+            "Dragon": "Дракон",
+            "Fallow Deer": "Лань",
+            "Field Mouse": "Полевая Мышь",
+            "Firefly": "Светлячок",
+            "Frost Fury": "Фрост Фурия",
+            "Frost Unicorn": "Фрост Юникорн",
+            "Goldhorn": "Золоторог",
+            "Griffin": "Гриффон",
+            "Ice Golem": "Ледяной Голем",
+            "King Bee": "Король Пчел",
+            "Kitsune": "Кицунэ",
+            "Octopus": "Осьминог",
+            "Phoenix": "Феникс",
+            "Shark": "Акула",
+            "Snow Owl": "Снежная Сова",
+            "T-Rex": "Ти-Рекс",
+            "Unicorn": "Юникорн",
+            "Shadow Dragon": "Теневой Дракон",
+            "Frost Dragon": "Фрост Дракон",
+            "Giraffe": "Жираф",
+            "Bat Dragon": "Бэт Дракон",
+            "Owl": "Сова",
+            "Cow": "Корова"
+        });
