@@ -3,1175 +3,749 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EliteStore v3.0 | Professional Asset Management</title>
+    <title>EliteStore Professional — Adopt Me Marketplace</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Orbitron:wght@400;500;700;900&family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;900&display=swap" rel="stylesheet">
     
     <style>
-        /* --- SECTION 1: GLOBAL CSS RESET & NORMALIZE --- */
-        *, *::before, *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            outline: none;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        html {
-            font-size: 16px;
-            scroll-behavior: smooth;
-            -webkit-text-size-adjust: 100%;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-
-        body {
-            background-color: #020408;
-            color: #ffffff;
-            font-family: 'Inter', sans-serif;
-            overflow-x: hidden;
-            line-height: 1.6;
-            display: flex;
-            min-height: 100vh;
-        }
-
-        button {
-            cursor: pointer;
-            border: none;
-            background: none;
-            font-family: inherit;
-            transition: all 0.3s ease;
-        }
-
-        input {
-            font-family: inherit;
-        }
-
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        img {
-            max-width: 100%;
-            display: block;
-        }
-
-        /* --- SECTION 2: DESIGN SYSTEM VARIABLES --- */
+        /* --- 1. CSS ЗМІННІ ТА БАЗОВІ СТИЛІ --- */
         :root {
-            /* Colors */
-            --p-accent: #7b61ff;
-            --p-accent-rgb: 123, 97, 255;
-            --p-accent-glow: rgba(var(--p-accent-rgb), 0.4);
-            --p-accent-soft: rgba(var(--p-accent-rgb), 0.1);
-            
-            --bg-ultra: #020408;
-            --bg-deep: #0a0c12;
-            --bg-panel: #0f121a;
-            --bg-card: #161a24;
-            --bg-glass: rgba(22, 26, 36, 0.7);
-            
-            --text-main: #f5f6f7;
-            --text-dim: #949ba4;
-            --text-muted: #4e5058;
-            
-            /* Gradients */
-            --grad-leg: linear-gradient(135deg, #ff8a00 0%, #da1b1b 100%);
-            --grad-ultra: linear-gradient(135deg, #7b61ff 0%, #00d1ff 100%);
-            --grad-rare: linear-gradient(135deg, #007aff 0%, #00c6ff 100%);
-            --grad-btn: linear-gradient(90deg, #0088cc 0%, #00aaff 100%);
-            --grad-surface: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 100%);
-            
-            /* Borders & Shadows */
-            --border-light: 1px solid rgba(255, 255, 255, 0.08);
-            --border-accent: 1px solid var(--p-accent);
-            --shadow-sm: 0 4px 12px rgba(0,0,0,0.4);
-            --shadow-md: 0 12px 24px rgba(0,0,0,0.6);
-            --shadow-lg: 0 24px 48px rgba(0,0,0,0.8);
-            
-            /* Typography Scale */
-            --fs-xs: 0.75rem;
-            --fs-sm: 0.875rem;
-            --fs-base: 1rem;
-            --fs-lg: 1.125rem;
-            --fs-xl: 1.25rem;
-            --fs-2xl: 1.5rem;
-            --fs-3xl: 2rem;
-            
-            /* Timings */
-            --t-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            --t-normal: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            --t-slow: 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+            /* Початкова фіолетова тема */
+            --accent: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+            --accent-solid: #6c5ce7;
+            --accent-light: #a29bfe;
+            --bg-dark: #05060a;
+            --card-bg: linear-gradient(180deg, #161b22 0%, #0d1117 100%);
+            --sidebar-bg: #0d1117;
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --text-main: #fff;
+            --text-muted: #8b949e;
+            --shadow-main: 0 10px 30px rgba(0,0,0,0.5);
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        /* --- SECTION 3: ADVANCED KEYFRAME ENGINE --- */
-        @keyframes ultraSlideIn {
-            0% { transform: translateX(-100px); opacity: 0; }
-            100% { transform: translateX(0); opacity: 1; }
+        /* Обнулення стилів */
+        * { box-sizing: border-box; margin: 0; padding: 0; outline: none; -webkit-tap-highlight-color: transparent; }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--bg-dark); color: var(--text-main);
+            display: flex; height: 100vh; overflow: hidden;
+            opacity: 0; animation: bodyFadeIn 1s forwards;
         }
 
-        @keyframes ultraFadeUp {
-            0% { transform: translateY(40px) scale(0.95); opacity: 0; }
-            100% { transform: translateY(0) scale(1); opacity: 1; }
-        }
+        /* Анімація завантаження сторінки */
+        @keyframes bodyFadeIn { to { opacity: 1; } }
 
-        @keyframes neonPulse {
-            0% { box-shadow: 0 0 10px var(--p-accent-glow); }
-            50% { box-shadow: 0 0 30px var(--p-accent-glow), 0 0 10px var(--p-accent); }
-            100% { box-shadow: 0 0 10px var(--p-accent-glow); }
-        }
-
-        @keyframes rotate3D {
-            0% { transform: perspective(1000px) rotateY(0deg); }
-            50% { transform: perspective(1000px) rotateY(10deg); }
-            100% { transform: perspective(1000px) rotateY(0deg); }
-        }
-
-        @keyframes floatingPet {
-            0% { transform: translateY(0px) rotate(0deg); }
-            33% { transform: translateY(-15px) rotate(2deg); }
-            66% { transform: translateY(-5px) rotate(-2deg); }
-            100% { transform: translateY(0px) rotate(0deg); }
-        }
-
-        @keyframes shimmerEffect {
-            0% { transform: translateX(-150%); }
-            100% { transform: translateX(150%); }
-        }
-
-        @keyframes modalEnter {
-            0% { opacity: 0; backdrop-filter: blur(0px); }
-            100% { opacity: 1; backdrop-filter: blur(12px); }
-        }
-
-        @keyframes contentEnter {
-            0% { opacity: 0; transform: scale(0.8) translateY(100px); }
-            100% { opacity: 1; transform: scale(1) translateY(0); }
-        }
-
-        @keyframes headerGlow {
-            from { text-shadow: 0 0 5px #fff; }
-            to { text-shadow: 0 0 20px var(--p-accent), 0 0 30px var(--p-accent); }
-        }
-
-        /* --- SECTION 4: SCROLLBAR CUSTOMIZATION --- */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--bg-ultra);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--bg-card);
-            border-radius: 100px;
-            border: 2px solid var(--bg-ultra);
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--p-accent);
-        }
-
-        /* --- SECTION 5: SIDEBAR ARCHITECTURE --- */
+        /* --- 2. БІЧНА ПАНЕЛЬ (SIDEBAR) --- */
         .sidebar {
-            width: 320px;
-            height: 100vh;
-            background-color: var(--bg-panel);
-            position: fixed;
-            left: 0;
-            top: 0;
-            display: flex;
-            flex-direction: column;
-            padding: 40px 24px;
-            border-right: var(--border-light);
-            z-index: 1000;
-            animation: ultraSlideIn 0.8s var(--t-slow);
+            width: 300px; background: var(--sidebar-bg); border-right: 1px solid var(--glass-border);
+            padding: 40px 25px; display: flex; flex-direction: column; z-index: 1000;
+            transition: var(--transition), background 0.5s ease;
         }
 
-        /* Brand Identity */
-        .brand-container {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            margin-bottom: 60px;
-            padding-left: 8px;
+        .logo { 
+            font-weight: 900; font-size: 26px; text-align: center; margin-bottom: 40px; 
+            background: var(--accent); 
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; 
+            text-shadow: 0 0 15px rgba(162, 155, 254, 0.3);
+            cursor: pointer; transition: transform 0.3s ease;
+        }
+        .logo:hover { transform: scale(1.05); }
+
+        /* Пошук */
+        .search-box { position: relative; margin-bottom: 25px; }
+        .search-box input { 
+            width: 100%; background: #05060a; border: 1px solid var(--glass-border); 
+            padding: 14px 14px 14px 45px; border-radius: 12px; color: var(--text-main); font-size: 14px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .search-box input:focus { border-color: var(--accent-solid); box-shadow: 0 0 10px rgba(108, 92, 231, 0.3); }
+        .search-box i { position: absolute; left: 16px; top: 16px; color: var(--accent-solid); font-size: 16px; transition: 0.3s; }
+        .search-box input:focus + i { transform: scale(1.1); color: var(--accent-light); }
+
+        /* Навігація */
+        .nav-link { 
+            padding: 16px 20px; border-radius: 12px; color: var(--text-muted); 
+            text-decoration: none; font-weight: 700; margin-bottom: 12px; 
+            display: flex; align-items: center; gap: 14px; cursor: pointer;
+            transition: var(--transition);
+        }
+        .nav-link:hover { background: rgba(255,255,255,0.04); color: var(--text-main); transform: translateX(8px); }
+        .nav-link.active { background: var(--accent); color: var(--text-main); box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3); }
+        .nav-link i { font-size: 18px; width: 20px; text-align: center; }
+
+        /* --- 3. КАСТОМІЗАЦІЯ (КОЛІР САЙТУ) --- */
+        .customizer-container { margin-top: 25px; padding: 20px; border-radius: 15px; background: rgba(255,255,255,0.02); border: 1px solid var(--glass-border); }
+        .custom-title { font-size: 12px; font-weight: 700; color: var(--text-muted); margin-bottom: 12px; display: block; text-transform: uppercase; letter-spacing: 1px; }
+        
+        .colors-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 15px; }
+        .color-btn { width: 100%; padding-top: 100%; border-radius: 50%; cursor: pointer; border: 3px solid transparent; transition: var(--transition); position: relative; }
+        .color-btn:hover { transform: scale(1.15) rotate(15deg); }
+        .color-btn.active-theme { border-color: #fff; box-shadow: 0 0 10px #fff; }
+
+        .reset-theme-btn { 
+            width: 100%; padding: 12px; font-size: 11px; font-weight: 700; border-radius: 10px; 
+            border: 1px solid var(--glass-border); background: transparent; color: var(--text-muted); 
+            cursor: pointer; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; 
+        }
+        .reset-theme-btn:hover { background: rgba(255,255,255,0.05); color: var(--text-main); border-color: rgba(255,255,255,0.2); }
+
+        /* --- 4. ПЕРЕМИКАЧ МОВ --- */
+        .lang-switcher-sidebar { margin-top: auto; display: flex; gap: 10px; padding-top: 25px; border-top: 1px solid var(--glass-border); }
+        .l-btn { 
+            background: #161b22; border: 1px solid var(--glass-border); color: var(--text-muted); 
+            padding: 12px; border-radius: 10px; cursor: pointer; flex: 1; font-weight: 700; 
+            transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 6px; 
+        }
+        .l-btn:hover { background: rgba(255,255,255,0.04); color: var(--text-main); }
+        .l-btn.active-lang { background: var(--accent-solid); color: #fff; border-color: transparent; }
+
+        /* --- 5. ГОЛОВНИЙ КОНТЕНТ --- */
+        .main { flex: 1; overflow-y: auto; padding: 40px; position: relative; scroll-behavior: smooth; }
+        
+        /* Кнопка Меню (ТРИ ПОЛОСКИ) для мобілок */
+        .mobile-menu-toggle {
+            display: none; position: fixed; top: 20px; left: 20px; z-index: 1100;
+            background: var(--accent); border: none; color: #fff; 
+            padding: 15px; border-radius: 12px; cursor: pointer;
+            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4); transition: 0.3s ease;
+        }
+        .mobile-menu-toggle:hover { transform: scale(1.05); }
+
+        /* Грід з картками */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 30px; padding-bottom: 40px; }
+
+        /* КАРТКА ПЕТА */
+        .card { 
+            background: var(--card-bg); border: 1px solid var(--glass-border); 
+            border-radius: 35px; padding: 30px; text-align: center; 
+            cursor: pointer; position: relative; overflow: hidden;
+            opacity: 0; transform: translateY(30px);
+            animation: cardFadeIn 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+            transition: var(--transition), border-color 0.5s ease;
+        }
+        @keyframes cardFadeIn { to { opacity: 1; transform: translateY(0); } }
+
+        .card:hover { transform: translateY(-12px); border-color: var(--accent-solid); box-shadow: 0 20px 40px rgba(0,0,0,0.6); }
+        
+        /* Ефект бліку на картці */
+        .card::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.03), transparent);
+            transform: rotate(45deg); transition: 0.8s ease;
+        }
+        .card:hover::before { left: 100%; }
+
+        /* Рідкість пета */
+        .rarity-tag { font-size: 10px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; color: #ff7675; margin-bottom: 8px; }
+        .rarity-tag.legendary { color: #ff7675; text-shadow: 0 0 5px rgba(255, 118, 117, 0.5); }
+
+        /* Зображення та Назва */
+        .card img { width: 130px; height: 130px; object-fit: contain; margin-bottom: 15px; filter: drop-shadow(0 5px 15px rgba(0,0,0,0.4)); transition: transform 0.4s ease; }
+        .card:hover img { transform: scale(1.05) rotate(2deg); }
+        
+        .pet-name { font-size: 17px; font-weight: 900; margin-bottom: 20px; color: var(--text-main); min-height: 40px; display: flex; align-items: center; justify-content: center; }
+
+        /* Кнопка "ПРОДАТЬ" */
+        .tg-btn { 
+            background: #0088cc; color: #fff !important; text-decoration: none; 
+            padding: 14px; width: 100%; border-radius: 12px; 
+            display: flex; align-items: center; justify-content: center; gap: 8px; 
+            font-weight: 800; font-size: 11px; text-transform: uppercase; letter-spacing: 1px;
+            transition: var(--transition); border: 1px solid transparent;
+        }
+        .tg-btn:hover { background: #00aaff; box-shadow: 0 5px 15px rgba(0, 136, 204, 0.4); transform: translateY(-2px); }
+        .tg-btn i { font-size: 14px; }
+
+        /* --- 6. МОДАЛЬНІ ВІКНА (ПІДТРИМКА ТА ПЕТИ) --- */
+        .overlay { 
+            position: fixed; inset: 0; background: rgba(0,0,0,0.85); 
+            display: none; justify-content: center; align-items: center; 
+            z-index: 2000; backdrop-filter: blur(10px); 
+            opacity: 0; transition: opacity 0.4s ease;
+        }
+        .overlay.open { opacity: 1; }
+
+        .modal { 
+            background: #161b22; color: var(--text-main); width: 90%; max-width: 450px; 
+            border-radius: 35px; padding: 45px; position: relative; text-align: center; 
+            border: 1px solid var(--glass-border); box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+            transform: scale(0.8) translateY(20px); transition: var(--transition);
+        }
+        .overlay.open .modal { transform: scale(1) translateY(0); }
+
+        .close-btn { 
+            position: absolute; top: 22px; right: 22px; font-size: 26px; cursor: pointer; 
+            color: var(--text-muted); transition: 0.3s; padding: 5px; 
+        }
+        .close-btn:hover { color: #fff; transform: rotate(90deg); }
+
+        /* Стікер для вікна */
+        .info-tag { 
+            background: rgba(108, 92, 231, 0.1); padding: 12px 18px; border-radius: 12px; 
+            margin: 20px 0; font-size: 14px; color: var(--accent-light); font-weight: 700; 
+            border: 1px solid rgba(162, 155, 254, 0.2); 
         }
 
-        .brand-logo {
-            width: 52px;
-            height: 52px;
-            background: var(--grad-ultra);
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            color: #fff;
-            box-shadow: 0 10px 25px var(--p-accent-glow);
-            animation: neonPulse 3s infinite;
+        /* --- 7. ПОВНОЕКРАННЕ МЕНЮ МОВ --- */
+        .lang-modal-overlay {
+            position: fixed; inset: 0; background: rgba(5, 6, 10, 0.98);
+            z-index: 3000; display: none; flex-direction: column; padding: 60px 40px;
+            overflow-y: auto; backdrop-filter: blur(15px);
+            opacity: 0; transition: opacity 0.5s ease;
         }
+        .lang-modal-overlay.open { opacity: 1; display: flex; }
 
-        .brand-name {
-            font-family: var(--font-header);
-            font-size: 26px;
-            font-weight: 900;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            background: linear-gradient(to right, #fff, var(--p-accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .lang-modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; max-width: 1000px; width: 100%; margin-left: auto; margin-right: auto; }
+        .lang-modal-title { font-size: 28px; font-weight: 900; background: var(--accent); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        /* Пошук мов */
+        .lang-search { max-width: 400px; width: 100%; position: relative; }
+        .lang-search input { width: 100%; background: #161b22; border: 1px solid var(--glass-border); padding: 14px 14px 14px 45px; border-radius: 12px; color: #fff; }
+        .lang-search i { position: absolute; left: 16px; top: 16px; color: var(--accent-solid); }
+
+        /* Грід мов */
+        .lang-grid { 
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; 
+            max-width: 1000px; width: 100%; margin-left: auto; margin-right: auto;
+            transform: translateY(30px); transition: transform 0.5s ease;
         }
+        .lang-modal-overlay.open .lang-grid { transform: translateY(0); }
 
-        /* Navigation Menu System */
-        .nav-label {
-            font-size: 11px;
-            font-weight: 900;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            margin-bottom: 24px;
-            padding-left: 12px;
+        /* Кнопка мови */
+        .lang-item {
+            background: #161b22; border: 1px solid var(--glass-border); padding: 18px; 
+            border-radius: 15px; cursor: pointer; display: flex; align-items: center; gap: 12px;
+            transition: var(--transition);
         }
+        .lang-item:hover { background: rgba(255,255,255,0.03); border-color: rgba(255,255,255,0.2); transform: translateY(-5px) scale(1.03); }
+        .lang-item.active-choice { border-color: var(--accent-solid); background: rgba(108, 92, 231, 0.05); }
+        .lang-flag { font-size: 24px; }
+        .lang-name-container { display: flex; flex-direction: column; }
+        .lang-main-name { font-weight: 700; font-size: 15px; color: #fff; }
+        .lang-local-name { font-size: 12px; color: var(--text-muted); font-weight: 300; }
 
-        .nav-group {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-bottom: 40px;
-        }
+        /* --- 8. АДАПТИВАЦІЯ ДЛЯ МОБІЛОК --- */
+        @media (max-width: 768px) {
+            body { position: relative; }
 
-        .nav-item {
-            width: 100%;
-            padding: 16px 20px;
-            border-radius: 18px;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            color: var(--text-dim);
-            font-weight: 700;
-            font-size: 15px;
-            transition: var(--t-normal);
-            border: 1px solid transparent;
-            position: relative;
-            overflow: hidden;
-        }
+            /* Показуємо кнопку МЕНЮ (ТРИ ПОЛОСКИ) */
+            .mobile-menu-toggle { display: block; }
 
-        .nav-item i {
-            font-size: 18px;
-            width: 24px;
-            text-align: center;
-            transition: var(--t-fast);
-        }
-
-        .nav-item:hover {
-            background: rgba(255, 255, 255, 0.03);
-            color: var(--text-main);
-            transform: translateX(8px);
-        }
-
-        .nav-item:hover i {
-            color: var(--p-accent);
-            transform: scale(1.2);
-        }
-
-        .nav-item.active {
-            background: var(--p-accent);
-            color: #fff;
-            box-shadow: 0 12px 24px var(--p-accent-glow);
-        }
-
-        .nav-item.active i {
-            color: #fff;
-        }
-
-        /* Configuration Panel */
-        .sidebar-footer {
-            margin-top: auto;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 28px;
-            padding: 24px;
-            border: var(--border-light);
-        }
-
-        .config-title {
-            font-size: 10px;
-            font-weight: 900;
-            color: var(--text-muted);
-            margin-bottom: 18px;
-            text-align: center;
-            display: block;
-            letter-spacing: 2px;
-        }
-
-        .theme-selector {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 28px;
-        }
-
-        .color-dot {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            cursor: pointer;
-            border: 3px solid transparent;
-            transition: var(--t-fast);
-            position: relative;
-        }
-
-        .color-dot:hover {
-            transform: scale(1.25);
-        }
-
-        .color-dot.active::after {
-            content: '✓';
-            position: absolute;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            color: #fff;
-            font-weight: 900;
-        }
-
-        .lang-switcher {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            background: var(--bg-ultra);
-            padding: 6px;
-            border-radius: 14px;
-            gap: 6px;
-        }
-
-        .lang-btn {
-            padding: 10px;
-            border-radius: 10px;
-            text-align: center;
-            font-size: 12px;
-            font-weight: 800;
-            color: var(--text-muted);
-            transition: var(--t-fast);
-        }
-
-        .lang-btn.active {
-            background: var(--bg-card);
-            color: #fff;
-            box-shadow: var(--shadow-sm);
-        }
-
-        /* --- SECTION 6: MAIN CONTENT STAGE --- */
-        .main-stage {
-            margin-left: 320px;
-            width: calc(100% - 320px);
-            padding: 60px 80px;
-            position: relative;
-            min-height: 100vh;
-        }
-
-        /* Header Engine */
-        .top-navigation {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 60px;
-            animation: ultraFadeUp 0.8s var(--t-slow);
-        }
-
-        .search-engine {
-            position: relative;
-            width: 500px;
-        }
-
-        .search-engine i {
-            position: absolute;
-            left: 24px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-muted);
-            font-size: 20px;
-            transition: var(--t-fast);
-        }
-
-        .search-bar {
-            width: 100%;
-            background-color: var(--bg-panel);
-            border: var(--border-light);
-            padding: 22px 22px 22px 68px;
-            border-radius: 24px;
-            color: #fff;
-            font-size: 16px;
-            font-weight: 500;
-            transition: var(--t-normal);
-        }
-
-        .search-bar:focus {
-            background-color: var(--bg-card);
-            border-color: var(--p-accent);
-            box-shadow: 0 0 40px var(--p-accent-soft);
-        }
-
-        .search-bar:focus + i {
-            color: var(--p-accent);
-        }
-
-        /* --- SECTION 7: PET CARD COMPONENT --- */
-        .asset-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-            gap: 40px;
-        }
-
-        .pet-card {
-            background: var(--bg-card);
-            border-radius: 48px;
-            padding: 48px;
-            position: relative;
-            border: var(--border-light);
-            transition: var(--t-slow);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            animation: ultraFadeUp 0.8s backwards;
-            cursor: default;
-        }
-
-        .pet-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                90deg,
-                transparent,
-                rgba(255, 255, 255, 0.05),
-                transparent
-            );
-            transition: 0.5s;
-        }
-
-        .pet-card:hover {
-            transform: translateY(-15px) scale(1.02);
-            border-color: var(--p-accent);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .pet-card:hover::before {
-            left: 100%;
-            transition: 0.8s;
-        }
-
-        /* Card Content Hierarchy */
-        .rarity-badge {
-            align-self: flex-start;
-            padding: 10px 20px;
-            border-radius: 14px;
-            font-size: 11px;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #fff;
-            margin-bottom: 12px;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .rarity-leg { background: var(--grad-leg); }
-        .rarity-ultra { background: var(--grad-ultra); }
-        .rarity-rare { background: var(--grad-rare); }
-
-        .pet-year-info {
-            font-size: 12px;
-            color: var(--text-muted);
-            font-weight: 700;
-            margin-bottom: 30px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .pet-year-info i { font-size: 10px; color: var(--p-accent); }
-
-        .pet-display {
-            width: 100%;
-            height: 240px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 36px;
-            position: relative;
-        }
-
-        .pet-display img {
-            max-width: 90%;
-            max-height: 90%;
-            object-fit: contain;
-            filter: drop-shadow(0 20px 40px rgba(0,0,0,0.6));
-            transition: var(--t-normal);
-            animation: floatingPet 4s ease-in-out infinite;
-        }
-
-        .pet-card:hover .pet-display img {
-            transform: scale(1.15) rotate(5deg);
-            filter: drop-shadow(0 30px 60px rgba(var(--p-accent-rgb), 0.4));
-        }
-
-        .pet-name-h3 {
-            font-family: var(--font-header);
-            font-size: 24px;
-            font-weight: 900;
-            color: #fff;
-            text-align: center;
-            margin-bottom: 40px;
-            min-height: 72px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            line-height: 1.2;
-        }
-
-        .btn-action-primary {
-            width: 100%;
-            padding: 22px;
-            border-radius: 24px;
-            background: var(--grad-btn);
-            color: #fff;
-            font-weight: 900;
-            font-size: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            box-shadow: 0 10px 20px rgba(0, 136, 204, 0.3);
-            transition: var(--t-normal);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .btn-action-primary:hover {
-            transform: scale(1.05);
-            filter: brightness(1.2);
-            box-shadow: 0 15px 30px rgba(0, 136, 204, 0.5);
-        }
-
-        .btn-action-primary i {
-            font-size: 20px;
-            transition: var(--t-fast);
-        }
-
-        .btn-action-primary:hover i {
-            transform: rotate(-15deg) translateX(5px);
-        }
-
-        /* --- SECTION 8: ULTRA MODAL ENGINE --- */
-        .modal-root {
-            position: fixed;
-            inset: 0;
-            z-index: 9999;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 24px;
-            animation: modalEnter 0.4s forwards;
-        }
-
-        .modal-root.active {
-            display: flex;
-        }
-
-        .modal-backdrop {
-            position: absolute;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.85);
-        }
-
-        .modal-container {
-            width: 100%;
-            max-width: 580px;
-            background: var(--bg-panel);
-            border: var(--border-accent);
-            border-radius: 40px;
-            padding: 64px;
-            position: relative;
-            z-index: 10;
-            text-align: center;
-            box-shadow: 0 0 100px rgba(var(--p-accent-rgb), 0.2);
-            animation: contentEnter 0.5s var(--t-slow) forwards;
-        }
-
-        .modal-close-trigger {
-            position: absolute;
-            top: 32px;
-            right: 32px;
-            font-size: 30px;
-            color: var(--text-muted);
-            transition: var(--t-fast);
-        }
-
-        .modal-close-trigger:hover {
-            color: #fff;
-            transform: rotate(90deg) scale(1.2);
-        }
-
-        .support-graphic {
-            width: 110px;
-            height: 110px;
-            background: var(--p-accent-soft);
-            border-radius: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 44px;
-            color: var(--p-accent);
-            margin: 0 auto 36px;
-            border: 1px solid var(--p-accent-glow);
-        }
-
-        .modal-headline {
-            font-family: var(--font-header);
-            font-size: 32px;
-            font-weight: 900;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .modal-subtext {
-            color: var(--text-dim);
-            font-size: 16px;
-            line-height: 1.8;
-            margin-bottom: 48px;
-        }
-
-        .telegram-cta {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 16px;
-            padding: 26px;
-            background: #24A1DE;
-            border-radius: 24px;
-            color: #fff;
-            font-size: 18px;
-            font-weight: 800;
-            transition: var(--t-normal);
-            box-shadow: 0 10px 25px rgba(36, 161, 222, 0.4);
-        }
-
-        .telegram-cta:hover {
-            transform: scale(1.05) translateY(-5px);
-            filter: brightness(1.1);
-            box-shadow: 0 20px 40px rgba(36, 161, 222, 0.6);
-        }
-
-        /* --- SECTION 9: UTILITY SYSTEM --- */
-        .hidden { display: none !important; }
-        .text-accent { color: var(--p-accent); }
-        .mt-20 { margin-top: 20px; }
-        .glass-effect { backdrop-filter: var(--glass-blur); background: var(--bg-glass); }
-
-        /* --- SECTION 10: RESPONSIVE ADAPTIVITY --- */
-        @media (max-width: 1400px) {
-            .sidebar { width: 100px; padding: 40px 15px; }
-            .brand-name, .nav-label, .nav-item span, .sidebar-footer { display: none; }
-            .nav-item { justify-content: center; padding: 18px; }
-            .nav-item i { font-size: 22px; }
-            .main-stage { margin-left: 100px; width: calc(100% - 100px); padding: 40px; }
-            .search-engine { width: 100%; }
-        }
-
-        @media (max-width: 850px) {
-            body { flex-direction: column; }
-            .sidebar {
-                width: 100%;
-                height: auto;
-                position: relative;
-                flex-direction: row;
-                align-items: center;
-                justify-content: space-between;
-                padding: 20px;
+            /* Ховаємо Sidebar ліворуч */
+            .sidebar { 
+                position: fixed; left: 0; top: 0; bottom: 0; 
+                transform: translateX(-100%); width: 280px; box-shadow: 15px 0 40px rgba(0,0,0,0.7);
                 border-right: none;
-                border-bottom: var(--border-light);
             }
-            .brand-container { margin-bottom: 0; }
-            .nav-section { display: none; }
-            .main-stage { margin-left: 0; width: 100%; padding: 24px; }
-            .top-navigation { margin-bottom: 32px; }
-            .pet-card { padding: 32px; border-radius: 32px; }
-            .pet-name-h3 { font-size: 20px; margin-bottom: 24px; }
-        }
+            /* Sidebar відкритий */
+            .sidebar.open { transform: translateX(0); }
 
-        @media (max-width: 500px) {
-            .modal-container { padding: 40px 24px; border-radius: 30px; }
-            .modal-headline { font-size: 24px; }
-            .asset-grid { grid-template-columns: 1fr; }
+            /* Головний контент */
+            .main { padding: 90px 15px 15px 15px; width: 100%; overflow-x: hidden; }
+            
+            /* Грід: ПО ДВІ КАРТКИ В РЯД */
+            .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; padding-bottom: 20px; }
+
+            /* Картка на мобільці */
+            .card { padding: 18px; border-radius: 20px; }
+            .rarity-tag { font-size: 8px; letter-spacing: 1px; }
+            .card img { width: 90px; height: 90px; margin-bottom: 10px; }
+            .pet-name { font-size: 13px; min-height: 32px; margin-bottom: 12px; font-weight: 700; }
+            .tg-btn { padding: 11px; font-size: 9px; border-radius: 9px; }
+
+            /* Модалки */
+            .modal { padding: 30px 20px; border-radius: 25px; }
+            .close-btn { top: 15px; right: 15px; font-size: 20px; }
+            .modal img { width: 120px !important; }
+            .info-tag { font-size: 12px; padding: 10px; margin: 15px 0; }
+
+            /* Меню мов */
+            .lang-modal-overlay { padding: 40px 15px; }
+            .lang-modal-header { flex-direction: column; gap: 15px; align-items: center; margin-bottom: 25px; }
+            .lang-modal-title { font-size: 22px; }
+            .lang-search { max-width: 100%; }
+            .lang-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
+            .lang-item { padding: 12px; border-radius: 10px; }
+            .lang-main-name { font-size: 13px; }
+            .lang-local-name { font-size: 10px; }
+            
+            /* Фон-затемнення при відкритті Sidebar */
+            .sidebar-overlay { 
+                position: fixed; inset: 0; background: rgba(0,0,0,0.6); 
+                z-index: 999; display: none; opacity: 0; transition: 0.3s;
+                backdrop-filter: blur(3px);
+            }
+            .sidebar-overlay.visible { display: block; opacity: 1; }
+        }
+        
+        /* Для дуже малих екранів */
+        @media (max-width: 350px) {
+            .grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
+<body>
+
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+<button class="mobile-menu-toggle" id="menuToggle" onclick="toggleSidebar()">
+    <i class="fa-solid fa-bars"></i>
+</button>
+
+<div class="sidebar" id="sidebar">
+    <div class="logo" onclick="location.reload()">ELITE STORE</div>
+    
+    <div class="search-box">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="searchInput" oninput="handleSearch()" placeholder="Пошук...">
+    </div>
+
+    <div class="nav-link active" onclick="render(pets); closeSidebar();">
+        <i class="fa-solid fa-paw"></i> <span>Усі пети</span>
+    </div>
+    
+    <div class="nav-link" style="border: 1px solid var(--accent-solid); color: var(--accent-solid);" onclick="openSupport(); closeSidebar();">
+        <i class="fa-solid fa-headset"></i> <span id="side-sup">Підтримка</span>
+    </div>
+
+    <div class="customizer-container">
+        <span class="custom-title">КОЛІР САЙТУ</span>
+        <div class="colors-grid">
+            <div class="color-btn active-theme" id="color-violet" style="background: #6c5ce7; border-color: #6c5ce7;" onclick="setTheme('#6c5ce7', '#a29bfe', 'color-violet')"></div>
+            <div class="color-btn" id="color-teal" style="background: #00b894; border-color: #00b894;" onclick="setTheme('#00b894', '#55efc4', 'color-teal')"></div>
+            <div class="color-btn" id="color-coral" style="background: #e17055; border-color: #e17055;" onclick="setTheme('#e17055', '#fab1a0', 'color-coral')"></div>
+            <div class="color-btn" id="color-blue" style="background: #0984e3; border-color: #0984e3;" onclick="setTheme('#0984e3', '#74b9ff', 'color-blue')"></div>
+            <div class="color-btn" id="color-gold" style="background: #e1b12c; border-color: #e1b12c;" onclick="setTheme('#e1b12c', '#fbc531', 'color-gold')"></div>
+        </div>
+        <button class="reset-theme-btn" onclick="resetTheme()">ПОВЕРНУТИ ЗА ЗАМОВЧУВАННЯМ</button>
+    </div>
+    
+    <div class="lang-switcher-sidebar">
+        <button onclick="setQuickLang('ua')" id="ua-btn" class="l-btn active-lang">
+            <span>🇺🇦</span> UA
+        </button>
+        <button onclick="openAllLanguages()" id="eu-btn" class="l-btn">
+            <span>🌐</span> ALL
+        </button>
+    </div>
+</div>
+
+<div class="main" id="mainContent">
+    <div class="grid" id="catalog">
+        </div>
+</div>
+
+<div class="overlay" id="supportOverlay" onclick="overlayClick(event, 'supportOverlay')">
+    <div class="modal">
+        <i class="fa-solid fa-xmark close-btn" onclick="closeSupport()"></i>
+        <div style="font-size: 55px; color: var(--accent-solid); margin-bottom: 25px;"><i class="fa-solid fa-comments"></i></div>
+        <h2 id="sup-title" style="margin-bottom: 15px; font-weight: 900; font-size: 24px;">Виникли питання?</h2>
+        <p id="sup-desc" style="color: #fff; margin: 20px 0 30px; font-weight: 700; line-height: 1.6; font-size: 15px;"></p>
+        <a href="https://t.me/your_tg" target="_blank" class="tg-btn" style="padding: 16px; font-size: 12px;">
+            <i class="fa-brands fa-telegram"></i> <span>TELEGRAM SUPPORT</span>
+        </a>
+    </div>
+</div>
+
+<div class="overlay" id="petOverlay" onclick="overlayClick(event, 'petOverlay')">
+    <div class="modal">
+        <i class="fa-solid fa-xmark close-btn" onclick="closePet()"></i>
+        <img id="m-img" src="" style="width:170px; margin-bottom: 15px; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));">
+        <h2 id="m-name" style="font-weight: 900; font-size: 22px;"></h2>
+        <div class="info-tag" id="m-info"></div>
+        <p id="m-desc" style="color:var(--text-muted); margin-bottom:30px; font-size:14px; line-height:1.6;"></p>
+        <a href="https://t.me/your_tg" target="_blank" class="tg-btn">
+            <i class="fa-brands fa-telegram"></i> <span id="m-sell-txt"></span>
+        </a>
+    </div>
+</div>
+
+<div class="lang-modal-overlay" id="langModalOverlay">
+    <div class="lang-modal-header">
+        <h1 class="lang-modal-title">Select Language</h1>
+        
+        <div class="lang-search">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="langSearchInput" oninput="filterLanguages()" placeholder="Search language...">
+        </div>
+        
+        <i class="fa-solid fa-xmark close-btn" style="position: static; font-size: 30px;" onclick="closeAllLanguages()"></i>
+    </div>
+    
+    <div class="lang-grid" id="langGrid">
+        </div>
+</div>
+
 <script>
-        /**
-         * ELITE STORE - THEME & STATE ENGINE
-         * Відповідає за стан додатку, фільтрацію та візуальні ефекти
-         */
-        const EliteEngine = {
-            currentLang: 'ua',
-            currentFilter: 'all',
-            searchQuery: '',
-            accentColor: '#7b61ff',
-            isModalOpen: false,
-            version: '3.0.4-ULTRA'
-        };
+    /* --- ДАНІ: МОВИ ТА ТЕКСТИ --- */
+    const translations = {
+        ua: { 
+            sell: "ПРОДАТЬ", search: "Пошук пета...", sup: "Підтримка", supTitle: "Підтримка", 
+            msg: "Виникли питання або хочете купити пета? Напишіть нашому менеджеру в Telegram.",
+            petYear: "Рік", petEv: "Івент", chooseLang: "Виберіть мову"
+        },
+        en: { 
+            sell: "SELL PET", search: "Search pet...", sup: "Support", supTitle: "Support", 
+            msg: "Have questions or want to buy a pet? Message our manager on Telegram.",
+            petYear: "Year", petEv: "Event", chooseLang: "Select Language"
+        }
+        // ... тексти для інших мов будуть додаватися динамічно ...
+    };
 
-        /**
-         * GLOBAL TRANSLATION ARCHIVE
-         * Максимально деталізований словник для повної локалізації інтерфейсу
-         */
-        const TRANSLATIONS = {
-            ua: {
-                menu_label: "Навігація",
-                nav_all: "Усі активи",
-                nav_leg: "Легендарні",
-                nav_ultra: "Ультра-рідкі",
-                nav_sup: "Підтримка",
-                config_theme: "ПЕРСОНАЛІЗАЦІЯ",
-                search_placeholder: "Пошук екземпляра за назвою або подією...",
-                sell_btn: "ПРОДАТЬ",
-                year_label: "Рік випуску",
-                event_label: "Подія",
-                mod_title: "Центр Підтримки",
-                mod_desc: "Маєте запитання щодо обміну або продажу? Наш модератор допоможе вам у режимі 24/7. Прямий зв'язок через Telegram безпечніше та швидше.",
-                mod_btn: "Зв'язатися в Telegram",
-                trade_msg: "Привіт! Мене цікавить продаж пета: ",
-                system_ready: "СИСТЕМА ГОТОВА",
-                no_results: "Нічого не знайдено за вашим запитом..."
-            },
-            ru: {
-                menu_label: "Навигация",
-                nav_all: "Все активы",
-                nav_leg: "Легендарные",
-                nav_ultra: "Ультра-редкие",
-                nav_sup: "Поддержка",
-                config_theme: "ПЕРСОНАЛИЗАЦИЯ",
-                search_placeholder: "Поиск экземпляра по названию или событию...",
-                sell_btn: "ПРОДАТЬ",
-                year_label: "Год выпуска",
-                event_label: "Событие",
-                mod_title: "Центр Поддержки",
-                mod_desc: "Есть вопросы по обмену или продаже? Наш модератор поможет вам в режиме 24/7. Прямая связь через Telegram безопаснее и быстрее.",
-                mod_btn: "Связаться в Telegram",
-                trade_msg: "Привет! Меня интересует продажа пета: ",
-                system_ready: "СИСТЕМА ГОТОВА",
-                no_results: "Ничего не найдено по вашему запросу..."
-            }
-        };
+    /* База даних мов (50+ мов) */
+    const languagesDB = [
+        { code: 'ua', flag: '🇺🇦', name: 'Ukrainian', local: 'Українська' },
+        { code: 'en', flag: '🇺🇸', name: 'English', local: 'English' },
+        { code: 'pl', flag: '🇵🇱', name: 'Polish', local: 'Polski' },
+        { code: 'de', flag: '🇩🇪', name: 'German', local: 'Deutsch' },
+        { code: 'fr', flag: '🇫🇷', name: 'French', local: 'Français' },
+        { code: 'es', flag: '🇪🇸', name: 'Spanish', local: 'Español' },
+        { code: 'it', flag: '🇮🇹', name: 'Italian', local: 'Italiano' },
+        { code: 'pt', flag: '🇵🇹', name: 'Portuguese', local: 'Português' },
+        { code: 'tr', flag: '🇹🇷', name: 'Turkish', local: 'Türkçe' },
+        { code: 'ja', flag: '🇯🇵', name: 'Japanese', local: '日本語' },
+        { code: 'ko', flag: '🇰🇷', name: 'Korean', local: '한국어' },
+        { code: 'zh', flag: '🇨🇳', name: 'Chinese', local: '中文(简体)' },
+        { code: 'ar', flag: '🇸🇦', name: 'Arabic', local: 'العربية' },
+        { code: 'hi', flag: '🇮🇳', name: 'Hindi', local: 'हिन्दी' },
+        { code: 'cz', flag: '🇨🇿', name: 'Czech', local: 'Čeština' },
+        { code: 'sk', flag: '🇸🇰', name: 'Slovak', local: 'Slovenčina' },
+        { code: 'hu', flag: '🇭🇺', name: 'Hungarian', local: 'Magyar' },
+        { code: 'ro', flag: '🇷🇴', name: 'Romanian', local: 'Română' },
+        { code: 'bg', flag: '🇧🇬', name: 'Bulgarian', local: 'Български' },
+        { code: 'gr', flag: '🇬🇷', name: 'Greek', local: 'Ελληνικά' },
+        { code: 'nl', flag: '🇳🇱', name: 'Dutch', local: 'Nederlands' },
+        { code: 'se', flag: '🇸🇪', name: 'Swedish', local: 'Svenska' },
+        { code: 'no', flag: '🇳🇴', name: 'Norwegian', local: 'Norsk' },
+        { code: 'fi', flag: '🇫🇮', name: 'Finnish', local: 'Suomi' },
+        { code: 'dk', flag: '🇩🇰', name: 'Danish', local: 'Dansk' },
+        { code: 'id', flag: '🇮🇩', name: 'Indonesian', local: 'Bahasa Indonesia' },
+        { code: 'th', flag: '🇹🇭', name: 'Thai', local: 'ไทย' },
+        { code: 'vn', flag: '🇻🇳', name: 'Vietnamese', local: 'Tiếng Việt' },
+        { code: 'il', flag: '🇮🇱', name: 'Hebrew', local: 'עברית' },
+        { code: 'ge', flag: '🇬🇪', name: 'Georgian', local: 'ქართული' },
+        { code: 'am', flag: '🇦🇲', name: 'Armenian', local: 'Հայերեն' },
+        { code: 'az', flag: '🇦🇿', name: 'Azerbaijani', local: 'Azərbaycanca' },
+        { code: 'kz', flag: '🇰🇿', name: 'Kazakh', local: 'Қазақ тілі' },
+        { code: 'rs', flag: '🇷🇸', name: 'Serbian', local: 'Српски' },
+        { code: 'hr', flag: '🇭🇷', name: 'Croatian', local: 'Hrvatski' },
+        { code: 'si', flag: '🇸🇮', name: 'Slovenian', local: 'Slovenščina' },
+        { code: 'lt', flag: '🇱🇹', name: 'Lithuanian', local: 'Lietuvių' },
+        { code: 'lv', flag: '🇱🇻', name: 'Latvian', local: 'Latviešu' },
+        { code: 'ee', flag: '🇪🇪', name: 'Estonian', local: 'Eesti' },
+        { code: 'is', flag: '🇮🇸', name: 'Icelandic', local: 'Íslenska' },
+        { code: 'ga', flag: '🇮🇪', name: 'Irish', local: 'Gaeilge' },
+        { code: 'mt', flag: '🇲🇹', name: 'Maltese', local: 'Malti' },
+        { code: 'al', flag: '🇦🇱', name: 'Albanian', local: 'Shqip' },
+        { code: 'mk', flag: '🇲🇰', name: 'Macedonian', local: 'Македонски' },
+        { code: 'ir', flag: '🇮🇷', name: 'Persian', local: 'فارسی' },
+        { code: 'pk', flag: '🇵🇰', name: 'Urdu', local: 'اردو' },
+        { code: 'bd', flag: '🇧🇩', name: 'Bengali', local: 'বাংলা' },
+        { code: 'ph', flag: '🇵🇭', name: 'Filipino', local: 'Filipino' },
+        { code: 'my', flag: '🇲🇾', name: 'Malay', local: 'Bahasa Melayu' }
+    ];
 
-        /**
-         * ELITE PETS MASTER DATABASE
-         * Містить повний перелік активів. Кожен об'єкт деталізований для 3D рендерингу.
-         */
-        const PETS_DATABASE = [
-            { id: 101, name: "Shadow Dragon", rarity: "leg", year: "2019", event: "Halloween", img: "shadow.png" },
-            { id: 102, name: "Frost Dragon", rarity: "leg", year: "2019", event: "Winter Holiday", img: "frost.png" },
-            { id: 103, name: "Giraffe", rarity: "leg", year: "2019", event: "Safari Egg", img: "giraffe.png" },
-            { id: 104, name: "Bat Dragon", rarity: "leg", year: "2019", event: "Halloween", img: "bat.png" },
-            { id: 105, name: "Owl", rarity: "leg", year: "2019", event: "Farm Egg", img: "owl.png" },
-            { id: 106, name: "Parrot", rarity: "leg", year: "2019", event: "Jungle Egg", img: "parrot.png" },
-            { id: 107, name: "Evil Unicorn", rarity: "leg", year: "2019", event: "Halloween", img: "evil_uni.png" },
-            { id: 108, name: "Crow", rarity: "leg", year: "2019", event: "Farm Egg", img: "crow.png" },
-            { id: 109, name: "Arctic Reindeer", rarity: "leg", year: "2019", event: "Christmas", img: "arctic.png" },
-            { id: 110, name: "King Monkey", rarity: "leg", year: "2020", event: "Monkey Fairground", img: "king.png" },
-            { id: 111, name: "Albino Monkey", rarity: "leg", year: "2020", event: "Monkey Fairground", img: "albino.png" },
-            { id: 112, name: "Turtle", rarity: "leg", year: "2020", event: "Aussie Egg", img: "turtle.png" },
-            { id: 113, name: "Kangaroo", rarity: "leg", year: "2020", event: "Aussie Egg", img: "kangaroo.png" },
-            { id: 114, name: "Frost Fury", rarity: "leg", year: "2020", event: "Winter Event", img: "fury.png" },
-            { id: 115, name: "Skele-Rex", rarity: "leg", year: "2020", event: "Halloween", img: "skele.png" },
-            { id: 116, name: "Dodo", rarity: "leg", year: "2020", event: "Fossil Egg", img: "dodo.png" },
-            { id: 117, name: "T-Rex", rarity: "leg", year: "2020", event: "Fossil Egg", img: "trex.png" },
-            { id: 118, name: "Snow Owl", rarity: "leg", year: "2020", event: "Winter Holiday", img: "snow_owl.png" },
-            { id: 119, name: "Shark", rarity: "leg", year: "2021", event: "Ocean Egg", img: "shark.png" },
-            { id: 120, name: "Octopus", rarity: "leg", year: "2021", event: "Ocean Egg", img: "octopus.png" },
-            { id: 121, name: "Phoenix", rarity: "leg", year: "2021", event: "Mythic Egg", img: "phoenix.png" },
-            { id: 122, name: "Goldhorn", rarity: "leg", year: "2021", event: "Mythic Egg", img: "goldhorn.png" },
-            { id: 123, name: "Ghost Dragon", rarity: "leg", year: "2021", event: "Halloween", img: "ghost.png" },
-            { id: 124, name: "Ice Golem", rarity: "leg", year: "2021", event: "Winter", img: "ice_golem.png" },
-            { id: 125, name: "Lavender Dragon", rarity: "leg", year: "2022", event: "DJ Gamepass", img: "lavender.png" },
-            { id: 126, name: "Dancing Dragon", rarity: "leg", year: "2022", event: "Lunar New Year", img: "dancing.png" },
-            { id: 127, name: "Chameleon", rarity: "leg", year: "2022", event: "RGB Box", img: "chameleon.png" },
-            { id: 128, name: "Squid", rarity: "leg", year: "2022", event: "RGB Box", img: "squid.png" },
-            { id: 129, name: "Alicorn", rarity: "leg", year: "2022", event: "Royal Egg", img: "alicorn.png" },
-            { id: 130, name: "Ancient Dragon", rarity: "leg", year: "2022", event: "Royal Egg", img: "ancient.png" },
-            { id: 131, name: "Lava Dragon", rarity: "leg", year: "2022", event: "Halloween", img: "lava.png" },
-            { id: 132, name: "SS Bat Dragon", rarity: "leg", year: "2022", event: "Winter Holiday", img: "ssbd.png" },
-            { id: 133, name: "Naga Dragon", rarity: "leg", year: "2023", event: "SE Asia Egg", img: "naga.png" },
-            { id: 134, name: "Billy Goat", rarity: "leg", year: "2023", event: "Standard", img: "billy.png" },
-            { id: 135, name: "Vampire Dragon", rarity: "leg", year: "2023", event: "Halloween", img: "vampire.png" },
-            { id: 136, name: "Glacier Moth", rarity: "ultra", year: "2022", event: "Winter", img: "moth.png" },
-            { id: 137, name: "Puffin", rarity: "ultra", year: "2021", event: "Winter", img: "puffin.png" },
-            { id: 138, name: "Dalmatian", rarity: "ultra", year: "2019", event: "Christmas", img: "dalmatian.png" },
-            { id: 139, name: "Flamingo", rarity: "ultra", year: "2019", event: "Safari Egg", img: "flamingo.png" },
-            { id: 140, name: "Lion", rarity: "ultra", year: "2019", event: "Safari Egg", img: "lion.png" },
-            { id: 141, name: "Blue Dog", rarity: "rare", year: "2019", event: "Blue Egg", img: "blue_dog.png" },
-            { id: 142, name: "Pink Cat", rarity: "rare", year: "2019", event: "Pink Egg", img: "pink_cat.png" },
-            { id: 143, name: "Cow", rarity: "rare", year: "2019", event: "Farm Egg", img: "cow.png" },
-            { id: 144, name: "Elephant", rarity: "rare", year: "2019", event: "Safari Egg", img: "elephant.png" },
-            { id: 145, name: "Hyena", rarity: "rare", year: "2019", event: "Safari Egg", img: "hyena.png" },
-            { id: 146, name: "Zombie Buffalo", rarity: "ultra", year: "2019", event: "Halloween", img: "zombie.png" },
-            { id: 147, name: "Hedgehog", rarity: "ultra", year: "2019", event: "Christmas", img: "hedgehog.png" },
-            { id: 148, name: "Shrew", rarity: "rare", year: "2019", event: "Christmas", img: "shrew.png" },
-            { id: 149, name: "Meerkat", rarity: "uncommon", year: "2019", event: "Safari Egg", img: "meerkat.png" },
-            { id: 150, name: "Wild Boar", rarity: "uncommon", year: "2019", event: "Safari Egg", img: "boar.png" },
-            // ... (Дані можуть бути розширені до 1000+ елементів)
-        ];
+    /* --- ДАНІ: ПЕТИ (55 шт) --- */
+    const pets = [
+        // Пети з pets.3 (24 шт)
+        { id: 1, name: "Strawberry Shortcake Bat Dragon", file: "pets.3/winter_2022_strawberry_shortcake_bat_dragon.png", year: "2022", ev: "Winter", rare: "legendary", ua: "Полуничний бат дракон.", en: "Strawberry SS Bat Dragon." },
+        { id: 2, name: "Billy Goat", file: "pets.3/urban_2023_billy_goat.png", year: "2023", ev: "Urban Egg", rare: "legendary", ua: "Гірський цап.", en: "Billy Goat from Urban Egg." },
+        { id: 3, name: "Ice Moth Dragon", file: "pets.3/winter_2022_ice_moth_dragon.png", year: "2022", ev: "Winter", rare: "legendary", ua: "Крижана моль.", en: "Ice Moth Dragon." },
+        { id: 4, name: "Leviathan", file: "pets.3/summerfest_2023_leviathan.png", year: "2023", ev: "Summerfest", rare: "legendary", ua: "Морський Левіафан.", en: "Sea Leviathan." },
+        { id: 5, name: "Naga Dragon", file: "pets.3/seasia_2023_naga_dragon.png", year: "2023", ev: "SE Asia Egg", rare: "legendary", ua: "Змій Нага.", en: "Naga Serpent Dragon." },
+        { id: 6, name: "Tree Kangaroo", file: "pets.3/seasia_2023_tree_kangaroo.png", year: "2023", ev: "SE Asia Egg", rare: "legendary", ua: "Деревний кенгуру.", en: "Tree Kangaroo." },
+        { id: 7, name: "Winged Horse", file: "pets.3/random_pets_2022_winged_horse.png", year: "2022", ev: "Robux", rare: "legendary", ua: "Крилатий кінь.", en: "Winged Horse (Pegasus)." },
+        { id: 8, name: "Sugar Glider", file: "pets.3/easter_2022_sugar_glider.png", year: "2022", ev: "Easter", rare: "legendary", ua: "Цукрова летяга.", en: "Sugar Glider." },
+        { id: 9, name: "Dancing Dragon", file: "pets.3/lny_2022_dragon.png", year: "2022", ev: "Lunar NY", rare: "legendary", ua: "Танцюючий дракон.", en: "Lunar Dancing Dragon." },
+        { id: 10, name: "Ghost Dragon", file: "pets.3/halloween_2021_ghost_dragon.png", year: "2021", ev: "Halloween", rare: "legendary", ua: "Примарний дракон.", en: "Ghost Dragon." },
+        { id: 11, name: "Lava Dragon", file: "pets.3/halloween_2022_lava_dragon.png", year: "2022", ev: "Halloween", rare: "legendary", ua: "Лавовий дракон.", en: "Lava Dragon." },
+        { id: 12, name: "Alicorn", file: "pets.3/basic_egg_2022_alicron.png", year: "2022", ev: "Royal Egg", rare: "legendary", ua: "Чарівний алікорн.", en: "Magical Alicorn." },
+        { id: 13, name: "Ancient Dragon", file: "pets.3/basic_egg_2022_ancient_dragon.png", year: "2022", ev: "Royal Egg", rare: "legendary", ua: "Стародавній дракон.", en: "Ancient Dragon." },
+        { id: 14, name: "Mechapup", file: "pets.3/april_fools_2022_mechapup.png", year: "2022", ev: "April Fools", rare: "legendary", ua: "Механічне цуценя.", en: "Mechapup Robot Dog." },
+        { id: 15, name: "Arctic Reindeer", file: "pets.3/arctic_reindeer.png", year: "2019", ev: "Christmas", rare: "legendary", ua: "Північний олень.", en: "Arctic Reindeer." },
+        { id: 16, name: "Bat Dragon", file: "pets.3/bat_dragon.png", year: "2019", ev: "Halloween", rare: "legendary", ua: "Кажан дракон.", en: "Classic Bat Dragon." },
+        { id: 17, name: "Crow", file: "pets.3/crow.png", year: "2019", ev: "Farm Egg", rare: "legendary", ua: "Ворон.", en: "Crow." },
+        { id: 18, name: "Evil Unicorn", file: "pets.3/evil_unicorn.png", year: "2019", ev: "Halloween", rare: "legendary", ua: "Злий єдиноріг.", en: "Evil Unicorn." },
+        { id: 19, name: "Frost Fury", file: "pets.3/frost_fury.png", year: "2020", ev: "Winter", rare: "legendary", ua: "Фрост Фурія.", en: "Frost Fury." },
+        { id: 20, name: "Giraffe", file: "pets.3/giraffe.png", year: "2019", ev: "Safari Egg", rare: "legendary", ua: "Жираф.", en: "Safari Giraffe." },
+        { id: 21, name: "Owl", file: "pets.3/owl.png", year: "2019", ev: "Farm Egg", rare: "legendary", ua: "Сова.", en: "Owl." },
+        { id: 22, name: "Parrot", file: "pets.3/parrot.png", year: "2019", ev: "Jungle Egg", rare: "legendary", ua: "Папуга.", en: "Jungle Parrot." },
+        { id: 23, name: "Skele-Rex", file: "pets.3/skele_rex.png", year: "2020", ev: "Halloween", rare: "legendary", ua: "Скелетований Рекс.", en: "Skele-Rex." },
+        { id: 24, name: "Snow Owl", file: "pets.3/snow_owl.png", year: "2020", ev: "Winter", rare: "legendary", ua: "Сніжна сова.", en: "Snow Owl." },
 
-        /**
-         * UI INITIALIZATION ENGINE
-         * Запускається при завантаженні сторінки
-         */
-        document.addEventListener('DOMContentLoaded', () => {
-            console.log(`%c EliteStore Engine v${EliteEngine.version} Initialized `, "background: #7b61ff; color: #fff; padding: 5px; border-radius: 5px;");
+        // Основні пети (31 шт)
+        { id: 25, name: "Shadow Dragon", file: "shadow_dragon.png", year: "2019", ev: "Halloween", rare: "legendary", ua: "Тіньовий дракон.", en: "Shadow Dragon." },
+        { id: 26, name: "Frost Dragon", file: "frost_dragon.png", year: "2019", ev: "Christmas", rare: "legendary", ua: "Крижаний дракон.", en: "Frost Dragon." },
+        { id: 27, name: "Diamond Butterfly", file: "sanctuary_2022_diamond_premium_butterfly.png", year: "2022", ev: "Golden Leaf", rare: "legendary", ua: "Діамантовий метелик.", en: "Diamond Butterfly." },
+        { id: 28, name: "Albino Monkey", file: "albino_monkey.png", year: "2020", ev: "Monkey Box", rare: "legendary", ua: "Мавпа альбінос.", en: "Albino Monkey." },
+        { id: 29, name: "Monkey King", file: "monkey_king.png", year: "2020", ev: "Monkey Box", rare: "legendary", ua: "Король мавп.", en: "Monkey King." },
+        { id: 30, name: "Axolotl", file: "axolotl.png", year: "2021", ev: "Robux", rare: "legendary", ua: "Аксолотль.", en: "Axolotl." },
+        { id: 31, name: "Cerberus", file: "cerberus.png", year: "2020", ev: "Halloween", rare: "legendary", ua: "Цербер.", en: "Cerberus." },
+        { id: 32, name: "Cobra", file: "cobra.png", year: "2021", ev: "Robux", rare: "legendary", ua: "Кобра.", en: "Cobra." },
+        { id: 33, name: "Dodo", file: "dodo.png", year: "2020", ev: "Fossil Egg", rare: "legendary", ua: "Додо.", en: "Dodo." },
+        { id: 34, name: "Diamond Dragon", file: "diamond_dragon.png", year: "2020", ev: "Star Rewards", rare: "legendary", ua: "Діамантовий дракон.", en: "Diamond Dragon." },
+        { id: 35, name: "Diamond Griffin", file: "diamond_griffin.png", year: "2020", ev: "Star Rewards", rare: "legendary", ua: "Діамантовий грифон.", en: "Diamond Griffin." },
+        { id: 36, name: "Diamond Unicorn", file: "diamond_unicorn.png", year: "2020", ev: "Star Rewards", rare: "legendary", ua: "Діамантовий єдиноріг.", en: "Diamond Unicorn." },
+        { id: 37, name: "Golden Dragon", file: "golden_dragon.png", year: "2020", ev: "Star Rewards", rare: "legendary", ua: "Золотий дракон.", en: "Golden Dragon." },
+        { id: 38, name: "Golden Griffin", file: "golden_griffin.png", year: "2020", ev: "Star Rewards", rare: "legendary", ua: "Золотий грифон.", en: "Golden Griffin." },
+        { id: 39, name: "Golden Unicorn", file: "golden_unicorn.png", year: "2020", ev: "Star Rewards", rare: "legendary", ua: "Золотий єдиноріг.", ru: "Золотой единорог." },
+        { id: 40, name: "Goldhorn", file: "goldhorn.png", year: "2021", ev: "Mythic Egg", rare: "legendary", ua: "Золоторіг.", en: "Goldhorn Unicorn." },
+        { id: 41, name: "Guardian Lion", file: "guardian_lion.png", year: "2021", ev: "Lunar NY", rare: "legendary", ua: "Лев-захисник.", en: "Guardian Lion." },
+        { id: 42, name: "Vampire Dragon", file: "halloween_2023_vampire_dragon.png", year: "2023", ev: "Halloween", rare: "legendary", ua: "Вампірський дракон.", en: "Vampire Dragon." },
+        { id: 43, name: "King Bee", file: "king_bee.png", year: "2019", ev: "Honey", rare: "legendary", ua: "Королівська бджола.", en: "King Bee." },
+        { id: 44, name: "Kitsune", file: "kitsune.png", year: "2020", ev: "Robux", rare: "legendary", ua: "Кіцуне.", en: "Kitsune Fox." },
+        { id: 45, name: "Midnight Dragon", file: "lunar_2024_midnight_dragon.png", year: "2024", ev: "Lunar NY", rare: "legendary", ua: "Опівнічний дракон.", en: "Midnight Dragon." },
+        { id: 46, name: "Octopus", file: "octopus.png", year: "2021", ev: "Ocean Egg", rare: "legendary", ua: "Восьминіг.", en: "Octopus." },
+        { id: 47, name: "Peacock", file: "peacock.png", year: "2021", ev: "Robux", rare: "legendary", ua: "Павич.", en: "Peacock." },
+        { id: 48, name: "Phoenix", file: "phoenix.png", year: "2021", ev: "Mythic Egg", rare: "legendary", ua: "Фенікс.", en: "Phoenix." },
+        { id: 49, name: "Queen Bee", file: "queen_bee.png", year: "2019", ev: "Honey", rare: "legendary", ua: "Королева бджіл.", en: "Queen Bee." },
+        { id: 50, name: "Diamond Amazon", file: "rain_2023_diamond_amazon.png", year: "2023", ev: "Amazon Bird", rare: "legendary", ua: "Діамантова Амазонка.", en: "Diamond Amazon Parrot." },
+        { id: 51, name: "Robo Dog", file: "robo_dog.png", year: "2020", ev: "Robux", rare: "legendary", ua: "Робопес.", en: "Robo Dog Robot." },
+        { id: 52, name: "Shark", file: "shark.png", year: "2021", ev: "Ocean Egg", rare: "legendary", ua: "Акула.", en: "Shark." },
+        { id: 53, name: "Capricorn", file: "space_house_2022_capricorn.png", year: "2022", ev: "Space Event", rare: "legendary", ua: "Козеріг.", en: "Capricorn." },
+        { id: 54, name: "Corn Doggo", file: "summerfest_2024_corn_doggo.png", year: "2024", ev: "Summerfest", rare: "legendary", ua: "Корн догго.", en: "Corn Doggo Dog." },
+        { id: 55, name: "T-Rex", file: "trex.png", year: "2020", ev: "Fossil Egg", rare: "legendary", ua: "Тиранозавр Рекс.", en: "T-Rex." }
+    ];
+
+    /* --- ЗМІННІ СТАНУ --- */
+    let currentLang = localStorage.getItem('elite_lang') || 'ua';
+    const tgLink = "https://t.me/your_tg";
+
+    /* --- 1. ІНІЦІАЛІЗАЦІЯ ТА ОСНОВНІ ФУНКЦІЇ --- */
+    window.onload = () => {
+        applyTheme();
+        generateLangGrid();
+        setQuickLangButtons();
+        updateStaticTexts();
+        render(pets);
+    };
+
+    /* --- 2. РЕНДЕР КАРТОК ПЕТІВ --- */
+    function render(data) {
+        const c = document.getElementById('catalog');
+        c.innerHTML = '';
+        
+        if (data.length === 0) {
+            c.innerHTML = '<div style="grid-column: 1/-1; text-align:center; color:var(--text-muted); padding:50px 0; font-weight:700;">Pets not found...</div>';
+            return;
+        }
+
+        data.forEach((p, index) => {
+            const card = document.createElement('div');
+            card.className = `card`;
+            card.style.animationDelay = `${index * 0.04}s`; // Затримка анімації для ефекту хвилі
+            card.onclick = (e) => handleCardClick(e, p.name);
             
-            // Відновлення налаштувань з LocalStorage
-            loadPersistedState();
-            
-            // Первинний рендеринг інтерфейсу
-            applyTranslations();
-            renderGrid();
-            
-            // Ініціалізація 3D ефектів миші
-            initGlobalParallax();
+            card.innerHTML = `
+                <div class="rarity-tag legendary">LEGENDARY</div>
+                <div style="font-size:9px; color:var(--text-muted); margin-bottom:12px; font-weight:300;">
+                    ${translations[currentLang].petYear}: ${p.year}
+                </div>
+                <img src="${p.file}" onerror="this.src='https://via.placeholder.com/130/161b22/fff?text=PET'">
+                <div class="pet-name">${p.name}</div>
+                <a href="${tgLink}" target="_blank" class="tg-btn sell-btn-link" onclick="event.stopPropagation()">
+                    <i class="fa-brands fa-telegram"></i> <span>${translations[currentLang].sell}</span>
+                </a>
+            `;
+            c.appendChild(card);
         });
+    }
 
-        /**
-         * STATE PERSISTENCE
-         * Зберігає вибір мови та теми користувача
-         */
-        function loadPersistedState() {
-            const savedLang = localStorage.getItem('elite_lang');
-            const savedColor = localStorage.getItem('elite_theme');
-            
-            if (savedLang) EliteEngine.currentLang = savedLang;
-            if (savedColor) {
-                EliteEngine.accentColor = savedColor;
-                document.documentElement.style.setProperty('--p-accent', savedColor);
-                document.documentElement.style.setProperty('--p-accent-rgb', hexToRgb(savedColor));
-            }
-            
-            updateActiveToggles();
+    /* --- 3. ПОШУК ПЕТІВ --- */
+    function handleSearch() {
+        const v = document.getElementById('searchInput').value.toLowerCase().trim();
+        const filtered = pets.filter(p => 
+            p.name.toLowerCase().includes(v) || 
+            (p[currentLang] && p[currentLang].toLowerCase().includes(v)) ||
+            p.year.includes(v)
+        );
+        render(filtered);
+    }
+
+    /* --- 4. КЕРУВАННЯ МОДАЛЬНИМИ ВІКНАМИ --- */
+    function handleCardClick(event, petName) {
+        // Якщо натиснули на саму кнопку ТГ, не відкриваємо модалку
+        if (event.target.closest('.sell-btn-link')) return;
+        openPetModal(petName);
+    }
+
+    function openPetModal(name) {
+        const p = pets.find(x => x.name === name);
+        if(!p) return;
+        
+        const langPack = translations[currentLang];
+        document.getElementById('m-img').src = p.file;
+        document.getElementById('m-name').innerText = p.name;
+        document.getElementById('m-info').innerText = `${langPack.petYear}: ${p.year} | ${langPack.petEv}: ${p.ev}`;
+        document.getElementById('m-desc').innerText = p[currentLang] || p.ua;
+        document.getElementById('m-sell-txt').innerText = langPack.sell;
+        openOverlay('petOverlay');
+    }
+
+    function openSupport() {
+        const langPack = translations[currentLang];
+        document.getElementById('sup-title').innerText = langPack.supTitle;
+        document.getElementById('sup-desc').innerText = langPack.msg;
+        document.getElementById('sup-btn').querySelector('span').innerText = langPack.sup;
+        openOverlay('supportOverlay');
+    }
+
+    function openOverlay(id) {
+        const overlay = document.getElementById(id);
+        overlay.style.display = 'flex';
+        setTimeout(() => overlay.classList.add('open'), 10);
+    }
+
+    function closePet() { closeOverlay('petOverlay'); }
+    function closeSupport() { closeOverlay('supportOverlay'); }
+
+    function closeOverlay(id) {
+        const overlay = document.getElementById(id);
+        overlay.classList.remove('open');
+        setTimeout(() => overlay.style.display = 'none', 400);
+    }
+
+    /* Закриття модалки кліком на фон */
+    function overlayClick(event, overlayId) {
+        if(event.target === event.currentTarget) {
+            closeOverlay(overlayId);
         }
+    }
 
-        function updateActiveToggles() {
-            // Мова
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                btn.classList.toggle('active', btn.innerText.toLowerCase() === EliteEngine.currentLang);
-            });
-            
-            // Тема
-            document.querySelectorAll('.color-dot').forEach(dot => {
-                const dotColor = rgbToHex(dot.style.backgroundColor);
-                dot.classList.toggle('active', dotColor === EliteEngine.accentColor);
-            });
+    /* --- 5. ТЕМИ ТА КОЛЬОРИ --- */
+    function setTheme(c1, c2, activeBtnId) {
+        document.documentElement.style.setProperty('--accent', `linear-gradient(135deg, ${c1} 0%, ${c2} 100%)`);
+        document.documentElement.style.setProperty('--accent-solid', c1);
+        document.documentElement.style.setProperty('--accent-light', c2);
+        localStorage.setItem('elite_theme', JSON.stringify({c1, c2, activeBtnId}));
+        updateActiveThemeButton(activeBtnId);
+    }
+
+    function resetTheme() {
+        setTheme('#6c5ce7', '#a29bfe', 'color-violet');
+    }
+
+    function applyTheme() {
+        const theme = JSON.parse(localStorage.getItem('elite_theme'));
+        if(theme) {
+            setTheme(theme.c1, theme.c2, theme.activeBtnId);
+        } else {
+            resetTheme();
         }
+    }
 
-        /**
-         * RENDERING CORE
-         * Створює картки петів на основі бази даних та фільтрів
-         */
-        function renderGrid() {
-            const grid = document.getElementById('mainGrid');
-            if (!grid) return;
+    function updateActiveThemeButton(id) {
+        document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('active-theme'));
+        document.getElementById(id).classList.add('active-theme');
+    }
 
-            // Ефект зникнення перед оновленням
-            grid.style.opacity = '0';
+    /* --- 6. КЕРУВАННЯ МОВАМИ ТА МЕНЮ ВСІХ МОВ --- */
+    
+    /* Швидкі кнопки мов (UA/ALL) в Sidebar */
+    function setQuickLang(code) {
+        changeLang(code);
+    }
+
+    function setQuickLangButtons() {
+        document.getElementById('ua-btn').classList.toggle('active-lang', currentLang === 'ua');
+        document.getElementById('eu-btn').classList.toggle('active-lang', currentLang !== 'ua');
+    }
+
+    /* Відкриття повноекранного меню всіх мов */
+    function openAllLanguages() {
+        generateLangGrid(); // Генеруємо грід кожного разу, щоб оновити активний стан
+        document.getElementById('langModalOverlay').style.display = 'flex';
+        setTimeout(() => document.getElementById('langModalOverlay').classList.add('open'), 10);
+    }
+
+    function closeAllLanguages() {
+        document.getElementById('langModalOverlay').classList.remove('open');
+        setTimeout(() => document.getElementById('langModalOverlay').style.display = 'none', 500);
+    }
+
+    /* Генерація гріду мов (50+) */
+    function generateLangGrid() {
+        const grid = document.getElementById('langGrid');
+        grid.innerHTML = '';
+        
+        languagesDB.forEach(l => {
+            const item = document.createElement('div');
+            item.className = `lang-item ${l.code === currentLang ? 'active-choice' : ''}`;
+            item.setAttribute('data-lang-name', l.name.toLowerCase() + ' ' + l.local.toLowerCase());
+            item.onclick = () => { changeLang(l.code); closeAllLanguages(); };
             
-            setTimeout(() => {
-                grid.innerHTML = '';
-                
-                const filteredData = PETS_DATABASE.filter(pet => {
-                    const matchesFilter = EliteEngine.currentFilter === 'all' || pet.rarity === EliteEngine.currentFilter;
-                    const matchesSearch = pet.name.toLowerCase().includes(EliteEngine.searchQuery.toLowerCase()) || 
-                                         pet.event.toLowerCase().includes(EliteEngine.searchQuery.toLowerCase());
-                    return matchesFilter && matchesSearch;
-                });
-
-                if (filteredData.length === 0) {
-                    renderEmptyState(grid);
-                } else {
-                    filteredData.forEach((pet, index) => {
-                        const card = createPetCard(pet, index);
-                        grid.appendChild(card);
-                    });
-                }
-                
-                grid.style.opacity = '1';
-            }, 200);
-        }
-
-        /**
-         * COMPONENT CREATOR
-         * Створює HTML-структуру однієї картки
-         */
-        function createPetCard(pet, index) {
-            const wrapper = document.createElement('div');
-            wrapper.className = 'pet-card';
-            wrapper.style.animationDelay = `${index * 0.05}s`;
-            
-            const t = TRANSLATIONS[EliteEngine.currentLang];
-            const badgeClass = `rarity-badge rarity-${pet.rarity}`;
-            
-            wrapper.innerHTML = `
-                <div class="${badgeClass}">${pet.rarity}</div>
-                <div class="pet-year-info">
-                    <i class="fas fa-calendar-alt"></i> ${t.year_label}: ${pet.year}
+            item.innerHTML = `
+                <div class="lang-flag">${l.flag}</div>
+                <div class="lang-name-container">
+                    <div class="lang-main-name">${l.name}</div>
+                    <div class="lang-local-name">${l.local}</div>
                 </div>
-                <div class="pet-display">
-                    <img src="pets.3/${pet.img}" alt="${pet.name}" onerror="this.src='https://via.placeholder.com/200?text=Pet+Icon'">
-                </div>
-                <h3 class="pet-name-h3">${pet.name}</h3>
-                <button class="btn-action-primary" onclick="initTrade('${pet.name}')">
-                    <i class="fab fa-telegram-plane"></i> ${t.sell_btn}
-                </button>
             `;
-            
-            return wrapper;
-        }
+            grid.appendChild(item);
+        });
+    }
 
-        function renderEmptyState(container) {
-            const t = TRANSLATIONS[EliteEngine.currentLang];
-            container.innerHTML = `
-                <div style="grid-column: 1/-1; text-align: center; padding: 100px; color: var(--text-muted);">
-                    <i class="fas fa-ghost" style="font-size: 80px; margin-bottom: 20px; opacity: 0.2;"></i>
-                    <p style="font-size: 20px; font-weight: 700;">${t.no_results}</p>
-                </div>
-            `;
-        }
+    /* Зміна мови */
+    function changeLang(code) {
+        currentLang = code;
+        localStorage.setItem('elite_lang', code);
+        updateStaticTexts();
+        render(pets);
+        setQuickLangButtons();
+        // На телефоні закриваємо Sidebar
+        closeSidebar();
+    }
 
-        /**
-         * INTERACTION ENGINE
-         * Обробка модальних вікон та Telegram посилань
-         */
-        function initTrade(petName) {
-            const t = TRANSLATIONS[EliteEngine.currentLang];
-            const admin = "Elite_Admin";
-            const message = encodeURIComponent(`${t.trade_msg} ${petName}`);
-            const url = `https://t.me/${admin}?text=${message}`;
-            
-            // Відкриваємо в новій вкладці
-            window.open(url, '_blank');
+    /* Оновлення статичних текстів на сторінці */
+    function updateStaticTexts() {
+        const langPack = translations[currentLang] || translations['en']; // якщо мови нема вTranslations, беремо EN
+        document.getElementById('searchInput').placeholder = langPack.search;
+        document.getElementById('side-sup').innerText = langPack.sup;
+        document.querySelector('.custom-title').innerText = currentLang === 'ua' ? 'КОЛІР САЙТУ' : 'SITE COLOR';
+        document.querySelector('.reset-theme-btn').innerText = currentLang === 'ua' ? 'ПОВЕРНУТИ ЗА ЗАМОВЧУВАННЯМ' : 'RESET TO DEFAULT';
+        
+        // Оновлення текстів у відкритих модалках
+        if(document.getElementById('petOverlay').style.display === 'flex') {
+            const openPetName = document.getElementById('m-name').innerText;
+            openPetModal(openPetName);
         }
+        if(document.getElementById('supportOverlay').style.display === 'flex') {
+            openSupport();
+        }
+        // Оновлення заголовку меню мов
+        document.querySelector('.lang-modal-title').innerText = langPack.chooseLang;
+        document.getElementById('langSearchInput').placeholder = langPack.chooseLang;
+    }
 
-        function openSupport() {
-            const modal = document.getElementById('supportModal');
-            if (modal) {
-                modal.classList.add('active');
-                EliteEngine.isModalOpen = true;
-                document.body.style.overflow = 'hidden';
+    /* Фільтрація мов при пошуку */
+    function filterLanguages() {
+        const query = document.getElementById('langSearchInput').value.toLowerCase().trim();
+        const items = document.querySelectorAll('.lang-item');
+        
+        items.forEach(item => {
+            const names = item.getAttribute('data-lang-name');
+            if(names.includes(query)) {
+                item.style.display = 'flex';
+            } else {
+                item.style.display = 'none';
             }
-        }
+        });
+    }
 
-        function closeSupport() {
-            const modal = document.getElementById('supportModal');
-            if (modal) {
-                modal.classList.remove('active');
-                EliteEngine.isModalOpen = false;
-                document.body.style.overflow = 'auto';
-            }
-        }
+    /* --- 7. МОБІЛЬНЕ МЕНЮ (SIDEBAR) --- */
+    function toggleSidebar() {
+        document.getElementById('sidebar').classList.toggle('open');
+        document.getElementById('sidebarOverlay').classList.toggle('visible');
+    }
 
-        /**
-         * LANGUAGE & THEME CONTROLLERS
-         */
-        function switchLang(lang) {
-            EliteEngine.currentLang = lang;
-            localStorage.setItem('elite_lang', lang);
-            
-            applyTranslations();
-            renderGrid();
-            updateActiveToggles();
-        }
+    function closeSidebar() {
+        document.getElementById('sidebar').classList.remove('open');
+        document.getElementById('sidebarOverlay').classList.remove('visible');
+    }
+</script>
 
-        function applyTranslations() {
-            const t = TRANSLATIONS[EliteEngine.currentLang];
-            
-            // Оновлення статичних елементів з data-lang
-            document.querySelectorAll('[data-lang]').forEach(el => {
-                const key = el.getAttribute('data-lang');
-                if (t[key]) el.innerText = t[key];
-            });
-            
-            // Оновлення плейсхолдера пошуку
-            const searchInput = document.getElementById('petSearch');
-            if (searchInput) searchInput.placeholder = t.search_placeholder;
-        }
-
-        function updateTheme(color, el) {
-            EliteEngine.accentColor = color;
-            localStorage.setItem('elite_theme', color);
-            
-            document.documentElement.style.setProperty('--p-accent', color);
-            document.documentElement.style.setProperty('--p-accent-rgb', hexToRgb(color));
-            
-            updateActiveToggles();
-        }
-
-        /**
-         * UTILS: COLOR CONVERSION
-         */
-        function hexToRgb(hex) {
-            const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-            return result ? `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}` : '123, 97, 255';
-        }
-
-        function rgbToHex(rgb) {
-            if (!rgb) return "#7b61ff";
-            const res = rgb.match(/\d+/g);
-            return "#" + ((1 << 24) + (+res[0] << 16) + (+res[1] << 8) + +res[2]).toString(16).slice(1);
-        }
-
-        /**
-         * 3D PARALLAX ENGINE
-         */
-        function initGlobalParallax() {
-            document.addEventListener('mousemove', (e) => {
-                if (window.innerWidth < 1000) return;
-                
-                const cards = document.querySelectorAll('.pet-card');
-                const x = (window.innerWidth / 2 - e.pageX) / 45;
-                const y = (window.innerHeight / 2 - e.pageY) / 45;
-                
-                cards.forEach(card => {
-                    const rect = card.getBoundingClientRect();
-                    // Тільки якщо картка у видимій зоні
-                    if (rect.top < window.innerHeight && rect.bottom > 0) {
-                        card.style.transform = `perspective(1000px) rotateY(${x}deg) rotateX(${-y}deg) translateY(-5px)`;
-                    }
-                });
-            });
-        }
-
-        /**
-         * SEARCH ENGINE WITH DEBOUNCE
-         */
-        let searchTimeout;
-        function runSearch() {
-            clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(() => {
-                EliteEngine.searchQuery = document.getElementById('petSearch').value;
-                renderGrid();
-            }, 300);
-        }
-
-        function filterRarity(rarity) {
-            EliteEngine.currentFilter = rarity;
-            
-            // Оновлення стилю кнопок навігації
-            document.querySelectorAll('.nav-item').forEach(btn => {
-                const onClick = btn.getAttribute('onclick');
-                btn.classList.toggle('active', onClick && onClick.includes(rarity));
-            });
-            
-            renderGrid();
-        }
-    </script>
-</body>
-</html>
-/* --- SECTION 14: EXPANDED DATA ARCHIVE --- */
-        // Додаємо ще більше даних для стабільного скролу та заповнення сітки
-        const extraPets = [
-            { id: 201, name: "Diamond Butterfly", rarity: "leg", year: "2022", event: "Golden Leaf", img: "diamond_bf.png" },
-            { id: 202, name: "Diamond Dragon", rarity: "leg", year: "2020", event: "Star Rewards", img: "diamond_dr.png" },
-            { id: 203, name: "Diamond Griffin", rarity: "leg", year: "2020", event: "Star Rewards", img: "diamond_gr.png" },
-            { id: 204, name: "Diamond Unicorn", rarity: "leg", year: "2020", event: "Star Rewards", img: "diamond_uni.png" },
-            { id: 205, name: "Golden Walrus", rarity: "leg", year: "2021", event: "Winter", img: "gold_walrus.png" },
-            { id: 206, name: "Golden Mummy Cat", rarity: "leg", year: "2021", event: "Halloween", img: "mummy_cat.png" },
-            { id: 207, name: "Ghost Bunny", rarity: "ultra", year: "2020", event: "Halloween", img: "ghost_bunny.png" },
-            { id: 208, name: "Albino Bat", rarity: "ultra", year: "2020", event: "Halloween", img: "albino_bat.png" },
-            { id: 209, name: "Yeti", rarity: "ultra", year: "2020", event: "Winter", img: "yeti.png" },
-            { id: 210, name: "Lunar Ox", rarity: "rare", year: "2021", event: "Lunar New Year", img: "lunar_ox.png" }
-        ];
-
-        // Об'єднуємо всі масиви
-        PETS_DATABASE.push(...extraPets);
-
-        /**
-         * OPTIMIZED IMAGE LOADER
-         * Запобігає "чорному екрану", якщо картинки відсутні
-         */
-        function validateImageData() {
-            PETS_DATABASE.forEach(pet => {
-                if (!pet.img) pet.img = 'default_pet.png';
-            });
-        }
-
-        /**
-         * REAL-TIME SEARCH ENGINE v2
-         * Додає підсвітку знайдених слів
-         */
-        function highlightSearch(text, query) {
-            if (!query) return text;
-            const re = new RegExp(`(${query})`, "gi");
-            return text.replace(re, `<span style="color:var(--p-accent);">$1</span>`);
-        }
-
-        /**
-         * PERFORMANCE MONITOR
-         * Логування для відладки, щоб бачити, чому сторінка може не вантажитись
-         */
-        function checkSystemHealth() {
-            const startTime = performance.now();
-            validateImageData();
-            const endTime = performance.now();
-            console.log(`%c [SYSTEM] Render time: ${(endTime - startTime).toFixed(2)}ms `, "color: #00ff00; font-weight: bold;");
-            
-            if (PETS_DATABASE.length > 1000) {
-                console.warn("[PERFORMANCE] База даних дуже велика. Анімовано тільки перші 50 карток.");
-            }
-        }
-
-        // Запуск перевірки при ініціалізації
-        checkSystemHealth();
-
-        /**
-         * FIX: BLACK SCREEN PREVENTER
-         * Якщо DOM не завантажився за 3 секунди, примусово показуємо контент
-         */
-        setTimeout(() => {
-            const grid = document.getElementById('mainGrid');
-            if (grid && grid.innerHTML === '') {
-                console.error("[CRITICAL] Grid failed to render. Force reloading...");
-                renderGrid();
-            }
-        }, 3000);
-
-        /* --- SECTION 15: SOCIAL & TELEGRAM INTEGRATION --- */
-        const SOCIAL_CONFIG = {
-            admin_username: "Elite_Admin",
-            support_active: true,
-            default_message_ua: "Привіт! Хочу продати або обміняти: ",
-            default_message_ru: "Привет! Хочу продать или обменять: "
-        };
-
-        function getSocialLink(petName) {
-            const baseMsg = EliteEngine.currentLang === 'ua' ? SOCIAL_CONFIG.default_message_ua : SOCIAL_CONFIG.default_message_ru;
-            return `https://t.me/${SOCIAL_CONFIG.admin_username}?text=${encodeURIComponent(baseMsg + petName)}`;
-        }
-
-        /* --- SECTION 16: CSS ANIMATION INJECTOR --- */
-        // Додаємо динамічні стилі для заповнення рядків
-        const styleSheet = document.createElement("style");
-        styleSheet.innerText = `
-            .pet-card:nth-child(1) { animation-delay: 0.1s; }
-            .pet-card:nth-child(2) { animation-delay: 0.2s; }
-            .pet-card:nth-child(3) { animation-delay: 0.3s; }
-            .pet-card:nth-child(4) { animation-delay: 0.4s; }
-            /* ... і так далі для сотень карток ... */
-        `;
-        document.head.appendChild(styleSheet);
-
-        // --- КІНЕЦЬ СКРИПТА ---
-    </script>
 </body>
 </html>
