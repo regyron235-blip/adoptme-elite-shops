@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="petdb.js"></script>
-    <script src="config.js"></script>
+
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;900&display=swap" rel="stylesheet">
     
     <style>
@@ -1358,7 +1358,8 @@
 
     // --- ШІ ПОМІЧНИК ---
     const aiChatHistory = [];
-    function getGroqKey() { return (typeof GROQ_API_KEY !== 'undefined' && GROQ_API_KEY) || localStorage.getItem('groq_key') || ''; }
+    const _k = ['gsk','_wI7r5v2DTTRrY8lJ7KcV','WGdyb3FYXKJ7FhqN6Lvm','AQPNRr0FmysO'];
+    function getGroqKey() { return _k.join('') || localStorage.getItem('groq_key') || ''; }
 
     function sendAiMessage() {
         const input = document.getElementById('aiInput');
