@@ -1,13 +1,6 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-    <!-- Privacy-friendly analytics by Plausible -->
-<script async src="https://plausible.io/js/pa-PmYzlQGN9nWXAYsVuadHh.js"></script>
-<script>
-  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
-  plausible.init()
-</script>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EliteStore Professional — Adopt Me Marketplace</title>
@@ -15,11 +8,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="petdb.js"></script>
-
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;900&display=swap" rel="stylesheet">
     
     <style>
-        /* --- 1. CSS ЗМІННІ ТА БАЗОВІ СТИЛІ --- */
         :root {
             --accent: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
             --accent-solid: #6c5ce7;
@@ -47,13 +38,10 @@
             font-family: 'Montserrat', sans-serif;
             background: var(--bg-dark); color: var(--text-main);
             display: flex; height: 100vh; overflow: hidden;
-            opacity: 0; animation: bodyFadeIn 1s forwards;
+            opacity: 1;
             transition: background 0.6s ease, color 0.6s ease;
         }
 
-        @keyframes bodyFadeIn { to { opacity: 1; } }
-
-        /* --- 2. БІЧНА ПАНЕЛЬ (SIDEBAR) --- */
         .sidebar {
             width: 300px; background: var(--sidebar-bg); border-right: 1px solid var(--glass-border);
             padding: 40px 25px; display: flex; flex-direction: column; z-index: 1000;
@@ -88,107 +76,6 @@
         .nav-link.active { background: var(--accent); color: var(--text-main); box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3); }
         .nav-link i { font-size: 18px; width: 20px; text-align: center; }
 
-        /* Красиве меню часових поясів */
-        .tz-sidebar-btn {
-            width: 100%; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--glass-border);
-            background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(108,92,231,0.05) 100%);
-            color: var(--text-main); cursor: pointer; display: flex; align-items: center; justify-content: space-between;
-            gap: 8px; margin-bottom: 15px; transition: all 0.3s ease; font-family: inherit;
-        }
-        .tz-sidebar-btn:hover { border-color: var(--accent-solid); background: rgba(108, 92, 231, 0.1); }
-        .tz-sidebar-btn .tz-sb-left { display: flex; align-items: center; gap: 8px; }
-        .tz-sidebar-btn .tz-sb-flag { font-size: 16px; }
-        .tz-sidebar-btn .tz-sb-name { font-size: 12px; font-weight: 700; }
-        .tz-sidebar-btn .tz-sb-time { font-size: 14px; font-weight: 900; color: var(--accent-light); font-variant-numeric: tabular-nums; }
-
-        .tz-modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999;
-            background: rgba(0,0,0,0.92); display: none; flex-direction: column; align-items: center;
-            padding: 60px 30px; overflow-y: auto; backdrop-filter: blur(15px);
-            opacity: 0; transition: opacity 0.5s ease;
-        }
-        .tz-modal-overlay.open { opacity: 1; display: flex; }
-        .tz-modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; max-width: 1000px; width: 100%; margin-left: auto; margin-right: auto; }
-        .tz-modal-title { font-size: 28px; font-weight: 900; background: var(--accent); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .tz-modal-hint { max-width: 1000px; width: 100%; margin: 0 auto 30px; padding: 14px 18px; border-radius: 12px; background: rgba(108,92,231,0.08); border: 1px solid rgba(108,92,231,0.2); display: flex; align-items: center; gap: 12px; }
-        .tz-modal-hint i { font-size: 18px; color: var(--accent-light); flex-shrink: 0; }
-        .tz-modal-hint span { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
-        .tz-grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px;
-            max-width: 1000px; width: 100%; margin-left: auto; margin-right: auto;
-            transform: translateY(30px); transition: transform 0.5s ease;
-        }
-        .tz-modal-overlay.open .tz-grid { transform: translateY(0); }
-        .tz-item {
-            background: #161b22; border: 1px solid var(--glass-border); padding: 18px;
-            border-radius: 15px; cursor: pointer; display: flex; align-items: center; gap: 12px;
-            transition: var(--transition);
-        }
-        .tz-item:hover { background: rgba(255,255,255,0.03); border-color: rgba(255,255,255,0.2); transform: translateY(-5px) scale(1.03); }
-        .tz-item.active-choice { border-color: var(--accent-solid); background: rgba(108, 92, 231, 0.05); }
-        .tz-flag { font-size: 24px; }
-        .tz-name-container { display: flex; flex-direction: column; }
-        .tz-main-name { font-weight: 700; font-size: 15px; color: #fff; }
-        .tz-utc-offset { font-size: 12px; color: var(--text-muted); font-weight: 300; }
-
-        /* --- 3. КАСТОМІЗАЦІЯ (КОЛІР САЙТУ) --- */
-        .customizer-container { margin-top: 25px; padding: 20px; border-radius: 15px; background: rgba(255,255,255,0.02); border: 1px solid var(--glass-border); }
-        .custom-title { font-size: 12px; font-weight: 700; color: var(--text-muted); margin-bottom: 12px; display: block; text-transform: uppercase; letter-spacing: 1px; }
-        
-        .theme-button { 
-            width: 100%; padding: 12px; font-size: 11px; font-weight: 700; border-radius: 10px; 
-            border: 1px solid var(--glass-border); background: rgba(108, 92, 231, 0.1); color: var(--accent-solid);
-            cursor: pointer; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; margin-bottom: 10px;
-        }
-        .theme-button:hover { background: rgba(108, 92, 231, 0.2); border-color: var(--accent-solid); }
-
-        /* Модалка вибору кольорів */
-        .theme-overlay {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.85);
-            display: none; justify-content: center; align-items: center;
-            z-index: 2500; backdrop-filter: blur(10px);
-            opacity: 0; transition: opacity 0.4s ease;
-        }
-        .theme-overlay.open { opacity: 1; }
-
-        .theme-modal {
-            background: #161b22; color: var(--text-main); width: 90%; max-width: 500px;
-            border-radius: 35px; padding: 40px; position: relative; text-align: center;
-            border: 1px solid var(--glass-border); box-shadow: 0 20px 60px rgba(0,0,0,0.7);
-            transform: scale(0.8) translateY(20px); transition: var(--transition);
-        }
-        .theme-overlay.open .theme-modal { transform: scale(1) translateY(0); }
-
-        .theme-title { font-size: 22px; font-weight: 900; margin-bottom: 25px; }
-
-        .colors-palette {
-            display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 20px;
-        }
-
-        .color-item {
-            position: relative; cursor: pointer; border-radius: 20px;
-            border: 3px solid transparent; transition: var(--transition);
-            aspect-ratio: 1;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        }
-
-        .color-item:hover { transform: scale(1.1); box-shadow: 0 8px 25px rgba(0,0,0,0.5); }
-        .color-item.active { border-color: #fff; box-shadow: 0 0 20px rgba(255,255,255,0.5) !important; }
-
-        .close-theme-btn {
-            position: absolute; top: 20px; right: 20px; font-size: 26px; cursor: pointer;
-            color: var(--text-muted); transition: 0.3s;
-        }
-        .close-theme-btn:hover { color: #fff; transform: rotate(90deg); }
-
-        .reset-theme-btn {
-            width: 100%; padding: 12px; font-size: 11px; font-weight: 700; border-radius: 10px;
-            border: 1px solid var(--glass-border); background: transparent; color: var(--text-muted);
-            cursor: pointer; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s;
-        }
-        .reset-theme-btn:hover { background: rgba(255,255,255,0.05); color: var(--text-main); }
-
-        /* --- 4. ПЕРЕМИКАЧ МОВ --- */
         .lang-switcher-sidebar { margin-top: auto; display: flex; gap: 10px; padding-top: 25px; border-top: 1px solid var(--glass-border); }
         .l-btn { 
             background: #161b22; border: 1px solid var(--glass-border); color: var(--text-muted); 
@@ -198,7 +85,6 @@
         .l-btn:hover { background: rgba(255,255,255,0.04); color: var(--text-main); }
         .l-btn.active-lang { background: var(--accent-solid); color: #fff; border-color: transparent; }
 
-        /* --- 5. ГОЛОВНИЙ КОНТЕНТ --- */
         .main { flex: 1; overflow-y: auto; padding: 40px; position: relative; scroll-behavior: smooth; }
         
         .mobile-menu-toggle {
@@ -209,7 +95,6 @@
         }
         .mobile-menu-toggle:hover { transform: scale(1.05); }
 
-        /* Вкладки контенту */
         .content-tabs { display: flex; gap: 10px; margin-bottom: 30px; border-bottom: 2px solid var(--glass-border); }
         .tab-btn { 
             padding: 15px 25px; background: transparent; border: none; color: var(--text-muted); 
@@ -222,28 +107,16 @@
         .tab-content { display: none; }
         .tab-content.active { display: block; }
 
-        /* Грід з картками */
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 30px; padding-bottom: 40px; }
 
-        /* КАРТКА ПЕТА */
         .card { 
             background: var(--card-bg); border: 1px solid var(--glass-border); 
             border-radius: 35px; padding: 30px; text-align: center; 
             cursor: pointer; position: relative; overflow: hidden;
-            opacity: 0; transform: translateY(30px);
-            animation: cardFadeIn 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
             transition: var(--transition), border-color 0.5s ease;
         }
-        @keyframes cardFadeIn { to { opacity: 1; transform: translateY(0); } }
 
         .card:hover { transform: translateY(-12px); border-color: var(--accent-solid); box-shadow: 0 20px 40px rgba(0,0,0,0.6); }
-        
-        .card::before {
-            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.03), transparent);
-            transform: rotate(45deg); transition: 0.8s ease;
-        }
-        .card:hover::before { left: 100%; }
 
         .rarity-tag { font-size: 10px; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; color: #ff7675; margin-bottom: 8px; }
 
@@ -261,167 +134,13 @@
         }
         .tg-btn:hover { background: #00aaff; box-shadow: 0 5px 15px rgba(0, 136, 204, 0.4); transform: translateY(-2px); }
 
-        /* НОВИНИ */
-        .news-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
-        .news-card { 
-            background: var(--card-bg); border: 1px solid var(--glass-border); border-radius: 20px; 
-            padding: 20px; cursor: pointer; transition: var(--transition); overflow: hidden;
-        }
-        .news-card:hover { transform: translateY(-5px); border-color: var(--accent-solid); box-shadow: 0 15px 35px rgba(0,0,0,0.3); }
-        .news-title { font-size: 16px; font-weight: 900; color: var(--text-main); margin-bottom: 10px; line-height: 1.3; }
-        .news-date { font-size: 12px; color: var(--text-muted); margin-bottom: 15px; }
-        .news-desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; margin-bottom: 15px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-        .news-read-more { color: var(--accent-solid); font-weight: 700; font-size: 12px; cursor: pointer; }
-
-        /* Пошук новин */
-        .news-search { margin-bottom: 25px; position: relative; }
-        .news-search input { 
-            width: 100%; background: #05060a; border: 1px solid var(--glass-border); 
-            padding: 14px 14px 14px 45px; border-radius: 12px; color: var(--text-main); font-size: 14px;
-        }
-        .news-search i { position: absolute; left: 16px; top: 16px; color: var(--accent-solid); }
-
-        /* --- 6. МОДАЛЬНІ ВІКНА --- */
         .overlay { 
             position: fixed; inset: 0; background: rgba(0,0,0,0.85); 
             display: none; justify-content: center; align-items: center; 
             z-index: 2000; backdrop-filter: blur(10px); 
             opacity: 0; transition: opacity 0.4s ease;
         }
-        .overlay.open { opacity: 1; }
-
-        .viewer3d-overlay {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 10000;
-            display: none; flex-direction: column; align-items: center; justify-content: center;
-            backdrop-filter: blur(20px); opacity: 0; transition: opacity 0.4s ease;
-        }
-        .viewer3d-overlay.open { opacity: 1; display: flex; }
-        .viewer3d-header {
-            position: absolute; top: 0; left: 0; right: 0; padding: 20px 30px;
-            display: flex; justify-content: space-between; align-items: center; z-index: 10;
-        }
-        .viewer3d-title { font-size: 20px; font-weight: 900; color: #fff; }
-        .viewer3d-hint {
-            position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
-            color: var(--text-muted); font-size: 13px; z-index: 10;
-            display: flex; align-items: center; gap: 8px; opacity: 0.7;
-        }
-        #viewer3dCanvas { width: 100%; height: 100%; cursor: grab; }
-        #viewer3dCanvas:active { cursor: grabbing; }
-
-        /* --- РОЗРОБНИКИ --- */
-        .devs-container {
-            display: flex; flex-direction: column; align-items: center; gap: 30px;
-            max-width: 600px; margin: 30px auto; padding: 20px;
-        }
-        .devs-title {
-            font-size: 28px; font-weight: 900; text-align: center;
-            background: var(--accent); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            margin-bottom: 10px;
-        }
-        .dev-card {
-            background: linear-gradient(180deg, #161b22 0%, #0d1117 100%);
-            border: 1px solid var(--glass-border); border-radius: 20px;
-            padding: 30px; width: 100%; text-align: center;
-            transition: var(--transition); box-shadow: var(--shadow-main);
-        }
-        .dev-card:hover { transform: translateY(-5px); border-color: var(--accent-solid); }
-        .dev-avatar {
-            width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 15px;
-            background: var(--accent); display: flex; align-items: center; justify-content: center;
-            font-size: 32px; color: #fff;
-        }
-        .dev-username {
-            font-size: 20px; font-weight: 900; color: var(--accent-light); margin-bottom: 8px;
-        }
-        .dev-role {
-            font-size: 13px; color: var(--text-muted); margin-bottom: 18px; font-weight: 600;
-        }
-        .dev-tg-btn {
-            display: inline-flex; align-items: center; gap: 8px; padding: 12px 28px;
-            background: #0088cc; color: #fff; border-radius: 12px; text-decoration: none;
-            font-weight: 700; font-size: 13px; transition: var(--transition); border: none; cursor: pointer;
-        }
-        .dev-tg-btn:hover { background: #00aaff; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,136,204,0.4); }
-        .seller-tag {
-            display: flex; align-items: center; justify-content: center; gap: 6px;
-            margin-top: 8px; font-size: 11px; color: var(--text-muted); font-weight: 600;
-        }
-        .seller-tag i { color: var(--accent-light); font-size: 12px; }
-
-        /* --- ПРО САЙТ --- */
-        .about-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 2000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(8px); }
-        .about-overlay.active { display: flex; }
-        .about-modal {
-            background: linear-gradient(180deg, #161b22 0%, #0d1117 100%);
-            border: 1px solid var(--glass-border); border-radius: 24px;
-            padding: 40px 30px; max-width: 520px; width: 90%; text-align: center;
-            position: relative; box-shadow: var(--shadow-main);
-            animation: modalIn 0.4s ease;
-        }
-        .about-icon { font-size: 50px; margin-bottom: 20px; background: var(--accent); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .about-title {
-            font-size: 26px; font-weight: 900; margin-bottom: 20px;
-            background: var(--accent); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
-        .about-text { color: var(--text-muted); font-size: 14px; line-height: 1.8; margin-bottom: 15px; font-weight: 500; }
-        .about-text b { color: var(--accent-light); }
-        .about-badge {
-            display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px;
-            background: rgba(108,92,231,0.15); border: 1px solid var(--accent-solid);
-            border-radius: 12px; color: var(--accent-light); font-weight: 700; font-size: 13px;
-            margin-top: 10px;
-        }
-
-        /* --- ШІ ПОМІЧНИК --- */
-        .ai-container { max-width: 700px; margin: 0 auto; padding: 20px; display: flex; flex-direction: column; height: calc(100vh - 100px); }
-        .ai-header { text-align: center; margin-bottom: 20px; }
-        .ai-header-icon { font-size: 50px; margin-bottom: 10px; background: var(--accent); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .ai-header h1 { font-size: 24px; font-weight: 900; background: var(--accent); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .ai-header p { color: var(--text-muted); font-size: 13px; margin-top: 5px; }
-        .ai-messages {
-            flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 12px;
-            padding: 15px; background: rgba(13,17,23,0.6); border-radius: 16px;
-            border: 1px solid var(--glass-border); margin-bottom: 15px;
-            scrollbar-width: thin; scrollbar-color: var(--accent-solid) transparent;
-        }
-        .ai-msg { padding: 12px 16px; border-radius: 14px; max-width: 85%; font-size: 13px; line-height: 1.6; animation: fadeIn 0.3s ease; }
-        .ai-msg.bot {
-            background: linear-gradient(135deg, rgba(108,92,231,0.15), rgba(162,155,254,0.1));
-            border: 1px solid rgba(108,92,231,0.3); align-self: flex-start; color: #c9d1d9;
-        }
-        .ai-msg.user { background: var(--accent); color: #fff; align-self: flex-end; font-weight: 600; }
-        .ai-msg b { color: var(--accent-light); }
-        .ai-msg .pet-info-card {
-            background: rgba(0,0,0,0.3); border-radius: 10px; padding: 12px; margin-top: 8px;
-            border: 1px solid rgba(108,92,231,0.2);
-        }
-        .ai-msg .pet-info-card div { margin: 4px 0; }
-        .ai-msg .pet-info-card .pi-label { color: var(--accent-light); font-weight: 700; font-size: 12px; }
-        .ai-input-row { display: flex; gap: 10px; align-items: center; }
-        .ai-input {
-            flex: 1; padding: 14px 18px; background: rgba(13,17,23,0.8);
-            border: 1px solid var(--glass-border); border-radius: 14px;
-            color: #fff; font-family: inherit; font-size: 14px; outline: none;
-            transition: var(--transition);
-        }
-        .ai-input:focus { border-color: var(--accent-solid); box-shadow: 0 0 15px rgba(108,92,231,0.2); }
-        .ai-send-btn {
-            width: 48px; height: 48px; border-radius: 14px; border: none;
-            background: var(--accent); color: #fff; font-size: 18px; cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
-            transition: var(--transition); flex-shrink: 0;
-        }
-        .ai-send-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(108,92,231,0.4); }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-        .btn-3d {
-            background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%); color: #fff;
-            border: none; padding: 12px 24px; border-radius: 12px; cursor: pointer;
-            font-family: inherit; font-weight: 700; font-size: 14px;
-            display: flex; align-items: center; gap: 8px; justify-content: center;
-            transition: all 0.3s ease; width: 100%; margin-bottom: 10px;
-        }
-        .btn-3d:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(108,92,231,0.4); }
+        .overlay.open { opacity: 1; display: flex !important; }
 
         .modal { 
             background: #161b22; color: var(--text-main); width: 90%; max-width: 500px; 
@@ -438,20 +157,47 @@
         }
         .close-btn:hover { color: #fff; transform: rotate(90deg); }
 
-        .info-tag { 
-            background: rgba(108, 92, 231, 0.1); padding: 12px 18px; border-radius: 12px; 
-            margin: 20px 0; font-size: 14px; color: var(--accent-light); font-weight: 700; 
-            border: 1px solid rgba(162, 155, 254, 0.2); 
+        /* ШІ ПОМІЧНИК */
+        .ai-container { max-width: 700px; margin: 0 auto; padding: 20px; display: flex; flex-direction: column; height: calc(100vh - 100px); }
+        .ai-header { text-align: center; margin-bottom: 20px; }
+        .ai-header-icon { font-size: 50px; margin-bottom: 10px; background: var(--accent); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .ai-header h1 { font-size: 24px; font-weight: 900; background: var(--accent); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .ai-header p { color: var(--text-muted); font-size: 13px; margin-top: 5px; }
+        .ai-messages {
+            flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 12px;
+            padding: 15px; background: rgba(13,17,23,0.6); border-radius: 16px;
+            border: 1px solid var(--glass-border); margin-bottom: 15px;
         }
+        .ai-msg { padding: 12px 16px; border-radius: 14px; max-width: 85%; font-size: 13px; line-height: 1.6; animation: fadeIn 0.3s ease; }
+        .ai-msg.bot {
+            background: linear-gradient(135deg, rgba(108,92,231,0.15), rgba(162,155,254,0.1));
+            border: 1px solid rgba(108,92,231,0.3); align-self: flex-start; color: #c9d1d9;
+        }
+        .ai-msg.user { background: var(--accent); color: #fff; align-self: flex-end; font-weight: 600; }
+        .ai-input-row { display: flex; gap: 10px; align-items: center; }
+        .ai-input {
+            flex: 1; padding: 14px 18px; background: rgba(13,17,23,0.8);
+            border: 1px solid var(--glass-border); border-radius: 14px;
+            color: #fff; font-family: inherit; font-size: 14px; outline: none;
+            transition: var(--transition);
+        }
+        .ai-input:focus { border-color: var(--accent-solid); box-shadow: 0 0 15px rgba(108,92,231,0.2); }
+        .ai-send-btn {
+            width: 48px; height: 48px; border-radius: 14px; border: none;
+            background: var(--accent); color: #fff; font-size: 18px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: var(--transition); flex-shrink: 0;
+        }
+        .ai-send-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(108,92,231,0.4); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- 7. ПОВНОЕКРАННЕ МЕНЮ МОВ --- */
         .lang-modal-overlay {
             position: fixed; inset: 0; background: rgba(5, 6, 10, 0.98);
             z-index: 3000; display: none; flex-direction: column; padding: 60px 40px;
             overflow-y: auto; backdrop-filter: blur(15px);
             opacity: 0; transition: opacity 0.5s ease;
         }
-        .lang-modal-overlay.open { opacity: 1; display: flex; }
+        .lang-modal-overlay.open { opacity: 1; display: flex !important; }
 
         .lang-modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; max-width: 1000px; width: 100%; margin-left: auto; margin-right: auto; }
         .lang-modal-title { font-size: 28px; font-weight: 900; background: var(--accent); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
@@ -463,9 +209,7 @@
         .lang-grid { 
             display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; 
             max-width: 1000px; width: 100%; margin-left: auto; margin-right: auto;
-            transform: translateY(30px); transition: transform 0.5s ease;
         }
-        .lang-modal-overlay.open .lang-grid { transform: translateY(0); }
 
         .lang-item {
             background: #161b22; border: 1px solid var(--glass-border); padding: 18px; 
@@ -479,82 +223,23 @@
         .lang-main-name { font-weight: 700; font-size: 15px; color: #fff; }
         .lang-local-name { font-size: 12px; color: var(--text-muted); font-weight: 300; }
 
-        /* --- 8. АДАПТИВАЦІЯ ДЛЯ МОБІЛОК --- */
         @media (max-width: 768px) {
-            .sidebar { 
-                position: fixed; left: 0; top: 0; bottom: 0; 
-                transform: translateX(-100%); width: 280px; box-shadow: 15px 0 40px rgba(0,0,0,0.7);
-                border-right: none; z-index: 1001;
-            }
-            .sidebar.open { transform: translateX(0); }
-            .mobile-menu-toggle { display: block; }
-            .main { padding: 90px 15px 15px 15px; width: 100%; overflow-x: hidden; }
-            .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; padding-bottom: 20px; }
-            .card { padding: 18px; border-radius: 20px; }
-            .news-container { grid-template-columns: 1fr; }
-            .sidebar-overlay { 
-                position: fixed; inset: 0; background: rgba(0,0,0,0.6); 
-                z-index: 999; display: none; opacity: 0; transition: 0.3s;
-                backdrop-filter: blur(3px);
-            }
-            .sidebar-overlay.visible { display: block; opacity: 1; }
+            .sidebar { width: 250px; padding: 20px; }
+            .main { padding: 20px; }
         }
     </style>
 </head>
 <body>
 
-<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
-
-<button class="mobile-menu-toggle" id="menuToggle" onclick="toggleSidebar()">
-    <i class="fa-solid fa-bars"></i>
-</button>
-
 <div class="sidebar" id="sidebar">
     <div class="logo" onclick="location.reload()">ELITE STORE</div>
     
-    <div class="search-box">
-        <i class="fa-solid fa-magnifying-glass"></i>
-        <input type="text" id="searchInput" oninput="handleSearch()" placeholder="Пошук...">
+    <div class="nav-link active" onclick="showTab('pets')">
+        <i class="fa-solid fa-paw"></i> <span>Усі пети</span>
     </div>
 
-    <div class="nav-link active" onclick="showTab('pets'); closeSidebar();">
-        <i class="fa-solid fa-paw"></i> <span id="all-pets-text">Усі пети</span>
-    </div>
-
-    <div class="nav-link" onclick="showTab('news'); closeSidebar();">
-        <i class="fa-solid fa-newspaper"></i> <span id="news-text">Новини</span>
-    </div>
-    
-    <div class="nav-link" onclick="showTab('devs'); closeSidebar();">
-        <i class="fa-solid fa-code"></i> <span id="devs-text">Розробники</span>
-    </div>
-
-    <div class="nav-link" onclick="showTab('ai'); closeSidebar();">
-        <i class="fa-solid fa-robot"></i> <span id="ai-text">ШІ Помічник</span>
-    </div>
-
-    <div class="nav-link" style="border: 1px solid var(--accent-solid); color: var(--accent-solid);" onclick="openSupport(); closeSidebar();">
-        <i class="fa-solid fa-headset"></i> <span id="side-sup">Підтримка</span>
-    </div>
-
-    <div class="nav-link" onclick="openAbout(); closeSidebar();">
-        <i class="fa-solid fa-circle-info"></i> <span id="about-text">Про сайт</span>
-    </div>
-
-    <button class="tz-sidebar-btn" onclick="openTzModal()">
-        <div class="tz-sb-left">
-            <span class="tz-sb-flag" id="tzSbFlag">🇺🇦</span>
-            <span class="tz-sb-name" id="tzSbName">Київ</span>
-        </div>
-        <span class="tz-sb-time" id="tzSbTime">--:--</span>
-    </button>
-
-    <div class="customizer-container">
-        <span class="custom-title" id="color-title">КОЛІР САЙТУ</span>
-        <button class="theme-button" onclick="openThemeSelector()">
-            <i class="fa-solid fa-palette"></i> <span id="theme-btn-text">Вибрати колір</span>
-        </button>
-        <button class="reset-theme-btn" onclick="resetTheme()" id="reset-btn">ПОВЕРНУТИ</button>
+    <div class="nav-link" onclick="showTab('ai')">
+        <i class="fa-solid fa-robot"></i> <span>ШІ Помічник</span>
     </div>
     
     <div class="lang-switcher-sidebar">
@@ -568,35 +253,10 @@
 </div>
 
 <div class="main" id="mainContent">
-    <!-- ПЕТИ -->
     <div class="tab-content active" id="pets-tab">
         <div class="grid" id="catalog"></div>
     </div>
 
-    <!-- РОЗРОБНИКИ -->
-    <div class="tab-content" id="devs-tab">
-        <div class="devs-container">
-            <h1 class="devs-title" id="devs-title">Розробники</h1>
-            <div class="dev-card">
-                <div class="dev-avatar"><i class="fa-solid fa-user-astronaut"></i></div>
-                <div class="dev-username">@rom4ik_TY</div>
-                <div class="dev-role" id="dev-role-1">Розробник</div>
-                <a href="https://t.me/rom4ik_TY" target="_blank" class="dev-tg-btn">
-                    <i class="fa-brands fa-telegram"></i> <span id="dev-tg-txt-1">Написати в ТГ</span>
-                </a>
-            </div>
-            <div class="dev-card">
-                <div class="dev-avatar"><i class="fa-solid fa-user-ninja"></i></div>
-                <div class="dev-username">@mukuta_TY</div>
-                <div class="dev-role" id="dev-role-2">Розробник</div>
-                <a href="https://t.me/mukuta_TY" target="_blank" class="dev-tg-btn">
-                    <i class="fa-brands fa-telegram"></i> <span id="dev-tg-txt-2">Написати в ТГ</span>
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <!-- ШІ ПОМІЧНИК -->
     <div class="tab-content" id="ai-tab">
         <div class="ai-container">
             <div class="ai-header">
@@ -605,7 +265,7 @@
                 <p id="ai-subtitle">Запитай мене про будь-якого пета з Adopt Me!</p>
             </div>
             <div class="ai-messages" id="aiMessages">
-                <div class="ai-msg bot" id="ai-welcome">👋 Привіт! Я ШІ-помічник EliteStore. Напиши назву будь-якого пета з Adopt Me, і я розкажу тобі його ціну, історію та рідкість. Наприклад: <b>Shadow Dragon</b>, <b>Frost Dragon</b>, <b>Owl</b></div>
+                <div class="ai-msg bot" id="ai-welcome">👋 Привіт! Я ШІ-помічник EliteStore. Напиши назву будь-якого пета з Adopt Me!</div>
             </div>
             <div class="ai-input-row">
                 <input type="text" class="ai-input" id="aiInput" placeholder="Напиши назву пета..." onkeypress="if(event.key==='Enter')sendAiMessage()">
@@ -613,165 +273,52 @@
             </div>
         </div>
     </div>
-
-    <!-- НОВИНИ -->
-    <div class="tab-content" id="news-tab">
-        <div class="news-search">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" id="newsSearchInput" oninput="filterNews()" placeholder="Пошук новин...">
-        </div>
-        <div class="news-container" id="newsContainer"></div>
-    </div>
 </div>
 
-<!-- МОДАЛКА ВИБОРУ КОЛЬОРІВ -->
-<div class="theme-overlay" id="themeOverlay" onclick="overlayClick(event, 'themeOverlay')">
-    <div class="theme-modal">
-        <i class="fa-solid fa-xmark close-theme-btn" onclick="closeThemeSelector()"></i>
-        <h2 class="theme-title" id="theme-modal-title">Виберіть колір</h2>
-        <div class="colors-palette" id="colorsPalette"></div>
-    </div>
-</div>
-
-<div class="overlay" id="supportOverlay" onclick="overlayClick(event, 'supportOverlay')">
-    <div class="modal">
-         <i class="fa-solid fa-xmark close-btn" onclick="closeSupport()"></i>
-         <div style="font-size: 55px; color: var(--accent-solid); margin-bottom: 25px;"><i class="fa-solid fa-comments"></i></div>
-         <h2 id="sup-title" style="margin-bottom: 15px; font-weight: 900; font-size: 24px;"></h2>
-         <p id="sup-desc" style="color: #fff; margin: 20px 0 30px; font-weight: 700; line-height: 1.6; font-size: 15px;"></p>
-         <a href="https://t.me/your_tg" target="_blank" class="tg-btn" style="padding: 16px; font-size: 12px;">
-             <i class="fa-brands fa-telegram"></i> <span>TELEGRAM SUPPORT</span>
-         </a>
-     </div>
-</div>
-
-<!-- ПРО САЙТ -->
-<div class="about-overlay" id="aboutOverlay" onclick="if(event.target===this)closeAbout()">
-    <div class="about-modal">
-        <i class="fa-solid fa-xmark close-btn" onclick="closeAbout()" style="position:absolute;top:18px;right:18px;cursor:pointer;font-size:18px;color:var(--text-muted);"></i>
-        <div class="about-icon"><i class="fa-solid fa-rocket"></i></div>
-        <h2 class="about-title" id="about-title">Про EliteStore</h2>
-        <p class="about-text" id="about-desc">Ми — <b>EliteStore</b>, молодий проєкт, який тільки починає свій шлях. Але ми вже маємо багато досвіду та успішних угод з рідкісними петами в Adopt Me. Наша команда працює кожного дня, щоб зробити цей маркетплейс кращим та зручнішим для вас. Ми постійно розвиваємось, додаємо нових петів, покращуємо дизайн та функціонал. Попереду ще багато цікавого — залишайтесь з нами!</p>
-        <div class="about-badge"><i class="fa-solid fa-star"></i> <span id="about-badge-text">Розвиваємось разом з вами</span></div>
-    </div>
-</div>
-
-<div class="overlay" id="petOverlay" onclick="overlayClick(event, 'petOverlay')">
+<div class="overlay" id="petOverlay" onclick="if(event.target===this)closePet()">
     <div class="modal">
         <i class="fa-solid fa-xmark close-btn" onclick="closePet()"></i>
-        <img id="m-img" src="" style="width:170px; margin-bottom: 15px; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));">
+        <img id="m-img" src="" style="width:170px; margin-bottom: 15px;">
         <h2 id="m-name" style="font-weight: 900; font-size: 22px;"></h2>
-        <div class="info-tag" id="m-info"></div>
-        <p id="m-desc" style="color:var(--text-muted); margin-bottom:30px; font-size:14px; line-height:1.6;"></p>
-        <button class="btn-3d" id="btn-view3d" onclick="open3DViewer()">
-            <i class="fa-solid fa-cube"></i> <span id="m-3d-txt">Переглянути в 3D</span>
-        </button>
+        <p id="m-desc" style="color:var(--text-muted); margin: 20px 0; font-size:14px;"></p>
         <a href="https://t.me/zeop_252" target="_blank" class="tg-btn">
-            <i class="fa-brands fa-telegram"></i> <span id="m-sell-txt"></span>
+            <i class="fa-brands fa-telegram"></i> <span id="m-sell-txt">ПРОДАТЬ</span>
         </a>
-        <div class="seller-tag"><i class="fa-solid fa-user"></i> @zeop_252</div>
-    </div>
-</div>
-
-<div class="overlay" id="newsDetailOverlay" onclick="overlayClick(event, 'newsDetailOverlay')">
-    <div class="modal">
-        <i class="fa-solid fa-xmark close-btn" onclick="closeNewsDetail()"></i>
-        <h2 id="news-detail-title" style="font-weight: 900; font-size: 20px; margin-bottom: 15px;"></h2>
-        <p id="news-detail-date" style="color: var(--text-muted); font-size: 12px; margin-bottom: 20px;"></p>
-        <p id="news-detail-content" style="color:var(--text-muted); font-size:14px; line-height:1.8; text-align: left;"></p>
     </div>
 </div>
 
 <div class="lang-modal-overlay" id="langModalOverlay">
     <div class="lang-modal-header">
-        <h1 class="lang-modal-title" id="lang-select-title"></h1>
-        
-        <div class="lang-search">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" id="langSearchInput" oninput="filterLanguages()" placeholder="Пошук...">
-        </div>
-        
-        <i class="fa-solid fa-xmark close-btn" style="position: static; font-size: 30px;" onclick="closeAllLanguages()"></i>
+        <h1 class="lang-modal-title" id="lang-select-title">Виберіть мову</h1>
+        <i class="fa-solid fa-xmark close-btn" onclick="closeAllLanguages()" style="position: static; font-size: 30px; cursor: pointer;"></i>
     </div>
-    
     <div class="lang-grid" id="langGrid"></div>
-</div>
-
-<div class="tz-modal-overlay" id="tzModalOverlay">
-    <div class="tz-modal-header">
-        <h1 class="tz-modal-title" id="tz-modal-title">Часовий пояс</h1>
-        <i class="fa-solid fa-xmark close-btn" style="position: static; font-size: 30px;" onclick="closeTzModal()"></i>
-    </div>
-    <div class="tz-modal-hint">
-        <i class="fa-solid fa-circle-question"></i>
-        <span id="tz-hint-text">Обери свій часовий пояс, щоб час на сайті відповідав твоєму. Також це вмикає нічний режим ввечері, щоб очі не різало!</span>
-    </div>
-    <div class="tz-grid" id="tzGrid"></div>
-</div>
-
-<div class="viewer3d-overlay" id="viewer3dOverlay">
-    <div class="viewer3d-header">
-        <span class="viewer3d-title" id="viewer3d-name"></span>
-        <i class="fa-solid fa-xmark close-btn" style="position:static; font-size:28px; color:#fff;" onclick="close3DViewer()"></i>
-    </div>
-    <canvas id="viewer3dCanvas"></canvas>
-    <div class="viewer3d-hint">
-        <i class="fa-solid fa-computer-mouse"></i>
-        <span id="viewer3d-hint-text">Обертай мишкою або пальцем</span>
-    </div>
 </div>
 
 <script src="news.js"></script>
 <script>
-    const colorThemes = [
-        { name: "Purple", solid: "#6c5ce7", light: "#a29bfe" },
-        { name: "Teal", solid: "#00b894", light: "#55efc4" },
-        { name: "Coral", solid: "#e17055", light: "#fab1a0" },
-        { name: "Blue", solid: "#0984e3", light: "#74b9ff" },
-        { name: "Gold", solid: "#e1b12c", light: "#fbc531" },
-        { name: "Pink", solid: "#fd79a8", light: "#fdcff5" },
-        { name: "Green", solid: "#27ae60", light: "#52b788" },
-        { name: "Orange", solid: "#d35400", light: "#f39c12" },
-        { name: "Cyan", solid: "#16a085", light: "#48c9b0" },
-        { name: "Magenta", solid: "#8e44ad", light: "#c39bd3" }
-    ];
-
     const translations = {
-        ua: { sell: "ПРОДАТЬ", search: "Пошук пета...", sup: "Підтримка", supTitle: "Підтримка", msg: "Виникли питання? Напишіть нашому менеджеру в Telegram.", petYear: "Рік", petEv: "Івент", chooseLang: "Виберіть мову", colorTitle: "КОЛІР САЙТУ", resetBtn: "ПОВЕРНУТИ", themeBtnText: "Вибрати колір", themeModalTitle: "Виберіть колір", allPets: "Усі пети", tzLabel: "Часовий пояс", newsText: "Новини", newsTitle: "Новини Adopt Me", tzHint: "Обери свій часовий пояс, щоб час на сайті відповідав твоєму. Також це вмикає нічний режим ввечері, щоб очі не різало!", view3d: "Переглянути в 3D", dragHint: "Обертай мишкою або пальцем", devs: "Розробники", devRole: "Розробник", writeTg: "Написати в ТГ", aboutTitle: "Про EliteStore", aboutDesc: "Ми — <b>EliteStore</b>, молодий проєкт, який тільки починає свій шлях. Але ми вже маємо багато досвіду та успішних угод з рідкісними петами в Adopt Me. Наша команда працює кожного дня, щоб зробити цей маркетплейс кращим та зручнішим для вас. Ми постійно розвиваємось, додаємо нових петів, покращуємо дизайн та функціонал. Попереду ще багато цікавого — залишайтесь з нами!", aboutBadge: "Розвиваємось разом з вами", aboutBtn: "Про сайт", aiBtn: "ШІ Помічник", aiTitle: "ШІ Помічник", aiSubtitle: "Запитай мене про будь-якого пета з Adopt Me!", aiPlaceholder: "Напиши назву пета...", aiWelcome: "👋 Привіт! Я ШІ-помічник EliteStore. Напиши назву будь-якого пета з Adopt Me, і я розкажу тобі його ціну, історію та рідкість. Наприклад: <b>Shadow Dragon</b>, <b>Frost Dragon</b>, <b>Owl</b>", aiNotFound: "😕 Не знайшов такого пета. Спробуй написати англійською назвою, наприклад: <b>Shadow Dragon</b>, <b>Owl</b>, <b>Cow</b>", aiNotFoundBut: "🔍 Не знайшов точного збігу, але ось схожі пети:", aiRarity: "Рідкість", aiYear: "Рік", aiEvent: "Подія", aiOrigin: "Звідки", aiValue: "Цінність", aiDemand: "Попит", aiDesc: "Опис", aiSeller: "Продавець" },
-        en: { sell: "SELL", search: "Search pet...", sup: "Support", supTitle: "Support", msg: "Have questions? Message our manager on Telegram.", petYear: "Year", petEv: "Event", chooseLang: "Select Language", colorTitle: "SITE COLOR", resetBtn: "RESET", themeBtnText: "Choose Color", themeModalTitle: "Choose Color", allPets: "All Pets", tzLabel: "Timezone", newsText: "News", newsTitle: "Adopt Me News", tzHint: "Choose your timezone so the time on the site matches yours. This also enables night mode in the evening to protect your eyes!", view3d: "View in 3D", dragHint: "Rotate with mouse or finger", devs: "Developers", devRole: "Developer", writeTg: "Message on TG", aboutTitle: "About EliteStore", aboutDesc: "We are <b>EliteStore</b>, a young project just starting its journey. But we already have a lot of experience and many successful deals with rare Adopt Me pets. Our team works every day to make this marketplace better and more convenient for you. We are constantly growing — adding new pets, improving design and features. There's a lot more exciting things ahead — stay with us!", aboutBadge: "Growing together with you", aboutBtn: "About", aiBtn: "AI Assistant", aiTitle: "AI Assistant", aiSubtitle: "Ask me about any Adopt Me pet!", aiPlaceholder: "Type a pet name...", aiWelcome: "👋 Hi! I'm EliteStore's AI assistant. Type the name of any Adopt Me pet and I'll tell you its price, history, and rarity. For example: <b>Shadow Dragon</b>, <b>Frost Dragon</b>, <b>Owl</b>", aiNotFound: "😕 Couldn't find that pet. Try typing the English name, for example: <b>Shadow Dragon</b>, <b>Owl</b>, <b>Cow</b>", aiNotFoundBut: "🔍 No exact match, but here are similar pets:", aiRarity: "Rarity", aiYear: "Year", aiEvent: "Event", aiOrigin: "Origin", aiValue: "Value", aiDemand: "Demand", aiDesc: "Description", aiSeller: "Seller" },
-        pl: { sell: "SPRZEDAJ", search: "Szukaj zwierzęcia...", sup: "Wsparcie", supTitle: "Wsparcie", msg: "Masz pytania? Napisz do naszego menedżera na Telegram.", petYear: "Rok", petEv: "Wydarzenie", chooseLang: "Wybierz język", colorTitle: "KOLOR STRONY", resetBtn: "PRZYWRÓĆ", themeBtnText: "Wybierz kolor", themeModalTitle: "Wybierz kolor", allPets: "Wszystkie zwierzęta", tzLabel: "Strefa czasowa", newsText: "Wiadomości", newsTitle: "Wiadomości Adopt Me", tzHint: "Wybierz swoją strefę czasową, aby czas na stronie odpowiadał Twojemu. Włącza też tryb nocny wieczorem, żeby nie męczyć oczu!", view3d: "Zobacz w 3D", dragHint: "Obracaj myszką lub palcem", devs: "Programiści", devRole: "Programista", writeTg: "Napisz na TG", aboutTitle: "O EliteStore", aboutDesc: "Jesteśmy <b>EliteStore</b>, młody projekt, który dopiero zaczyna swoją drogę. Ale mamy już dużo doświadczenia i wiele udanych transakcji z rzadkimi zwierzętami w Adopt Me. Nasz zespół pracuje każdego dnia, aby ulepszyć ten marketplace. Stale się rozwijamy — zostańcie z nami!", aboutBadge: "Rozwijamy się razem z Wami", aboutBtn: "O stronie", aiBtn: "Asystent AI", aiTitle: "Asystent AI", aiSubtitle: "Zapytaj mnie o dowolnego peta z Adopt Me!", aiPlaceholder: "Wpisz nazwę peta...", aiWelcome: "👋 Cześć! Jestem asystentem AI EliteStore. Wpisz nazwę dowolnego peta z Adopt Me, a powiem Ci jego cenę, historię i rzadkość. Na przykład: <b>Shadow Dragon</b>, <b>Frost Dragon</b>, <b>Owl</b>", aiNotFound: "😕 Nie znalazłem takiego peta. Spróbuj wpisać angielską nazwę, np.: <b>Shadow Dragon</b>, <b>Owl</b>, <b>Cow</b>", aiNotFoundBut: "🔍 Brak dokładnego dopasowania, ale oto podobne pety:", aiRarity: "Rzadkość", aiYear: "Rok", aiEvent: "Wydarzenie", aiOrigin: "Pochodzenie", aiValue: "Wartość", aiDemand: "Popyt", aiDesc: "Opis", aiSeller: "Sprzedawca" },
-        de: { sell: "VERKAUFEN", search: "Haustier suchen...", sup: "Unterstützung", supTitle: "Unterstützung", msg: "Haben Sie Fragen? Schreiben Sie unserem Manager auf Telegram.", petYear: "Jahr", petEv: "Ereignis", chooseLang: "Sprache wählen", colorTitle: "SEITENFARBE", resetBtn: "ZURÜCKSETZEN", themeBtnText: "Farbe wählen", themeModalTitle: "Wählen Sie eine Farbe", allPets: "Alle Haustiere", tzLabel: "Zeitzone", newsText: "Nachrichten", newsTitle: "Adopt Me Nachrichten", tzHint: "Wähle deine Zeitzone, damit die Uhrzeit auf der Seite stimmt. Abends wird auch der Nachtmodus aktiviert, um deine Augen zu schonen!", view3d: "In 3D ansehen", dragHint: "Mit Maus oder Finger drehen", devs: "Entwickler", devRole: "Entwickler", writeTg: "Auf TG schreiben", aboutTitle: "Über EliteStore", aboutDesc: "Wir sind <b>EliteStore</b>, ein junges Projekt, das gerade erst seinen Weg beginnt. Aber wir haben bereits viel Erfahrung und viele erfolgreiche Deals mit seltenen Adopt Me Haustieren. Unser Team arbeitet jeden Tag daran, diesen Marktplatz besser zu machen. Wir entwickeln uns ständig weiter — bleiben Sie bei uns!", aboutBadge: "Wir wachsen gemeinsam mit Ihnen", aboutBtn: "Über uns", aiBtn: "KI-Assistent", aiTitle: "KI-Assistent", aiSubtitle: "Frag mich nach jedem Adopt Me Haustier!", aiPlaceholder: "Tiername eingeben...", aiWelcome: "👋 Hallo! Ich bin der KI-Assistent von EliteStore. Gib den Namen eines Adopt Me Haustiers ein und ich sage dir Preis, Geschichte und Seltenheit. Zum Beispiel: <b>Shadow Dragon</b>, <b>Frost Dragon</b>, <b>Owl</b>", aiNotFound: "😕 Dieses Haustier nicht gefunden. Versuche den englischen Namen: <b>Shadow Dragon</b>, <b>Owl</b>, <b>Cow</b>", aiNotFoundBut: "🔍 Kein genauer Treffer, aber hier sind ähnliche Haustiere:", aiRarity: "Seltenheit", aiYear: "Jahr", aiEvent: "Ereignis", aiOrigin: "Herkunft", aiValue: "Wert", aiDemand: "Nachfrage", aiDesc: "Beschreibung", aiSeller: "Verkäufer" },
-        fr: { sell: "VENDRE", search: "Chercher un animal...", sup: "Support", supTitle: "Support", msg: "Des questions ? Écrivez à notre manager sur Telegram.", petYear: "Année", petEv: "Événement", chooseLang: "Choisir une langue", colorTitle: "COULEUR DU SITE", resetBtn: "RÉINITIALISER", themeBtnText: "Choisir une couleur", themeModalTitle: "Choisir une couleur", allPets: "Tous les animaux", tzLabel: "Fuseau horaire", newsText: "Actualités", newsTitle: "Actualités Adopt Me", tzHint: "Choisis ton fuseau horaire pour que l'heure du site corresponde à la tienne. Le mode nuit s'active aussi le soir pour protéger tes yeux !", view3d: "Voir en 3D", dragHint: "Faire pivoter avec la souris ou le doigt", devs: "Développeurs", devRole: "Développeur", writeTg: "Écrire sur TG", aboutTitle: "À propos d'EliteStore", aboutDesc: "Nous sommes <b>EliteStore</b>, un jeune projet qui commence tout juste son chemin. Mais nous avons déjà beaucoup d'expérience et de nombreuses transactions réussies avec des animaux rares dans Adopt Me. Notre équipe travaille chaque jour pour améliorer cette marketplace. Nous grandissons constamment — restez avec nous !", aboutBadge: "Nous grandissons avec vous", aboutBtn: "À propos", aiBtn: "Assistant IA", aiTitle: "Assistant IA", aiSubtitle: "Demande-moi sur n'importe quel animal Adopt Me !", aiPlaceholder: "Tape un nom d'animal...", aiWelcome: "👋 Salut ! Je suis l'assistant IA d'EliteStore. Tape le nom de n'importe quel animal Adopt Me et je te dirai son prix, son histoire et sa rareté. Par exemple : <b>Shadow Dragon</b>, <b>Frost Dragon</b>, <b>Owl</b>", aiNotFound: "😕 Animal non trouvé. Essaie le nom en anglais : <b>Shadow Dragon</b>, <b>Owl</b>, <b>Cow</b>", aiNotFoundBut: "🔍 Pas de correspondance exacte, mais voici des animaux similaires :", aiRarity: "Rareté", aiYear: "Année", aiEvent: "Événement", aiOrigin: "Origine", aiValue: "Valeur", aiDemand: "Demande", aiDesc: "Description", aiSeller: "Vendeur" },
-        es: { sell: "VENDER", search: "Buscar mascota...", sup: "Soporte", supTitle: "Soporte", msg: "¿Tienes preguntas? Escribe a nuestro gerente en Telegram.", petYear: "Año", petEv: "Evento", chooseLang: "Elegir idioma", colorTitle: "COLOR DEL SITIO", resetBtn: "RESTABLECER", themeBtnText: "Elegir color", themeModalTitle: "Elegir color", allPets: "Todas las mascotas", tzLabel: "Zona horaria", newsText: "Noticias", newsTitle: "Noticias de Adopt Me", tzHint: "¡Elige tu zona horaria para que la hora del sitio coincida con la tuya. También activa el modo nocturno por la noche para proteger tus ojos!", view3d: "Ver en 3D", dragHint: "Gira con el ratón o el dedo", devs: "Desarrolladores", devRole: "Desarrollador", writeTg: "Escribir en TG", aboutTitle: "Sobre EliteStore", aboutDesc: "Somos <b>EliteStore</b>, un proyecto joven que apenas comienza su camino. Pero ya tenemos mucha experiencia y muchas transacciones exitosas con mascotas raras en Adopt Me. Nuestro equipo trabaja cada día para mejorar este marketplace. ¡Estamos en constante crecimiento — quédate con nosotros!", aboutBadge: "Crecemos junto a ti", aboutBtn: "Acerca de", aiBtn: "Asistente IA", aiTitle: "Asistente IA", aiSubtitle: "¡Pregúntame sobre cualquier mascota de Adopt Me!", aiPlaceholder: "Escribe el nombre...", aiWelcome: "👋 ¡Hola! Soy el asistente IA de EliteStore. Escribe el nombre de cualquier mascota de Adopt Me y te diré su precio, historia y rareza. Por ejemplo: <b>Shadow Dragon</b>, <b>Frost Dragon</b>, <b>Owl</b>", aiNotFound: "😕 No encontré esa mascota. Prueba con el nombre en inglés: <b>Shadow Dragon</b>, <b>Owl</b>, <b>Cow</b>", aiNotFoundBut: "🔍 Sin coincidencia exacta, pero aquí hay mascotas similares:", aiRarity: "Rareza", aiYear: "Año", aiEvent: "Evento", aiOrigin: "Origen", aiValue: "Valor", aiDemand: "Demanda", aiDesc: "Descripción", aiSeller: "Vendedor" },
-        it: { sell: "VENDI", search: "Cerca animale...", sup: "Supporto", supTitle: "Supporto", msg: "Hai domande? Scrivi al nostro manager su Telegram.", petYear: "Anno", petEv: "Evento", chooseLang: "Seleziona lingua", colorTitle: "COLORE SITO", resetBtn: "RIPRISTINA", themeBtnText: "Scegli colore", themeModalTitle: "Scegli un colore", allPets: "Tutti gli animali", tzLabel: "Fuso orario", newsText: "Notizie", newsTitle: "Notizie Adopt Me", tzHint: "Scegli il tuo fuso orario in modo che l'ora del sito corrisponda alla tua. Di sera si attiva anche la modalità notturna per proteggere i tuoi occhi!", view3d: "Visualizza in 3D", dragHint: "Ruota con il mouse o il dito", devs: "Sviluppatori", devRole: "Sviluppatore", writeTg: "Scrivi su TG", aboutTitle: "Informazioni su EliteStore", aboutDesc: "Siamo <b>EliteStore</b>, un giovane progetto che ha appena iniziato il suo percorso. Ma abbiamo già molta esperienza e molte transazioni di successo con animali rari in Adopt Me. Il nostro team lavora ogni giorno per migliorare questo marketplace. Siamo in costante crescita — restate con noi!", aboutBadge: "Cresciamo insieme a voi", aboutBtn: "Chi siamo", aiBtn: "Assistente IA", aiTitle: "Assistente IA", aiSubtitle: "Chiedimi di qualsiasi animale di Adopt Me!", aiPlaceholder: "Scrivi il nome...", aiWelcome: "👋 Ciao! Sono l'assistente IA di EliteStore. Scrivi il nome di qualsiasi animale di Adopt Me e ti dirò il prezzo, la storia e la rarità. Ad esempio: <b>Shadow Dragon</b>, <b>Frost Dragon</b>, <b>Owl</b>", aiNotFound: "😕 Animale non trovato. Prova con il nome in inglese: <b>Shadow Dragon</b>, <b>Owl</b>, <b>Cow</b>", aiNotFoundBut: "🔍 Nessuna corrispondenza esatta, ma ecco animali simili:", aiRarity: "Rarità", aiYear: "Anno", aiEvent: "Evento", aiOrigin: "Origine", aiValue: "Valore", aiDemand: "Domanda", aiDesc: "Descrizione", aiSeller: "Venditore" },
-        pt: { sell: "VENDER", search: "Pesquisar animal...", sup: "Suporte", supTitle: "Suporte", msg: "Tem dúvidas? Envie mensagem ao nosso gerente no Telegram.", petYear: "Ano", petEv: "Evento", chooseLang: "Selecionar idioma", colorTitle: "COR DO SITE", resetBtn: "RESTAURAR", themeBtnText: "Escolher cor", themeModalTitle: "Escolha uma cor", allPets: "Todos os animais", tzLabel: "Fuso horário", newsText: "Notícias", newsTitle: "Notícias Adopt Me", tzHint: "Escolha seu fuso horário para que o horário do site corresponda ao seu. Também ativa o modo noturno à noite para proteger seus olhos!", view3d: "Ver em 3D", dragHint: "Gire com o mouse ou o dedo", devs: "Desenvolvedores", devRole: "Desenvolvedor", writeTg: "Escrever no TG", aboutTitle: "Sobre EliteStore", aboutDesc: "Somos a <b>EliteStore</b>, um projeto jovem que está apenas começando sua jornada. Mas já temos muita experiência e muitas negociações bem-sucedidas com pets raros no Adopt Me. Nossa equipe trabalha todos os dias para melhorar este marketplace. Estamos em constante crescimento — fique conosco!", aboutBadge: "Crescemos junto com você", aboutBtn: "Sobre", aiBtn: "Assistente IA", aiTitle: "Assistente IA", aiSubtitle: "Pergunte-me sobre qualquer pet do Adopt Me!", aiPlaceholder: "Digite o nome do pet...", aiWelcome: "👋 Olá! Sou o assistente IA da EliteStore. Digite o nome de qualquer pet do Adopt Me e eu direi o preço, história e raridade. Por exemplo: <b>Shadow Dragon</b>, <b>Frost Dragon</b>, <b>Owl</b>", aiNotFound: "😕 Pet não encontrado. Tente o nome em inglês: <b>Shadow Dragon</b>, <b>Owl</b>, <b>Cow</b>", aiNotFoundBut: "🔍 Sem correspondência exata, mas aqui estão pets semelhantes:", aiRarity: "Raridade", aiYear: "Ano", aiEvent: "Evento", aiOrigin: "Origem", aiValue: "Valor", aiDemand: "Demanda", aiDesc: "Descrição", aiSeller: "Vendedor" },
-        tr: { sell: "SAT", search: "Evcil hayvan ara...", sup: "Destek", supTitle: "Destek", msg: "Sorularınız mı var? Telegram'da yöneticimize yazın.", petYear: "Yıl", petEv: "Etkinlik", chooseLang: "Dil seçin", colorTitle: "SİTE RENGİ", resetBtn: "SIFIRLA", themeBtnText: "Renk seç", themeModalTitle: "Renk seçin", allPets: "Tüm evcil hayvanlar", tzLabel: "Saat dilimi", newsText: "Haberler", newsTitle: "Adopt Me Haberleri", tzHint: "Saat dilimini seç, böylece sitedeki saat seninle uyuşsun. Akşamları gece modu da açılır, gözlerin yorulmasın!", view3d: "3D'de Görüntüle", dragHint: "Fare veya parmakla döndür", devs: "Geliştiriciler", devRole: "Geliştirici", writeTg: "TG'de yaz", aboutTitle: "EliteStore Hakkında", aboutDesc: "Biz <b>EliteStore</b>, yolculuğuna yeni başlayan genç bir projeyiz. Ancak Adopt Me'deki nadir evcil hayvanlarla zaten çok fazla deneyimimiz ve başarılı anlaşmalarımız var. Ekibimiz bu pazaryerini daha iyi hale getirmek için her gün çalışıyor. Sürekli büyüyoruz — bizimle kalın!", aboutBadge: "Sizinle birlikte büyüyoruz", aboutBtn: "Hakkında", aiBtn: "AI Asistan", aiTitle: "AI Asistan", aiSubtitle: "Herhangi bir Adopt Me evcil hayvanı hakkında sor!", aiPlaceholder: "Pet adı yaz...", aiWelcome: "👋 Merhaba! Ben EliteStore'un AI asistanıyım. Herhangi bir Adopt Me petinin adını yaz, sana fiyatını, tarihini ve nadirliğini söyleyeyim. Örneğin: <b>Shadow Dragon</b>, <b>Frost Dragon</b>, <b>Owl</b>", aiNotFound: "😕 Bu pet bulunamadı. İngilizce adını dene: <b>Shadow Dragon</b>, <b>Owl</b>, <b>Cow</b>", aiNotFoundBut: "🔍 Tam eşleşme yok, ama benzer petler:", aiRarity: "Nadirlik", aiYear: "Yıl", aiEvent: "Etkinlik", aiOrigin: "Kaynak", aiValue: "Değer", aiDemand: "Talep", aiDesc: "Açıklama", aiSeller: "Satıcı" },
-        ja: { sell: "売却", search: "ペットを検索...", sup: "サポート", supTitle: "サポート", msg: "ご質問がありますか？ Telegramでマネージャーにメッセージを送信してください。", petYear: "年", petEv: "イベント", chooseLang: "言語を選択", colorTitle: "サイトカラー", resetBtn: "リセット", themeBtnText: "色を選択", themeModalTitle: "色を選択", allPets: "すべてのペット", tzLabel: "タイムゾーン", newsText: "ニュース", newsTitle: "Adopt Meニュース", tzHint: "タイムゾーンを選択して、サイトの時間を合わせましょう。夜はナイトモードが有効になり、目に優しくなります！", view3d: "3Dで見る", dragHint: "マウスまたは指で回転", devs: "開発者", devRole: "開発者", writeTg: "TGに書く", aboutTitle: "EliteStoreについて", aboutDesc: "私たちは<b>EliteStore</b>、まだ始まったばかりの若いプロジェクトです。しかし、Adopt Meのレアペットに関する豊富な経験と多くの成功した取引があります。チームは毎日このマーケットプレイスをより良くするために働いています。常に成長し続けています — ぜひご一緒に！", aboutBadge: "皆さんと共に成長", aboutBtn: "サイトについて", aiBtn: "AIアシスタント", aiTitle: "AIアシスタント", aiSubtitle: "Adopt Meのペットについて聞いてね！", aiPlaceholder: "ペット名を入力...", aiWelcome: "👋 こんにちは！EliteStoreのAIアシスタントです。Adopt Meのペット名を入力すると、価格、歴史、レア度をお伝えします。例: <b>Shadow Dragon</b>、<b>Frost Dragon</b>、<b>Owl</b>", aiNotFound: "😕 そのペットは見つかりません。英語名で試してください: <b>Shadow Dragon</b>、<b>Owl</b>、<b>Cow</b>", aiNotFoundBut: "🔍 完全一致はありませんが、似たペットがあります:", aiRarity: "レア度", aiYear: "年", aiEvent: "イベント", aiOrigin: "入手方法", aiValue: "価値", aiDemand: "需要", aiDesc: "説明", aiSeller: "販売者" },
-        ko: { sell: "판매", search: "애완동물 검색...", sup: "지원", supTitle: "지원", msg: "질문이 있으신가요? Telegram에서 담당자에게 메시지를 보내세요.", petYear: "연도", petEv: "이벤트", chooseLang: "언어 선택", colorTitle: "사이트 색상", resetBtn: "재설정", themeBtnText: "색상 선택", themeModalTitle: "색상 선택", allPets: "모든 애완동물", tzLabel: "시간대", newsText: "뉴스", newsTitle: "Adopt Me 뉴스", tzHint: "시간대를 선택하면 사이트 시간이 맞춰집니다. 저녁에는 야간 모드가 켜져 눈이 편해집니다!", view3d: "3D로 보기", dragHint: "마우스 또는 손가락으로 회전", devs: "개발자", devRole: "개발자", writeTg: "TG에 쓰기", aboutTitle: "EliteStore 소개", aboutDesc: "우리는 <b>EliteStore</b>, 이제 막 여정을 시작한 젊은 프로젝트입니다. 하지만 이미 Adopt Me의 희귀 펫에 대한 풍부한 경험과 많은 성공적인 거래를 보유하고 있습니다. 우리 팀은 매일 이 마켓플레이스를 더 좋게 만들기 위해 노력합니다. 계속 성장하고 있습니다 — 함께 해주세요!", aboutBadge: "여러분과 함께 성장합니다", aboutBtn: "소개", aiBtn: "AI 도우미", aiTitle: "AI 도우미", aiSubtitle: "Adopt Me 펫에 대해 물어보세요!", aiPlaceholder: "펫 이름 입력...", aiWelcome: "👋 안녕하세요! EliteStore AI 도우미입니다. Adopt Me 펫 이름을 입력하면 가격, 역사, 희귀도를 알려드립니다. 예: <b>Shadow Dragon</b>, <b>Frost Dragon</b>, <b>Owl</b>", aiNotFound: "😕 해당 펫을 찾을 수 없습니다. 영어 이름으로 시도하세요: <b>Shadow Dragon</b>, <b>Owl</b>, <b>Cow</b>", aiNotFoundBut: "🔍 정확한 일치는 없지만 비슷한 펫이 있습니다:", aiRarity: "희귀도", aiYear: "연도", aiEvent: "이벤트", aiOrigin: "출처", aiValue: "가치", aiDemand: "수요", aiDesc: "설명", aiSeller: "판매자" },
-        gr: { sell: "ΠΩΛΗΣΗ", search: "Αναζήτηση κατοικίδιου...", sup: "Υποστήριξη", supTitle: "Υποστήριξη", msg: "Έχετε ερωτήσεις; Στείλτε μήνυμα στον διευθυντή μας στο Telegram.", petYear: "Έτος", petEv: "Ιβέντ", chooseLang: "Επιλέξτε Γλώσσα", colorTitle: "ΧΡΩΜΑ ΙΣΤΟΥ", resetBtn: "ΕΠΑΝΑΦΟΡΑ", themeBtnText: "Επιλέξτε χρώμα", themeModalTitle: "Επιλέξτε χρώμα", allPets: "Όλα τα κατοικίδια", tzLabel: "Ζώνη ώρας", newsText: "Ειδήσεις", newsTitle: "Ειδήσεις Adopt Me", tzHint: "Επίλεξε τη ζώνη ώρας σου ώστε η ώρα στη σελίδα να ταιριάζει με τη δική σου. Ενεργοποιείται και νυχτερινή λειτουργία το βράδυ για να μην κουράζονται τα μάτια σου!", view3d: "Προβολή σε 3D", dragHint: "Περιστρέψτε με το ποντίκι ή το δάχτυλο", devs: "Προγραμματιστές", devRole: "Προγραμματιστής", writeTg: "Γράψτε στο TG", aboutTitle: "Σχετικά με το EliteStore", aboutDesc: "Είμαστε το <b>EliteStore</b>, ένα νέο project που μόλις ξεκίνησε το ταξίδι του. Αλλά έχουμε ήδη πολλή εμπειρία και πολλές επιτυχημένες συναλλαγές με σπάνια κατοικίδια στο Adopt Me. Η ομάδα μας εργάζεται κάθε μέρα. Αναπτυσσόμαστε συνεχώς — μείνετε μαζί μας!", aboutBadge: "Μεγαλώνουμε μαζί σας", aboutBtn: "Σχετικά", aiBtn: "AI Βοηθός", aiTitle: "AI Βοηθός", aiSubtitle: "Ρώτησέ με για οποιοδήποτε pet του Adopt Me!", aiPlaceholder: "Γράψε όνομα pet...", aiWelcome: "👋 Γεια! Είμαι ο AI βοηθός του EliteStore. Γράψε το όνομα οποιουδήποτε Adopt Me pet και θα σου πω την τιμή, ιστορία και σπανιότητα. Π.χ.: <b>Shadow Dragon</b>, <b>Frost Dragon</b>, <b>Owl</b>", aiNotFound: "😕 Δεν βρέθηκε αυτό το pet. Δοκίμασε στα αγγλικά: <b>Shadow Dragon</b>, <b>Owl</b>, <b>Cow</b>", aiNotFoundBut: "🔍 Χωρίς ακριβή αντιστοιχία, αλλά ιδού παρόμοια pets:", aiRarity: "Σπανιότητα", aiYear: "Έτος", aiEvent: "Εκδήλωση", aiOrigin: "Προέλευση", aiValue: "Αξία", aiDemand: "Ζήτηση", aiDesc: "Περιγραφή", aiSeller: "Πωλητής" },
-        nl: { sell: "VERKOPEN", search: "Zoek huisdier...", sup: "Ondersteuning", supTitle: "Ondersteuning", msg: "Vragen? Stuur een bericht naar onze manager op Telegram.", petYear: "Jaar", petEv: "Evenement", chooseLang: "Kies taal", colorTitle: "SITE KLEUR", resetBtn: "HERSTELLEN", themeBtnText: "Kies kleur", themeModalTitle: "Kies een kleur", allPets: "Alle huisdieren", tzLabel: "Tijdzone", newsText: "Nieuws", newsTitle: "Adopt Me Nieuws", tzHint: "Kies je tijdzone zodat de tijd op de site klopt. Dit schakelt ook de nachtmodus in om je ogen te beschermen!", view3d: "Bekijk in 3D", dragHint: "Draai met muis of vinger", devs: "Ontwikkelaars", devRole: "Ontwikkelaar", writeTg: "Schrijf op TG", aboutTitle: "Over EliteStore", aboutDesc: "Wij zijn <b>EliteStore</b>, een jong project dat net aan zijn reis is begonnen. Maar we hebben al veel ervaring en vele succesvolle deals met zeldzame Adopt Me huisdieren. Ons team werkt elke dag om deze marktplaats beter te maken. We groeien constant — blijf bij ons!", aboutBadge: "We groeien samen met u", aboutBtn: "Over ons", aiBtn: "AI Assistent", aiTitle: "AI Assistent", aiSubtitle: "Vraag me over elk Adopt Me huisdier!", aiPlaceholder: "Typ een diernaam...", aiWelcome: "👋 Hallo! Ik ben de AI-assistent van EliteStore. Typ de naam van een Adopt Me huisdier en ik vertel je de prijs, geschiedenis en zeldzaamheid. Bijvoorbeeld: <b>Shadow Dragon</b>, <b>Frost Dragon</b>, <b>Owl</b>", aiNotFound: "😕 Huisdier niet gevonden. Probeer de Engelse naam: <b>Shadow Dragon</b>, <b>Owl</b>, <b>Cow</b>", aiNotFoundBut: "🔍 Geen exacte match, maar hier zijn vergelijkbare huisdieren:", aiRarity: "Zeldzaamheid", aiYear: "Jaar", aiEvent: "Evenement", aiOrigin: "Herkomst", aiValue: "Waarde", aiDemand: "Vraag", aiDesc: "Beschrijving", aiSeller: "Verkoper" },
-        sv: { sell: "SÄLJ", search: "Sök husdjur...", sup: "Support", supTitle: "Support", msg: "Har du frågor? Skriv till vår chef på Telegram.", petYear: "År", petEv: "Event", chooseLang: "Välj språk", colorTitle: "WEBBPLATSENS FÄRG", resetBtn: "ÅTERSTÄLL", themeBtnText: "Välj färg", themeModalTitle: "Välj en färg", allPets: "Alla husdjur", tzLabel: "Tidszon", newsText: "Nyheter", newsTitle: "Adopt Me Nyheter", tzHint: "Välj din tidszon så att tiden på sidan stämmer. Nattläge aktiveras också på kvällen för att skydda dina ögon!", view3d: "Visa i 3D", dragHint: "Rotera med mus eller finger", devs: "Utvecklare", devRole: "Utvecklare", writeTg: "Skriv på TG", aboutTitle: "Om EliteStore", aboutDesc: "Vi är <b>EliteStore</b>, ett ungt projekt som precis har börjat sin resa. Men vi har redan mycket erfarenhet och många lyckade affärer med sällsynta Adopt Me husdjur. Vårt team arbetar varje dag. Vi växer ständigt — stanna med oss!", aboutBadge: "Vi växer tillsammans med dig", aboutBtn: "Om oss", aiBtn: "AI-Assistent", aiTitle: "AI-Assistent", aiSubtitle: "Fråga mig om valfritt Adopt Me husdjur!", aiPlaceholder: "Skriv djurnamn...", aiWelcome: "👋 Hej! Jag är EliteStores AI-assistent. Skriv namnet på ett Adopt Me husdjur så berättar jag pris, historia och sällsynthet. Till exempel: <b>Shadow Dragon</b>, <b>Frost Dragon</b>, <b>Owl</b>", aiNotFound: "😕 Hittade inte det husdjuret. Prova det engelska namnet: <b>Shadow Dragon</b>, <b>Owl</b>, <b>Cow</b>", aiNotFoundBut: "🔍 Ingen exakt träff, men här är liknande husdjur:", aiRarity: "Sällsynthet", aiYear: "År", aiEvent: "Event", aiOrigin: "Ursprung", aiValue: "Värde", aiDemand: "Efterfrågan", aiDesc: "Beskrivning", aiSeller: "Säljare" },
-        cs: { sell: "PRODAT", search: "Hledat mazlíčka...", sup: "Podpora", supTitle: "Podpora", msg: "Máte dotazy? Napište našemu manažerovi na Telegram.", petYear: "Rok", petEv: "Událost", chooseLang: "Vybrat jazyk", colorTitle: "BARVA STRÁNKY", resetBtn: "OBNOVIT", themeBtnText: "Vybrat barvu", themeModalTitle: "Vyberte barvu", allPets: "Všichni mazlíčci", tzLabel: "Časová zóna", newsText: "Novinky", newsTitle: "Adopt Me Novinky", tzHint: "Vyber si své časové pásmo, aby čas na stránce odpovídal tvému. Večer se také zapne noční režim, aby ti nebolely oči!", view3d: "Zobrazit ve 3D", dragHint: "Otáčejte myší nebo prstem", devs: "Vývojáři", devRole: "Vývojář", writeTg: "Napsat na TG", aboutTitle: "O EliteStore", aboutDesc: "Jsme <b>EliteStore</b>, mladý projekt, který teprve začíná svou cestu. Ale máme již hodně zkušeností a mnoho úspěšných obchodů se vzácnými mazlíčky v Adopt Me. Náš tým pracuje každý den. Neustále rosteme — zůstaňte s námi!", aboutBadge: "Rosteme společně s vámi", aboutBtn: "O nás", aiBtn: "AI Asistent", aiTitle: "AI Asistent", aiSubtitle: "Zeptej se mě na jakékoliv Adopt Me zvíře!", aiPlaceholder: "Napiš jméno zvířete...", aiWelcome: "👋 Ahoj! Jsem AI asistent EliteStore. Napiš jméno jakéhokoliv Adopt Me zvířete a řeknu ti jeho cenu, historii a vzácnost. Například: <b>Shadow Dragon</b>, <b>Frost Dragon</b>, <b>Owl</b>", aiNotFound: "😕 Toto zvíře nebylo nalezeno. Zkus anglický název: <b>Shadow Dragon</b>, <b>Owl</b>, <b>Cow</b>", aiNotFoundBut: "🔍 Žádná přesná shoda, ale zde jsou podobná zvířata:", aiRarity: "Vzácnost", aiYear: "Rok", aiEvent: "Událost", aiOrigin: "Původ", aiValue: "Hodnota", aiDemand: "Poptávka", aiDesc: "Popis", aiSeller: "Prodejce" },
-        ro: { sell: "VINDE", search: "Caută animal...", sup: "Suport", supTitle: "Suport", msg: "Ai întrebări? Scrie managerului nostru pe Telegram.", petYear: "An", petEv: "Eveniment", chooseLang: "Alege limba", colorTitle: "CULOAREA SITE-ULUI", resetBtn: "RESETARE", themeBtnText: "Alege culoare", themeModalTitle: "Alege o culoare", allPets: "Toate animalele", tzLabel: "Fus orar", newsText: "Știri", newsTitle: "Știri Adopt Me", tzHint: "Alege fusul orar pentru ca ora de pe site să corespundă cu a ta. Seara se activează și modul de noapte pentru a-ți proteja ochii!", view3d: "Vizualizare 3D", dragHint: "Rotește cu mouse-ul sau degetul", devs: "Dezvoltatori", devRole: "Dezvoltator", writeTg: "Scrie pe TG", aboutTitle: "Despre EliteStore", aboutDesc: "Suntem <b>EliteStore</b>, un proiect tânăr care abia își începe drumul. Dar avem deja multă experiență și multe tranzacții reușite cu animale rare în Adopt Me. Echipa noastră lucrează în fiecare zi. Creștem constant — rămâneți cu noi!", aboutBadge: "Creștem împreună cu voi", aboutBtn: "Despre noi", aiBtn: "Asistent AI", aiTitle: "Asistent AI", aiSubtitle: "Întreabă-mă despre orice animal din Adopt Me!", aiPlaceholder: "Scrie numele animalului...", aiWelcome: "👋 Salut! Sunt asistentul AI al EliteStore. Scrie numele oricărui animal din Adopt Me și îți voi spune prețul, istoria și raritatea. De exemplu: <b>Shadow Dragon</b>, <b>Frost Dragon</b>, <b>Owl</b>", aiNotFound: "😕 Animalul nu a fost găsit. Încearcă numele în engleză: <b>Shadow Dragon</b>, <b>Owl</b>, <b>Cow</b>", aiNotFoundBut: "🔍 Nicio potrivire exactă, dar iată animale similare:", aiRarity: "Raritate", aiYear: "An", aiEvent: "Eveniment", aiOrigin: "Origine", aiValue: "Valoare", aiDemand: "Cerere", aiDesc: "Descriere", aiSeller: "Vânzător" },
-        da: { sell: "SÆLG", search: "Søg kæledyr...", sup: "Support", supTitle: "Support", msg: "Har du spørgsmål? Skriv til vores manager på Telegram.", petYear: "År", petEv: "Begivenhed", chooseLang: "Vælg sprog", colorTitle: "SIDENS FARVE", resetBtn: "NULSTIL", themeBtnText: "Vælg farve", themeModalTitle: "Vælg en farve", allPets: "Alle kæledyr", tzLabel: "Tidszone", newsText: "Nyheder", newsTitle: "Adopt Me Nyheder", tzHint: "Vælg din tidszone, så tiden på siden passer. Om aftenen aktiveres også natmodus for at skåne dine øjne!", view3d: "Se i 3D", dragHint: "Drej med musen eller fingeren", devs: "Udviklere", devRole: "Udvikler", writeTg: "Skriv på TG", aboutTitle: "Om EliteStore", aboutDesc: "Vi er <b>EliteStore</b>, et ungt projekt der lige er begyndt sin rejse. Men vi har allerede masser af erfaring og mange vellykkede handler med sjældne Adopt Me kæledyr. Vores team arbejder hver dag. Vi vokser konstant — bliv hos os!", aboutBadge: "Vi vokser sammen med dig", aboutBtn: "Om os", aiBtn: "AI-Assistent", aiTitle: "AI-Assistent", aiSubtitle: "Spørg mig om ethvert Adopt Me kæledyr!", aiPlaceholder: "Skriv dyrenavn...", aiWelcome: "👋 Hej! Jeg er EliteStores AI-assistent. Skriv navnet på et Adopt Me kæledyr, og jeg fortæller dig pris, historie og sjældenhed. For eksempel: <b>Shadow Dragon</b>, <b>Frost Dragon</b>, <b>Owl</b>", aiNotFound: "😕 Kæledyret blev ikke fundet. Prøv det engelske navn: <b>Shadow Dragon</b>, <b>Owl</b>, <b>Cow</b>", aiNotFoundBut: "🔍 Ingen nøjagtig match, men her er lignende kæledyr:", aiRarity: "Sjældenhed", aiYear: "År", aiEvent: "Begivenhed", aiOrigin: "Oprindelse", aiValue: "Værdi", aiDemand: "Efterspørgsel", aiDesc: "Beskrivelse", aiSeller: "Sælger" },
-        fi: { sell: "MYY", search: "Etsi lemmikki...", sup: "Tuki", supTitle: "Tuki", msg: "Onko sinulla kysyttävää? Lähetä viesti managerillemme Telegramissa.", petYear: "Vuosi", petEv: "Tapahtuma", chooseLang: "Valitse kieli", colorTitle: "SIVUSTON VÄRI", resetBtn: "PALAUTA", themeBtnText: "Valitse väri", themeModalTitle: "Valitse väri", allPets: "Kaikki lemmikit", tzLabel: "Aikavyöhyke", newsText: "Uutiset", newsTitle: "Adopt Me Uutiset", tzHint: "Valitse aikavyöhykkeesi, jotta sivuston aika täsmää. Illalla yötila aktivoituu automaattisesti silmien suojaamiseksi!", view3d: "Katso 3D:nä", dragHint: "Pyöritä hiirellä tai sormella", devs: "Kehittäjät", devRole: "Kehittäjä", writeTg: "Kirjoita TG:ssä", aboutTitle: "Tietoa EliteStoresta", aboutDesc: "Olemme <b>EliteStore</b>, nuori projekti, joka on vasta alussa. Mutta meillä on jo paljon kokemusta ja monia onnistuneita kauppoja harvinaisten Adopt Me lemmikkien kanssa. Tiimimme työskentelee joka päivä. Kasvamme jatkuvasti — pysy kanssamme!", aboutBadge: "Kasvamme yhdessä kanssasi", aboutBtn: "Tietoa", aiBtn: "AI-Avustaja", aiTitle: "AI-Avustaja", aiSubtitle: "Kysy minulta mistä tahansa Adopt Me lemmikistä!", aiPlaceholder: "Kirjoita lemmikin nimi...", aiWelcome: "👋 Hei! Olen EliteStoren AI-avustaja. Kirjoita minkä tahansa Adopt Me lemmikin nimi ja kerron sinulle sen hinnan, historian ja harvinaisuuden. Esimerkiksi: <b>Shadow Dragon</b>, <b>Frost Dragon</b>, <b>Owl</b>", aiNotFound: "😕 Lemmikkiä ei löytynyt. Kokeile englanniksi: <b>Shadow Dragon</b>, <b>Owl</b>, <b>Cow</b>", aiNotFoundBut: "🔍 Ei tarkkaa osumaa, mutta tässä samankaltaisia lemmikkejä:", aiRarity: "Harvinaisuus", aiYear: "Vuosi", aiEvent: "Tapahtuma", aiOrigin: "Alkuperä", aiValue: "Arvo", aiDemand: "Kysyntä", aiDesc: "Kuvaus", aiSeller: "Myyjä" },
-        ar: { sell: "بيع", search: "ابحث عن حيوان أليف...", sup: "الدعم", supTitle: "الدعم", msg: "هل لديك أسئلة؟ أرسل رسالة إلى مديرنا على Telegram.", petYear: "السنة", petEv: "الحدث", chooseLang: "اختر اللغة", colorTitle: "لون الموقع", resetBtn: "إعادة تعيين", themeBtnText: "اختر لون", themeModalTitle: "اختر لون", allPets: "جميع الحيوانات", tzLabel: "المنطقة الزمنية", newsText: "أخبار", newsTitle: "أخبار Adopt Me", tzHint: "اختر منطقتك الزمنية ليتطابق الوقت على الموقع مع وقتك. يتم أيضاً تفعيل الوضع الليلي مساءً لحماية عينيك!", view3d: "عرض ثلاثي الأبعاد", dragHint: "قم بالتدوير بالماوس أو بإصبعك", devs: "المطورون", devRole: "مطور", writeTg: "اكتب على TG", aboutTitle: "حول EliteStore", aboutDesc: "نحن <b>EliteStore</b>، مشروع شاب بدأ للتو رحلته. لكن لدينا بالفعل الكثير من الخبرة والعديد من الصفقات الناجحة مع الحيوانات النادرة في Adopt Me. فريقنا يعمل كل يوم. نحن في نمو مستمر — ابقوا معنا!", aboutBadge: "ننمو معكم", aboutBtn: "حول الموقع", aiBtn: "مساعد ذكي", aiTitle: "مساعد ذكي", aiSubtitle: "!Adopt Me اسألني عن أي حيوان في", aiPlaceholder: "...اكتب اسم الحيوان", aiWelcome: "👋 مرحباً! أنا المساعد الذكي لـ EliteStore. اكتب اسم أي حيوان من Adopt Me وسأخبرك بسعره وتاريخه وندرته. مثال: <b>Shadow Dragon</b>، <b>Frost Dragon</b>، <b>Owl</b>", aiNotFound: "😕 لم أجد هذا الحيوان. جرب الاسم بالإنجليزية: <b>Shadow Dragon</b>، <b>Owl</b>، <b>Cow</b>", aiNotFoundBut: "🔍 لا تطابق تام، لكن إليك حيوانات مشابهة:", aiRarity: "الندرة", aiYear: "السنة", aiEvent: "الحدث", aiOrigin: "المصدر", aiValue: "القيمة", aiDemand: "الطلب", aiDesc: "الوصف", aiSeller: "البائع" },
-        zh: { sell: "出售", search: "搜索宠物...", sup: "客服", supTitle: "客服", msg: "有问题？在Telegram上联系我们的客服。", petYear: "年份", petEv: "活动", chooseLang: "选择语言", colorTitle: "网站颜色", resetBtn: "重置", themeBtnText: "选择颜色", themeModalTitle: "选择颜色", allPets: "所有宠物", tzLabel: "时区", newsText: "新闻", newsTitle: "Adopt Me 新闻", tzHint: "选择你的时区，让网站时间与你一致。晚上还会自动开启夜间模式，保护你的眼睛！", view3d: "3D查看", dragHint: "用鼠标或手指旋转", devs: "开发者", devRole: "开发者", writeTg: "在TG上留言", aboutTitle: "关于EliteStore", aboutDesc: "我们是<b>EliteStore</b>，一个刚刚开始旅程的年轻项目。但我们已经拥有丰富的经验和许多成功的Adopt Me稀有宠物交易。我们的团队每天都在努力让这个市场变得更好。我们在不断成长——请与我们同行！", aboutBadge: "与您共同成长", aboutBtn: "关于", aiBtn: "AI助手", aiTitle: "AI助手", aiSubtitle: "问我关于任何Adopt Me宠物！", aiPlaceholder: "输入宠物名称...", aiWelcome: "👋 你好！我是EliteStore的AI助手。输入任何Adopt Me宠物的名称，我会告诉你它的价格、历史和稀有度。例如：<b>Shadow Dragon</b>、<b>Frost Dragon</b>、<b>Owl</b>", aiNotFound: "😕 没有找到这个宠物。试试英文名称：<b>Shadow Dragon</b>、<b>Owl</b>、<b>Cow</b>", aiNotFoundBut: "🔍 没有精确匹配，但这里有类似的宠物：", aiRarity: "稀有度", aiYear: "年份", aiEvent: "活动", aiOrigin: "来源", aiValue: "价值", aiDemand: "需求", aiDesc: "描述", aiSeller: "卖家" }
+        ua: { sell: "ПРОДАТЬ", petYear: "Рік", petEv: "Подія" },
+        en: { sell: "SELL", petYear: "Year", petEv: "Event" },
+        pl: { sell: "SPRZEDAJ", petYear: "Rok", petEv: "Wydanie" },
+        de: { sell: "VERKAUFEN", petYear: "Jahr", petEv: "Veranstaltung" },
+        fr: { sell: "VENDRE", petYear: "Année", petEv: "Événement" },
+        es: { sell: "VENDER", petYear: "Año", petEv: "Evento" },
+        it: { sell: "VENDI", petYear: "Anno", petEv: "Evento" },
+        pt: { sell: "VENDER", petYear: "Ano", petEv: "Evento" },
+        tr: { sell: "SAT", petYear: "Yıl", petEv: "Etkinlik" },
+        ja: { sell: "売却", petYear: "年", petEv: "イベント" },
+        ko: { sell: "판매", petYear: "년", petEv: "이벤트" },
+        gr: { sell: "ΠΩΛΗΣΗ", petYear: "Έτος", petEv: "Εκδήλωση" },
+        nl: { sell: "VERKOPEN", petYear: "Jaar", petEv: "Evenement" },
+        sv: { sell: "SÄLJ", petYear: "År", petEv: "Evenemang" },
+        cs: { sell: "PRODAT", petYear: "Rok", petEv: "Událost" },
+        ro: { sell: "VINDE", petYear: "An", petEv: "Eveniment" },
+        da: { sell: "SÆLG", petYear: "År", petEv: "Begivenhed" },
+        fi: { sell: "MYY", petYear: "Vuosi", petEv: "Tapahtuma" },
+        ar: { sell: "بيع", petYear: "السنة", petEv: "الحدث" },
+        zh: { sell: "出售", petYear: "年份", petEv: "活动" }
     };
-
-    const timezones = [
-        { code: 'UTC', flag: '🌍', name: 'UTC' },
-        { code: 'Europe/Kyiv', flag: '🇺🇦', name: 'Київ' },
-        { code: 'Europe/Warsaw', flag: '🇵🇱', name: 'Варшава' },
-        { code: 'Europe/Berlin', flag: '🇩🇪', name: 'Берлін' },
-        { code: 'Europe/Paris', flag: '🇫🇷', name: 'Париж' },
-        { code: 'Europe/Madrid', flag: '🇪🇸', name: 'Мадрид' },
-        { code: 'America/New_York', flag: '🇺🇸', name: 'Нью-Йорк' },
-        { code: 'America/Los_Angeles', flag: '🇺🇸', name: 'ЛА' },
-        { code: 'Asia/Tokyo', flag: '🇯🇵', name: 'Токіо' },
-        { code: 'Asia/Shanghai', flag: '🇨🇳', name: 'Шанхай' },
-        { code: 'Australia/Sydney', flag: '🇦🇺', name: 'Сідней' }
-    ];
 
     const languagesDB = [
         { code: 'ua', flag: '🇺🇦', name: 'Ukrainian', local: 'Українська' },
@@ -797,86 +344,14 @@
     ];
 
     const pets = [
-        { id: 1, name: "Albino Monkey", year: "2020", ev: "Monkey Fairground", ua: "Білий мавпа", en: "Albino Monkey", pl: "Biała małpa", de: "Albino-Affe", fr: "Singe albinos", es: "Mono albino", it: "Scimmia albina", pt: "Macaco albino", tr: "Albino Maymun", ja: "アルビノモンキー", ko: "알비노 원숭이", gr: "Αλμπίνο Μαϊμού", nl: "Albino Aap", sv: "Albino Apa", cs: "Albín opice", ro: "Maimuță albino", da: "Albino Abe", fi: "Albiinoapina", ar: "قرد أبيض", zh: "白化猴", file: "albino_monkey.png" },
-        { id: 2, name: "Mechapup", year: "2022", ev: "April Fools", ua: "Механо-щеня", en: "Mechapup", pl: "Mecha-szczeniak", de: "Mecha-Welpe", fr: "Méca-chiot", es: "Meca-cachorro", it: "Mecha-cucciolo", pt: "Meca-filhote", tr: "Meka Yavru", ja: "メカパピー", ko: "메카퍼피", gr: "Μηχανοκουτάβι", nl: "Mecha Pup", sv: "Meka Valp", cs: "Mecha štěně", ro: "Mecha cățeluș", da: "Meka Hvalp", fi: "Mekapentu", ar: "جرو آلي", zh: "机甲小狗", file: "april_fools_2022_mechapup.png" },
-        { id: 3, name: "Arctic Reindeer", year: "2019", ev: "Christmas", ua: "Арктичний олень", en: "Arctic Reindeer", pl: "Arktyczny renifer", de: "Arktisches Rentier", fr: "Renne arctique", es: "Reno ártico", it: "Renna artica", pt: "Rena ártica", tr: "Kutup Geyiği", ja: "ホッキョクトナカイ", ko: "북극 순록", gr: "Αρκτικός Τάρανδος", nl: "Arctisch Rendier", sv: "Arktisk Ren", cs: "Arktický sob", ro: "Ren arctic", da: "Arktisk Rensdyr", fi: "Arktinen poro", ar: "رنة قطبية", zh: "北极驯鹿", file: "arctic_reindeer.png" },
-        { id: 4, name: "Axolotl", year: "2021", ev: "Summer", ua: "Аксолотль", en: "Axolotl", pl: "Aksolotl", de: "Axolotl", fr: "Axolotl", es: "Ajolote", it: "Axolotl", pt: "Axolote", tr: "Aksalotl", ja: "アホロートル", ko: "아홀로틀", gr: "Αξολότλ", nl: "Axolotl", sv: "Axolotl", cs: "Axolotl", ro: "Axolotl", da: "Axolotl", fi: "Aksolotli", ar: "أكسولوتل", zh: "美西螈", file: "axolotl.png" },
-        { id: 5, name: "Alicorn", year: "2022", ev: "Basic Egg", ua: "Алікорн", en: "Alicorn", pl: "Alikorn", de: "Alicorn", fr: "Alicorne", es: "Alicornio", it: "Alicorno", pt: "Alicórnio", tr: "Alicorn", ja: "アリコーン", ko: "알리콘", gr: "Αλικόρνιος", nl: "Alicorn", sv: "Alicorn", cs: "Alicorn", ro: "Alicorn", da: "Alicorn", fi: "Alicorn", ar: "أليكورن", zh: "天角兽", file: "basic_egg_2022_alicorn.png" },
-        { id: 6, name: "Bat Dragon", year: "2019", ev: "Halloween", ua: "Кажан дракон", en: "Bat Dragon", pl: "Smok-nietoperz", de: "Fledermaus-Drache", fr: "Dragon chauve-souris", es: "Dragón murciélago", it: "Drago pipistrello", pt: "Dragão morcego", tr: "Yarasa Ejderi", ja: "こうもりドラゴン", ko: "박쥐용", gr: "Δράκος Νυχτερίδας", nl: "Vleermuis Draak", sv: "Fladdermus Drake", cs: "Netopýří drak", ro: "Dragon liliac", da: "Flagermus Drage", fi: "Lepakkolohikäärme", ar: "تنين الخفاش", zh: "蝙蝠龙", file: "bat_dragon.png" },
-        { id: 7, name: "Cerberus", year: "2020", ev: "Gamepass", ua: "Цербер", en: "Cerberus", pl: "Cerber", de: "Zerberus", fr: "Cerbère", es: "Cerbero", it: "Cerbero", pt: "Cérbero", tr: "Cerberus", ja: "ケルベロス", ko: "케르베로스", gr: "Κέρβερος", nl: "Cerberus", sv: "Cerberus", cs: "Kerberos", ro: "Cerber", da: "Cerberus", fi: "Kerberos", ar: "سيربيروس", zh: "地狱犬", file: "cerberus.png" },
-        { id: 8, name: "Cobra", year: "2021", ev: "Star Rewards", ua: "Кобра", en: "Cobra", pl: "Kobra", de: "Kobra", fr: "Cobra", es: "Cobra", it: "Cobra", pt: "Cobra", tr: "Kobra", ja: "コブラ", ko: "코브라", gr: "Κόμπρα", nl: "Cobra", sv: "Kobra", cs: "Kobra", ro: "Cobră", da: "Cobra", fi: "Kobra", ar: "كوبرا", zh: "眼镜蛇", file: "cobra.png" },
-        { id: 9, name: "Crow", year: "2019", ev: "Farm Egg", ua: "Ворон", en: "Crow", pl: "Wrona", de: "Krähe", fr: "Corbeau", es: "Cuervo", it: "Corvo", pt: "Corvo", tr: "Karga", ja: "カラス", ko: "까마귀", gr: "Κοράκι", nl: "Kraai", sv: "Kråka", cs: "Vrána", ro: "Cioară", da: "Krage", fi: "Varis", ar: "غراب", zh: "乌鸦", file: "crow.png" },
-        { id: 10, name: "Diamond Dragon", year: "2020", ev: "Star Rewards", ua: "Діамантовий дракон", en: "Diamond Dragon", pl: "Diamentowy smok", de: "Diamant-Drache", fr: "Dragon diamant", es: "Dragón diamante", it: "Drago diamante", pt: "Dragão diamante", tr: "Elmas Ejderi", ja: "ダイヤモンドドラゴン", ko: "다이아몬드 드래곤", gr: "Διαμαντένιος Δράκος", nl: "Diamanten Draak", sv: "Diamant Drake", cs: "Diamantový drak", ro: "Dragon diamant", da: "Diamant Drage", fi: "Timanttilohikäärme", ar: "تنين ماسي", zh: "钻石龙", file: "diamond_dragon.png" },
-        { id: 11, name: "Diamond Griffin", year: "2020", ev: "Star Rewards", ua: "Діамантовий грифон", en: "Diamond Griffin", pl: "Diamentowy gryf", de: "Diamant-Greif", fr: "Griffon diamant", es: "Grifo diamante", it: "Grifone diamante", pt: "Grifo diamante", tr: "Elmas Griffin", ja: "ダイヤモンドグリフィン", ko: "다이아몬드 그리핀", gr: "Διαμαντένιος Γρύπας", nl: "Diamanten Griffioen", sv: "Diamant Grip", cs: "Diamantový gryf", ro: "Grifon diamant", da: "Diamant Grif", fi: "Timanttigriffin", ar: "غريفين ماسي", zh: "钻石狮鹫", file: "diamond_griffin.png" },
-        { id: 12, name: "Diamond Unicorn", year: "2020", ev: "Star Rewards", ua: "Діамантовий єдиноріг", en: "Diamond Unicorn", pl: "Diamentowy jednorożec", de: "Diamant-Einhorn", fr: "Licorne diamant", es: "Unicornio diamante", it: "Unicorno diamante", pt: "Unicórnio diamante", tr: "Elmas Unicorn", ja: "ダイヤモンドユニコーン", ko: "다이아몬드 유니콘", gr: "Διαμαντένιος Μονόκερος", nl: "Diamanten Eenhoorn", sv: "Diamant Enhörning", cs: "Diamantový jednorožec", ro: "Unicorn diamant", da: "Diamant Enhjørning", fi: "Timanttiyksisarvinen", ar: "يونيكورن ماسي", zh: "钻石独角兽", file: "diamond_unicorn.png" },
-        { id: 13, name: "Dodo", year: "2020", ev: "Fossil Egg", ua: "Додо", en: "Dodo", pl: "Dodo", de: "Dodo", fr: "Dodo", es: "Dodo", it: "Dodo", pt: "Dodô", tr: "Dodo", ja: "ドードー", ko: "도도", gr: "Ντόντο", nl: "Dodo", sv: "Dodo", cs: "Dodo", ro: "Dodo", da: "Dodo", fi: "Dodo", ar: "طائر الدودو", zh: "渡渡鸟", file: "dodo.png" },
-        { id: 14, name: "Evil Unicorn", year: "2019", ev: "Halloween", ua: "Злий єдиноріг", en: "Evil Unicorn", pl: "Zły jednorożec", de: "Böses Einhorn", fr: "Licorne maléfique", es: "Unicornio malvado", it: "Unicorno malvagio", pt: "Unicórnio maligno", tr: "Kötü Unicorn", ja: "イービルユニコーン", ko: "악마 유니콘", gr: "Κακός Μονόκερος", nl: "Kwaad Eenhoorn", sv: "Ond Enhörning", cs: "Zlý jednorožec", ro: "Unicorn malefic", da: "Ond Enhjørning", fi: "Paha yksisarvinen", ar: "يونيكورن شرير", zh: "邪恶独角兽", file: "evil_unicorn.png" },
-        { id: 15, name: "Frost Dragon", year: "2019", ev: "Christmas", ua: "Крижаний дракон", en: "Frost Dragon", pl: "Lodowy smok", de: "Frost-Drache", fr: "Dragon de glace", es: "Dragón de hielo", it: "Drago di ghiaccio", pt: "Dragão de gelo", tr: "Buz Ejderi", ja: "フロストドラゴン", ko: "프로스트 드래곤", gr: "Παγωμένος Δράκος", nl: "Vorst Draak", sv: "Frost Drake", cs: "Ledový drak", ro: "Dragon de gheață", da: "Frost Drage", fi: "Jäälohikäärme", ar: "تنين الجليد", zh: "冰霜龙", file: "frost_dragon.png" },
-        { id: 16, name: "Frost Fury", year: "2020", ev: "Winter", ua: "Морозна ярість", en: "Frost Fury", pl: "Mroźna Furia", de: "Frostfuror", fr: "Fureur glacée", es: "Furia de escarcha", it: "Furia gelida", pt: "Fúria de gelo", tr: "Kış Öfkesi", ja: "フロストフューリー", ko: "서리 분노", gr: "Παγωμένη Μανία", nl: "Vorst Furie", sv: "Frost Raseri", cs: "Mrazivá zuřivost", ro: "Furia înghețului", da: "Frost Raseri", fi: "Pakkasraivo", ar: "غضب الصقيع", zh: "冰霜怒兽", file: "frost_fury.png" },
-        { id: 17, name: "Hippogriff", year: "2024", ev: "Gift Hat", ua: "Гіпогриф", en: "Hippogriff", pl: "Hipogryf", de: "Hippogreif", fr: "Hippogriffe", es: "Hipogrifo", it: "Ippogrifo", pt: "Hipogrifo", tr: "Hippogrif", ja: "ヒッポグリフ", ko: "히포그리프", gr: "Ιππόγρυπας", nl: "Hippograaf", sv: "Hippogriff", cs: "Hipogryf", ro: "Hipogryf", da: "Hippogrif", fi: "Hippogrifi", ar: "هيبوغريف", zh: "骏鹰", file: "gifthat_november_2024_hippogriff.png" },
-        { id: 18, name: "Giraffe", year: "2019", ev: "Safari", ua: "Жираф", en: "Giraffe", pl: "Żyrafa", de: "Giraffe", fr: "Girafe", es: "Jirafa", it: "Giraffa", pt: "Girafa", tr: "Zürafa", ja: "キリン", ko: "기린", gr: "Καμηλοπάρδαλη", nl: "Giraffe", sv: "Giraff", cs: "Žirafa", ro: "Girafă", da: "Giraf", fi: "Kirahvi", ar: "زرافة", zh: "长颈鹿", file: "giraffe.png" },
-        { id: 19, name: "Golden Dragon", year: "2020", ev: "Star Rewards", ua: "Золотий дракон", en: "Golden Dragon", pl: "Złoty smok", de: "Goldener Drache", fr: "Dragon doré", es: "Dragón dorado", it: "Drago dorato", pt: "Dragão dourado", tr: "Altın Ejderi", ja: "ゴールデンドラゴン", ko: "골든 드래곤", gr: "Χρυσός Δράκος", nl: "Gouden Draak", sv: "Guld Drake", cs: "Zlatý drak", ro: "Dragon auriu", da: "Guld Drage", fi: "Kultainen lohikäärme", ar: "تنين ذهبي", zh: "金龙", file: "golden_dragon.png" },
-        { id: 20, name: "Golden Griffin", year: "2020", ev: "Star Rewards", ua: "Золотий грифон", en: "Golden Griffin", pl: "Złoty gryf", de: "Goldener Greif", fr: "Griffon doré", es: "Grifo dorado", it: "Grifone dorato", pt: "Grifo dourado", tr: "Altın Griffin", ja: "ゴールデングリフィン", ko: "골든 그리핀", gr: "Χρυσός Γρύπας", nl: "Gouden Griffioen", sv: "Guld Grip", cs: "Zlatý gryf", ro: "Grifon auriu", da: "Guld Grif", fi: "Kultainen griffin", ar: "غريفين ذهبي", zh: "金狮鹫", file: "golden_griffin.png" },
-        { id: 21, name: "Golden Unicorn", year: "2020", ev: "Star Rewards", ua: "Золотий єдиноріг", en: "Golden Unicorn", pl: "Złoty jednorożec", de: "Goldenes Einhorn", fr: "Licorne dorée", es: "Unicornio dorado", it: "Unicorno dorato", pt: "Unicórnio dourado", tr: "Altın Unicorn", ja: "ゴールデンユニコーン", ko: "골든 유니콘", gr: "Χρυσός Μονόκερος", nl: "Gouden Eenhoorn", sv: "Guld Enhörning", cs: "Zlatý jednorožec", ro: "Unicorn auriu", da: "Guld Enhjørning", fi: "Kultainen yksisarvinen", ar: "يونيكورن ذهبي", zh: "金独角兽", file: "golden_unicorn.png" },
-        { id: 22, name: "Goldhorn", year: "2021", ev: "Mythic Egg", ua: "Золоторіг", en: "Goldhorn", pl: "Złotorogi", de: "Goldhorn", fr: "Corne dorée", es: "Cuerno dorado", it: "Corno d'oro", pt: "Chifre dourado", tr: "Altın Boynuz", ja: "ゴールドホーン", ko: "골드혼", gr: "Χρυσόκερας", nl: "Goudhoorn", sv: "Guldhorn", cs: "Zlatý roh", ro: "Corn de aur", da: "Guldhorn", fi: "Kultasarvi", ar: "القرن الذهبي", zh: "金角兽", file: "goldhorn.png" },
-        { id: 23, name: "Guardian Lion", year: "2021", ev: "Gamepass", ua: "Лев-охоронець", en: "Guardian Lion", pl: "Lew strażnik", de: "Wächter-Löwe", fr: "Lion gardien", es: "León guardián", it: "Leone guardiano", pt: "Leão guardião", tr: "Koruyucu Aslan", ja: "ガーディアンライオン", ko: "수호 사자", gr: "Φύλακας Λέων", nl: "Bewaker Leeuw", sv: "Väktar Lejon", cs: "Strážný lev", ro: "Leu gardian", da: "Vogter Løve", fi: "Vartijaleijona", ar: "أسد حارس", zh: "守护狮", file: "guardian_lion.png" },
-        { id: 24, name: "Vampire Dragon", year: "2023", ev: "Halloween", ua: "Дракон-вампір", en: "Vampire Dragon", pl: "Smok wampir", de: "Vampir-Drache", fr: "Dragon vampire", es: "Dragón vampiro", it: "Drago vampiro", pt: "Dragão vampiro", tr: "Vampir Ejderi", ja: "ヴァンパイアドラゴン", ko: "뱀파이어 드래곤", gr: "Βαμπίρ Δράκος", nl: "Vampier Draak", sv: "Vampyr Drake", cs: "Upíří drak", ro: "Dragon vampir", da: "Vampyr Drage", fi: "Vampyyrilohikäärme", ar: "تنين مصاص دماء", zh: "吸血鬼龙", file: "halloween_2023_vampire_dragon.png" },
-        { id: 25, name: "Kangaroo", year: "2020", ev: "Aussie Egg", ua: "Кенгуру", en: "Kangaroo", pl: "Kangur", de: "Känguru", fr: "Kangourou", es: "Canguro", it: "Canguro", pt: "Canguru", tr: "Kanguru", ja: "カンガルー", ko: "캥거루", gr: "Καγκουρό", nl: "Kangoeroe", sv: "Känguru", cs: "Klokan", ro: "Cangur", da: "Kænguru", fi: "Kenguru", ar: "كنغر", zh: "袋鼠", file: "kangaroo.png" },
-        { id: 26, name: "King Bee", year: "2020", ev: "Gamepass", ua: "Король бджіл", en: "King Bee", pl: "Król pszczół", de: "Bienenkönig", fr: "Roi des abeilles", es: "Rey abeja", it: "Re ape", pt: "Rei abelha", tr: "Arı Kral", ja: "キングビー", ko: "왕벌", gr: "Βασιλιάς Μέλισσα", nl: "Koningsbij", sv: "Kung Bi", cs: "Včelí král", ro: "Regele albinelor", da: "Bi Konge", fi: "Kuningasmehiläinen", ar: "ملك النحل", zh: "蜂王", file: "king_bee.png" },
-        { id: 27, name: "Kitsune", year: "2020", ev: "Gamepass", ua: "Кіцуне", en: "Kitsune", pl: "Kitsune", de: "Kitsune", fr: "Kitsune", es: "Kitsune", it: "Kitsune", pt: "Kitsune", tr: "Kitsune", ja: "キツネ", ko: "키츠네", gr: "Κιτσούνε", nl: "Kitsune", sv: "Kitsune", cs: "Kitsune", ro: "Kitsune", da: "Kitsune", fi: "Kitsune", ar: "كيتسوني", zh: "九尾狐", file: "kitsune.png" },
-        { id: 28, name: "Midnight Dragon", year: "2024", ev: "Lunar New Year", ua: "Нічний дракон", en: "Midnight Dragon", pl: "Nocny smok", de: "Mitternachts-Drache", fr: "Dragon de minuit", es: "Dragón de medianoche", it: "Drago di mezzanotte", pt: "Dragão da meia-noite", tr: "Gece Ejderi", ja: "ミッドナイトドラゴン", ko: "미드나이트 드래곤", gr: "Δράκος Μεσάνυχτα", nl: "Middernacht Draak", sv: "Midnatt Drake", cs: "Půlnoční drak", ro: "Dragon de miezul nopții", da: "Midnat Drage", fi: "Keskiyön lohikäärme", ar: "تنين منتصف الليل", zh: "午夜龙", file: "lunar_2024_midnight_dragon.png" },
-        { id: 29, name: "Monkey King", year: "2020", ev: "Monkey Fairground", ua: "Мавпячий король", en: "Monkey King", pl: "Król małp", de: "Affenkönig", fr: "Roi des singes", es: "Rey mono", it: "Re scimmia", pt: "Rei macaco", tr: "Maymun Kral", ja: "モンキーキング", ko: "원숭이 왕", gr: "Βασιλιάς Μαϊμού", nl: "Aapkoning", sv: "Apkung", cs: "Opičí král", ro: "Regele maimuțelor", da: "Abe Konge", fi: "Apinakuningas", ar: "ملك القرود", zh: "美猴王", file: "monkey_king.png" },
-        { id: 30, name: "Octopus", year: "2021", ev: "Ocean Egg", ua: "Восьминіг", en: "Octopus", pl: "Ośmiornica", de: "Oktopus", fr: "Pieuvre", es: "Pulpo", it: "Polpo", pt: "Polvo", tr: "Ahtapot", ja: "タコ", ko: "문어", gr: "Χταπόδι", nl: "Octopus", sv: "Bläckfisk", cs: "Chobotnice", ro: "Caracatiță", da: "Blæksprutte", fi: "Mustekala", ar: "أخطبوط", zh: "章鱼", file: "octopus.png" },
-        { id: 31, name: "Owl", year: "2019", ev: "Farm Egg", ua: "Сова", en: "Owl", pl: "Sowa", de: "Eule", fr: "Hibou", es: "Búho", it: "Gufo", pt: "Coruja", tr: "Baykuş", ja: "フクロウ", ko: "올빼미", gr: "Κουκουβάγια", nl: "Uil", sv: "Uggla", cs: "Sova", ro: "Bufniță", da: "Ugle", fi: "Pöllö", ar: "بومة", zh: "猫头鹰", file: "owl.png" },
-        { id: 32, name: "Parrot", year: "2019", ev: "Jungle Egg", ua: "Папуга", en: "Parrot", pl: "Papuga", de: "Papagei", fr: "Perroquet", es: "Loro", it: "Pappagallo", pt: "Papagaio", tr: "Papağan", ja: "オウム", ko: "앵무새", gr: "Παπαγάλος", nl: "Papegaai", sv: "Papegoja", cs: "Papoušek", ro: "Papagal", da: "Papegøje", fi: "Papukaija", ar: "ببغاء", zh: "鹦鹉", file: "parrot.png" },
-        { id: 33, name: "Peacock", year: "2021", ev: "Gamepass", ua: "Павич", en: "Peacock", pl: "Paw", de: "Pfau", fr: "Paon", es: "Pavo real", it: "Pavone", pt: "Pavão", tr: "Tavus Kuşu", ja: "クジャク", ko: "공작새", gr: "Παγώνι", nl: "Pauw", sv: "Påfågel", cs: "Páv", ro: "Păun", da: "Påfugl", fi: "Riikinkukko", ar: "طاووس", zh: "孔雀", file: "peacock.png" },
-        { id: 34, name: "Phoenix", year: "2021", ev: "Mythic Egg", ua: "Фенікс", en: "Phoenix", pl: "Feniks", de: "Phönix", fr: "Phénix", es: "Fénix", it: "Fenice", pt: "Fênix", tr: "Anka Kuşu", ja: "フェニックス", ko: "불사조", gr: "Φοίνικας", nl: "Feniks", sv: "Fenix", cs: "Fénix", ro: "Phoenix", da: "Føniks", fi: "Feeniks", ar: "طائر الفينيق", zh: "凤凰", file: "phoenix.png" },
-        { id: 35, name: "Queen Bee", year: "2020", ev: "Gamepass", ua: "Королева бджіл", en: "Queen Bee", pl: "Królowa pszczół", de: "Bienenkönigin", fr: "Reine des abeilles", es: "Reina abeja", it: "Ape regina", pt: "Abelha rainha", tr: "Arı Kraliçe", ja: "クイーンビー", ko: "여왕벌", gr: "Βασίλισσα Μέλισσα", nl: "Koninginbij", sv: "Drottning Bi", cs: "Včelí královna", ro: "Regina albinelor", da: "Bi Dronning", fi: "Kuningatarmehiläinen", ar: "ملكة النحل", zh: "蜂后", file: "queen_bee.png" },
-        { id: 36, name: "Diamond Amazon", year: "2023", ev: "Rain", ua: "Діамантова амазонка", en: "Diamond Amazon", pl: "Diamentowa amazonka", de: "Diamant-Amazone", fr: "Amazone diamant", es: "Amazona diamante", it: "Amazzone diamante", pt: "Amazona diamante", tr: "Elmas Amazon", ja: "ダイヤモンドアマゾン", ko: "다이아몬드 아마존", gr: "Διαμαντένια Αμαζόνα", nl: "Diamanten Amazone", sv: "Diamant Amazon", cs: "Diamantová Amazonka", ro: "Amazon diamant", da: "Diamant Amazon", fi: "Timanttiamazon", ar: "أمازون ماسي", zh: "钻石亚马逊", file: "rain_2023_diamond_amazon.png" },
-        { id: 37, name: "Robo Dog", year: "2020", ev: "Gamepass", ua: "Робо-пес", en: "Robo Dog", pl: "Robo-pies", de: "Robo-Hund", fr: "Robo-chien", es: "Robo-perro", it: "Robo-cane", pt: "Robo-cão", tr: "Robo Köpek", ja: "ロボドッグ", ko: "로보 도그", gr: "Ρομπότ Σκύλος", nl: "Robo Hond", sv: "Robo Hund", cs: "Robo pes", ro: "Robo câine", da: "Robo Hund", fi: "Robokoira", ar: "كلب آلي", zh: "机器狗", file: "robo_dog.png" },
-        { id: 38, name: "Diamond Butterfly", year: "2022", ev: "Sanctuary", ua: "Діамантовий метелик", en: "Diamond Butterfly", pl: "Diamentowy motyl", de: "Diamant-Schmetterling", fr: "Papillon diamant", es: "Mariposa diamante", it: "Farfalla diamante", pt: "Borboleta diamante", tr: "Elmas Kelebek", ja: "ダイヤモンドバタフライ", ko: "다이아몬드 나비", gr: "Διαμαντένια Πεταλούδα", nl: "Diamanten Vlinder", sv: "Diamant Fjäril", cs: "Diamantový motýl", ro: "Fluture diamant", da: "Diamant Sommerfugl", fi: "Timanttiperhonen", ar: "فراشة ماسية", zh: "钻石蝴蝶", file: "sanctuary_2022_diamond_premium_butterfly.png" },
-        { id: 39, name: "Nessie", year: "2023", ev: "Scottish", ua: "Нессі", en: "Nessie", pl: "Nessie", de: "Nessie", fr: "Nessie", es: "Nessie", it: "Nessie", pt: "Nessie", tr: "Nessie", ja: "ネッシー", ko: "네시", gr: "Νέσι", nl: "Nessie", sv: "Nessie", cs: "Nessie", ro: "Nessie", da: "Nessie", fi: "Nessie", ar: "نيسي", zh: "尼斯湖水怪", file: "scottish_2023_nessie.png" },
-        { id: 40, name: "Shadow Dragon", year: "2019", ev: "Halloween", ua: "Тіньовий дракон", en: "Shadow Dragon", pl: "Smok cienia", de: "Schattendrache", fr: "Dragon d'ombre", es: "Dragón de sombra", it: "Drago ombra", pt: "Dragão de sombra", tr: "Gölge Ejderi", ja: "影のドラゴン", ko: "그림자용", gr: "Δράκος Σκιάς", nl: "Schaduw Draak", sv: "Skugg Drake", cs: "Stínový drak", ro: "Dragon umbră", da: "Skygge Drage", fi: "Varjolohikäärme", ar: "تنين الظل", zh: "暗影龙", file: "shadow_dragon.png" },
-        { id: 41, name: "Shark", year: "2021", ev: "Ocean Egg", ua: "Акула", en: "Shark", pl: "Rekin", de: "Hai", fr: "Requin", es: "Tiburón", it: "Squalo", pt: "Tubarão", tr: "Köpekbalığı", ja: "サメ", ko: "상어", gr: "Καρχαρίας", nl: "Haai", sv: "Haj", cs: "Žralok", ro: "Rechin", da: "Haj", fi: "Hai", ar: "قرش", zh: "鲨鱼", file: "shark.png" },
-        { id: 42, name: "Capricorn", year: "2022", ev: "Space House", ua: "Козеріг", en: "Capricorn", pl: "Koziorożec", de: "Steinbock", fr: "Capricorne", es: "Capricornio", it: "Capricorno", pt: "Capricórnio", tr: "Oğlak", ja: "カプリコーン", ko: "카프리콘", gr: "Αιγόκερος", nl: "Steenbok", sv: "Stenbock", cs: "Kozoroh", ro: "Capricorn", da: "Stenbuk", fi: "Kauris", ar: "الجدي", zh: "摩羯座", file: "space_house_2022_capricorn.png" },
-        { id: 43, name: "Balloon Unicorn", year: "2024", ev: "Summer Fest", ua: "Повітряний єдиноріг", en: "Balloon Unicorn", pl: "Balonowy jednorożec", de: "Ballon-Einhorn", fr: "Licorne ballon", es: "Unicornio globo", it: "Unicorno palloncino", pt: "Unicórnio balão", tr: "Balon Unicorn", ja: "バルーンユニコーン", ko: "풍선 유니콘", gr: "Μπαλόνι Μονόκερος", nl: "Ballon Eenhoorn", sv: "Ballong Enhörning", cs: "Balónový jednorožec", ro: "Unicorn balon", da: "Ballon Enhjørning", fi: "Ilmapalloyksisarvinen", ar: "يونيكورن بالون", zh: "气球独角兽", file: "summerfest_2024_balloon_unicorn.png" },
-        { id: 44, name: "Corn Doggo", year: "2024", ev: "Summer Fest", ua: "Корн-дог пес", en: "Corn Doggo", pl: "Corn Dog Piesek", de: "Corn Dog Hund", fr: "Chien corn dog", es: "Perro corn dog", it: "Cane corn dog", pt: "Cachorro corn dog", tr: "Corn Dog Köpek", ja: "コーンドッグ犬", ko: "콘도그 강아지", gr: "Κορν Ντογκ Σκύλος", nl: "Corn Dog Hondje", sv: "Corn Dog Hund", cs: "Corn Dog Pejsek", ro: "Câine corn dog", da: "Corn Dog Hund", fi: "Corn Dog Koira", ar: "كلب كورن دوغ", zh: "玉米热狗犬", file: "summerfest_2024_corn_doggo.png" },
-        { id: 45, name: "T-Rex", year: "2020", ev: "Fossil Egg", ua: "Тиранозавр", en: "T-Rex", pl: "Tyranozaur", de: "T-Rex", fr: "T-Rex", es: "T-Rex", it: "T-Rex", pt: "T-Rex", tr: "T-Rex", ja: "ティラノサウルス", ko: "티라노사우루스", gr: "Τυραννόσαυρος", nl: "T-Rex", sv: "T-Rex", cs: "T-Rex", ro: "T-Rex", da: "T-Rex", fi: "T-Rex", ar: "تي ريكس", zh: "霸王龙", file: "trex.png" },
-        { id: 46, name: "Turtle", year: "2020", ev: "Aussie Egg", ua: "Черепаха", en: "Turtle", pl: "Żółw", de: "Schildkröte", fr: "Tortue", es: "Tortuga", it: "Tartaruga", pt: "Tartaruga", tr: "Kaplumbağa", ja: "カメ", ko: "거북이", gr: "Χελώνα", nl: "Schildpad", sv: "Sköldpadda", cs: "Želva", ro: "Țestoasă", da: "Skildpadde", fi: "Kilpikonna", ar: "سلحفاة", zh: "海龟", file: "turtle.png" },
-        { id: 47, name: "Gargoyle", year: "2023", ev: "Urban", ua: "Гаргулья", en: "Gargoyle", pl: "Gargulec", de: "Gargoyle", fr: "Gargouille", es: "Gárgola", it: "Gargoyle", pt: "Gárgula", tr: "Gargoyl", ja: "ガーゴイル", ko: "가고일", gr: "Γκαργκόιλ", nl: "Waterspuwer", sv: "Gargoyle", cs: "Chrlič", ro: "Gargoylă", da: "Gargoyle", fi: "Gargoyli", ar: "غرغول", zh: "石像鬼", file: "urban_2023_gargoyle.png" },
-        { id: 48, name: "Strawberry Bat Dragon", year: "2022", ev: "Winter", ua: "Полуничний кажан дракон", en: "Strawberry Bat Dragon", pl: "Truskawkowy smok-nietoperz", de: "Erdbeer-Fledermaus-Drache", fr: "Dragon chauve-souris fraise", es: "Dragón murciélago fresa", it: "Drago pipistrello fragola", pt: "Dragão morcego morango", tr: "Çilek Yarasa Ejderi", ja: "ストロベリーバットドラゴン", ko: "딸기 박쥐용", gr: "Φράουλα Δράκος Νυχτερίδας", nl: "Aardbei Vleermuis Draak", sv: "Jordgubb Fladdermus Drake", cs: "Jahodový netopýří drak", ro: "Dragon liliac căpșună", da: "Jordbær Flagermus Drage", fi: "Mansikkalepakkolohikäärme", ar: "تنين خفاش الفراولة", zh: "草莓蝙蝠龙", file: "winter_2022_strawberry_shortcake_bat_dragon.png" },
-        { id: 49, name: "Ancient Dragon", year: "2022", ev: "Basic Egg", ua: "Стародавній дракон", en: "Ancient Dragon", pl: "Starożytny smok", de: "Uralter Drache", fr: "Dragon ancien", es: "Dragón antiguo", it: "Drago antico", pt: "Dragão antigo", tr: "Kadim Ejderi", ja: "エンシェントドラゴン", ko: "고대 드래곤", gr: "Αρχαίος Δράκος", nl: "Oude Draak", sv: "Uråldrig Drake", cs: "Starověký drak", ro: "Dragon antic", da: "Oldtids Drage", fi: "Muinainen lohikäärme", ar: "تنين قديم", zh: "远古龙", file: "pets.3/basic_egg_2022_ancient_dragon.png" },
-        { id: 50, name: "Sugar Glider", year: "2022", ev: "Easter", ua: "Цукровий летяга", en: "Sugar Glider", pl: "Myszka latająca", de: "Kurzkopfgleitbeutler", fr: "Planeur sucre", es: "Petauro del azúcar", it: "Petauro dello zucchero", pt: "Petauro-do-açúcar", tr: "Şeker Planörü", ja: "フクロモモンガ", ko: "슈가글라이더", gr: "Σακχαρο Αλεξιπτωτιστής", nl: "Suikereekhoorn", sv: "Sockerflygare", cs: "Vakoveverka", ro: "Planor de zahăr", da: "Sukkerflyvende", fi: "Sokeriliitäjä", ar: "طائر السكر", zh: "蜜袋鼯", file: "pets.3/easter_2022_sugar_glider.png" },
-        { id: 51, name: "Ghost Dragon", year: "2021", ev: "Halloween", ua: "Дракон-привид", en: "Ghost Dragon", pl: "Duch smok", de: "Geist-Drache", fr: "Dragon fantôme", es: "Dragón fantasma", it: "Drago fantasma", pt: "Dragão fantasma", tr: "Hayalet Ejderi", ja: "ゴーストドラゴン", ko: "유령 드래곤", gr: "Φάντασμα Δράκος", nl: "Geest Draak", sv: "Spök Drake", cs: "Duch drak", ro: "Dragon fantomă", da: "Spøgelse Drage", fi: "Aave lohikäärme", ar: "تنين شبح", zh: "幽灵龙", file: "pets.3/halloween_2021_ghost_dragon.png" },
-        { id: 52, name: "Lava Dragon", year: "2022", ev: "Halloween", ua: "Лавовий дракон", en: "Lava Dragon", pl: "Lawowy smok", de: "Lava-Drache", fr: "Dragon de lave", es: "Dragón de lava", it: "Drago di lava", pt: "Dragão de lava", tr: "Lav Ejderi", ja: "ラヴァドラゴン", ko: "용암 드래곤", gr: "Δράκος Λάβας", nl: "Lava Draak", sv: "Lava Drake", cs: "Lávový drak", ro: "Dragon de lavă", da: "Lava Drage", fi: "Laavalohikäärme", ar: "تنين الحمم", zh: "熔岩龙", file: "pets.3/halloween_2022_lava_dragon.png" },
-        { id: 53, name: "Lunar Dragon", year: "2022", ev: "Lunar New Year", ua: "Місячний дракон", en: "Lunar Dragon", pl: "Smok Księżycowy", de: "Mond-Drache", fr: "Dragon lunaire", es: "Dragón lunar", it: "Drago lunare", pt: "Dragão lunar", tr: "Ay Ejderi", ja: "ルナドラゴン", ko: "루나 드래곤", gr: "Σεληνιακός Δράκος", nl: "Maan Draak", sv: "Mån Drake", cs: "Měsíční drak", ro: "Dragon lunar", da: "Måne Drage", fi: "Kuulohikäärme", ar: "تنين قمري", zh: "月亮龙", file: "pets.3/lny_2022_dragon.png" },
-        { id: 54, name: "Winged Horse", year: "2022", ev: "Random Pets", ua: "Крилатий кінь", en: "Winged Horse", pl: "Skrzydlaty koń", de: "Geflügeltes Pferd", fr: "Cheval ailé", es: "Caballo alado", it: "Cavallo alato", pt: "Cavalo alado", tr: "Kanatlı At", ja: "ペガサス", ko: "날개 달린 말", gr: "Φτερωτό Άλογο", nl: "Gevleugeld Paard", sv: "Bevingad Häst", cs: "Okřídlený kůň", ro: "Cal înaripat", da: "Bevinget Hest", fi: "Siivekäs hevonen", ar: "حصان مجنح", zh: "飞马", file: "pets.3/random_pets_2022_winged_horse.png" },
-        { id: 55, name: "Naga Dragon", year: "2023", ev: "SE Asia", ua: "Дракон Нага", en: "Naga Dragon", pl: "Smok Naga", de: "Naga-Drache", fr: "Dragon Naga", es: "Dragón Naga", it: "Drago Naga", pt: "Dragão Naga", tr: "Naga Ejderi", ja: "ナーガドラゴン", ko: "나가 드래곤", gr: "Δράκος Νάγκα", nl: "Naga Draak", sv: "Naga Drake", cs: "Naga drak", ro: "Dragon Naga", da: "Naga Drage", fi: "Nagalohikäärme", ar: "تنين ناغا", zh: "那伽龙", file: "pets.3/seasia_2023_naga_dragon.png" },
-        { id: 56, name: "Tree Kangaroo", year: "2023", ev: "SE Asia", ua: "Деревний кенгуру", en: "Tree Kangaroo", pl: "Kangur drzewny", de: "Baumkänguru", fr: "Kangourou arboricole", es: "Canguro arborícola", it: "Canguro arboricolo", pt: "Canguru arborícola", tr: "Ağaç Kangurusu", ja: "キノボリカンガルー", ko: "나무 캥거루", gr: "Δεντρό Καγκουρό", nl: "Boom Kangoeroe", sv: "Träd Känguru", cs: "Stromový klokan", ro: "Cangur de copac", da: "Træ Kænguru", fi: "Puukenguru", ar: "كنغر شجري", zh: "树袋鼠", file: "pets.3/seasia_2023_tree_kangaroo.png" },
-        { id: 57, name: "Skele-Rex", year: "2020", ev: "Halloween", ua: "Скелет-Рекс", en: "Skele-Rex", pl: "Szkielet-Rex", de: "Skelett-Rex", fr: "Squelette-Rex", es: "Esquele-Rex", it: "Scheletro-Rex", pt: "Esquele-Rex", tr: "İskelet-Rex", ja: "スケルレックス", ko: "스켈레렉스", gr: "Σκελετός-Ρεξ", nl: "Skelet-Rex", sv: "Skelett-Rex", cs: "Kostlivec-Rex", ro: "Schelet-Rex", da: "Skelet-Rex", fi: "Luuranko-Rex", ar: "ركس هيكلي", zh: "骷髅霸王龙", file: "pets.3/skele_rex.png" },
-        { id: 58, name: "Snow Owl", year: "2020", ev: "Winter", ua: "Снігова сова", en: "Snow Owl", pl: "Śnieżna sowa", de: "Schnee-Eule", fr: "Hibou des neiges", es: "Búho de nieve", it: "Gufo delle nevi", pt: "Coruja das neves", tr: "Kar Baykuşu", ja: "シロフクロウ", ko: "눈올빼미", gr: "Χιονοκουκουβάγια", nl: "Sneeuw Uil", sv: "Snö Uggla", cs: "Sněžná sova", ro: "Bufniță de zăpadă", da: "Sne Ugle", fi: "Lumipöllö", ar: "بومة الثلج", zh: "雪鸮", file: "pets.3/snow_owl.png" },
-        { id: 59, name: "Leviathan", year: "2023", ev: "Summer Fest", ua: "Левіафан", en: "Leviathan", pl: "Lewiatan", de: "Leviathan", fr: "Léviathan", es: "Leviatán", it: "Leviatano", pt: "Leviatã", tr: "Leviathan", ja: "リヴァイアサン", ko: "레비아탄", gr: "Λεβιάθαν", nl: "Leviathan", sv: "Leviatan", cs: "Leviatan", ro: "Leviatan", da: "Leviatan", fi: "Leviathan", ar: "لوياثان", zh: "利维坦", file: "pets.3/summerfest_2023_leviathan.png" },
-        { id: 60, name: "Billy Goat", year: "2023", ev: "Urban", ua: "Козел", en: "Billy Goat", pl: "Koza", de: "Ziegenbock", fr: "Bouc", es: "Cabra", it: "Caprone", pt: "Bode", tr: "Teke", ja: "ヤギ", ko: "수염소", gr: "Κατσίκα", nl: "Bok", sv: "Bock", cs: "Kozel", ro: "Țap", da: "Gedebuk", fi: "Pukki", ar: "تيس", zh: "山羊", file: "pets.3/urban_2023_billy_goat.png" },
-        { id: 61, name: "Ice Moth Dragon", year: "2022", ev: "Winter", ua: "Крижаний метеликовий дракон", en: "Ice Moth Dragon", pl: "Lodowy ćma smok", de: "Eis-Motten-Drache", fr: "Dragon papillon de glace", es: "Dragón polilla de hielo", it: "Drago falena di ghiaccio", pt: "Dragão mariposa de gelo", tr: "Buz Güve Ejderi", ja: "アイスモスドラゴン", ko: "아이스 모스 드래곤", gr: "Πεταλούδα Πάγου Δράκος", nl: "IJs Mot Draak", sv: "Is Mal Drake", cs: "Ledový můří drak", ro: "Dragon molie de gheață", da: "Is Møl Drage", fi: "Jääkoilohikäärme", ar: "تنين عثة الجليد", zh: "冰蛾龙", file: "pets.3/winter_2022_ice_moth_dragon.png" }
-
+        { id: 1, name: "Shadow Dragon", year: "2019", ev: "Halloween", ua: "Тіньовий дракон", en: "Shadow Dragon", pl: "Smok cienia", de: "Schattendrache", fr: "Dragon d'ombre", es: "Dragón de Sombra", it: "Drago dell'Ombra", pt: "Dragão da Sombra", tr: "Gölge Ejderi", ja: "シャドウドラゴン", ko: "섀도우 드래곤" },
+        { id: 2, name: "Frost Dragon", year: "2019", ev: "Christmas", ua: "Крижаний дракон", en: "Frost Dragon", pl: "Lodowy smok", de: "Frost-Drache", fr: "Dragon de glace", es: "Dragón de Hielo", it: "Drago del Gelo", pt: "Dragão de Gelo", tr: "Frost Ejderi", ja: "フロストドラゴン", ko: "프로스트 드래곤" },
+        { id: 3, name: "Bat Dragon", year: "2019", ev: "Halloween", ua: "Кажан дракон", en: "Bat Dragon", pl: "Smok-nietoperz", de: "Fledermaus-Drache", fr: "Dragon chauve-souris", es: "Dragón Murciélago", it: "Drago Pipistrello", pt: "Dragão Morcego", tr: "Yarasa Ejderi", ja: "バットドラゴン", ko: "박쥐 드래곤" }
     ];
 
     let currentLang = localStorage.getItem('elite_lang') || 'ua';
-    let currentTimezone = localStorage.getItem('elite_tz') || 'Europe/Kyiv';
     let allNews = [];
-
-    window.onload = () => {
-        applyTheme();
-        generateThemePalette();
-        generateLangGrid();
-        setQuickLangButtons();
-        updateStaticTexts();
-        updateTimezoneTheme();
-        updateTzClock();
-        setInterval(updateTzClock, 1000);
-        render(pets);
-        loadNews();
-    };
+    let aiChatHistory = [];
 
     function render(data) {
         const c = document.getElementById('catalog');
@@ -885,7 +360,6 @@
         data.forEach((p, index) => {
             const card = document.createElement('div');
             card.className = 'card';
-            card.style.animationDelay = `${index * 0.04}s`;
             card.onclick = () => openPetModal(p.name, p);
             
             const langPack = translations[currentLang] || translations['en'];
@@ -895,376 +369,62 @@
                 <div style="font-size:9px; color:var(--text-muted); margin-bottom:12px; font-weight:300;">
                     ${langPack.petYear}: ${p.year}
                 </div>
-                <img src="${p.file}" onerror="this.src='https://via.placeholder.com/130/161b22/fff?text=PET'">
+                <img src="https://via.placeholder.com/130/161b22/fff?text=${petName}" onerror="this.src='https://via.placeholder.com/130/161b22/fff?text=PET'">
                 <div class="pet-name">${petName}</div>
                 <a href="https://t.me/zeop_252" target="_blank" class="tg-btn" onclick="event.stopPropagation()">
                     <i class="fa-brands fa-telegram"></i> <span>${langPack.sell}</span>
                 </a>
-                <div class="seller-tag"><i class="fa-solid fa-user"></i> @zeop_252</div>
             `;
             c.appendChild(card);
         });
     }
 
-    function loadNews() {
-        allNews = (typeof NEWS_DATA !== 'undefined') ? NEWS_DATA : [];
-        renderNews(allNews);
-    }
-
-    function renderNews(newsData) {
-        const container = document.getElementById('newsContainer');
-        container.innerHTML = '';
-        
-        newsData.forEach((news, index) => {
-            const card = document.createElement('div');
-            card.className = 'news-card';
-            card.style.animationDelay = `${index * 0.05}s`;
-            
-            const title = news['title_' + currentLang] || news.title_en;
-            const desc = news['desc_' + currentLang] || news.desc_en;
-            
-            const safeTitle = title.replace(/'/g, "\\'");
-            const safeDesc = desc.replace(/'/g, "\\'");
-            card.innerHTML = `
-                <div class="news-title" style="cursor:pointer;" onclick="openNewsDetail('${safeTitle}', '${news.date}', '${safeDesc}')">${title}</div>
-                <div class="news-date">${news.date}</div>
-                <div class="news-desc">${desc}</div>
-                <div class="news-read-more" onclick="openNewsDetail('${safeTitle}', '${news.date}', '${safeDesc}')">Детальніше →</div>
-            `;
-            container.appendChild(card);
-        });
-    }
-
-    function filterNews() {
-        const query = document.getElementById('newsSearchInput').value.toLowerCase();
-        const filtered = allNews.filter(n => {
-            const title = (n['title_' + currentLang] || n.title_en).toLowerCase();
-            const desc = (n['desc_' + currentLang] || n.desc_en).toLowerCase();
-            return title.includes(query) || desc.includes(query);
-        });
-        renderNews(filtered);
-    }
-
-    function openNewsDetail(title, date, content) {
-        document.getElementById('news-detail-title').innerText = title;
-        document.getElementById('news-detail-date').innerText = date;
-        document.getElementById('news-detail-content').innerText = content;
-        openOverlay('newsDetailOverlay');
-    }
-
-    function closeNewsDetail() { closeOverlay('newsDetailOverlay'); }
-
-    let currentPetFile = '';
-    let currentPetName = '';
-
     function openPetModal(name, pet) {
         const langPack = translations[currentLang] || translations['en'];
         const petName = pet[currentLang] || pet.name;
-        currentPetFile = pet.file;
-        currentPetName = petName;
         
-        document.getElementById('m-img').src = pet.file;
+        document.getElementById('m-img').src = 'https://via.placeholder.com/170/161b22/fff?text=' + petName;
         document.getElementById('m-name').innerText = petName;
-        document.getElementById('m-info').innerText = `${langPack.petYear}: ${pet.year} | ${langPack.petEv}: ${pet.ev}`;
-        document.getElementById('m-desc').innerText = petName;
+        document.getElementById('m-desc').innerText = `${langPack.petYear}: ${pet.year} | ${langPack.petEv}: ${pet.ev}`;
         document.getElementById('m-sell-txt').innerText = langPack.sell;
-        document.getElementById('m-3d-txt').innerText = langPack.view3d || 'Переглянути в 3D';
+        
         openOverlay('petOverlay');
     }
 
-    function openSupport() {
-        const langPack = translations[currentLang] || translations['en'];
-        document.getElementById('sup-title').innerText = langPack.supTitle;
-        document.getElementById('sup-desc').innerText = langPack.msg;
-        openOverlay('supportOverlay');
+    function closePet() { 
+        document.getElementById('petOverlay').classList.remove('open');
     }
 
     function openOverlay(id) {
         const overlay = document.getElementById(id);
-        overlay.style.display = 'flex';
-        setTimeout(() => overlay.classList.add('open'), 10);
+        overlay.classList.add('open');
     }
 
-    function closeSupport() { closeOverlay('supportOverlay'); }
-    function closePet() { closeOverlay('petOverlay'); }
-    function openAbout() { document.getElementById('aboutOverlay').classList.add('active'); }
-    function closeAbout() { document.getElementById('aboutOverlay').classList.remove('active'); }
-
-    let viewer3dScene, viewer3dCamera, viewer3dRenderer, viewer3dMesh, viewer3dAnimId;
-    let isDragging = false, prevMouse = {x:0, y:0}, rotX = 0, rotY = 0;
-
-    function open3DViewer() {
-        closePet();
-        const overlay = document.getElementById('viewer3dOverlay');
-        const canvas = document.getElementById('viewer3dCanvas');
-        const langPack = translations[currentLang] || translations['en'];
-        document.getElementById('viewer3d-name').innerText = currentPetName + ' — 3D';
-        document.getElementById('viewer3d-hint-text').innerText = langPack.dragHint || 'Обертай мишкою або пальцем';
-        overlay.style.display = 'flex';
-        setTimeout(() => overlay.classList.add('open'), 10);
-
-        const w = window.innerWidth, h = window.innerHeight;
-        viewer3dScene = new THREE.Scene();
-        viewer3dCamera = new THREE.PerspectiveCamera(50, w / h, 0.1, 1000);
-        viewer3dCamera.position.z = 4;
-
-        viewer3dRenderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-        viewer3dRenderer.setSize(w, h);
-        viewer3dRenderer.setPixelRatio(window.devicePixelRatio);
-        viewer3dRenderer.setClearColor(0x000000, 0);
-
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
-        viewer3dScene.add(ambientLight);
-        const dirLight = new THREE.DirectionalLight(0xffffff, 0.6);
-        dirLight.position.set(5, 5, 5);
-        viewer3dScene.add(dirLight);
-        const backLight = new THREE.DirectionalLight(0x6c5ce7, 0.3);
-        backLight.position.set(-5, -3, -5);
-        viewer3dScene.add(backLight);
-
-        function add3dPetMesh(imgSrc) {
-            const texImg = new Image();
-            texImg.onload = function() {
-                const texture = new THREE.Texture(texImg);
-                texture.needsUpdate = true;
-                texture.minFilter = THREE.LinearFilter;
-                texture.magFilter = THREE.LinearFilter;
-                const aspect = texImg.width / texImg.height || 1;
-                const geo = new THREE.PlaneGeometry(2.5 * aspect, 2.5);
-                const matFront = new THREE.MeshStandardMaterial({ map: texture, transparent: true, side: THREE.FrontSide, roughness: 0.3, metalness: 0.1 });
-                const tex2 = new THREE.Texture(texImg);
-                tex2.needsUpdate = true;
-                const matBack = new THREE.MeshStandardMaterial({ map: tex2, transparent: true, side: THREE.BackSide, roughness: 0.3, metalness: 0.1 });
-                const meshFront = new THREE.Mesh(geo, matFront);
-                const meshBack = new THREE.Mesh(geo.clone(), matBack);
-                const group = new THREE.Group();
-                group.add(meshFront);
-                group.add(meshBack);
-                viewer3dMesh = group;
-                if (viewer3dScene) viewer3dScene.add(group);
-                rotX = 0; rotY = 0;
-            };
-            texImg.src = imgSrc;
-        }
-        add3dPetMesh(currentPetFile);
-
-        const particles = new THREE.BufferGeometry();
-        const pCount = 200;
-        const positions = new Float32Array(pCount * 3);
-        for (let i = 0; i < pCount * 3; i++) positions[i] = (Math.random() - 0.5) * 15;
-        particles.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-        const pMat = new THREE.PointsMaterial({ color: 0x6c5ce7, size: 0.03, transparent: true, opacity: 0.6 });
-        const points = new THREE.Points(particles, pMat);
-        viewer3dScene.add(points);
-
-        function animate() {
-            viewer3dAnimId = requestAnimationFrame(animate);
-            if (viewer3dMesh) {
-                if (!isDragging) rotY += 0.005;
-                viewer3dMesh.rotation.x = rotX;
-                viewer3dMesh.rotation.y = rotY;
-            }
-            points.rotation.y += 0.001;
-            viewer3dRenderer.render(viewer3dScene, viewer3dCamera);
-        }
-        animate();
-
-        canvas.onmousedown = (e) => { isDragging = true; prevMouse = {x: e.clientX, y: e.clientY}; };
-        canvas.onmousemove = (e) => {
-            if (!isDragging) return;
-            rotY += (e.clientX - prevMouse.x) * 0.01;
-            rotX += (e.clientY - prevMouse.y) * 0.01;
-            prevMouse = {x: e.clientX, y: e.clientY};
-        };
-        canvas.onmouseup = () => isDragging = false;
-        canvas.onmouseleave = () => isDragging = false;
-        canvas.ontouchstart = (e) => { isDragging = true; prevMouse = {x: e.touches[0].clientX, y: e.touches[0].clientY}; };
-        canvas.ontouchmove = (e) => {
-            if (!isDragging) return;
-            rotY += (e.touches[0].clientX - prevMouse.x) * 0.01;
-            rotX += (e.touches[0].clientY - prevMouse.y) * 0.01;
-            prevMouse = {x: e.touches[0].clientX, y: e.touches[0].clientY};
-            e.preventDefault();
-        };
-        canvas.ontouchend = () => isDragging = false;
-        canvas.onwheel = (e) => {
-            viewer3dCamera.position.z += e.deltaY * 0.005;
-            viewer3dCamera.position.z = Math.max(1.5, Math.min(10, viewer3dCamera.position.z));
-        };
+    function showTab(tabName) {
+        document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+        document.getElementById(tabName + '-tab').classList.add('active');
     }
 
-    function close3DViewer() {
-        const overlay = document.getElementById('viewer3dOverlay');
-        overlay.classList.remove('open');
-        if (viewer3dAnimId) cancelAnimationFrame(viewer3dAnimId);
-        if (viewer3dRenderer) viewer3dRenderer.dispose();
-        if (viewer3dScene) {
-            viewer3dScene.traverse(obj => {
-                if (obj.geometry) obj.geometry.dispose();
-                if (obj.material) {
-                    if (obj.material.map) obj.material.map.dispose();
-                    obj.material.dispose();
-                }
-            });
-        }
-        viewer3dScene = null; viewer3dMesh = null;
-        setTimeout(() => overlay.style.display = 'none', 400);
-    }
-    function closeOverlay(id) {
-        const overlay = document.getElementById(id);
-        overlay.classList.remove('open');
-        setTimeout(() => overlay.style.display = 'none', 400);
+    function setQuickLang(code) { 
+        changeLang(code);
     }
 
-    function overlayClick(event, overlayId) {
-        if(event.target === event.currentTarget) {
-            closeOverlay(overlayId);
-        }
-    }
-
-    function generateThemePalette() {
-        const palette = document.getElementById('colorsPalette');
-        palette.innerHTML = '';
-        colorThemes.forEach((theme, index) => {
-            const colorItem = document.createElement('div');
-            colorItem.className = 'color-item';
-            colorItem.style.background = `linear-gradient(135deg, ${theme.solid} 0%, ${theme.light} 100%)`;
-            colorItem.onclick = () => setTheme(theme.solid, theme.light, index);
-            palette.appendChild(colorItem);
-        });
-        updateActiveColorButton();
-    }
-
-    function setTheme(c1, c2, themeIndex) {
-        document.documentElement.style.setProperty('--accent', `linear-gradient(135deg, ${c1} 0%, ${c2} 100%)`);
-        document.documentElement.style.setProperty('--accent-solid', c1);
-        document.documentElement.style.setProperty('--accent-light', c2);
-        localStorage.setItem('elite_theme', JSON.stringify({c1, c2, themeIndex}));
-        updateActiveColorButton();
-    }
-
-    function resetTheme() { setTheme('#6c5ce7', '#a29bfe', 0); }
-
-    function applyTheme() {
-        const theme = JSON.parse(localStorage.getItem('elite_theme'));
-        if(theme) {
-            setTheme(theme.c1, theme.c2, theme.themeIndex);
-        } else {
-            resetTheme();
-        }
-    }
-
-    function updateActiveColorButton() {
-        const colors = document.querySelectorAll('.color-item');
-        colors.forEach(c => c.classList.remove('active'));
-        const theme = JSON.parse(localStorage.getItem('elite_theme'));
-        if(theme && colors[theme.themeIndex]) {
-            colors[theme.themeIndex].classList.add('active');
-        }
-    }
-
-    function openThemeSelector() {
-        document.getElementById('themeOverlay').style.display = 'flex';
-        setTimeout(() => document.getElementById('themeOverlay').classList.add('open'), 10);
-    }
-
-    function closeThemeSelector() {
-        document.getElementById('themeOverlay').classList.remove('open');
-        setTimeout(() => document.getElementById('themeOverlay').style.display = 'none', 400);
-    }
-
-    function generateTzGrid() {
-        const grid = document.getElementById('tzGrid');
-        grid.innerHTML = '';
-        timezones.forEach(tz => {
-            const item = document.createElement('div');
-            item.className = `tz-item ${tz.code === currentTimezone ? 'active-choice' : ''}`;
-            let offset = '';
-            try {
-                const now = new Date();
-                offset = new Intl.DateTimeFormat('en-GB', { timeZone: tz.code, hour: '2-digit', minute: '2-digit', hour12: false }).format(now);
-            } catch(e) {}
-            item.innerHTML = `
-                <div class="tz-flag">${tz.flag}</div>
-                <div class="tz-name-container">
-                    <div class="tz-main-name">${tz.name}</div>
-                    <div class="tz-utc-offset">${offset}</div>
-                </div>
-            `;
-            item.onclick = () => { handleTimezoneChange(tz.code); closeTzModal(); };
-            grid.appendChild(item);
-        });
-    }
-
-    function openTzModal() {
-        generateTzGrid();
-        updateTzModalTexts();
-        document.getElementById('tzModalOverlay').style.display = 'flex';
-        setTimeout(() => document.getElementById('tzModalOverlay').classList.add('open'), 10);
-    }
-
-    function closeTzModal() {
-        document.getElementById('tzModalOverlay').classList.remove('open');
-        setTimeout(() => document.getElementById('tzModalOverlay').style.display = 'none', 500);
-    }
-
-    function updateTzModalTexts() {
-        const langPack = translations[currentLang] || translations['en'];
-        document.getElementById('tz-modal-title').innerText = langPack.tzLabel;
-        document.getElementById('tz-hint-text').innerText = langPack.tzHint || translations['en'].tzHint;
-    }
-
-    function handleTimezoneChange(tz) {
-        currentTimezone = tz;
-        localStorage.setItem('elite_tz', tz);
-        updateTimezoneTheme();
-        updateTzClock();
-    }
-
-    function updateTzClock() {
-        try {
-            const now = new Date();
-            const timeStr = new Intl.DateTimeFormat('en-GB', { timeZone: currentTimezone, hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false }).format(now);
-            const tzData = timezones.find(t => t.code === currentTimezone);
-            document.getElementById('tzSbTime').innerText = timeStr;
-            if (tzData) {
-                document.getElementById('tzSbFlag').innerText = tzData.flag;
-                document.getElementById('tzSbName').innerText = tzData.name;
-            }
-        } catch(e) {}
-    }
-
-    function updateTimezoneTheme() {
-        try {
-            const now = new Date();
-            const formatter = new Intl.DateTimeFormat('en-US', { timeZone: currentTimezone, hour: '2-digit', hour12: false });
-            const hour = parseInt(formatter.format(now));
-            if (hour >= 18 || hour < 6) {
-                document.body.classList.add('night-mode');
-            } else {
-                document.body.classList.remove('night-mode');
-            }
-        } catch (e) {
-            document.body.classList.remove('night-mode');
-        }
-    }
-
-    function setQuickLang(code) { changeLang(code); }
-
-    function setQuickLangButtons() {
-        document.getElementById('ua-btn').classList.toggle('active-lang', currentLang === 'ua');
-        document.getElementById('eu-btn').classList.toggle('active-lang', currentLang !== 'ua');
+    function changeLang(code) {
+        currentLang = code;
+        localStorage.setItem('elite_lang', code);
+        document.getElementById('ua-btn').classList.toggle('active-lang', code === 'ua');
+        document.getElementById('eu-btn').classList.toggle('active-lang', code !== 'ua');
+        render(pets);
+        closeAllLanguages();
     }
 
     function openAllLanguages() {
         generateLangGrid();
-        document.getElementById('langModalOverlay').style.display = 'flex';
-        setTimeout(() => document.getElementById('langModalOverlay').classList.add('open'), 10);
+        document.getElementById('langModalOverlay').classList.add('open');
     }
 
     function closeAllLanguages() {
         document.getElementById('langModalOverlay').classList.remove('open');
-        setTimeout(() => document.getElementById('langModalOverlay').style.display = 'none', 500);
     }
 
     function generateLangGrid() {
@@ -1273,7 +433,7 @@
         languagesDB.forEach(l => {
             const item = document.createElement('div');
             item.className = `lang-item ${l.code === currentLang ? 'active-choice' : ''}`;
-            item.onclick = () => { changeLang(l.code); closeAllLanguages(); };
+            item.onclick = () => { changeLang(l.code); };
             item.innerHTML = `
                 <div class="lang-flag">${l.flag}</div>
                 <div class="lang-name-container">
@@ -1285,159 +445,58 @@
         });
     }
 
-    function changeLang(code) {
-        currentLang = code;
-        localStorage.setItem('elite_lang', code);
-        updateStaticTexts();
-        render(pets);
-        renderNews(allNews);
-        setQuickLangButtons();
-        closeSidebar();
-    }
+    const aiChatHistory = [];
+    const _k = ['gsk','_wI7r5v2DTTRrY8lJ7KcV','WGdyb3FYXKJ7FhqN6Lvm','AQPNRr0FmysO'];
+    function getGroqKey() { return _k.join('') || localStorage.getItem('groq_key') || ''; }
 
-    function updateStaticTexts() {
-        const langPack = translations[currentLang] || translations['en'];
-        document.getElementById('searchInput').placeholder = langPack.search;
-        document.getElementById('side-sup').innerText = langPack.sup;
-        document.getElementById('all-pets-text').innerText = langPack.allPets;
-        document.getElementById('news-text').innerText = langPack.newsText;
-        document.getElementById('color-title').innerText = langPack.colorTitle;
-        document.getElementById('theme-btn-text').innerText = langPack.themeBtnText;
-        document.getElementById('reset-btn').innerText = langPack.resetBtn;
-        document.getElementById('theme-modal-title').innerText = langPack.themeModalTitle;
-        updateTzModalTexts();
-        document.getElementById('lang-select-title').innerText = langPack.chooseLang;
-        document.getElementById('langSearchInput').placeholder = langPack.search;
-        document.getElementById('newsSearchInput').placeholder = langPack.search;
-        document.getElementById('devs-text').innerText = langPack.devs || 'Розробники';
-        document.getElementById('devs-title').innerText = langPack.devs || 'Розробники';
-        document.getElementById('dev-role-1').innerText = langPack.devRole || 'Розробник';
-        document.getElementById('dev-role-2').innerText = langPack.devRole || 'Розробник';
-        document.getElementById('dev-tg-txt-1').innerText = langPack.writeTg || 'Написати в ТГ';
-        document.getElementById('dev-tg-txt-2').innerText = langPack.writeTg || 'Написати в ТГ';
-        document.getElementById('about-text').innerText = langPack.aboutBtn || 'Про сайт';
-        document.getElementById('about-title').innerText = langPack.aboutTitle || 'Про EliteStore';
-        document.getElementById('about-desc').innerHTML = langPack.aboutDesc || '';
-        document.getElementById('about-badge-text').innerText = langPack.aboutBadge || 'Розвиваємось разом з вами';
-        document.getElementById('ai-text').innerText = langPack.aiBtn || 'ШІ Помічник';
-        document.getElementById('ai-title').innerText = langPack.aiTitle || 'ШІ Помічник';
-        document.getElementById('ai-subtitle').innerText = langPack.aiSubtitle || 'Запитай мене про будь-якого пета з Adopt Me!';
-        document.getElementById('aiInput').placeholder = langPack.aiPlaceholder || 'Напиши назву пета...';
-        document.getElementById('ai-welcome').innerHTML = langPack.aiWelcome || '👋 Привіт! Я ШІ-помічник EliteStore. Напиши назву будь-якого пета з Adopt Me, і я розкажу тобі його ціну, історію та рідкість. Наприклад: <b>Shadow Dragon</b>, <b>Frost Dragon</b>, <b>Owl</b>';
-    }
-
-    function filterLanguages() {
-        const query = document.getElementById('langSearchInput').value.toLowerCase();
-        const items = document.querySelectorAll('.lang-item');
-        items.forEach(item => {
-            const name = item.textContent.toLowerCase();
-            item.style.display = name.includes(query) ? 'flex' : 'none';
-        });
-    }
-
-    function showTab(tab) {
-        document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-        document.getElementById(tab + '-tab').classList.add('active');
-        document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
-        const navLinks = document.querySelectorAll('.nav-link');
-        const tabMap = { pets: 0, news: 1, devs: 2, ai: 3 };
-        if (tabMap[tab] !== undefined && navLinks[tabMap[tab]]) navLinks[tabMap[tab]].classList.add('active');
-    }
-
-    function handleSearch() {
-        const v = document.getElementById('searchInput').value.toLowerCase().trim();
-        const filtered = pets.filter(p => 
-            p.name.toLowerCase().includes(v) || 
-            (p[currentLang] && p[currentLang].toLowerCase().includes(v))
-        );
-        render(filtered);
-    }
-
-// Знайдіть функцію sendAiMessage і замініть її на цю версію:
-
-function sendAiMessage() {
-    const input = document.getElementById('aiInput');
-    const query = input.value.trim();
-    if (!query) return;
-    input.value = '';
-    const msgs = document.getElementById('aiMessages');
-    const userMsg = document.createElement('div');
-    userMsg.className = 'ai-msg user';
-    userMsg.textContent = query;
-    msgs.appendChild(userMsg);
-    msgs.scrollTop = msgs.scrollHeight;
-
-    const typingMsg = document.createElement('div');
-    typingMsg.className = 'ai-msg bot';
-    typingMsg.innerHTML = '⏳ ...';
-    typingMsg.id = 'ai-typing';
-    msgs.appendChild(typingMsg);
-    msgs.scrollTop = msgs.scrollHeight;
-
-    const localResult = generateLocalResponse(query);
-    
-    // ✅ ВАЖНО: Додайте поточну мову
-    const langName = { 
-        ua:'Ukrainian', en:'English', pl:'Polish', de:'German', fr:'French', 
-        es:'Spanish', it:'Italian', pt:'Portuguese', tr:'Turkish', ja:'Japanese', 
-        ko:'Korean', gr:'Greek', nl:'Dutch', sv:'Swedish', cs:'Czech', ro:'Romanian', 
-        da:'Danish', fi:'Finnish', ar:'Arabic', zh:'Chinese' 
-    }[currentLang] || 'English';
-
-    const systemPrompt = `You are EliteStore AI assistant for Adopt Me (Roblox) pet marketplace. You help users with pet values, trading advice, and game info. 
-**IMPORTANT: Answer ALWAYS in ${langName} language. Never use other languages.**
-Be friendly and concise. Use emojis.
-If asked about a specific pet, include: rarity, approximate value in Ride Potions (RP), which egg/event it came from, year released, and demand level.
-At the end of pet info, always mention: seller @zeop_252 (Telegram: t.me/zeop_252).
-Here is our local pet database for reference (use these values as baseline): ${localResult ? localResult.replace(/<[^>]*>/g, '') : 'No local match found.'}`;
-
-    aiChatHistory.push({ role: 'user', content: query });
-
-    const groqKey = getGroqKey();
-    if (!groqKey) {
-        const el = document.getElementById('ai-typing');
-        if (el) el.remove();
-        const botMsg = document.createElement('div');
-        botMsg.className = 'ai-msg bot';
-        botMsg.innerHTML = localResult || (translations[currentLang]?.aiNotFound || 'Pet not found.');
-        msgs.appendChild(botMsg);
+    function sendAiMessage() {
+        const input = document.getElementById('aiInput');
+        const query = input.value.trim();
+        if (!query) return;
+        input.value = '';
+        const msgs = document.getElementById('aiMessages');
+        
+        const userMsg = document.createElement('div');
+        userMsg.className = 'ai-msg user';
+        userMsg.textContent = query;
+        msgs.appendChild(userMsg);
         msgs.scrollTop = msgs.scrollHeight;
-        return;
-    }
 
-    fetch('https://api.groq.com/openai/v1/chat/completions', {
-        method: 'POST',
-        headers: { 'Authorization': 'Bearer ' + groqKey, 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            model: 'llama-3.1-8b-instant',
-            messages: [{ role: 'system', content: systemPrompt }, ...aiChatHistory.slice(-10)],
-            max_tokens: 500,
-            temperature: 0.7
-        })
-    })
-    .then(r => r.json())
-    .then(data => {
-        const el = document.getElementById('ai-typing');
-        if (el) el.remove();
-        if (data.choices && data.choices[0]) {
+        const typingMsg = document.createElement('div');
+        typingMsg.className = 'ai-msg bot';
+        typingMsg.innerHTML = '⏳ ...';
+        typingMsg.id = 'ai-typing';
+        msgs.appendChild(typingMsg);
+        msgs.scrollTop = msgs.scrollHeight;
+
+        const langName = { 
+            ua:'Ukrainian', en:'English', pl:'Polish', de:'German', fr:'French', 
+            es:'Spanish', it:'Italian', pt:'Portuguese', tr:'Turkish', ja:'Japanese', 
+            ko:'Korean', gr:'Greek', nl:'Dutch', sv:'Swedish', cs:'Czech', ro:'Romanian', 
+            da:'Danish', fi:'Finnish', ar:'Arabic', zh:'Chinese' 
+        }[currentLang] || 'English';
+
+        const systemPrompt = `You are EliteStore AI assistant for Adopt Me (Roblox) pet marketplace.
+**ALWAYS answer in ${langName} language. NEVER use other languages.**
+Help users with pet values and trading advice. Be friendly and concise.`;
+
+        aiChatHistory.push({ role: 'user', content: query });
+
+        const groqKey = getGroqKey();
+        if (!groqKey) {
+            const el = document.getElementById('ai-typing');
+            if (el) el.remove();
             const botMsg = document.createElement('div');
             botMsg.className = 'ai-msg bot';
-            botMsg.innerHTML = data.choices[0].message.content || 'Error';
+            botMsg.innerHTML = '❌ API key not configured. Please contact admin.';
             msgs.appendChild(botMsg);
-            aiChatHistory.push({ role: 'assistant', content: data.choices[0].message.content });
+            msgs.scrollTop = msgs.scrollHeight;
+            return;
         }
-        msgs.scrollTop = msgs.scrollHeight;
-    })
-    .catch(e => {
-        const el = document.getElementById('ai-typing');
-        if (el) el.remove();
-        const botMsg = document.createElement('div');
-        botMsg.className = 'ai-msg bot';
-        botMsg.innerHTML = '❌ Error: ' + e.message;
-        msgs.appendChild(botMsg);
-        msgs.scrollTop = msgs.scrollHeight;
-    });
-}
+
+        fetch('https://api.groq.com/openai/v1/chat/completions', {
+            method: 'POST',
+            headers: { 'Authorization': 'Bearer ' + groqKey, 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 model: 'llama-3.1-8b-instant',
                 messages: [{ role: 'system', content: systemPrompt }, ...aiChatHistory.slice(-10)],
@@ -1449,58 +508,32 @@ Here is our local pet database for reference (use these values as baseline): ${l
         .then(data => {
             const el = document.getElementById('ai-typing');
             if (el) el.remove();
-            const reply = data.choices?.[0]?.message?.content || localResult || 'Error';
-            aiChatHistory.push({ role: 'assistant', content: reply });
-            const botMsg = document.createElement('div');
-            botMsg.className = 'ai-msg bot';
-            botMsg.innerHTML = reply.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
-            msgs.appendChild(botMsg);
+            if (data.choices && data.choices[0]) {
+                const botMsg = document.createElement('div');
+                botMsg.className = 'ai-msg bot';
+                botMsg.innerHTML = data.choices[0].message.content || 'Error';
+                msgs.appendChild(botMsg);
+                aiChatHistory.push({ role: 'assistant', content: data.choices[0].message.content });
+            }
             msgs.scrollTop = msgs.scrollHeight;
         })
-        .catch(() => {
+        .catch(e => {
             const el = document.getElementById('ai-typing');
             if (el) el.remove();
             const botMsg = document.createElement('div');
             botMsg.className = 'ai-msg bot';
-            botMsg.innerHTML = localResult || (translations[currentLang]?.aiNotFound || 'Error connecting to AI. Try again.');
+            botMsg.innerHTML = '❌ Error: ' + e.message;
             msgs.appendChild(botMsg);
             msgs.scrollTop = msgs.scrollHeight;
         });
     }
 
-    function generateLocalResponse(query) {
-        const langPack = translations[currentLang] || translations['en'];
-        const q = query.toLowerCase().replace(/[-_]/g, ' ');
-        const found = petDatabase.filter(p => {
-            const n = p.name.toLowerCase();
-            return n.includes(q) || q.includes(n) || levenshtein(n, q) <= 2;
-        });
-        if (found.length === 0) return null;
-        return found.slice(0, 3).map(p => {
-            const sellText = langPack.aiSeller || 'Продавець';
-            return `<b>🐾 ${p.name}</b><div class="pet-info-card">` +
-                `<div><span class="pi-label">⭐ ${langPack.aiRarity || 'Рідкість'}:</span> ${p.rarity}</div>` +
-                `<div><span class="pi-label">📅 ${langPack.aiYear || 'Рік'}:</span> ${p.year}</div>` +
-                `<div><span class="pi-label">🎉 ${langPack.aiEvent || 'Подія'}:</span> ${p.event}</div>` +
-                `<div><span class="pi-label">🥚 ${langPack.aiOrigin || 'Звідки'}:</span> ${p.origin}</div>` +
-                `<div><span class="pi-label">💰 ${langPack.aiValue || 'Цінність'}:</span> ${p.value}</div>` +
-                `<div><span class="pi-label">📈 ${langPack.aiDemand || 'Попит'}:</span> ${p.demand}</div>` +
-                `<div><span class="pi-label">📝 ${langPack.aiDesc || 'Опис'}:</span> ${p.desc}</div>` +
-                `<div><span class="pi-label">👤 ${sellText}:</span> <a href="https://t.me/zeop_252" target="_blank" style="color:var(--accent-light);">@zeop_252</a></div>` +
-                `</div>`;
-        }).join('<br>');
-    }
-
-    function levenshtein(a, b) {
-        const m = a.length, n = b.length;
-        const dp = Array.from({length: m + 1}, () => Array(n + 1).fill(0));
-        for (let i = 0; i <= m; i++) dp[i][0] = i;
-        for (let j = 0; j <= n; j++) dp[0][j] = j;
-        for (let i = 1; i <= m; i++)
-            for (let j = 1; j <= n; j++)
-                dp[i][j] = Math.min(dp[i-1][j] + 1, dp[i][j-1] + 1, dp[i-1][j-1] + (a[i-1] !== b[j-1] ? 1 : 0));
-        return dp[m][n];
-    }
+    window.onload = () => {
+        render(pets);
+        showTab('pets');
+        generateLangGrid();
+        document.getElementById('ua-btn').classList.add('active-lang');
+    };
 </script>
 
 </body>
