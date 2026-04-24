@@ -1353,65 +1353,91 @@
         render(filtered);
     }
 
-    function toggleSidebar() {
-        document.getElementById('sidebar').classList.toggle('open');
-        document.getElementById('sidebarOverlay').classList.toggle('visible');
-    }
+// Знайдіть функцію sendAiMessage і замініть її на цю версію:
 
-    function closeSidebar() {
-        document.getElementById('sidebar').classList.remove('open');
-        document.getElementById('sidebarOverlay').classList.remove('visible');
-    }
+function sendAiMessage() {
+    const input = document.getElementById('aiInput');
+    const query = input.value.trim();
+    if (!query) return;
+    input.value = '';
+    const msgs = document.getElementById('aiMessages');
+    const userMsg = document.createElement('div');
+    userMsg.className = 'ai-msg user';
+    userMsg.textContent = query;
+    msgs.appendChild(userMsg);
+    msgs.scrollTop = msgs.scrollHeight;
 
-    // --- ШІ ПОМІЧНИК ---
-    const aiChatHistory = [];
-    const _k = ['gsk','_wI7r5v2DTTRrY8lJ7KcV','WGdyb3FYXKJ7FhqN6Lvm','AQPNRr0FmysO'];
-    function getGroqKey() { return _k.join('') || localStorage.getItem('groq_key') || ''; }
+    const typingMsg = document.createElement('div');
+    typingMsg.className = 'ai-msg bot';
+    typingMsg.innerHTML = '⏳ ...';
+    typingMsg.id = 'ai-typing';
+    msgs.appendChild(typingMsg);
+    msgs.scrollTop = msgs.scrollHeight;
 
-    function sendAiMessage() {
-        const input = document.getElementById('aiInput');
-        const query = input.value.trim();
-        if (!query) return;
-        input.value = '';
-        const msgs = document.getElementById('aiMessages');
-        const userMsg = document.createElement('div');
-        userMsg.className = 'ai-msg user';
-        userMsg.textContent = query;
-        msgs.appendChild(userMsg);
-        msgs.scrollTop = msgs.scrollHeight;
+    const localResult = generateLocalResponse(query);
+    
+    // ✅ ВАЖНО: Додайте поточну мову
+    const langName = { 
+        ua:'Ukrainian', en:'English', pl:'Polish', de:'German', fr:'French', 
+        es:'Spanish', it:'Italian', pt:'Portuguese', tr:'Turkish', ja:'Japanese', 
+        ko:'Korean', gr:'Greek', nl:'Dutch', sv:'Swedish', cs:'Czech', ro:'Romanian', 
+        da:'Danish', fi:'Finnish', ar:'Arabic', zh:'Chinese' 
+    }[currentLang] || 'English';
 
-        const typingMsg = document.createElement('div');
-        typingMsg.className = 'ai-msg bot';
-        typingMsg.innerHTML = '⏳ ...';
-        typingMsg.id = 'ai-typing';
-        msgs.appendChild(typingMsg);
-        msgs.scrollTop = msgs.scrollHeight;
-
-        const localResult = generateLocalResponse(query);
-        const langName = { ua:'Ukrainian', en:'English', pl:'Polish', de:'German', fr:'French', es:'Spanish', it:'Italian', pt:'Portuguese', tr:'Turkish', ja:'Japanese', ko:'Korean', gr:'Greek', nl:'Dutch', sv:'Swedish', cs:'Czech', ro:'Romanian', da:'Danish', fi:'Finnish', ar:'Arabic', zh:'Chinese' }[currentLang] || 'English';
-
-        const systemPrompt = `You are EliteStore AI assistant for Adopt Me (Roblox) pet marketplace. You help users with pet values, trading advice, and game info. Answer in ${langName}. Be friendly and concise. Use emojis.
+    const systemPrompt = `You are EliteStore AI assistant for Adopt Me (Roblox) pet marketplace. You help users with pet values, trading advice, and game info. 
+**IMPORTANT: Answer ALWAYS in ${langName} language. Never use other languages.**
+Be friendly and concise. Use emojis.
 If asked about a specific pet, include: rarity, approximate value in Ride Potions (RP), which egg/event it came from, year released, and demand level.
 At the end of pet info, always mention: seller @zeop_252 (Telegram: t.me/zeop_252).
 Here is our local pet database for reference (use these values as baseline): ${localResult ? localResult.replace(/<[^>]*>/g, '') : 'No local match found.'}`;
 
-        aiChatHistory.push({ role: 'user', content: query });
+    aiChatHistory.push({ role: 'user', content: query });
 
-        const groqKey = getGroqKey();
-        if (!groqKey) {
-            const el = document.getElementById('ai-typing');
-            if (el) el.remove();
+    const groqKey = getGroqKey();
+    if (!groqKey) {
+        const el = document.getElementById('ai-typing');
+        if (el) el.remove();
+        const botMsg = document.createElement('div');
+        botMsg.className = 'ai-msg bot';
+        botMsg.innerHTML = localResult || (translations[currentLang]?.aiNotFound || 'Pet not found.');
+        msgs.appendChild(botMsg);
+        msgs.scrollTop = msgs.scrollHeight;
+        return;
+    }
+
+    fetch('https://api.groq.com/openai/v1/chat/completions', {
+        method: 'POST',
+        headers: { 'Authorization': 'Bearer ' + groqKey, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            model: 'llama-3.1-8b-instant',
+            messages: [{ role: 'system', content: systemPrompt }, ...aiChatHistory.slice(-10)],
+            max_tokens: 500,
+            temperature: 0.7
+        })
+    })
+    .then(r => r.json())
+    .then(data => {
+        const el = document.getElementById('ai-typing');
+        if (el) el.remove();
+        if (data.choices && data.choices[0]) {
             const botMsg = document.createElement('div');
             botMsg.className = 'ai-msg bot';
-            botMsg.innerHTML = localResult || (translations[currentLang]?.aiNotFound || 'Pet not found.');
+            botMsg.innerHTML = data.choices[0].message.content || 'Error';
             msgs.appendChild(botMsg);
-            msgs.scrollTop = msgs.scrollHeight;
-            return;
+            aiChatHistory.push({ role: 'assistant', content: data.choices[0].message.content });
         }
-
-        fetch('https://api.groq.com/openai/v1/chat/completions', {
-            method: 'POST',
-            headers: { 'Authorization': 'Bearer ' + groqKey, 'Content-Type': 'application/json' },
+        msgs.scrollTop = msgs.scrollHeight;
+    })
+    .catch(e => {
+        const el = document.getElementById('ai-typing');
+        if (el) el.remove();
+        const botMsg = document.createElement('div');
+        botMsg.className = 'ai-msg bot';
+        botMsg.innerHTML = '❌ Error: ' + e.message;
+        msgs.appendChild(botMsg);
+        msgs.scrollTop = msgs.scrollHeight;
+    });
+}
             body: JSON.stringify({
                 model: 'llama-3.1-8b-instant',
                 messages: [{ role: 'system', content: systemPrompt }, ...aiChatHistory.slice(-10)],
