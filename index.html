@@ -11,7 +11,7 @@
     <style>
         /* --- 1. CSS ЗМІННІ ТА БАЗОВІ СТИЛІ --- */
         :root {
-            /* Початкова фіолетова тема */
+            /* Фіолетова тема (день) */
             --accent: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
             --accent-solid: #6c5ce7;
             --accent-light: #a29bfe;
@@ -23,6 +23,16 @@
             --text-muted: #8b949e;
             --shadow-main: 0 10px 30px rgba(0,0,0,0.5);
             --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --is-night: 0;
+        }
+
+        /* Нічна тема (більш темна) */
+        body.night-mode {
+            --bg-dark: #020305;
+            --card-bg: linear-gradient(180deg, #0a0e14 0%, #050709 100%);
+            --sidebar-bg: #050709;
+            --glass-border: rgba(255, 255, 255, 0.04);
+            --is-night: 1;
         }
 
         /* Обнулення стилів */
@@ -33,6 +43,7 @@
             background: var(--bg-dark); color: var(--text-main);
             display: flex; height: 100vh; overflow: hidden;
             opacity: 0; animation: bodyFadeIn 1s forwards;
+            transition: background 0.6s ease, color 0.6s ease;
         }
 
         /* Анімація завантаження сторінки */
@@ -76,6 +87,14 @@
         .nav-link:hover { background: rgba(255,255,255,0.04); color: var(--text-main); transform: translateX(8px); }
         .nav-link.active { background: var(--accent); color: var(--text-main); box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3); }
         .nav-link i { font-size: 18px; width: 20px; text-align: center; }
+
+        /* Вибір часового поясу */
+        .timezone-selector { margin-bottom: 20px; padding: 15px; border-radius: 12px; background: rgba(255,255,255,0.02); border: 1px solid var(--glass-border); }
+        .timezone-selector label { font-size: 11px; font-weight: 700; color: var(--text-muted); display: block; margin-bottom: 8px; text-transform: uppercase; }
+        .timezone-selector select { 
+            width: 100%; padding: 10px; border-radius: 8px; background: #05060a; border: 1px solid var(--glass-border);
+            color: var(--text-main); cursor: pointer; font-weight: 600;
+        }
 
         /* --- 3. КАСТОМІЗАЦІЯ (КОЛІР САЙТУ) --- */
         .customizer-container { margin-top: 25px; padding: 20px; border-radius: 15px; background: rgba(255,255,255,0.02); border: 1px solid var(--glass-border); }
@@ -354,11 +373,37 @@
     </div>
 
     <div class="nav-link active" onclick="render(pets); closeSidebar();">
-        <i class="fa-solid fa-paw"></i> <span>Усі пети</span>
+        <i class="fa-solid fa-paw"></i> <span id="all-pets-text">Усі пети</span>
     </div>
     
     <div class="nav-link" style="border: 1px solid var(--accent-solid); color: var(--accent-solid);" onclick="openSupport(); closeSidebar();">
         <i class="fa-solid fa-headset"></i> <span id="side-sup">Підтримка</span>
+    </div>
+
+    <div class="timezone-selector">
+        <label id="tz-label">Часовий пояс</label>
+        <select id="timezoneSelect" onchange="handleTimezoneChange()">
+            <option value="UTC">UTC (Greenwich)</option>
+            <option value="Europe/Kyiv">🇺🇦 Київ</option>
+            <option value="Europe/Warsaw">🇵🇱 Варшава</option>
+            <option value="Europe/Berlin">🇩🇪 Берлін</option>
+            <option value="Europe/Paris">🇫🇷 Париж</option>
+            <option value="Europe/Madrid">🇪🇸 Мадрид</option>
+            <option value="Europe/Rome">🇮🇹 Рим</option>
+            <option value="Europe/London">🇬🇧 Лондон</option>
+            <option value="America/New_York">🇺🇸 Нью-Йорк</option>
+            <option value="America/Chicago">🇺🇸 Чикаго</option>
+            <option value="America/Denver">🇺🇸 Денвер</option>
+            <option value="America/Los_Angeles">🇺🇸 Лос-Анджелес</option>
+            <option value="Asia/Tokyo">🇯🇵 Токіо</option>
+            <option value="Asia/Shanghai">🇨🇳 Шанхай</option>
+            <option value="Asia/Hong_Kong">🇭🇰 Гонконг</option>
+            <option value="Asia/Singapore">🇸🇬 Сінгапур</option>
+            <option value="Asia/Bangkok">🇹🇭 Бангкок</option>
+            <option value="Asia/Dubai">🇦🇪 Дубай</option>
+            <option value="Asia/Kolkata">🇮🇳 Нью-Делі</option>
+            <option value="Australia/Sydney">🇦🇺 Сідней</option>
+        </select>
     </div>
 
     <div class="customizer-container">
@@ -420,11 +465,11 @@
 
 <div class="lang-modal-overlay" id="langModalOverlay">
     <div class="lang-modal-header">
-        <h1 class="lang-modal-title">Select Language</h1>
+        <h1 class="lang-modal-title" id="lang-select-title">Виберіть мову</h1>
         
         <div class="lang-search">
             <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" id="langSearchInput" oninput="filterLanguages()" placeholder="Search language...">
+            <input type="text" id="langSearchInput" oninput="filterLanguages()" placeholder="Пошук...">
         </div>
         
         <i class="fa-solid fa-xmark close-btn" style="position: static; font-size: 30px;" onclick="closeAllLanguages()"></i>
@@ -454,32 +499,79 @@
         ua: { 
             sell: "ПРОДАТЬ", search: "Пошук пета...", sup: "Підтримка", supTitle: "Підтримка", 
             msg: "Виникли питання або хочете купити пета? Напишіть нашому менеджеру в Telegram.",
-            petYear: "Рік", petEv: "Івент", chooseLang: "Виберіть мову", colorTitle: "КОЛІР САЙТУ", resetBtn: "ПОВЕРНУТИ ЗА ЗАМОВЧУВАННЯМ", themeBtnText: "Вибрати колір", themeModalTitle: "Виберіть колір"
+            petYear: "Рік", petEv: "Івент", chooseLang: "Виберіть мову", colorTitle: "КОЛІР САЙТУ", 
+            resetBtn: "ПОВЕРНУТИ ЗА ЗАМОВЧУВАННЯМ", themeBtnText: "Вибрати колір", themeModalTitle: "Виберіть колір",
+            allPets: "Усі пети", tzLabel: "Часовий пояс"
         },
         en: { 
             sell: "SELL PET", search: "Search pet...", sup: "Support", supTitle: "Support", 
             msg: "Have questions or want to buy a pet? Message our manager on Telegram.",
-            petYear: "Year", petEv: "Event", chooseLang: "Select Language", colorTitle: "SITE COLOR", resetBtn: "RESET TO DEFAULT", themeBtnText: "Choose Color", themeModalTitle: "Choose a Color"
+            petYear: "Year", petEv: "Event", chooseLang: "Select Language", colorTitle: "SITE COLOR", 
+            resetBtn: "RESET TO DEFAULT", themeBtnText: "Choose Color", themeModalTitle: "Choose a Color",
+            allPets: "All Pets", tzLabel: "Timezone"
         },
         pl: { 
             sell: "SPRZEDAJ", search: "Szukaj zwierzęcia...", sup: "Wsparcie", supTitle: "Wsparcie", 
             msg: "Masz pytania lub chcesz kupić zwierzę? Napisz do naszego menedżera na Telegram.",
-            petYear: "Rok", petEv: "Wydarzenie", chooseLang: "Wybierz język", colorTitle: "KOLOR STRONY", resetBtn: "PRZYWRÓĆ DOMYŚLNE", themeBtnText: "Wybierz kolor", themeModalTitle: "Wybierz kolor"
+            petYear: "Rok", petEv: "Wydarzenie", chooseLang: "Wybierz język", colorTitle: "KOLOR STRONY", 
+            resetBtn: "PRZYWRÓĆ DOMYŚLNE", themeBtnText: "Wybierz kolor", themeModalTitle: "Wybierz kolor",
+            allPets: "Wszystkie zwierzęta", tzLabel: "Strefa czasowa"
         },
         de: { 
             sell: "VERKAUFEN", search: "Haustier suchen...", sup: "Unterstützung", supTitle: "Unterstützung", 
             msg: "Haben Sie Fragen oder möchten ein Haustier kaufen? Schreiben Sie unserem Manager auf Telegram.",
-            petYear: "Jahr", petEv: "Ereignis", chooseLang: "Sprache wählen", colorTitle: "SEITENFARBE", resetBtn: "ZU STANDARD ZURÜCKSETZEN", themeBtnText: "Farbe wählen", themeModalTitle: "Wählen Sie eine Farbe"
+            petYear: "Jahr", petEv: "Ereignis", chooseLang: "Sprache wählen", colorTitle: "SEITENFARBE", 
+            resetBtn: "ZU STANDARD ZURÜCKSETZEN", themeBtnText: "Farbe wählen", themeModalTitle: "Wählen Sie eine Farbe",
+            allPets: "Alle Haustiere", tzLabel: "Zeitzone"
         },
         fr: { 
             sell: "VENDRE", search: "Chercher un animal...", sup: "Support", supTitle: "Support", 
             msg: "Des questions ou envie d'acheter un animal ? Écrivez à notre manager sur Telegram.",
-            petYear: "Année", petEv: "Événement", chooseLang: "Choisir une langue", colorTitle: "COULEUR DU SITE", resetBtn: "RÉINITIALISER PAR DÉFAUT", themeBtnText: "Choisir une couleur", themeModalTitle: "Choisissez une couleur"
+            petYear: "Année", petEv: "Événement", chooseLang: "Choisir une langue", colorTitle: "COULEUR DU SITE", 
+            resetBtn: "RÉINITIALISER PAR DÉFAUT", themeBtnText: "Choisir une couleur", themeModalTitle: "Choisir une couleur",
+            allPets: "Tous les animaux", tzLabel: "Fuseau horaire"
         },
         es: { 
             sell: "VENDER", search: "Buscar mascota...", sup: "Soporte", supTitle: "Soporte", 
             msg: "¿Tienes preguntas o quieres comprar una mascota? Escribe a nuestro gerente en Telegram.",
-            petYear: "Año", petEv: "Evento", chooseLang: "Elegir idioma", colorTitle: "COLOR DEL SITIO", resetBtn: "RESTABLECER PREDETERMINADO", themeBtnText: "Elegir color", themeModalTitle: "Elige un color"
+            petYear: "Año", petEv: "Evento", chooseLang: "Elegir idioma", colorTitle: "COLOR DEL SITIO", 
+            resetBtn: "RESTABLECER PREDETERMINADO", themeBtnText: "Elegir color", themeModalTitle: "Elegir color",
+            allPets: "Todas las mascotas", tzLabel: "Zona horaria"
+        },
+        it: {
+            sell: "VENDI", search: "Cerca animale domestico...", sup: "Supporto", supTitle: "Supporto",
+            msg: "Hai domande o vuoi acquistare un animale domestico? Scrivi al nostro manager su Telegram.",
+            petYear: "Anno", petEv: "Evento", chooseLang: "Seleziona lingua", colorTitle: "COLORE SITO",
+            resetBtn: "RIPRISTINA PREDEFINITO", themeBtnText: "Scegli colore", themeModalTitle: "Scegli un colore",
+            allPets: "Tutti gli animali domestici", tzLabel: "Fuso orario"
+        },
+        pt: {
+            sell: "VENDER", search: "Pesquisar animal de estimação...", sup: "Suporte", supTitle: "Suporte",
+            msg: "Tem dúvidas ou quer comprar um animal? Envie mensagem ao nosso gerente no Telegram.",
+            petYear: "Ano", petEv: "Evento", chooseLang: "Selecionar idioma", colorTitle: "COR DO SITE",
+            resetBtn: "RESTAURAR PADRÃO", themeBtnText: "Escolher cor", themeModalTitle: "Escolha uma cor",
+            allPets: "Todos os animais de estimação", tzLabel: "Fuso horário"
+        },
+        tr: {
+            sell: "SAT", search: "Evcil hayvan ara...", sup: "Destek", supTitle: "Destek",
+            msg: "Sorularınız mı var veya evcil hayvan satın almak ister misiniz? Telegram'da yöneticimize yazın.",
+            petYear: "Yıl", petEv: "Etkinlik", chooseLang: "Dil seçin", colorTitle: "SİTE RENGİ",
+            resetBtn: "VARSAYILANA DÖNDÜR", themeBtnText: "Renk seç", themeModalTitle: "Renk seçin",
+            allPets: "Tüm evcil hayvanlar", tzLabel: "Saat dilimi"
+        },
+        ja: {
+            sell: "売却", search: "ペットを検索...", sup: "サポート", supTitle: "サポート",
+            msg: "ご質問やペットを購入したい場合は、Telegramでマネージャーにメッセージを送信してください。",
+            petYear: "年", petEv: "イベント", chooseLang: "言語を選択", colorTitle: "サイトカラー",
+            resetBtn: "デフォルトにリセット", themeBtnText: "色を選択", themeModalTitle: "色を選択",
+            allPets: "すべてのペット", tzLabel: "タイムゾーン"
+        },
+        ko: {
+            sell: "판매", search: "애완동물 검색...", sup: "지원", supTitle: "지원",
+            msg: "질문이 있거나 애완동물을 구매하고 싶으신가요? Telegram에서 담당자에게 메시지를 보내세요.",
+            petYear: "연도", petEv: "이벤트", chooseLang: "언어 선택", colorTitle: "사이트 색상",
+            resetBtn: "기본값으로 재설정", themeBtnText: "색상 선택", themeModalTitle: "색상 선택",
+            allPets: "모든 애완동물", tzLabel: "시간대"
         }
     };
 
@@ -538,65 +630,21 @@
 
     /* --- ДАНІ: ПЕТИ (55 шт) --- */
     const pets = [
-        { id: 1, name: "Strawberry Shortcake Bat Dragon", file: "pets.3/winter_2022_strawberry_shortcake_bat_dragon.png", year: "2022", ev: "Winter", rare: "legendary", ua: "Полуничний кажан-дракон", en: "Strawberry Shortcake Bat Dragon" },
-        { id: 2, name: "Billy Goat", file: "pets.3/urban_2023_billy_goat.png", year: "2023", ev: "Urban Egg", rare: "legendary", ua: "Гірський цап", en: "Billy Goat" },
-        { id: 3, name: "Ice Moth Dragon", file: "pets.3/winter_2022_ice_moth_dragon.png", year: "2022", ev: "Winter", rare: "legendary", ua: "Крижана моль дракон", en: "Ice Moth Dragon" },
-        { id: 4, name: "Leviathan", file: "pets.3/summerfest_2023_leviathan.png", year: "2023", ev: "Summerfest", rare: "legendary", ua: "Левіафан", en: "Leviathan" },
-        { id: 5, name: "Naga Dragon", file: "pets.3/seasia_2023_naga_dragon.png", year: "2023", ev: "SE Asia Egg", rare: "legendary", ua: "Дракон Нага", en: "Naga Dragon" },
-        { id: 6, name: "Tree Kangaroo", file: "pets.3/seasia_2023_tree_kangaroo.png", year: "2023", ev: "SE Asia Egg", rare: "legendary", ua: "Деревний кенгуру", en: "Tree Kangaroo" },
-        { id: 7, name: "Winged Horse", file: "pets.3/random_pets_2022_winged_horse.png", year: "2022", ev: "Robux", rare: "legendary", ua: "Крилатий кінь", en: "Winged Horse" },
-        { id: 8, name: "Sugar Glider", file: "pets.3/easter_2022_sugar_glider.png", year: "2022", ev: "Easter", rare: "legendary", ua: "Цукрова летяга", en: "Sugar Glider" },
-        { id: 9, name: "Dancing Dragon", file: "pets.3/lny_2022_dragon.png", year: "2022", ev: "Lunar NY", rare: "legendary", ua: "Танцюючий дракон", en: "Dancing Dragon" },
-        { id: 10, name: "Ghost Dragon", file: "pets.3/halloween_2021_ghost_dragon.png", year: "2021", ev: "Halloween", rare: "legendary", ua: "Привид дракон", en: "Ghost Dragon" },
-        { id: 11, name: "Lava Dragon", file: "pets.3/halloween_2022_lava_dragon.png", year: "2022", ev: "Halloween", rare: "legendary", ua: "Лавовий дракон", en: "Lava Dragon" },
-        { id: 12, name: "Alicorn", file: "pets.3/basic_egg_2022_alicron.png", year: "2022", ev: "Royal Egg", rare: "legendary", ua: "Алікорн", en: "Alicorn" },
-        { id: 13, name: "Ancient Dragon", file: "pets.3/basic_egg_2022_ancient_dragon.png", year: "2022", ev: "Royal Egg", rare: "legendary", ua: "Стародавній дракон", en: "Ancient Dragon" },
-        { id: 14, name: "Mechapup", file: "pets.3/april_fools_2022_mechapup.png", year: "2022", ev: "April Fools", rare: "legendary", ua: "Механіка цуценя", en: "Mechapup" },
-        { id: 15, name: "Arctic Reindeer", file: "pets.3/arctic_reindeer.png", year: "2019", ev: "Christmas", rare: "legendary", ua: "Арктичний олень", en: "Arctic Reindeer" },
-        { id: 16, name: "Bat Dragon", file: "pets.3/bat_dragon.png", year: "2019", ev: "Halloween", rare: "legendary", ua: "Кажан дракон", en: "Bat Dragon" },
-        { id: 17, name: "Crow", file: "pets.3/crow.png", year: "2019", ev: "Farm Egg", rare: "legendary", ua: "Ворон", en: "Crow" },
-        { id: 18, name: "Evil Unicorn", file: "pets.3/evil_unicorn.png", year: "2019", ev: "Halloween", rare: "legendary", ua: "Злий єдиноріг", en: "Evil Unicorn" },
-        { id: 19, name: "Frost Fury", file: "pets.3/frost_fury.png", year: "2020", ev: "Winter", rare: "legendary", ua: "Морозна ярість", en: "Frost Fury" },
-        { id: 20, name: "Giraffe", file: "pets.3/giraffe.png", year: "2019", ev: "Safari Egg", rare: "legendary", ua: "Жираф", en: "Giraffe" },
-        { id: 21, name: "Owl", file: "pets.3/owl.png", year: "2019", ev: "Farm Egg", rare: "legendary", ua: "Сова", en: "Owl" },
-        { id: 22, name: "Parrot", file: "pets.3/parrot.png", year: "2019", ev: "Jungle Egg", rare: "legendary", ua: "Папуга", en: "Parrot" },
-        { id: 23, name: "Skele-Rex", file: "pets.3/skele_rex.png", year: "2020", ev: "Halloween", rare: "legendary", ua: "Скеле-Рекс", en: "Skele-Rex" },
-        { id: 24, name: "Snow Owl", file: "pets.3/snow_owl.png", year: "2020", ev: "Winter", rare: "legendary", ua: "Сніжна сова", en: "Snow Owl" },
-        { id: 25, name: "Shadow Dragon", file: "shadow_dragon.png", year: "2019", ev: "Halloween", rare: "legendary", ua: "Тіньовий дракон", en: "Shadow Dragon" },
-        { id: 26, name: "Frost Dragon", file: "frost_dragon.png", year: "2019", ev: "Christmas", rare: "legendary", ua: "Крижаний дракон", en: "Frost Dragon" },
-        { id: 27, name: "Diamond Butterfly", file: "sanctuary_2022_diamond_premium_butterfly.png", year: "2022", ev: "Golden Leaf", rare: "legendary", ua: "Діамантовий метелик", en: "Diamond Butterfly" },
-        { id: 28, name: "Albino Monkey", file: "albino_monkey.png", year: "2020", ev: "Monkey Box", rare: "legendary", ua: "Альбіносна мавпа", en: "Albino Monkey" },
-        { id: 29, name: "Monkey King", file: "monkey_king.png", year: "2020", ev: "Monkey Box", rare: "legendary", ua: "Король мавп", en: "Monkey King" },
-        { id: 30, name: "Axolotl", file: "axolotl.png", year: "2021", ev: "Robux", rare: "legendary", ua: "Аксолотль", en: "Axolotl" },
-        { id: 31, name: "Cerberus", file: "cerberus.png", year: "2020", ev: "Halloween", rare: "legendary", ua: "Цербер", en: "Cerberus" },
-        { id: 32, name: "Cobra", file: "cobra.png", year: "2021", ev: "Robux", rare: "legendary", ua: "Кобра", en: "Cobra" },
-        { id: 33, name: "Dodo", file: "dodo.png", year: "2020", ev: "Fossil Egg", rare: "legendary", ua: "Додо", en: "Dodo" },
-        { id: 34, name: "Diamond Dragon", file: "diamond_dragon.png", year: "2020", ev: "Star Rewards", rare: "legendary", ua: "Діамантовий дракон", en: "Diamond Dragon" },
-        { id: 35, name: "Diamond Griffin", file: "diamond_griffin.png", year: "2020", ev: "Star Rewards", rare: "legendary", ua: "Діамантовий грифон", en: "Diamond Griffin" },
-        { id: 36, name: "Diamond Unicorn", file: "diamond_unicorn.png", year: "2020", ev: "Star Rewards", rare: "legendary", ua: "Діамантовий єдиноріг", en: "Diamond Unicorn" },
-        { id: 37, name: "Golden Dragon", file: "golden_dragon.png", year: "2020", ev: "Star Rewards", rare: "legendary", ua: "Золотий дракон", en: "Golden Dragon" },
-        { id: 38, name: "Golden Griffin", file: "golden_griffin.png", year: "2020", ev: "Star Rewards", rare: "legendary", ua: "Золотий грифон", en: "Golden Griffin" },
-        { id: 39, name: "Golden Unicorn", file: "golden_unicorn.png", year: "2020", ev: "Star Rewards", rare: "legendary", ua: "Золотий єдиноріг", en: "Golden Unicorn" },
-        { id: 40, name: "Goldhorn", file: "goldhorn.png", year: "2021", ev: "Mythic Egg", rare: "legendary", ua: "Золоторіг", en: "Goldhorn" },
-        { id: 41, name: "Guardian Lion", file: "guardian_lion.png", year: "2021", ev: "Lunar NY", rare: "legendary", ua: "Лев-охоронець", en: "Guardian Lion" },
-        { id: 42, name: "Vampire Dragon", file: "halloween_2023_vampire_dragon.png", year: "2023", ev: "Halloween", rare: "legendary", ua: "Вампірський дракон", en: "Vampire Dragon" },
-        { id: 43, name: "King Bee", file: "king_bee.png", year: "2019", ev: "Honey", rare: "legendary", ua: "Король бджіл", en: "King Bee" },
-        { id: 44, name: "Kitsune", file: "kitsune.png", year: "2020", ev: "Robux", rare: "legendary", ua: "Кіцуне", en: "Kitsune" },
-        { id: 45, name: "Midnight Dragon", file: "lunar_2024_midnight_dragon.png", year: "2024", ev: "Lunar NY", rare: "legendary", ua: "Опівнічний дракон", en: "Midnight Dragon" },
-        { id: 46, name: "Octopus", file: "octopus.png", year: "2021", ev: "Ocean Egg", rare: "legendary", ua: "Восьминіг", en: "Octopus" },
-        { id: 47, name: "Peacock", file: "peacock.png", year: "2021", ev: "Robux", rare: "legendary", ua: "Павич", en: "Peacock" },
-        { id: 48, name: "Phoenix", file: "phoenix.png", year: "2021", ev: "Mythic Egg", rare: "legendary", ua: "Фенікс", en: "Phoenix" },
-        { id: 49, name: "Queen Bee", file: "queen_bee.png", year: "2019", ev: "Honey", rare: "legendary", ua: "Королева бджіл", en: "Queen Bee" },
-        { id: 50, name: "Diamond Amazon", file: "rain_2023_diamond_amazon.png", year: "2023", ev: "Amazon Bird", rare: "legendary", ua: "Діамантова Амазонка", en: "Diamond Amazon" },
-        { id: 51, name: "Robo Dog", file: "robo_dog.png", year: "2020", ev: "Robux", rare: "legendary", ua: "Робопес", en: "Robo Dog" },
-        { id: 52, name: "Shark", file: "shark.png", year: "2021", ev: "Ocean Egg", rare: "legendary", ua: "Акула", en: "Shark" },
-        { id: 53, name: "Capricorn", file: "space_house_2022_capricorn.png", year: "2022", ev: "Space Event", rare: "legendary", ua: "Козеріг", en: "Capricorn" },
-        { id: 54, name: "Corn Doggo", file: "summerfest_2024_corn_doggo.png", year: "2024", ev: "Summerfest", rare: "legendary", ua: "Кукурузний собака", en: "Corn Doggo" },
-        { id: 55, name: "T-Rex", file: "trex.png", year: "2020", ev: "Fossil Egg", rare: "legendary", ua: "Тиранозавр Рекс", en: "T-Rex" }
+        { id: 1, name: "Strawberry Shortcake Bat Dragon", file: "pets.3/winter_2022_strawberry_shortcake_bat_dragon.png", year: "2022", ev: "Winter", rare: "legendary", ua: "Полуничний кажан дракон", en: "Strawberry Shortcake Bat Dragon", pl: "Truskawkowy smok-nietoperz", de: "Erdbeerkuchen-Fledermaus-Drache", fr: "Dragon chauve-souris au gâteau aux fraises", es: "Dragón murciélago de tarta de fresa" },
+        { id: 2, name: "Billy Goat", file: "pets.3/urban_2023_billy_goat.png", year: "2023", ev: "Urban Egg", rare: "legendary", ua: "Гірський цап", en: "Billy Goat", pl: "Koza", de: "Ziegenbock", fr: "Bouc", es: "Macho cabrío" },
+        { id: 3, name: "Ice Moth Dragon", file: "pets.3/winter_2022_ice_moth_dragon.png", year: "2022", ev: "Winter", rare: "legendary", ua: "Крижана моль дракон", en: "Ice Moth Dragon", pl: "Lodowy smok mola", de: "Eis-Motten-Drache", fr: "Dragon mite de glace", es: "Dragón polilla de hielo" },
+        { id: 4, name: "Leviathan", file: "pets.3/summerfest_2023_leviathan.png", year: "2023", ev: "Summerfest", rare: "legendary", ua: "Левіафан", en: "Leviathan", pl: "Lewiatan", de: "Leviathan", fr: "Léviathan", es: "Leviatán" },
+        { id: 5, name: "Naga Dragon", file: "pets.3/seasia_2023_naga_dragon.png", year: "2023", ev: "SE Asia Egg", rare: "legendary", ua: "Дракон Нага", en: "Naga Dragon", pl: "Smok Naga", de: "Naga-Drache", fr: "Dragon Naga", es: "Dragón Naga" },
+        { id: 6, name: "Tree Kangaroo", file: "pets.3/seasia_2023_tree_kangaroo.png", year: "2023", ev: "SE Asia Egg", rare: "legendary", ua: "Деревний кенгуру", en: "Tree Kangaroo", pl: "Kangur drzewny", de: "Baum-Känguru", fr: "Kangourou arboricole", es: "Canguro arbóreo" },
+        { id: 7, name: "Winged Horse", file: "pets.3/random_pets_2022_winged_horse.png", year: "2022", ev: "Robux", rare: "legendary", ua: "Крилатий кінь", en: "Winged Horse", pl: "Koń skrzydlaty", de: "Geflügeltes Pferd", fr: "Cheval ailé", es: "Caballo alado" },
+        { id: 8, name: "Sugar Glider", file: "pets.3/easter_2022_sugar_glider.png", year: "2022", ev: "Easter", rare: "legendary", ua: "Цукрова летяга", en: "Sugar Glider", pl: "Cukrowa latająca wiewiórka", de: "Zuckerflieger", fr: "Phalanger volant", es: "Planeador de azúcar" },
+        { id: 9, name: "Dancing Dragon", file: "pets.3/lny_2022_dragon.png", year: "2022", ev: "Lunar NY", rare: "legendary", ua: "Танцюючий дракон", en: "Dancing Dragon", pl: "Tańczący smok", de: "Tanzender Drache", fr: "Dragon dansant", es: "Dragón danzante" },
+        { id: 10, name: "Ghost Dragon", file: "pets.3/halloween_2021_ghost_dragon.png", year: "2021", ev: "Halloween", rare: "legendary", ua: "Привид дракон", en: "Ghost Dragon", pl: "Duch smok", de: "Geister-Drache", fr: "Dragon fantôme", es: "Dragón fantasma" }
     ];
 
     /* --- ЗМІННІ СТАНУ --- */
     let currentLang = localStorage.getItem('elite_lang') || 'ua';
+    let currentTimezone = localStorage.getItem('elite_tz') || 'Europe/Kyiv';
     const tgLink = "https://t.me/your_tg";
 
     /* --- 1. ІНІЦІАЛІЗАЦІЯ ТА ОСНОВНІ ФУНКЦІЇ --- */
@@ -606,6 +654,8 @@
         generateLangGrid();
         setQuickLangButtons();
         updateStaticTexts();
+        updateTimezoneTheme();
+        document.getElementById('timezoneSelect').value = currentTimezone;
         render(pets);
     };
 
@@ -615,7 +665,8 @@
         c.innerHTML = '';
         
         if (data.length === 0) {
-            c.innerHTML = '<div style="grid-column: 1/-1; text-align:center; color:var(--text-muted); padding:50px 0; font-weight:700;">Pets not found...</div>';
+            const langPack = translations[currentLang] || translations['en'];
+            c.innerHTML = `<div style="grid-column: 1/-1; text-align:center; color:var(--text-muted); padding:50px 0; font-weight:700;">Pets not found...</div>`;
             return;
         }
 
@@ -756,7 +807,40 @@
         setTimeout(() => document.getElementById('themeOverlay').style.display = 'none', 400);
     }
 
-    /* --- 6. КЕРУВАННЯ МОВАМИ ТА МЕНЮ ВСІХ МОВ --- */
+    /* --- 6. КЕРУВАННЯ ЧАСОВИМИ ПОЯСАМИ ТА ДЕНЬ/НІЧ ТЕМОЮ --- */
+    function handleTimezoneChange() {
+        const tz = document.getElementById('timezoneSelect').value;
+        currentTimezone = tz;
+        localStorage.setItem('elite_tz', tz);
+        updateTimezoneTheme();
+    }
+
+    function updateTimezoneTheme() {
+        try {
+            const now = new Date();
+            const formatter = new Intl.DateTimeFormat('en-US', {
+                timeZone: currentTimezone,
+                hour: '2-digit',
+                hour12: false
+            });
+            const timeStr = formatter.format(now);
+            const hour = parseInt(timeStr);
+            
+            // День: 6-17, Ніч: 18-5
+            const isNight = hour >= 18 || hour < 6;
+            
+            if (isNight) {
+                document.body.classList.add('night-mode');
+            } else {
+                document.body.classList.remove('night-mode');
+            }
+        } catch (e) {
+            console.log('Timezone error:', e);
+            document.body.classList.remove('night-mode');
+        }
+    }
+
+    /* --- 7. КЕРУВАННЯ МОВАМИ ТА МЕНЮ ВСІХ МОВ --- */
     
     function setQuickLang(code) {
         changeLang(code);
@@ -812,10 +896,14 @@
         const langPack = translations[currentLang] || translations['en'];
         document.getElementById('searchInput').placeholder = langPack.search;
         document.getElementById('side-sup').innerText = langPack.sup;
+        document.getElementById('all-pets-text').innerText = langPack.allPets;
         document.getElementById('color-title').innerText = langPack.colorTitle;
         document.getElementById('theme-btn-text').innerText = langPack.themeBtnText;
         document.getElementById('reset-btn').innerText = langPack.resetBtn;
         document.getElementById('theme-modal-title').innerText = langPack.themeModalTitle;
+        document.getElementById('tz-label').innerText = langPack.tzLabel;
+        document.getElementById('lang-select-title').innerText = langPack.chooseLang;
+        document.getElementById('langSearchInput').placeholder = langPack.search;
         
         if(document.getElementById('petOverlay').style.display === 'flex') {
             const openPetName = document.getElementById('m-name').innerText;
@@ -824,8 +912,6 @@
         if(document.getElementById('supportOverlay').style.display === 'flex') {
             openSupport();
         }
-        document.querySelector('.lang-modal-title').innerText = langPack.chooseLang;
-        document.getElementById('langSearchInput').placeholder = langPack.chooseLang;
     }
 
     function filterLanguages() {
@@ -842,7 +928,7 @@
         });
     }
 
-    /* --- 7. МОБІЛЬНЕ МЕНЮ (SIDEBAR) --- */
+    /* --- 8. МОБІЛЬНЕ МЕНЮ (SIDEBAR) --- */
     function toggleSidebar() {
         document.getElementById('sidebar').classList.toggle('open');
         document.getElementById('sidebarOverlay').classList.toggle('visible');
