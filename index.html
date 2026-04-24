@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="petdb.js"></script>
+    <script src="config.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;900&display=swap" rel="stylesheet">
     
     <style>
@@ -1356,6 +1357,9 @@
     }
 
     // --- ШІ ПОМІЧНИК ---
+    const aiChatHistory = [];
+    function getGroqKey() { return (typeof GROQ_API_KEY !== 'undefined' && GROQ_API_KEY) || localStorage.getItem('groq_key') || ''; }
+
     function sendAiMessage() {
         const input = document.getElementById('aiInput');
         const query = input.value.trim();
@@ -1366,31 +1370,78 @@
         userMsg.className = 'ai-msg user';
         userMsg.textContent = query;
         msgs.appendChild(userMsg);
-        setTimeout(() => {
+        msgs.scrollTop = msgs.scrollHeight;
+
+        const typingMsg = document.createElement('div');
+        typingMsg.className = 'ai-msg bot';
+        typingMsg.innerHTML = '⏳ ...';
+        typingMsg.id = 'ai-typing';
+        msgs.appendChild(typingMsg);
+        msgs.scrollTop = msgs.scrollHeight;
+
+        const localResult = generateLocalResponse(query);
+        const langName = { ua:'Ukrainian', en:'English', pl:'Polish', de:'German', fr:'French', es:'Spanish', it:'Italian', pt:'Portuguese', tr:'Turkish', ja:'Japanese', ko:'Korean', gr:'Greek', nl:'Dutch', sv:'Swedish', cs:'Czech', ro:'Romanian', da:'Danish', fi:'Finnish', ar:'Arabic', zh:'Chinese' }[currentLang] || 'English';
+
+        const systemPrompt = `You are EliteStore AI assistant for Adopt Me (Roblox) pet marketplace. You help users with pet values, trading advice, and game info. Answer in ${langName}. Be friendly and concise. Use emojis.
+If asked about a specific pet, include: rarity, approximate value in Ride Potions (RP), which egg/event it came from, year released, and demand level.
+At the end of pet info, always mention: seller @zeop_252 (Telegram: t.me/zeop_252).
+Here is our local pet database for reference (use these values as baseline): ${localResult ? localResult.replace(/<[^>]*>/g, '') : 'No local match found.'}`;
+
+        aiChatHistory.push({ role: 'user', content: query });
+
+        const groqKey = getGroqKey();
+        if (!groqKey) {
+            const el = document.getElementById('ai-typing');
+            if (el) el.remove();
             const botMsg = document.createElement('div');
             botMsg.className = 'ai-msg bot';
-            botMsg.innerHTML = generateAiResponse(query);
+            botMsg.innerHTML = localResult || (translations[currentLang]?.aiNotFound || 'Pet not found.');
             msgs.appendChild(botMsg);
             msgs.scrollTop = msgs.scrollHeight;
-        }, 400);
-        msgs.scrollTop = msgs.scrollHeight;
+            return;
+        }
+
+        fetch('https://api.groq.com/openai/v1/chat/completions', {
+            method: 'POST',
+            headers: { 'Authorization': 'Bearer ' + groqKey, 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                model: 'llama-3.1-8b-instant',
+                messages: [{ role: 'system', content: systemPrompt }, ...aiChatHistory.slice(-10)],
+                max_tokens: 500,
+                temperature: 0.7
+            })
+        })
+        .then(r => r.json())
+        .then(data => {
+            const el = document.getElementById('ai-typing');
+            if (el) el.remove();
+            const reply = data.choices?.[0]?.message?.content || localResult || 'Error';
+            aiChatHistory.push({ role: 'assistant', content: reply });
+            const botMsg = document.createElement('div');
+            botMsg.className = 'ai-msg bot';
+            botMsg.innerHTML = reply.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
+            msgs.appendChild(botMsg);
+            msgs.scrollTop = msgs.scrollHeight;
+        })
+        .catch(() => {
+            const el = document.getElementById('ai-typing');
+            if (el) el.remove();
+            const botMsg = document.createElement('div');
+            botMsg.className = 'ai-msg bot';
+            botMsg.innerHTML = localResult || (translations[currentLang]?.aiNotFound || 'Error connecting to AI. Try again.');
+            msgs.appendChild(botMsg);
+            msgs.scrollTop = msgs.scrollHeight;
+        });
     }
 
-    function generateAiResponse(query) {
+    function generateLocalResponse(query) {
         const langPack = translations[currentLang] || translations['en'];
         const q = query.toLowerCase().replace(/[-_]/g, ' ');
         const found = petDatabase.filter(p => {
             const n = p.name.toLowerCase();
             return n.includes(q) || q.includes(n) || levenshtein(n, q) <= 2;
         });
-        if (found.length === 0) {
-            const suggestions = petDatabase.filter(p => p.name.toLowerCase().includes(q.split(' ')[0]));
-            if (suggestions.length > 0) {
-                return (langPack.aiNotFoundBut || '🔍 Не знайшов точного збігу, але ось схожі пети:') + '<br><br>' +
-                    suggestions.slice(0, 5).map(p => `• <b>${p.name}</b> — ${p.rarity}`).join('<br>');
-            }
-            return langPack.aiNotFound || '😕 Не знайшов такого пета. Спробуй написати англійською назвою, наприклад: <b>Shadow Dragon</b>, <b>Owl</b>, <b>Cow</b>';
-        }
+        if (found.length === 0) return null;
         return found.slice(0, 3).map(p => {
             const sellText = langPack.aiSeller || 'Продавець';
             return `<b>🐾 ${p.name}</b><div class="pet-info-card">` +
