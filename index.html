@@ -6,6 +6,7 @@
     <title>EliteStore Professional — Adopt Me Marketplace</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;900&display=swap" rel="stylesheet">
     
     <style>
@@ -280,6 +281,33 @@
         }
         .overlay.open { opacity: 1; }
 
+        .viewer3d-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 10000;
+            display: none; flex-direction: column; align-items: center; justify-content: center;
+            backdrop-filter: blur(20px); opacity: 0; transition: opacity 0.4s ease;
+        }
+        .viewer3d-overlay.open { opacity: 1; display: flex; }
+        .viewer3d-header {
+            position: absolute; top: 0; left: 0; right: 0; padding: 20px 30px;
+            display: flex; justify-content: space-between; align-items: center; z-index: 10;
+        }
+        .viewer3d-title { font-size: 20px; font-weight: 900; color: #fff; }
+        .viewer3d-hint {
+            position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+            color: var(--text-muted); font-size: 13px; z-index: 10;
+            display: flex; align-items: center; gap: 8px; opacity: 0.7;
+        }
+        #viewer3dCanvas { width: 100%; height: 100%; cursor: grab; }
+        #viewer3dCanvas:active { cursor: grabbing; }
+        .btn-3d {
+            background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%); color: #fff;
+            border: none; padding: 12px 24px; border-radius: 12px; cursor: pointer;
+            font-family: inherit; font-weight: 700; font-size: 14px;
+            display: flex; align-items: center; gap: 8px; justify-content: center;
+            transition: all 0.3s ease; width: 100%; margin-bottom: 10px;
+        }
+        .btn-3d:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(108,92,231,0.4); }
+
         .modal { 
             background: #161b22; color: var(--text-main); width: 90%; max-width: 500px; 
             border-radius: 35px; padding: 45px; position: relative; text-align: center; 
@@ -456,6 +484,9 @@
         <h2 id="m-name" style="font-weight: 900; font-size: 22px;"></h2>
         <div class="info-tag" id="m-info"></div>
         <p id="m-desc" style="color:var(--text-muted); margin-bottom:30px; font-size:14px; line-height:1.6;"></p>
+        <button class="btn-3d" id="btn-view3d" onclick="open3DViewer()">
+            <i class="fa-solid fa-cube"></i> <span id="m-3d-txt">Переглянути в 3D</span>
+        </button>
         <a href="https://t.me/your_tg" target="_blank" class="tg-btn">
             <i class="fa-brands fa-telegram"></i> <span id="m-sell-txt"></span>
         </a>
@@ -498,6 +529,19 @@
     <div class="tz-grid" id="tzGrid"></div>
 </div>
 
+<div class="viewer3d-overlay" id="viewer3dOverlay">
+    <div class="viewer3d-header">
+        <span class="viewer3d-title" id="viewer3d-name"></span>
+        <i class="fa-solid fa-xmark close-btn" style="position:static; font-size:28px; color:#fff;" onclick="close3DViewer()"></i>
+    </div>
+    <canvas id="viewer3dCanvas"></canvas>
+    <div class="viewer3d-hint">
+        <i class="fa-solid fa-computer-mouse"></i>
+        <span id="viewer3d-hint-text">Обертай мишкою або пальцем</span>
+    </div>
+</div>
+
+<script src="news.js"></script>
 <script>
     const colorThemes = [
         { name: "Purple", solid: "#6c5ce7", light: "#a29bfe" },
@@ -513,26 +557,26 @@
     ];
 
     const translations = {
-        ua: { sell: "ПРОДАТЬ", search: "Пошук пета...", sup: "Підтримка", supTitle: "Підтримка", msg: "Виникли питання? Напишіть нашому менеджеру в Telegram.", petYear: "Рік", petEv: "Івент", chooseLang: "Виберіть мову", colorTitle: "КОЛІР САЙТУ", resetBtn: "ПОВЕРНУТИ", themeBtnText: "Вибрати колір", themeModalTitle: "Виберіть колір", allPets: "Усі пети", tzLabel: "Часовий пояс", newsText: "Новини", newsTitle: "Новини Adopt Me", tzHint: "Обери свій часовий пояс, щоб час на сайті відповідав твоєму. Також це вмикає нічний режим ввечері, щоб очі не різало!" },
-        en: { sell: "SELL", search: "Search pet...", sup: "Support", supTitle: "Support", msg: "Have questions? Message our manager on Telegram.", petYear: "Year", petEv: "Event", chooseLang: "Select Language", colorTitle: "SITE COLOR", resetBtn: "RESET", themeBtnText: "Choose Color", themeModalTitle: "Choose Color", allPets: "All Pets", tzLabel: "Timezone", newsText: "News", newsTitle: "Adopt Me News", tzHint: "Choose your timezone so the time on the site matches yours. This also enables night mode in the evening to protect your eyes!" },
-        pl: { sell: "SPRZEDAJ", search: "Szukaj zwierzęcia...", sup: "Wsparcie", supTitle: "Wsparcie", msg: "Masz pytania? Napisz do naszego menedżera na Telegram.", petYear: "Rok", petEv: "Wydarzenie", chooseLang: "Wybierz język", colorTitle: "KOLOR STRONY", resetBtn: "PRZYWRÓĆ", themeBtnText: "Wybierz kolor", themeModalTitle: "Wybierz kolor", allPets: "Wszystkie zwierzęta", tzLabel: "Strefa czasowa", newsText: "Wiadomości", newsTitle: "Wiadomości Adopt Me", tzHint: "Wybierz swoją strefę czasową, aby czas na stronie odpowiadał Twojemu. Włącza też tryb nocny wieczorem, żeby nie męczyć oczu!" },
-        de: { sell: "VERKAUFEN", search: "Haustier suchen...", sup: "Unterstützung", supTitle: "Unterstützung", msg: "Haben Sie Fragen? Schreiben Sie unserem Manager auf Telegram.", petYear: "Jahr", petEv: "Ereignis", chooseLang: "Sprache wählen", colorTitle: "SEITENFARBE", resetBtn: "ZURÜCKSETZEN", themeBtnText: "Farbe wählen", themeModalTitle: "Wählen Sie eine Farbe", allPets: "Alle Haustiere", tzLabel: "Zeitzone", newsText: "Nachrichten", newsTitle: "Adopt Me Nachrichten", tzHint: "Wähle deine Zeitzone, damit die Uhrzeit auf der Seite stimmt. Abends wird auch der Nachtmodus aktiviert, um deine Augen zu schonen!" },
-        fr: { sell: "VENDRE", search: "Chercher un animal...", sup: "Support", supTitle: "Support", msg: "Des questions ? Écrivez à notre manager sur Telegram.", petYear: "Année", petEv: "Événement", chooseLang: "Choisir une langue", colorTitle: "COULEUR DU SITE", resetBtn: "RÉINITIALISER", themeBtnText: "Choisir une couleur", themeModalTitle: "Choisir une couleur", allPets: "Tous les animaux", tzLabel: "Fuseau horaire", newsText: "Actualités", newsTitle: "Actualités Adopt Me", tzHint: "Choisis ton fuseau horaire pour que l'heure du site corresponde à la tienne. Le mode nuit s'active aussi le soir pour protéger tes yeux !" },
-        es: { sell: "VENDER", search: "Buscar mascota...", sup: "Soporte", supTitle: "Soporte", msg: "¿Tienes preguntas? Escribe a nuestro gerente en Telegram.", petYear: "Año", petEv: "Evento", chooseLang: "Elegir idioma", colorTitle: "COLOR DEL SITIO", resetBtn: "RESTABLECER", themeBtnText: "Elegir color", themeModalTitle: "Elegir color", allPets: "Todas las mascotas", tzLabel: "Zona horaria", newsText: "Noticias", newsTitle: "Noticias de Adopt Me", tzHint: "¡Elige tu zona horaria para que la hora del sitio coincida con la tuya. También activa el modo nocturno por la noche para proteger tus ojos!" },
-        it: { sell: "VENDI", search: "Cerca animale...", sup: "Supporto", supTitle: "Supporto", msg: "Hai domande? Scrivi al nostro manager su Telegram.", petYear: "Anno", petEv: "Evento", chooseLang: "Seleziona lingua", colorTitle: "COLORE SITO", resetBtn: "RIPRISTINA", themeBtnText: "Scegli colore", themeModalTitle: "Scegli un colore", allPets: "Tutti gli animali", tzLabel: "Fuso orario", newsText: "Notizie", newsTitle: "Notizie Adopt Me", tzHint: "Scegli il tuo fuso orario in modo che l'ora del sito corrisponda alla tua. Di sera si attiva anche la modalità notturna per proteggere i tuoi occhi!" },
-        pt: { sell: "VENDER", search: "Pesquisar animal...", sup: "Suporte", supTitle: "Suporte", msg: "Tem dúvidas? Envie mensagem ao nosso gerente no Telegram.", petYear: "Ano", petEv: "Evento", chooseLang: "Selecionar idioma", colorTitle: "COR DO SITE", resetBtn: "RESTAURAR", themeBtnText: "Escolher cor", themeModalTitle: "Escolha uma cor", allPets: "Todos os animais", tzLabel: "Fuso horário", newsText: "Notícias", newsTitle: "Notícias Adopt Me", tzHint: "Escolha seu fuso horário para que o horário do site corresponda ao seu. Também ativa o modo noturno à noite para proteger seus olhos!" },
-        tr: { sell: "SAT", search: "Evcil hayvan ara...", sup: "Destek", supTitle: "Destek", msg: "Sorularınız mı var? Telegram'da yöneticimize yazın.", petYear: "Yıl", petEv: "Etkinlik", chooseLang: "Dil seçin", colorTitle: "SİTE RENGİ", resetBtn: "SIFIRLA", themeBtnText: "Renk seç", themeModalTitle: "Renk seçin", allPets: "Tüm evcil hayvanlar", tzLabel: "Saat dilimi", newsText: "Haberler", newsTitle: "Adopt Me Haberleri", tzHint: "Saat dilimini seç, böylece sitedeki saat seninle uyuşsun. Akşamları gece modu da açılır, gözlerin yorulmasın!" },
-        ja: { sell: "売却", search: "ペットを検索...", sup: "サポート", supTitle: "サポート", msg: "ご質問がありますか？ Telegramでマネージャーにメッセージを送信してください。", petYear: "年", petEv: "イベント", chooseLang: "言語を選択", colorTitle: "サイトカラー", resetBtn: "リセット", themeBtnText: "色を選択", themeModalTitle: "色を選択", allPets: "すべてのペット", tzLabel: "タイムゾーン", newsText: "ニュース", newsTitle: "Adopt Meニュース", tzHint: "タイムゾーンを選択して、サイトの時間を合わせましょう。夜はナイトモードが有効になり、目に優しくなります！" },
-        ko: { sell: "판매", search: "애완동물 검색...", sup: "지원", supTitle: "지원", msg: "질문이 있으신가요? Telegram에서 담당자에게 메시지를 보내세요.", petYear: "연도", petEv: "이벤트", chooseLang: "언어 선택", colorTitle: "사이트 색상", resetBtn: "재설정", themeBtnText: "색상 선택", themeModalTitle: "색상 선택", allPets: "모든 애완동물", tzLabel: "시간대", newsText: "뉴스", newsTitle: "Adopt Me 뉴스", tzHint: "시간대를 선택하면 사이트 시간이 맞춰집니다. 저녁에는 야간 모드가 켜져 눈이 편해집니다!" },
-        gr: { sell: "ΠΩΛΗΣΗ", search: "Αναζήτηση κατοικίδιου...", sup: "Υποστήριξη", supTitle: "Υποστήριξη", msg: "Έχετε ερωτήσεις; Στείλτε μήνυμα στον διευθυντή μας στο Telegram.", petYear: "Έτος", petEv: "Ιβέντ", chooseLang: "Επιλέξτε Γλώσσα", colorTitle: "ΧΡΩΜΑ ΙΣΤΟΥ", resetBtn: "ΕΠΑΝΑΦΟΡΑ", themeBtnText: "Επιλέξτε χρώμα", themeModalTitle: "Επιλέξτε χρώμα", allPets: "Όλα τα κατοικίδια", tzLabel: "Ζώνη ώρας", newsText: "Ειδήσεις", newsTitle: "Ειδήσεις Adopt Me", tzHint: "Επίλεξε τη ζώνη ώρας σου ώστε η ώρα στη σελίδα να ταιριάζει με τη δική σου. Ενεργοποιείται και νυχτερινή λειτουργία το βράδυ για να μην κουράζονται τα μάτια σου!" },
-        nl: { sell: "VERKOPEN", search: "Zoek huisdier...", sup: "Ondersteuning", supTitle: "Ondersteuning", msg: "Vragen? Stuur een bericht naar onze manager op Telegram.", petYear: "Jaar", petEv: "Evenement", chooseLang: "Kies taal", colorTitle: "SITE KLEUR", resetBtn: "HERSTELLEN", themeBtnText: "Kies kleur", themeModalTitle: "Kies een kleur", allPets: "Alle huisdieren", tzLabel: "Tijdzone", newsText: "Nieuws", newsTitle: "Adopt Me Nieuws", tzHint: "Kies je tijdzone zodat de tijd op de site klopt. Dit schakelt ook de nachtmodus in om je ogen te beschermen!" },
-        sv: { sell: "SÄLJ", search: "Sök husdjur...", sup: "Support", supTitle: "Support", msg: "Har du frågor? Skriv till vår chef på Telegram.", petYear: "År", petEv: "Event", chooseLang: "Välj språk", colorTitle: "WEBBPLATSENS FÄRG", resetBtn: "ÅTERSTÄLL", themeBtnText: "Välj färg", themeModalTitle: "Välj en färg", allPets: "Alla husdjur", tzLabel: "Tidszon", newsText: "Nyheter", newsTitle: "Adopt Me Nyheter", tzHint: "Välj din tidszon så att tiden på sidan stämmer. Nattläge aktiveras också på kvällen för att skydda dina ögon!" },
-        cs: { sell: "PRODAT", search: "Hledat mazlíčka...", sup: "Podpora", supTitle: "Podpora", msg: "Máte dotazy? Napište našemu manažerovi na Telegram.", petYear: "Rok", petEv: "Událost", chooseLang: "Vybrat jazyk", colorTitle: "BARVA STRÁNKY", resetBtn: "OBNOVIT", themeBtnText: "Vybrat barvu", themeModalTitle: "Vyberte barvu", allPets: "Všichni mazlíčci", tzLabel: "Časová zóna", newsText: "Novinky", newsTitle: "Adopt Me Novinky", tzHint: "Vyber si své časové pásmo, aby čas na stránce odpovídal tvému. Večer se také zapne noční režim, aby ti nebolely oči!" },
-        ro: { sell: "VINDE", search: "Caută animal...", sup: "Suport", supTitle: "Suport", msg: "Ai întrebări? Scrie managerului nostru pe Telegram.", petYear: "An", petEv: "Eveniment", chooseLang: "Alege limba", colorTitle: "CULOAREA SITE-ULUI", resetBtn: "RESETARE", themeBtnText: "Alege culoare", themeModalTitle: "Alege o culoare", allPets: "Toate animalele", tzLabel: "Fus orar", newsText: "Știri", newsTitle: "Știri Adopt Me", tzHint: "Alege fusul orar pentru ca ora de pe site să corespundă cu a ta. Seara se activează și modul de noapte pentru a-ți proteja ochii!" },
-        da: { sell: "SÆLG", search: "Søg kæledyr...", sup: "Support", supTitle: "Support", msg: "Har du spørgsmål? Skriv til vores manager på Telegram.", petYear: "År", petEv: "Begivenhed", chooseLang: "Vælg sprog", colorTitle: "SIDENS FARVE", resetBtn: "NULSTIL", themeBtnText: "Vælg farve", themeModalTitle: "Vælg en farve", allPets: "Alle kæledyr", tzLabel: "Tidszone", newsText: "Nyheder", newsTitle: "Adopt Me Nyheder", tzHint: "Vælg din tidszone, så tiden på siden passer. Om aftenen aktiveres også natmodus for at skåne dine øjne!" },
-        fi: { sell: "MYY", search: "Etsi lemmikki...", sup: "Tuki", supTitle: "Tuki", msg: "Onko sinulla kysyttävää? Lähetä viesti managerillemme Telegramissa.", petYear: "Vuosi", petEv: "Tapahtuma", chooseLang: "Valitse kieli", colorTitle: "SIVUSTON VÄRI", resetBtn: "PALAUTA", themeBtnText: "Valitse väri", themeModalTitle: "Valitse väri", allPets: "Kaikki lemmikit", tzLabel: "Aikavyöhyke", newsText: "Uutiset", newsTitle: "Adopt Me Uutiset", tzHint: "Valitse aikavyöhykkeesi, jotta sivuston aika täsmää. Illalla yötila aktivoituu automaattisesti silmien suojaamiseksi!" },
-        ar: { sell: "بيع", search: "ابحث عن حيوان أليف...", sup: "الدعم", supTitle: "الدعم", msg: "هل لديك أسئلة؟ أرسل رسالة إلى مديرنا على Telegram.", petYear: "السنة", petEv: "الحدث", chooseLang: "اختر اللغة", colorTitle: "لون الموقع", resetBtn: "إعادة تعيين", themeBtnText: "اختر لون", themeModalTitle: "اختر لون", allPets: "جميع الحيوانات", tzLabel: "المنطقة الزمنية", newsText: "أخبار", newsTitle: "أخبار Adopt Me", tzHint: "اختر منطقتك الزمنية ليتطابق الوقت على الموقع مع وقتك. يتم أيضاً تفعيل الوضع الليلي مساءً لحماية عينيك!" },
-        zh: { sell: "出售", search: "搜索宠物...", sup: "客服", supTitle: "客服", msg: "有问题？在Telegram上联系我们的客服。", petYear: "年份", petEv: "活动", chooseLang: "选择语言", colorTitle: "网站颜色", resetBtn: "重置", themeBtnText: "选择颜色", themeModalTitle: "选择颜色", allPets: "所有宠物", tzLabel: "时区", newsText: "新闻", newsTitle: "Adopt Me 新闻", tzHint: "选择你的时区，让网站时间与你一致。晚上还会自动开启夜间模式，保护你的眼睛！" }
+        ua: { sell: "ПРОДАТЬ", search: "Пошук пета...", sup: "Підтримка", supTitle: "Підтримка", msg: "Виникли питання? Напишіть нашому менеджеру в Telegram.", petYear: "Рік", petEv: "Івент", chooseLang: "Виберіть мову", colorTitle: "КОЛІР САЙТУ", resetBtn: "ПОВЕРНУТИ", themeBtnText: "Вибрати колір", themeModalTitle: "Виберіть колір", allPets: "Усі пети", tzLabel: "Часовий пояс", newsText: "Новини", newsTitle: "Новини Adopt Me", tzHint: "Обери свій часовий пояс, щоб час на сайті відповідав твоєму. Також це вмикає нічний режим ввечері, щоб очі не різало!", view3d: "Переглянути в 3D", dragHint: "Обертай мишкою або пальцем" },
+        en: { sell: "SELL", search: "Search pet...", sup: "Support", supTitle: "Support", msg: "Have questions? Message our manager on Telegram.", petYear: "Year", petEv: "Event", chooseLang: "Select Language", colorTitle: "SITE COLOR", resetBtn: "RESET", themeBtnText: "Choose Color", themeModalTitle: "Choose Color", allPets: "All Pets", tzLabel: "Timezone", newsText: "News", newsTitle: "Adopt Me News", tzHint: "Choose your timezone so the time on the site matches yours. This also enables night mode in the evening to protect your eyes!", view3d: "View in 3D", dragHint: "Rotate with mouse or finger" },
+        pl: { sell: "SPRZEDAJ", search: "Szukaj zwierzęcia...", sup: "Wsparcie", supTitle: "Wsparcie", msg: "Masz pytania? Napisz do naszego menedżera na Telegram.", petYear: "Rok", petEv: "Wydarzenie", chooseLang: "Wybierz język", colorTitle: "KOLOR STRONY", resetBtn: "PRZYWRÓĆ", themeBtnText: "Wybierz kolor", themeModalTitle: "Wybierz kolor", allPets: "Wszystkie zwierzęta", tzLabel: "Strefa czasowa", newsText: "Wiadomości", newsTitle: "Wiadomości Adopt Me", tzHint: "Wybierz swoją strefę czasową, aby czas na stronie odpowiadał Twojemu. Włącza też tryb nocny wieczorem, żeby nie męczyć oczu!", view3d: "Zobacz w 3D", dragHint: "Obracaj myszką lub palcem" },
+        de: { sell: "VERKAUFEN", search: "Haustier suchen...", sup: "Unterstützung", supTitle: "Unterstützung", msg: "Haben Sie Fragen? Schreiben Sie unserem Manager auf Telegram.", petYear: "Jahr", petEv: "Ereignis", chooseLang: "Sprache wählen", colorTitle: "SEITENFARBE", resetBtn: "ZURÜCKSETZEN", themeBtnText: "Farbe wählen", themeModalTitle: "Wählen Sie eine Farbe", allPets: "Alle Haustiere", tzLabel: "Zeitzone", newsText: "Nachrichten", newsTitle: "Adopt Me Nachrichten", tzHint: "Wähle deine Zeitzone, damit die Uhrzeit auf der Seite stimmt. Abends wird auch der Nachtmodus aktiviert, um deine Augen zu schonen!", view3d: "In 3D ansehen", dragHint: "Mit Maus oder Finger drehen" },
+        fr: { sell: "VENDRE", search: "Chercher un animal...", sup: "Support", supTitle: "Support", msg: "Des questions ? Écrivez à notre manager sur Telegram.", petYear: "Année", petEv: "Événement", chooseLang: "Choisir une langue", colorTitle: "COULEUR DU SITE", resetBtn: "RÉINITIALISER", themeBtnText: "Choisir une couleur", themeModalTitle: "Choisir une couleur", allPets: "Tous les animaux", tzLabel: "Fuseau horaire", newsText: "Actualités", newsTitle: "Actualités Adopt Me", tzHint: "Choisis ton fuseau horaire pour que l'heure du site corresponde à la tienne. Le mode nuit s'active aussi le soir pour protéger tes yeux !", view3d: "Voir en 3D", dragHint: "Faire pivoter avec la souris ou le doigt" },
+        es: { sell: "VENDER", search: "Buscar mascota...", sup: "Soporte", supTitle: "Soporte", msg: "¿Tienes preguntas? Escribe a nuestro gerente en Telegram.", petYear: "Año", petEv: "Evento", chooseLang: "Elegir idioma", colorTitle: "COLOR DEL SITIO", resetBtn: "RESTABLECER", themeBtnText: "Elegir color", themeModalTitle: "Elegir color", allPets: "Todas las mascotas", tzLabel: "Zona horaria", newsText: "Noticias", newsTitle: "Noticias de Adopt Me", tzHint: "¡Elige tu zona horaria para que la hora del sitio coincida con la tuya. También activa el modo nocturno por la noche para proteger tus ojos!", view3d: "Ver en 3D", dragHint: "Gira con el ratón o el dedo" },
+        it: { sell: "VENDI", search: "Cerca animale...", sup: "Supporto", supTitle: "Supporto", msg: "Hai domande? Scrivi al nostro manager su Telegram.", petYear: "Anno", petEv: "Evento", chooseLang: "Seleziona lingua", colorTitle: "COLORE SITO", resetBtn: "RIPRISTINA", themeBtnText: "Scegli colore", themeModalTitle: "Scegli un colore", allPets: "Tutti gli animali", tzLabel: "Fuso orario", newsText: "Notizie", newsTitle: "Notizie Adopt Me", tzHint: "Scegli il tuo fuso orario in modo che l'ora del sito corrisponda alla tua. Di sera si attiva anche la modalità notturna per proteggere i tuoi occhi!", view3d: "Visualizza in 3D", dragHint: "Ruota con il mouse o il dito" },
+        pt: { sell: "VENDER", search: "Pesquisar animal...", sup: "Suporte", supTitle: "Suporte", msg: "Tem dúvidas? Envie mensagem ao nosso gerente no Telegram.", petYear: "Ano", petEv: "Evento", chooseLang: "Selecionar idioma", colorTitle: "COR DO SITE", resetBtn: "RESTAURAR", themeBtnText: "Escolher cor", themeModalTitle: "Escolha uma cor", allPets: "Todos os animais", tzLabel: "Fuso horário", newsText: "Notícias", newsTitle: "Notícias Adopt Me", tzHint: "Escolha seu fuso horário para que o horário do site corresponda ao seu. Também ativa o modo noturno à noite para proteger seus olhos!", view3d: "Ver em 3D", dragHint: "Gire com o mouse ou o dedo" },
+        tr: { sell: "SAT", search: "Evcil hayvan ara...", sup: "Destek", supTitle: "Destek", msg: "Sorularınız mı var? Telegram'da yöneticimize yazın.", petYear: "Yıl", petEv: "Etkinlik", chooseLang: "Dil seçin", colorTitle: "SİTE RENGİ", resetBtn: "SIFIRLA", themeBtnText: "Renk seç", themeModalTitle: "Renk seçin", allPets: "Tüm evcil hayvanlar", tzLabel: "Saat dilimi", newsText: "Haberler", newsTitle: "Adopt Me Haberleri", tzHint: "Saat dilimini seç, böylece sitedeki saat seninle uyuşsun. Akşamları gece modu da açılır, gözlerin yorulmasın!", view3d: "3D'de Görüntüle", dragHint: "Fare veya parmakla döndür" },
+        ja: { sell: "売却", search: "ペットを検索...", sup: "サポート", supTitle: "サポート", msg: "ご質問がありますか？ Telegramでマネージャーにメッセージを送信してください。", petYear: "年", petEv: "イベント", chooseLang: "言語を選択", colorTitle: "サイトカラー", resetBtn: "リセット", themeBtnText: "色を選択", themeModalTitle: "色を選択", allPets: "すべてのペット", tzLabel: "タイムゾーン", newsText: "ニュース", newsTitle: "Adopt Meニュース", tzHint: "タイムゾーンを選択して、サイトの時間を合わせましょう。夜はナイトモードが有効になり、目に優しくなります！", view3d: "3Dで見る", dragHint: "マウスまたは指で回転" },
+        ko: { sell: "판매", search: "애완동물 검색...", sup: "지원", supTitle: "지원", msg: "질문이 있으신가요? Telegram에서 담당자에게 메시지를 보내세요.", petYear: "연도", petEv: "이벤트", chooseLang: "언어 선택", colorTitle: "사이트 색상", resetBtn: "재설정", themeBtnText: "색상 선택", themeModalTitle: "색상 선택", allPets: "모든 애완동물", tzLabel: "시간대", newsText: "뉴스", newsTitle: "Adopt Me 뉴스", tzHint: "시간대를 선택하면 사이트 시간이 맞춰집니다. 저녁에는 야간 모드가 켜져 눈이 편해집니다!", view3d: "3D로 보기", dragHint: "마우스 또는 손가락으로 회전" },
+        gr: { sell: "ΠΩΛΗΣΗ", search: "Αναζήτηση κατοικίδιου...", sup: "Υποστήριξη", supTitle: "Υποστήριξη", msg: "Έχετε ερωτήσεις; Στείλτε μήνυμα στον διευθυντή μας στο Telegram.", petYear: "Έτος", petEv: "Ιβέντ", chooseLang: "Επιλέξτε Γλώσσα", colorTitle: "ΧΡΩΜΑ ΙΣΤΟΥ", resetBtn: "ΕΠΑΝΑΦΟΡΑ", themeBtnText: "Επιλέξτε χρώμα", themeModalTitle: "Επιλέξτε χρώμα", allPets: "Όλα τα κατοικίδια", tzLabel: "Ζώνη ώρας", newsText: "Ειδήσεις", newsTitle: "Ειδήσεις Adopt Me", tzHint: "Επίλεξε τη ζώνη ώρας σου ώστε η ώρα στη σελίδα να ταιριάζει με τη δική σου. Ενεργοποιείται και νυχτερινή λειτουργία το βράδυ για να μην κουράζονται τα μάτια σου!", view3d: "Προβολή σε 3D", dragHint: "Περιστρέψτε με το ποντίκι ή το δάχτυλο" },
+        nl: { sell: "VERKOPEN", search: "Zoek huisdier...", sup: "Ondersteuning", supTitle: "Ondersteuning", msg: "Vragen? Stuur een bericht naar onze manager op Telegram.", petYear: "Jaar", petEv: "Evenement", chooseLang: "Kies taal", colorTitle: "SITE KLEUR", resetBtn: "HERSTELLEN", themeBtnText: "Kies kleur", themeModalTitle: "Kies een kleur", allPets: "Alle huisdieren", tzLabel: "Tijdzone", newsText: "Nieuws", newsTitle: "Adopt Me Nieuws", tzHint: "Kies je tijdzone zodat de tijd op de site klopt. Dit schakelt ook de nachtmodus in om je ogen te beschermen!", view3d: "Bekijk in 3D", dragHint: "Draai met muis of vinger" },
+        sv: { sell: "SÄLJ", search: "Sök husdjur...", sup: "Support", supTitle: "Support", msg: "Har du frågor? Skriv till vår chef på Telegram.", petYear: "År", petEv: "Event", chooseLang: "Välj språk", colorTitle: "WEBBPLATSENS FÄRG", resetBtn: "ÅTERSTÄLL", themeBtnText: "Välj färg", themeModalTitle: "Välj en färg", allPets: "Alla husdjur", tzLabel: "Tidszon", newsText: "Nyheter", newsTitle: "Adopt Me Nyheter", tzHint: "Välj din tidszon så att tiden på sidan stämmer. Nattläge aktiveras också på kvällen för att skydda dina ögon!", view3d: "Visa i 3D", dragHint: "Rotera med mus eller finger" },
+        cs: { sell: "PRODAT", search: "Hledat mazlíčka...", sup: "Podpora", supTitle: "Podpora", msg: "Máte dotazy? Napište našemu manažerovi na Telegram.", petYear: "Rok", petEv: "Událost", chooseLang: "Vybrat jazyk", colorTitle: "BARVA STRÁNKY", resetBtn: "OBNOVIT", themeBtnText: "Vybrat barvu", themeModalTitle: "Vyberte barvu", allPets: "Všichni mazlíčci", tzLabel: "Časová zóna", newsText: "Novinky", newsTitle: "Adopt Me Novinky", tzHint: "Vyber si své časové pásmo, aby čas na stránce odpovídal tvému. Večer se také zapne noční režim, aby ti nebolely oči!", view3d: "Zobrazit ve 3D", dragHint: "Otáčejte myší nebo prstem" },
+        ro: { sell: "VINDE", search: "Caută animal...", sup: "Suport", supTitle: "Suport", msg: "Ai întrebări? Scrie managerului nostru pe Telegram.", petYear: "An", petEv: "Eveniment", chooseLang: "Alege limba", colorTitle: "CULOAREA SITE-ULUI", resetBtn: "RESETARE", themeBtnText: "Alege culoare", themeModalTitle: "Alege o culoare", allPets: "Toate animalele", tzLabel: "Fus orar", newsText: "Știri", newsTitle: "Știri Adopt Me", tzHint: "Alege fusul orar pentru ca ora de pe site să corespundă cu a ta. Seara se activează și modul de noapte pentru a-ți proteja ochii!", view3d: "Vizualizare 3D", dragHint: "Rotește cu mouse-ul sau degetul" },
+        da: { sell: "SÆLG", search: "Søg kæledyr...", sup: "Support", supTitle: "Support", msg: "Har du spørgsmål? Skriv til vores manager på Telegram.", petYear: "År", petEv: "Begivenhed", chooseLang: "Vælg sprog", colorTitle: "SIDENS FARVE", resetBtn: "NULSTIL", themeBtnText: "Vælg farve", themeModalTitle: "Vælg en farve", allPets: "Alle kæledyr", tzLabel: "Tidszone", newsText: "Nyheder", newsTitle: "Adopt Me Nyheder", tzHint: "Vælg din tidszone, så tiden på siden passer. Om aftenen aktiveres også natmodus for at skåne dine øjne!", view3d: "Se i 3D", dragHint: "Drej med musen eller fingeren" },
+        fi: { sell: "MYY", search: "Etsi lemmikki...", sup: "Tuki", supTitle: "Tuki", msg: "Onko sinulla kysyttävää? Lähetä viesti managerillemme Telegramissa.", petYear: "Vuosi", petEv: "Tapahtuma", chooseLang: "Valitse kieli", colorTitle: "SIVUSTON VÄRI", resetBtn: "PALAUTA", themeBtnText: "Valitse väri", themeModalTitle: "Valitse väri", allPets: "Kaikki lemmikit", tzLabel: "Aikavyöhyke", newsText: "Uutiset", newsTitle: "Adopt Me Uutiset", tzHint: "Valitse aikavyöhykkeesi, jotta sivuston aika täsmää. Illalla yötila aktivoituu automaattisesti silmien suojaamiseksi!", view3d: "Katso 3D:nä", dragHint: "Pyöritä hiirellä tai sormella" },
+        ar: { sell: "بيع", search: "ابحث عن حيوان أليف...", sup: "الدعم", supTitle: "الدعم", msg: "هل لديك أسئلة؟ أرسل رسالة إلى مديرنا على Telegram.", petYear: "السنة", petEv: "الحدث", chooseLang: "اختر اللغة", colorTitle: "لون الموقع", resetBtn: "إعادة تعيين", themeBtnText: "اختر لون", themeModalTitle: "اختر لون", allPets: "جميع الحيوانات", tzLabel: "المنطقة الزمنية", newsText: "أخبار", newsTitle: "أخبار Adopt Me", tzHint: "اختر منطقتك الزمنية ليتطابق الوقت على الموقع مع وقتك. يتم أيضاً تفعيل الوضع الليلي مساءً لحماية عينيك!", view3d: "عرض ثلاثي الأبعاد", dragHint: "قم بالتدوير بالماوس أو بإصبعك" },
+        zh: { sell: "出售", search: "搜索宠物...", sup: "客服", supTitle: "客服", msg: "有问题？在Telegram上联系我们的客服。", petYear: "年份", petEv: "活动", chooseLang: "选择语言", colorTitle: "网站颜色", resetBtn: "重置", themeBtnText: "选择颜色", themeModalTitle: "选择颜色", allPets: "所有宠物", tzLabel: "时区", newsText: "新闻", newsTitle: "Adopt Me 新闻", tzHint: "选择你的时区，让网站时间与你一致。晚上还会自动开启夜间模式，保护你的眼睛！", view3d: "3D查看", dragHint: "用鼠标或手指旋转" }
     };
 
     const timezones = [
@@ -682,11 +726,7 @@
     }
 
     function loadNews() {
-        allNews = [
-            { title_ua: "Новий дракон 'Розета'!", title_en: "New Dragon 'Rosetta'!", title_gr: "Νέος Δράκος 'Rosetta'!", date: "2026-04-20", desc_ua: "Представляємо нового чудового дракона Розета з гарними кристальними крилами!", desc_en: "Introducing the new magnificent dragon Rosetta with beautiful crystal wings!", desc_gr: "Παρουσιάζουμε το νέο υπέροχο δράκο Rosetta με όμορφα κρυσταλλικά φτερά!" },
-            { title_ua: "Пасхальний івент!", title_en: "Easter Event!", title_gr: "Ιστορία Πάσχας!", date: "2026-04-15", desc_ua: "Спеціальний пасхальний івент з eksklusive тваринами!",  desc_en: "Special Easter event with exclusive animals!", desc_gr: "Ειδικό γεγονός Πάσχας με αποκλειστικά ζώα!" },
-            { title_ua: "Оновлення гри v1.2", title_en: "Game Update v1.2", title_gr: "Ενημέρωση Παιχνιδιού v1.2", date: "2026-04-10", desc_ua: "Нові функції, виправлення помилок та покращення перформансу!", desc_en: "New features, bug fixes and performance improvements!", desc_gr: "Νέα χαρακτηριστικά, διορθώσεις σφαλμάτων και βελτιώσεις απόδοσης!" }
-        ];
+        allNews = (typeof NEWS_DATA !== 'undefined') ? NEWS_DATA : [];
         renderNews(allNews);
     }
 
@@ -733,15 +773,21 @@
 
     function closeNewsDetail() { closeOverlay('newsDetailOverlay'); }
 
+    let currentPetFile = '';
+    let currentPetName = '';
+
     function openPetModal(name, pet) {
         const langPack = translations[currentLang] || translations['en'];
         const petName = pet[currentLang] || pet.name;
+        currentPetFile = pet.file;
+        currentPetName = petName;
         
         document.getElementById('m-img').src = pet.file;
         document.getElementById('m-name').innerText = petName;
         document.getElementById('m-info').innerText = `${langPack.petYear}: ${pet.year} | ${langPack.petEv}: ${pet.ev}`;
         document.getElementById('m-desc').innerText = petName;
         document.getElementById('m-sell-txt').innerText = langPack.sell;
+        document.getElementById('m-3d-txt').innerText = langPack.view3d || 'Переглянути в 3D';
         openOverlay('petOverlay');
     }
 
@@ -760,6 +806,127 @@
 
     function closeSupport() { closeOverlay('supportOverlay'); }
     function closePet() { closeOverlay('petOverlay'); }
+
+    let viewer3dScene, viewer3dCamera, viewer3dRenderer, viewer3dMesh, viewer3dAnimId;
+    let isDragging = false, prevMouse = {x:0, y:0}, rotX = 0, rotY = 0;
+
+    function open3DViewer() {
+        closePet();
+        const overlay = document.getElementById('viewer3dOverlay');
+        const canvas = document.getElementById('viewer3dCanvas');
+        const langPack = translations[currentLang] || translations['en'];
+        document.getElementById('viewer3d-name').innerText = currentPetName + ' — 3D';
+        document.getElementById('viewer3d-hint-text').innerText = langPack.dragHint || 'Обертай мишкою або пальцем';
+        overlay.style.display = 'flex';
+        setTimeout(() => overlay.classList.add('open'), 10);
+
+        const w = window.innerWidth, h = window.innerHeight;
+        viewer3dScene = new THREE.Scene();
+        viewer3dCamera = new THREE.PerspectiveCamera(50, w / h, 0.1, 1000);
+        viewer3dCamera.position.z = 4;
+
+        viewer3dRenderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+        viewer3dRenderer.setSize(w, h);
+        viewer3dRenderer.setPixelRatio(window.devicePixelRatio);
+        viewer3dRenderer.setClearColor(0x000000, 0);
+
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+        viewer3dScene.add(ambientLight);
+        const dirLight = new THREE.DirectionalLight(0xffffff, 0.6);
+        dirLight.position.set(5, 5, 5);
+        viewer3dScene.add(dirLight);
+        const backLight = new THREE.DirectionalLight(0x6c5ce7, 0.3);
+        backLight.position.set(-5, -3, -5);
+        viewer3dScene.add(backLight);
+
+        function add3dPetMesh(imgSrc) {
+            const texImg = new Image();
+            texImg.onload = function() {
+                const texture = new THREE.Texture(texImg);
+                texture.needsUpdate = true;
+                texture.minFilter = THREE.LinearFilter;
+                texture.magFilter = THREE.LinearFilter;
+                const aspect = texImg.width / texImg.height || 1;
+                const geo = new THREE.PlaneGeometry(2.5 * aspect, 2.5);
+                const matFront = new THREE.MeshStandardMaterial({ map: texture, transparent: true, side: THREE.FrontSide, roughness: 0.3, metalness: 0.1 });
+                const tex2 = new THREE.Texture(texImg);
+                tex2.needsUpdate = true;
+                const matBack = new THREE.MeshStandardMaterial({ map: tex2, transparent: true, side: THREE.BackSide, roughness: 0.3, metalness: 0.1 });
+                const meshFront = new THREE.Mesh(geo, matFront);
+                const meshBack = new THREE.Mesh(geo.clone(), matBack);
+                const group = new THREE.Group();
+                group.add(meshFront);
+                group.add(meshBack);
+                viewer3dMesh = group;
+                if (viewer3dScene) viewer3dScene.add(group);
+                rotX = 0; rotY = 0;
+            };
+            texImg.src = imgSrc;
+        }
+        add3dPetMesh(currentPetFile);
+
+        const particles = new THREE.BufferGeometry();
+        const pCount = 200;
+        const positions = new Float32Array(pCount * 3);
+        for (let i = 0; i < pCount * 3; i++) positions[i] = (Math.random() - 0.5) * 15;
+        particles.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        const pMat = new THREE.PointsMaterial({ color: 0x6c5ce7, size: 0.03, transparent: true, opacity: 0.6 });
+        const points = new THREE.Points(particles, pMat);
+        viewer3dScene.add(points);
+
+        function animate() {
+            viewer3dAnimId = requestAnimationFrame(animate);
+            if (viewer3dMesh) {
+                if (!isDragging) rotY += 0.005;
+                viewer3dMesh.rotation.x = rotX;
+                viewer3dMesh.rotation.y = rotY;
+            }
+            points.rotation.y += 0.001;
+            viewer3dRenderer.render(viewer3dScene, viewer3dCamera);
+        }
+        animate();
+
+        canvas.onmousedown = (e) => { isDragging = true; prevMouse = {x: e.clientX, y: e.clientY}; };
+        canvas.onmousemove = (e) => {
+            if (!isDragging) return;
+            rotY += (e.clientX - prevMouse.x) * 0.01;
+            rotX += (e.clientY - prevMouse.y) * 0.01;
+            prevMouse = {x: e.clientX, y: e.clientY};
+        };
+        canvas.onmouseup = () => isDragging = false;
+        canvas.onmouseleave = () => isDragging = false;
+        canvas.ontouchstart = (e) => { isDragging = true; prevMouse = {x: e.touches[0].clientX, y: e.touches[0].clientY}; };
+        canvas.ontouchmove = (e) => {
+            if (!isDragging) return;
+            rotY += (e.touches[0].clientX - prevMouse.x) * 0.01;
+            rotX += (e.touches[0].clientY - prevMouse.y) * 0.01;
+            prevMouse = {x: e.touches[0].clientX, y: e.touches[0].clientY};
+            e.preventDefault();
+        };
+        canvas.ontouchend = () => isDragging = false;
+        canvas.onwheel = (e) => {
+            viewer3dCamera.position.z += e.deltaY * 0.005;
+            viewer3dCamera.position.z = Math.max(1.5, Math.min(10, viewer3dCamera.position.z));
+        };
+    }
+
+    function close3DViewer() {
+        const overlay = document.getElementById('viewer3dOverlay');
+        overlay.classList.remove('open');
+        if (viewer3dAnimId) cancelAnimationFrame(viewer3dAnimId);
+        if (viewer3dRenderer) viewer3dRenderer.dispose();
+        if (viewer3dScene) {
+            viewer3dScene.traverse(obj => {
+                if (obj.geometry) obj.geometry.dispose();
+                if (obj.material) {
+                    if (obj.material.map) obj.material.map.dispose();
+                    obj.material.dispose();
+                }
+            });
+        }
+        viewer3dScene = null; viewer3dMesh = null;
+        setTimeout(() => overlay.style.display = 'none', 400);
+    }
     function closeOverlay(id) {
         const overlay = document.getElementById(id);
         overlay.classList.remove('open');
