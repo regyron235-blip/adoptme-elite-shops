@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Elite Shop | AdoptMe Elite Shops</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <button id="elite-store-btn">Elite Store</button>
+  </main>
+  <script>
+    document.getElementById('elite-store-btn').onclick = () => {
+      const rocket = document.createElement('img');
+      rocket.src = 'assets/images/rocket.png';
+      rocket.className = 'rocket';
+      document.body.appendChild(rocket);
+      setTimeout(() => rocket.classList.add('fly'), 10);
+      setTimeout(() => rocket.remove(), 2000);
+    };
+  </script>
+</body>
+</html>
