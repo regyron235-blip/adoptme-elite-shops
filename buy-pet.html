@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Підібрати пета | AdoptMe Elite Shops</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <h1>Підібрати пета за своєю сумою</h1>
+    <input type="number" id="input-amount" placeholder="Ваша сума">
+    <select id="input-currency">
+      <option>UAH</option>
+      <option>USD</option>
+      <option>RUB</option>
+      <option>EUR</option>
+      <option>GBP</option>
+      <option>PLN</option>
+      <option>TRY</option>
+      <option>KZT</option>
+      <option>CHF</option>
+      <option>JPY</option>
+      <option>CAD</option>
+      <option>AUD</option>
+      <option>CNY</option>
+      <option>SEK</option>
+      <option>NOK</option>
+      <option>DKK</option>
+      <option>INR</option>
+      <option>ILS</option>
+      <option>HUF</option>
+      <option>CZK</option>
+      <option>ZAR</option>
+      <option>SGD</option>
+      <option>HKD</option>
+      <option>MXN</option>
+      <option>BRL</option>
+      <option>SAR</option>
+      <option>AED</option>
+      <option>THB</option>
+      <option>MYR</option>
+      <option>IDR</option>
+    </select>
+    <button onclick="findPet()">Підібрати</button>
+    <div id="found-pets"></div>
+  </main>
+  <script>
+    let pets = [];
+    fetch('data/pets.json')
+      .then(r=>r.json())
+      .then(data=>{pets=data;});
+
+    function findPet() {
+      const amount = +document.getElementById('input-amount').value;
+      const currency = document.getElementById('input-currency').value;
+      const result = pets.filter(pet=>pet.price[currency] && pet.price[currency]<=amount);
+      let out = '';
+      if(result.length)
+        out = result.map(pet=>`
+          <div>
+            <img src="${pet.image}" width=50>
+            <b>${pet.name}</b> — ${pet.price[currency]} ${currency}
+          </div>
+        `).join('');
+      else out = 'Немає підходящих петів для цієї суми 😢';
+      document.getElementById('found-pets').innerHTML = out;
+    }
+  </script>
+</body>
+</html>
