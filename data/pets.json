@@ -1,0 +1,51 @@
+[
+  {
+    "name": "Unicorn",
+    "rarity": "Legendary",
+    "image": "assets/images/pets/unicorn.png",
+    "price": {"UAH": 1200, "USD": 30, "RUB": 2700}
+  },
+  {
+    "name": "Golden Dragon",
+    "rarity": "Legendary",
+    "image": "assets/images/pets/golden-dragon.png",
+    "price": {"UAH": 1600, "USD": 39, "RUB": 3500}
+  },
+  {
+    "name": "Shadow Dragon",
+    "rarity": "Legendary",
+    "image": "assets/images/pets/shadow-dragon.png",
+    "price": {"UAH": 8000, "USD": 199, "RUB": 18000}
+  },
+  {
+    "name": "Bat Dragon",
+    "rarity": "Legendary",
+    "image": "assets/images/pets/bat-dragon.png",
+    "price": {"UAH": 6900, "USD": 172, "RUB": 15500}
+  },
+  {
+    "name": "Frost Dragon",
+    "rarity": "Legendary",
+    "image": "assets/images/pets/frost-dragon.png",
+    "price": {"UAH": 7500, "USD": 188, "RUB": 16800}
+  },
+  {
+    "name": "Arctic Reindeer",
+    "rarity": "Legendary",
+    "image": "assets/images/pets/arctic-reindeer.png",
+    "price": {"UAH": 4100, "USD": 102, "RUB": 9000}
+  },
+  {
+    "name": "Owl",
+    "rarity": "Legendary",
+    "image": "assets/images/pets/owl.png",
+    "price": {"UAH": 5500, "USD": 137, "RUB": 12000}
+  },
+  {
+    "name": "Parrot",
+    "rarity": "Legendary",
+    "image": "assets/images/pets/parrot.png",
+    "price": {"UAH": 5900, "USD": 146, "RUB": 12800}
+  }
+  // ... додайте ще інших легендарних петів для повного списку
+]
