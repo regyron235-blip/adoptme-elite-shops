@@ -1,25 +1,336 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-  <meta charset="UTF-8">
-  <title>Часті запитання | AdoptMe Elite Shops</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Часті запитання | AdoptMe Elite Shops</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* --- CSS ЗМІННІ --- */
+        :root {
+            --accent: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+            --accent-solid: #6c5ce7;
+            --accent-light: #a29bfe;
+            --bg-dark: #05060a;
+            --card-bg: linear-gradient(180deg, #161b22 0%, #0d1117 100%);
+            --sidebar-bg: #0d1117;
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --text-main: #fff;
+            --text-muted: #8b949e;
+            --shadow-main: 0 10px 30px rgba(0,0,0,0.5);
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; outline: none; -webkit-tap-highlight-color: transparent; }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-main);
+            overflow-x: hidden;
+            opacity: 0;
+            animation: bodyFadeIn 1s forwards;
+        }
+
+        @keyframes bodyFadeIn { to { opacity: 1; } }
+
+        /* --- HERO СЕКЦІЯ З ВІДЕО ФОНОМ --- */
+        .hero {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            min-height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(5,6,10,0.7) 0%, rgba(5,6,10,0.95) 100%);
+            z-index: 1;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.3;
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+
+        .hero-content h1 {
+            font-size: 48px;
+            font-weight: 900;
+            margin-bottom: 20px;
+            background: var(--accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+        }
+
+        .hero-content p {
+            font-size: 20px;
+            color: var(--text-muted);
+            font-weight: 400;
+            line-height: 1.6;
+        }
+
+        /* --- СЕКЦІЯ ПРУФІВ --- */
+        .proofs-section {
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .tg-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: #0088cc;
+            color: #fff !important;
+            text-decoration: none;
+            padding: 18px 40px;
+            border-radius: 16px;
+            font-weight: 800;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: var(--transition);
+        }
+
+        .tg-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(0, 136, 204, 0.4);
+        }
+
+        .tg-btn i {
+            font-size: 22px;
+        }
+
+        .proofs-count {
+            font-size: 56px;
+            font-weight: 900;
+            color: var(--accent-light);
+            margin-top: 30px;
+        }
+
+        .proofs-desc {
+            font-size: 16px;
+            color: var(--text-muted);
+            margin-top: 15px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+
+        /* --- FAQ СЕКЦІЯ --- */
+        .faq-section {
+            padding: 80px 20px 60px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-title {
+            font-size: 28px;
+            font-weight: 900;
+            text-align: center;
+            background: var(--accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 40px;
+        }
+
+        .faq-item {
+            background: #161b22;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .faq-item:hover {
+            border-color: #6c5ce7;
+            box-shadow: 0 5px 20px rgba(108, 92, 231, 0.15);
+        }
+
+        .faq-question {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .faq-question i {
+            font-size: 14px;
+            color: var(--accent-solid);
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 300px;
+            padding-top: 18px;
+        }
+
+        .faq-answer p {
+            font-size: 15px;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        /* --- КНОПКА НАЗАД --- */
+        .back-section {
+            padding: 20px 20px 80px;
+            text-align: center;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 16px 36px;
+            border-radius: 14px;
+            background: var(--accent);
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 15px;
+            transition: var(--transition);
+        }
+
+        .back-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(108, 92, 231, 0.4);
+        }
+
+        /* --- АДАПТИВНІСТЬ --- */
+        @media (max-width: 768px) {
+            .hero { height: 70vh; min-height: 400px; }
+            .hero-content h1 { font-size: 28px; }
+            .hero-content p { font-size: 16px; }
+            .proofs-section { padding: 50px 20px; }
+            .proofs-count { font-size: 40px; }
+            .tg-btn { padding: 14px 30px; font-size: 14px; }
+            .faq-section { padding: 50px 15px 40px; }
+            .faq-title { font-size: 22px; }
+            .faq-question { font-size: 15px; }
+            .faq-answer p { font-size: 14px; }
+        }
+
+        @media (max-width: 480px) {
+            .hero-content h1 { font-size: 22px; }
+            .hero-content p { font-size: 14px; }
+            .proofs-count { font-size: 32px; }
+            .tg-btn { padding: 12px 24px; font-size: 12px; }
+            .faq-question { font-size: 14px; }
+        }
+    </style>
 </head>
 <body>
-  <main class="faq-section">
-    <h1>Часті запитання</h1>
-    <div class="faq-item">
-      <h2>Чому нам довіряють?</h2>
-      <p>Ми гарантуємо чесну угоду та прозорі умови. Якщо у вас виникнуть питання чи складнощі, ми завжди допоможемо та вирішимо ситуацію на вашу користь.</p>
+
+    <!-- ===== HERO СЕКЦІЯ З ВІДЕО ФОНОМ ===== -->
+    <section class="hero">
+        <!-- ЗАМІНІТЬ src ВІДЕО НА СВОЄ ПОСИЛАННЯ -->
+        <video class="hero-video" autoplay muted loop playsinline>
+            <source src="" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>Ми не скам! Нам довіряють сотні клієнтів</h1>
+            <p>Чесна торгівля, прозорі умови та понад 250 підтверджених угод. Переконайтесь самі!</p>
+        </div>
+    </section>
+
+    <!-- ===== СЕКЦІЯ ПРУФІВ ===== -->
+    <section class="proofs-section">
+        <a href="https://t.me/zeopship" target="_blank" class="tg-btn">
+            <i class="fa-brands fa-telegram"></i> ZEOPSHIP
+        </a>
+        <div class="proofs-count">250+ пруфів</div>
+        <p class="proofs-desc">Ви можете знайти детальнішу інформацію по пруфам в нашому Telegram каналі</p>
+    </section>
+
+    <!-- ===== FAQ СЕКЦІЯ ===== -->
+    <section class="faq-section">
+        <h2 class="faq-title">Часті запитання</h2>
+
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+                <span>Чому нам довіряють?</span>
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                <p>Ми гарантуємо чесну угоду та прозорі умови. У нас вже понад 250 успішних угод, підтверджених у нашому Telegram каналі @zeopship. Ми працюємо відкрито — кожна угода фіксується як пруф. Якщо у вас виникнуть питання чи складнощі, ми завжди допоможемо та вирішимо ситуацію на вашу користь.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+                <span>Що буде, якщо не скинуть гроші?</span>
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                <p>Якщо ви не скинете гроші протягом 10-20 хвилин після замовлення, ми просто повернемо вам вашого пета. Жодних ризиків для вас — все чесно та безпечно.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+                <span>Що буде, якщо ми не скинемо грошей?</span>
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                <p>Якщо ми не отримуємо оплату, ми просто повертаємо вам пета назад. Ми працюємо чесно і ніколи не обманюємо наших клієнтів. Ваша безпека — наш пріоритет.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== КНОПКА НАЗАД ===== -->
+    <div class="back-section">
+        <a href="index.html" class="back-btn">
+            <span>&larr;</span> На головну
+        </a>
     </div>
-    <div class="faq-item">
-      <h2>Що буде, якщо не буде оплати?</h2>
-      <p>Якщо ви не скинете гроші протягом 10-20 хвилин після замовлення, ми повернемо вам вашого пета.</p>
-    </div>
-    <div class="faq-item">
-      <h2>Що якщо ми не отримаємо оплату?</h2>
-      <p>Якщо ми не отримуємо грошей, ми просто повертаємо вам пета ― усе чесно та безпечно.</p>
-    </div>
-  </main>
+
+    <script>
+        function toggleFaq(el) {
+            const item = el.parentElement;
+            const wasActive = item.classList.contains('active');
+            document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+            if (!wasActive) item.classList.add('active');
+        }
+    </script>
 </body>
 </html>
