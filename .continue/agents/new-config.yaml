@@ -1,9 +1,16 @@
+name: Example Config
+version: 1.0.0
+schema: v1
+
 models:
-  - name: "Groq Llama 3.3 70B"
+  - name: "Llama 3.3 70B"
     provider: groq
     model: llama-3.3-70b-versatile
     apiKey: gsk_ebUXvGygijGqUtcj909WGdyb3FYVWXH4h18mc3HgE8BJ0Sgi9jE
-  - name: "Groq Llama 3.1 8B"
+  - name: "Llama 3.1 8B"
     provider: groq
     model: llama-3.1-8b-instant
     apiKey: gsk_ebUXvGygijGqUtcj909WGdyb3FYVWXH4h18mc3HgE8BJ0Sgi9jE
+
+mcpServers:
+  - uses: anthropic/memory-mcp
