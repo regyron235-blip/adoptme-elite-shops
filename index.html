@@ -108,11 +108,34 @@
             gap: 8px; transition: all 0.3s ease; font-family: inherit; margin-bottom: 8px;
         }
         .currency-sidebar-btn:hover { border-color: var(--accent-solid); background: rgba(108, 92, 231, 0.1); }
-        .currency-sidebar-select {
-            width: 100%; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--glass-border);
-            background: #111722; color: var(--text-main); font-family: inherit; font-size: 13px;
-        }
         .pet-price-line { margin: 8px 0 12px; font-size: 12px; color: var(--accent-light); font-weight: 800; }
+        .currency-modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999;
+            background: rgba(0,0,0,0.92); display: none; flex-direction: column; align-items: center;
+            padding: 60px 30px; overflow-y: auto; backdrop-filter: blur(15px);
+            opacity: 0; transition: opacity 0.5s ease;
+        }
+        .currency-modal-overlay.open { opacity: 1; display: flex; }
+        .currency-modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; max-width: 1000px; width: 100%; margin-left: auto; margin-right: auto; }
+        .currency-modal-title { font-size: 28px; font-weight: 900; background: var(--accent); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .currency-modal-hint { max-width: 1000px; width: 100%; margin: 0 auto 30px; padding: 14px 18px; border-radius: 12px; background: rgba(108,92,231,0.08); border: 1px solid rgba(108,92,231,0.2); display: flex; align-items: center; gap: 12px; }
+        .currency-modal-hint i { font-size: 18px; color: var(--accent-light); flex-shrink: 0; }
+        .currency-modal-hint span { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+        .currency-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px;
+            max-width: 1000px; width: 100%; margin-left: auto; margin-right: auto;
+            transform: translateY(30px); transition: transform 0.5s ease;
+        }
+        .currency-modal-overlay.open .currency-grid { transform: translateY(0); }
+        .currency-item {
+            background: #161b22; border: 1px solid var(--glass-border); padding: 18px;
+            border-radius: 15px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+            transition: var(--transition);
+        }
+        .currency-item:hover { background: rgba(255,255,255,0.03); border-color: rgba(255,255,255,0.2); transform: translateY(-5px) scale(1.03); }
+        .currency-item.active-choice { border-color: var(--accent-solid); background: rgba(108, 92, 231, 0.05); }
+        .currency-code { font-weight: 800; font-size: 15px; color: #fff; }
+        .currency-rate { font-size: 12px; color: var(--text-muted); font-weight: 300; }
 
         .tz-modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999;
@@ -559,13 +582,10 @@
     </div>
 
     <div class="currency-sidebar-wrap">
-        <button class="currency-sidebar-btn" type="button" id="currency-menu-btn">
+        <button class="currency-sidebar-btn" type="button" id="currency-menu-btn" onclick="openCurrencyModal()">
             <span><i class="fa-solid fa-coins"></i> Валюта</span>
             <span id="currency-label">USD</span>
         </button>
-        <select id="currency-select" class="currency-sidebar-select">
-            <option>USD</option><option>UAH</option><option>EUR</option><option>RUB</option><option>GBP</option><option>PLN</option><option>TRY</option><option>KZT</option><option>CHF</option><option>JPY</option><option>CAD</option><option>AUD</option><option>CNY</option><option>SEK</option><option>NOK</option><option>DKK</option><option>INR</option><option>ILS</option><option>HUF</option><option>CZK</option><option>ZAR</option><option>SGD</option><option>HKD</option><option>MXN</option><option>BRL</option><option>SAR</option><option>AED</option><option>THB</option><option>MYR</option><option>IDR</option>
-        </select>
     </div>
 
     <button class="tz-sidebar-btn" onclick="openTzModal()">
@@ -736,6 +756,18 @@
     <div class="tz-grid" id="tzGrid"></div>
 </div>
 
+<div class="currency-modal-overlay" id="currencyModalOverlay">
+    <div class="currency-modal-header">
+        <h1 class="currency-modal-title">Валюта</h1>
+        <i class="fa-solid fa-xmark close-btn" style="position: static; font-size: 30px;" onclick="closeCurrencyModal()"></i>
+    </div>
+    <div class="currency-modal-hint">
+        <i class="fa-solid fa-circle-dollar-to-slot"></i>
+        <span>Обери валюту для показу цін на картках петів.</span>
+    </div>
+    <div class="currency-grid" id="currencyGrid"></div>
+</div>
+
 <div class="viewer3d-overlay" id="viewer3dOverlay">
     <div class="viewer3d-header">
         <span class="viewer3d-title" id="viewer3d-name"></span>
@@ -898,6 +930,7 @@
         INR: 83.2, ILS: 3.7, HUF: 365, CZK: 23.2, ZAR: 18.6, SGD: 1.35, HKD: 7.82, MXN: 16.8,
         BRL: 5.1, SAR: 3.75, AED: 3.67, THB: 36.5, MYR: 4.72, IDR: 16100
     };
+    const currencies = ["USD","UAH","EUR","RUB","GBP","PLN","TRY","KZT","CHF","JPY","CAD","AUD","CNY","SEK","NOK","DKK","INR","ILS","HUF","CZK","ZAR","SGD","HKD","MXN","BRL","SAR","AED","THB","MYR","IDR"];
 
     window.onload = () => {
         applyTheme();
@@ -927,19 +960,43 @@
     }
 
     function initCurrencyControls() {
-        const select = document.getElementById('currency-select');
         const label = document.getElementById('currency-label');
-        const btn = document.getElementById('currency-menu-btn');
-        if (!select || !label || !btn) return;
-        select.value = selectedCurrency;
+        if (!label) return;
         label.innerText = selectedCurrency;
-        select.onchange = () => {
-            selectedCurrency = select.value;
-            localStorage.setItem('elite_currency', selectedCurrency);
-            label.innerText = selectedCurrency;
-            render(pets);
-        };
-        btn.onclick = () => select.focus();
+    }
+
+    function generateCurrencyGrid() {
+        const grid = document.getElementById('currencyGrid');
+        if (!grid) return;
+        grid.innerHTML = '';
+        currencies.forEach(code => {
+            const item = document.createElement('div');
+            item.className = `currency-item ${code === selectedCurrency ? 'active-choice' : ''}`;
+            item.innerHTML = `
+                <span class="currency-code">${code}</span>
+                <span class="currency-rate">1 USD = ${fxRates[code]} ${code}</span>
+            `;
+            item.onclick = () => {
+                selectedCurrency = code;
+                localStorage.setItem('elite_currency', selectedCurrency);
+                const label = document.getElementById('currency-label');
+                if (label) label.innerText = selectedCurrency;
+                render(pets);
+                closeCurrencyModal();
+            };
+            grid.appendChild(item);
+        });
+    }
+
+    function openCurrencyModal() {
+        generateCurrencyGrid();
+        document.getElementById('currencyModalOverlay').style.display = 'flex';
+        setTimeout(() => document.getElementById('currencyModalOverlay').classList.add('open'), 10);
+    }
+
+    function closeCurrencyModal() {
+        document.getElementById('currencyModalOverlay').classList.remove('open');
+        setTimeout(() => document.getElementById('currencyModalOverlay').style.display = 'none', 500);
     }
 
     function render(data) {
