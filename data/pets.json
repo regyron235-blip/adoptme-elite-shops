@@ -1,51 +1,1787 @@
-[
-  {
-    "name": "Unicorn",
-    "rarity": "Legendary",
-    "image": "assets/images/pets/unicorn.png",
-    "price": {"UAH": 1200, "USD": 30, "RUB": 2700}
-  },
-  {
-    "name": "Golden Dragon",
-    "rarity": "Legendary",
-    "image": "assets/images/pets/golden-dragon.png",
-    "price": {"UAH": 1600, "USD": 39, "RUB": 3500}
-  },
-  {
-    "name": "Shadow Dragon",
-    "rarity": "Legendary",
-    "image": "assets/images/pets/shadow-dragon.png",
-    "price": {"UAH": 8000, "USD": 199, "RUB": 18000}
-  },
-  {
-    "name": "Bat Dragon",
-    "rarity": "Legendary",
-    "image": "assets/images/pets/bat-dragon.png",
-    "price": {"UAH": 6900, "USD": 172, "RUB": 15500}
-  },
-  {
-    "name": "Frost Dragon",
-    "rarity": "Legendary",
-    "image": "assets/images/pets/frost-dragon.png",
-    "price": {"UAH": 7500, "USD": 188, "RUB": 16800}
-  },
-  {
-    "name": "Arctic Reindeer",
-    "rarity": "Legendary",
-    "image": "assets/images/pets/arctic-reindeer.png",
-    "price": {"UAH": 4100, "USD": 102, "RUB": 9000}
-  },
-  {
-    "name": "Owl",
-    "rarity": "Legendary",
-    "image": "assets/images/pets/owl.png",
-    "price": {"UAH": 5500, "USD": 137, "RUB": 12000}
-  },
-  {
-    "name": "Parrot",
-    "rarity": "Legendary",
-    "image": "assets/images/pets/parrot.png",
-    "price": {"UAH": 5900, "USD": 146, "RUB": 12800}
-  }
-  // ... додайте ще інших легендарних петів для повного списку
+﻿[
+    {
+        "name":  "2D Kitty",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/2d-kitty.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Admin Abuse Egg",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/admin-abuse-egg.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Albino Gorilla",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/albino-gorilla.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Albino Monkey",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/albino-monkey.png",
+        "priceUSD":  25.2,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Alicorn",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/alicorn.png",
+        "priceUSD":  1.92,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Ancient Dragon",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/ancient-dragon.png",
+        "priceUSD":  1.92,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Angus Bull",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/angus-bull.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Apple Owl",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/apple-owl.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Arctic Dusk Dragon",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/arctic-dusk-dragon.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Arctic Reindeer",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/arctic-reindeer.png",
+        "priceUSD":  27.6,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Astronaut Gorilla",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/astronaut-gorilla.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Aurora Fox",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/aurora-fox.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Aussie Egg",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/aussie-egg.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Axolotl",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/axolotl.png",
+        "priceUSD":  2.16,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Aztec Egg",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/aztec-egg.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Baku",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/baku.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Balloon Unicorn",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/balloon-unicorn.png",
+        "priceUSD":  2.52,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Bat Dragon",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/bat-dragon.png",
+        "priceUSD":  109.2,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Berry Cool Cube",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/berry-cool-cube.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Billy Goat",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/billy-goat.png",
+        "priceUSD":  1.8,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Black Chow-Chow",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/black-chow-chow.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Black Widow",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/black-widow.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Black-Chested Pheasant",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/black-chested-pheasant.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Blazing Lion",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/blazing-lion.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Blue Betta Fish",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/blue-betta-fish.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Blue Whale",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/blue-whale.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Bush Elephant",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/bush-elephant.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Cactus Friend",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/cactus-friend.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Caelum Cervi",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/caelum-cervi.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Candicorn",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/candicorn.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Candy Hare",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/candy-hare.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Candyfloss Chick",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/candyfloss-chick.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Capricorn",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/capricorn.png",
+        "priceUSD":  2.28,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Cerberus",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/cerberus.png",
+        "priceUSD":  1.8,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Chameleon",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/chameleon.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Cheetah",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/cheetah.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Chimera",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/chimera.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Chocolate Chip Bat Dragon",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/chocolate-chip-bat-dragon.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Chocolate Chow-Chow",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/chocolate-chow-chow.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Christmas Egg",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/christmas-egg.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Christmas Spirit",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/christmas-spirit.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Cobra",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/cobra.png",
+        "priceUSD":  1.68,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Coconut Friend",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/coconut-friend.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Corn Doggo",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/corn-doggo.png",
+        "priceUSD":  2.28,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Criosphinx",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/criosphinx.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Crow",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/crow.png",
+        "priceUSD":  39.6,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Cryptid",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/cryptid.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Crystal Egg",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/crystal-egg.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Cuddly Candle",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/cuddly-candle.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Cupid Dragon",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/cupid-dragon.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Dancing Dragon",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/dancing-dragon.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Danger Egg",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/danger-egg.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Dango Penguins",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/dango-penguins.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Dark Choccybunny",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/dark-choccybunny.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Desert Egg",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/desert-egg.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Diamond Albatross",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/diamond-albatross.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Diamond Amazon",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/diamond-amazon.png",
+        "priceUSD":  2.16,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Diamond Butterfly",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/diamond-butterfly.png",
+        "priceUSD":  2.4,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Diamond Dragon",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/diamond-dragon.png",
+        "priceUSD":  7.92,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Diamond Egg",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/diamond-egg.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Diamond Griffin",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/diamond-griffin.png",
+        "priceUSD":  7.68,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Diamond Hamster",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/diamond-hamster.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Diamond Hummingbird",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/diamond-hummingbird.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Diamond King Penguin",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/diamond-king-penguin.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Diamond Ladybug",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/diamond-ladybug.png",
+        "priceUSD":  2.88,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Diamond Mahi Mahi",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/diamond-mahi-mahi.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Diamond Unicorn",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/diamond-unicorn.png",
+        "priceUSD":  8.64,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Dimension Drifter",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/dimension-drifter.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Dimorphodon",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/dimorphodon.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Dire Stag",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/dire-stag.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Dodo",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/dodo.png",
+        "priceUSD":  4.2,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Dracula Parrot",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/dracula-parrot.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Dragon",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/dragon.png",
+        "priceUSD":  1.2,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Dragonfly",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/dragonfly.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Dragonfruit Fox",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/dragonfruit-fox.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Easter Bunny",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/easter-bunny.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Emberlight",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/emberlight.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Emperor Gorilla",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/emperor-gorilla.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Endangered Egg",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/endangered-egg.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Evil Chick",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/evil-chick.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Evil Unicorn",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/evil-unicorn.png",
+        "priceUSD":  38.4,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Fairy Bat Dragon",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/fairy-bat-dragon.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Fallow Deer",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/fallow-deer.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Farm Egg",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/farm-egg.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Field Mouse",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/field-mouse.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Fire Mare",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/fire-mare.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Fire Stallion",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/fire-stallion.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Firefly",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/firefly.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Fleur De Ice",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/fleur-de-ice.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Fool Egg",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/fool-egg.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Fossil Egg",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/fossil-egg.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Frost Dragon",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/frost-dragon.png",
+        "priceUSD":  72,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Frost Fury",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/frost-fury.png",
+        "priceUSD":  5.52,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Frost Phoenix",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/frost-phoenix.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Frost Unicorn",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/frost-unicorn.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Frostbite Bear",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/frostbite-bear.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Frostclaw",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/frostclaw.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Garden Egg",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/garden-egg.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Gargoyle",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/gargoyle.png",
+        "priceUSD":  2.04,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Giant Gold Scarab",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/giant-gold-scarab.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Giant Panda",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/giant-panda.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Gilded Snake",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/gilded-snake.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Giraffe",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/giraffe.png",
+        "priceUSD":  91.2,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Glacier Kitsune",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/glacier-kitsune.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Glormy Crab",
+        "rarity":  "Legendary",
+        "image":  "https://cdn.playadopt.me/items/lss_2026_glormy_crab.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Glormy Dolphin",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/glormy-dolphin.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Glormy Hound",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/glormy-hound.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Glormy Leo",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/glormy-leo.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Golden Albatross",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/golden-albatross.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Golden Chow-Chow",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/golden-chow-chow.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Golden Dragon",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/golden-dragon.png",
+        "priceUSD":  3,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Golden Egg",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/golden-egg.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Golden Griffin",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/golden-griffin.png",
+        "priceUSD":  2.76,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Golden Hamster",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/golden-hamster.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Golden Hummingbird",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/golden-hummingbird.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Golden King Penguin",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/golden-king-penguin.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Golden Ladybug",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/golden-ladybug.png",
+        "priceUSD":  1.92,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Golden Penguin",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/golden-penguin.png",
+        "priceUSD":  2.16,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Golden Rat",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/golden-rat.png",
+        "priceUSD":  2.4,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Golden Tortoise Beetle",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/golden-tortoise-beetle.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Golden Unicorn",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/golden-unicorn.png",
+        "priceUSD":  3.24,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Golden Walrus",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/golden-walrus.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Goldhorn",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/goldhorn.png",
+        "priceUSD":  3,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Green Butterfly",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/green-butterfly.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Green-Chested Pheasant",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/green-chested-pheasant.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Griffin",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/griffin.png",
+        "priceUSD":  1.08,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Grim Dragon",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/grim-dragon.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Guardian Lion",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/guardian-lion.png",
+        "priceUSD":  1.8,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Haetae",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/haetae.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Halloween Golden Mummy Cat",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/halloween-golden-mummy-cat.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Halloween White Ghost Dragon",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/halloween-white-ghost-dragon.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Hawk",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/hawk.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Hero Gibbon",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/hero-gibbon.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Hippogriff",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/hippogriff.png",
+        "priceUSD":  3.24,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Hot Doggo",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/hot-doggo.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Ice Golem",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/ice-golem.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Ice Moth Dragon",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/ice-moth-dragon.png",
+        "priceUSD":  2.88,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Influencer Gibbon",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/influencer-gibbon.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Japan Egg",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/japan-egg.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Jekyll Hydra",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/jekyll-hydra.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Jousting Horse",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/jousting-horse.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Jungle Egg",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/jungle-egg.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Kangaroo",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/kangaroo.png",
+        "priceUSD":  9.12,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Kelp Captain",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/kelp-captain.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "King Bee",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/king-bee.png",
+        "priceUSD":  2.4,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Kitsune",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/kitsune.png",
+        "priceUSD":  1.44,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Kitty Bat",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/kitty-bat.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Kraken",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/kraken.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Latte Kitsune",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/latte-kitsune.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Lava Dragon",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/lava-dragon.png",
+        "priceUSD":  3.12,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Lava Wolf",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/lava-wolf.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Lavender Dragon",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/lavender-dragon.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Leviathan",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/leviathan.png",
+        "priceUSD":  2.4,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Lunar Gold Tiger",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/lunar-gold-tiger.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Lunar Moon Bear",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/lunar-moon-bear.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Majestic Pony",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/majestic-pony.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Maneki-Neko",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/maneki-neko.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Mecha Meow",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/mecha-meow.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Mechapup",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/mechapup.png",
+        "priceUSD":  4.8,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Mermicorn",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/mermicorn.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Metal Ox",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/metal-ox.png",
+        "priceUSD":  0.84,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Midnight Dragon",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/midnight-dragon.png",
+        "priceUSD":  4.08,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Mochi Meow",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/mochi-meow.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Monkey King",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/monkey-king.png",
+        "priceUSD":  30,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Moon Egg",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/moon-egg.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Moonbeam Butterfly",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/moonbeam-butterfly.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Moose Calf",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/moose-calf.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Mushroom Friend",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/mushroom-friend.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Mythic Egg",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/mythic-egg.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Naga Dragon",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/naga-dragon.png",
+        "priceUSD":  2.28,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Naughty Mistletroll",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/naughty-mistletroll.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Nessie",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/nessie.png",
+        "priceUSD":  3,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Ninja Monkey",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/ninja-monkey.png",
+        "priceUSD":  5.28,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Ocean Egg",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/ocean-egg.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Octopus",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/octopus.png",
+        "priceUSD":  3.72,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Orchid Butterfly",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/orchid-butterfly.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Owl",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/owl.png",
+        "priceUSD":  45.6,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Owlbear",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/owlbear.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Papa Moose",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/papa-moose.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Parrot",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/parrot.png",
+        "priceUSD":  40.8,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Peach Owl",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/peach-owl.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Peacock",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/peacock.png",
+        "priceUSD":  1.44,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Phantom Dragon",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/phantom-dragon.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Phoenix",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/phoenix.png",
+        "priceUSD":  3.6,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Pineapple Owl",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/pineapple-owl.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Pirate Ghost Capuchin Monkey",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/pirate-ghost-capuchin-monkey.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Pirate Hermit Crab",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/pirate-hermit-crab.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Priceless Shrimp",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/priceless-shrimp.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Primal Kaijunior",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/primal-kaijunior.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Princess Capuchin Monkey",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/princess-capuchin-monkey.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Prismatic Butterfly",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/prismatic-butterfly.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Purrowl",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/purrowl.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Queen Bee",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/queen-bee.png",
+        "priceUSD":  9,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Quetzalcoatl",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/quetzalcoatl.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Rainbow Dragon",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/rainbow-dragon.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Red Dutch Guinea Pig",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/red-dutch-guinea-pig.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Robo Dog",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/robo-dog.png",
+        "priceUSD":  1.8,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Rose Dragon",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/rose-dragon.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Rosy Maple Moth",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/rosy-maple-moth.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Royal Aztec Egg",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/royal-aztec-egg.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Royal Capuchin Monkey",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/royal-capuchin-monkey.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Royal Desert Egg",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/royal-desert-egg.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Royal Egg",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/royal-egg.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Royal Mistletroll",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/royal-mistletroll.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Royal Moon Egg",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/royal-moon-egg.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Safari Egg",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/safari-egg.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Sakura Spirit",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/sakura-spirit.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Scarebear",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/scarebear.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Scarecrow Crow",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/scarecrow-crow.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Scorching Kaijunior",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/scorching-kaijunior.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Sea Turtle",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/sea-turtle.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Shadow Dragon",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/shadow-dragon.png",
+        "priceUSD":  198,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Shark",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/shark.png",
+        "priceUSD":  3.36,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Shark Puppy",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/shark-puppy.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Shetland Pony Light Brown",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/shetland-pony-light-brown.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Silverback Gorilla",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/silverback-gorilla.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Skele-Rex",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/skele-rex.png",
+        "priceUSD":  5.4,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Slimingo",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/slimingo.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Snow Owl",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/snow-owl.png",
+        "priceUSD":  3.48,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Southeast Asia Egg",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/southeast-asia-egg.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Spinosaurus",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/spinosaurus.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Squid",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/squid.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Strawberry Penguin",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/strawberry-penguin.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Strawberry Shortcake Bat Dragon",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/strawberry-shortcake-bat-dragon.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Striped Eggy",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/striped-eggy.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Sugar Axolotl",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/sugar-axolotl.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Sugar Glider",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/sugar-glider.png",
+        "priceUSD":  2.4,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Sunglider",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/sunglider.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Sunrise Duckling",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/sunrise-duckling.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Super Saru",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/super-saru.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Temple Friend",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/temple-friend.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Tio De Nadal",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/tio-de-nadal.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Tortoiseshell Guinea Pig",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/tortoiseshell-guinea-pig.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Tree Kangaroo",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/tree-kangaroo.png",
+        "priceUSD":  2.16,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "T-Rex",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/t-rex.png",
+        "priceUSD":  4.32,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Turtle",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/turtle.png",
+        "priceUSD":  13.2,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Undead Jousting Horse",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/undead-jousting-horse.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Unicorn",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/unicorn.png",
+        "priceUSD":  1.32,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Urban Egg",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/urban-egg.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Vampire Dragon",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/vampire-dragon.png",
+        "priceUSD":  3.84,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Vanilla Penguin",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/vanilla-penguin.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Velocirooster",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/velocirooster.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Villain Gibbon",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/villain-gibbon.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Violet Butterfly",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/violet-butterfly.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Volcanic Rhino",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/volcanic-rhino.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Werewolf",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/werewolf.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "White Amazon",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/white-amazon.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Winged Horse",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/winged-horse.png",
+        "priceUSD":  2.04,
+        "priceSource":  "Derived from StarPets RP index"
+    },
+    {
+        "name":  "Winged Tiger",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/winged-tiger.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Winter Buck",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/winter-buck.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Woodland Egg",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/woodland-egg.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Wrapped Doll",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/wrapped-doll.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Yule Log Dog",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/yule-log-dog.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Zodiac Minion Chick",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/zodiac-minion-chick.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    },
+    {
+        "name":  "Zodiac Minion Egg",
+        "rarity":  "Legendary",
+        "image":  "assets/images/pets/zodiac-minion-egg.png",
+        "priceUSD":  null,
+        "priceSource":  "No price found"
+    }
 ]

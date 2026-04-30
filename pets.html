@@ -7,37 +7,9 @@
 </head>
 <body>
   <header>
-    <select id="currency-select">
-      <option>UAH</option>
-      <option>USD</option>
-      <option>RUB</option>
-      <option>EUR</option>
-      <option>GBP</option>
-      <option>PLN</option>
-      <option>TRY</option>
-      <option>KZT</option>
-      <option>CHF</option>
-      <option>JPY</option>
-      <option>CAD</option>
-      <option>AUD</option>
-      <option>CNY</option>
-      <option>SEK</option>
-      <option>NOK</option>
-      <option>DKK</option>
-      <option>INR</option>
-      <option>ILS</option>
-      <option>HUF</option>
-      <option>CZK</option>
-      <option>ZAR</option>
-      <option>SGD</option>
-      <option>HKD</option>
-      <option>MXN</option>
-      <option>BRL</option>
-      <option>SAR</option>
-      <option>AED</option>
-      <option>THB</option>
-      <option>MYR</option>
-      <option>IDR</option>
+    <button id="currency-menu-btn" type="button">Валюта: <span id="currency-label">USD</span></button>
+    <select id="currency-select" hidden>
+      <option>USD</option><option>UAH</option><option>EUR</option><option>RUB</option><option>GBP</option><option>PLN</option><option>TRY</option><option>KZT</option><option>CHF</option><option>JPY</option><option>CAD</option><option>AUD</option><option>CNY</option><option>SEK</option><option>NOK</option><option>DKK</option><option>INR</option><option>ILS</option><option>HUF</option><option>CZK</option><option>ZAR</option><option>SGD</option><option>HKD</option><option>MXN</option><option>BRL</option><option>SAR</option><option>AED</option><option>THB</option><option>MYR</option><option>IDR</option>
     </select>
     <input type="text" id="search-pet" placeholder="Пошук пета">
   </header>
@@ -46,7 +18,13 @@
   </main>
   <script>
     let pets = [];
-    let selectedCurrency = "UAH";
+    let selectedCurrency = "USD";
+    const fx = {
+      USD: 1, UAH: 40, EUR: 0.93, RUB: 92, GBP: 0.79, PLN: 3.98, TRY: 32.4, KZT: 447,
+      CHF: 0.9, JPY: 156.2, CAD: 1.37, AUD: 1.52, CNY: 7.25, SEK: 10.6, NOK: 10.8, DKK: 6.95,
+      INR: 83.2, ILS: 3.7, HUF: 365, CZK: 23.2, ZAR: 18.6, SGD: 1.35, HKD: 7.82, MXN: 16.8,
+      BRL: 5.1, SAR: 3.75, AED: 3.67, THB: 36.5, MYR: 4.72, IDR: 16100
+    };
 
     fetch('data/pets.json')
       .then(r => r.json())
@@ -61,13 +39,16 @@
       list.innerHTML = "";
       pets.filter(pet => pet.name.toLowerCase().includes(search))
         .forEach(pet => {
-          let price = pet.price[selectedCurrency] ?? "-";
+          const usd = typeof pet.priceUSD === "number" ? pet.priceUSD : null;
+          const converted = usd !== null && fx[selectedCurrency]
+            ? (usd * fx[selectedCurrency]).toFixed(selectedCurrency === "JPY" || selectedCurrency === "RUB" || selectedCurrency === "IDR" ? 0 : 2)
+            : "-";
           list.innerHTML += `
             <div class="pet-card">
               <img src="${pet.image}" alt="${pet.name}">
               <h3>${pet.name}</h3>
               <span class="rarity">${pet.rarity}</span>
-              <div class="pet-price">${price} ${selectedCurrency}</div>
+              <div class="pet-price">${converted} ${selectedCurrency}</div>
             </div>
           `;
         });
@@ -75,7 +56,11 @@
 
     document.getElementById('currency-select').onchange = function() {
       selectedCurrency = this.value;
+      document.getElementById('currency-label').textContent = selectedCurrency;
       renderPets();
+    };
+    document.getElementById('currency-menu-btn').onclick = function() {
+      document.getElementById('currency-select').click();
     };
     document.getElementById('search-pet').oninput = renderPets;
   </script>
