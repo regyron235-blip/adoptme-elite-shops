@@ -1057,7 +1057,13 @@
 
     function getPetPriceText(pet) {
         if (currentGame === 'mm2') {
-            return pet.mm2Value ? `Value: ${pet.mm2Value}` : '-';
+            if (!pet.mm2Value) return '-';
+            const base = parseFloat(String(pet.mm2Value).replace(/,/g, '').trim());
+            if (Number.isNaN(base)) return '-';
+            const rate = fxRates[selectedCurrency] || 1;
+            const converted = base * rate;
+            const decimals = ['JPY', 'RUB', 'IDR'].includes(selectedCurrency) ? 0 : 2;
+            return `${converted.toFixed(decimals)} ${selectedCurrency}`;
         }
         if (typeof petDatabase === 'undefined' || !Array.isArray(petDatabase)) return '-';
         const dbPet = petDatabase.find(x => x.name === pet.name && x.rarity === 'Legendary');
@@ -1093,7 +1099,13 @@
                 localStorage.setItem('elite_currency', selectedCurrency);
                 const label = document.getElementById('currency-label');
                 if (label) label.innerText = selectedCurrency;
-                render(pets);
+                const v = document.getElementById('searchInput')?.value?.toLowerCase().trim() || '';
+                const activeCatalog = getActiveCatalog();
+                const filtered = !v ? activeCatalog : activeCatalog.filter(p =>
+                    p.name.toLowerCase().includes(v) ||
+                    (p[currentLang] && p[currentLang].toLowerCase().includes(v))
+                );
+                render(filtered);
                 closeCurrencyModal();
             };
             grid.appendChild(item);
@@ -1692,10 +1704,13 @@
         const localResult = generateLocalResponse(query);
         const langName = { ua:'Ukrainian', en:'English', pl:'Polish', de:'German', fr:'French', es:'Spanish', it:'Italian', pt:'Portuguese', tr:'Turkish', ja:'Japanese', ko:'Korean', gr:'Greek', nl:'Dutch', sv:'Swedish', cs:'Czech', ro:'Romanian', da:'Danish', fi:'Finnish', ar:'Arabic', zh:'Chinese' }[currentLang] || 'English';
 
-        const systemPrompt = `You are EliteStore AI assistant for Adopt Me (Roblox) pet marketplace. You help users with pet values, trading advice, and game info. Answer in ${langName}. Be friendly and concise. Use emojis.
-If asked about a specific pet, include: rarity, approximate value in Ride Potions (RP), which egg/event it came from, year released, and demand level.
-At the end of pet info, always mention: seller @zeop_252 (Telegram: t.me/zeop_252).
-Here is our local pet database for reference (use these values as baseline): ${localResult ? localResult.replace(/<[^>]*>/g, '') : 'No local match found.'}`;
+        const systemPrompt = `You are EliteStore AI assistant for Adopt Me and Murder Mystery 2 (Roblox) marketplace.
+Current active game mode on site: ${currentGame === 'mm2' ? 'Murder Mystery 2' : 'Adopt Me'}.
+You help users with item values, trading advice, and game info. Answer in ${langName}. Be friendly and concise. Use emojis.
+For Adopt Me questions, include rarity, approximate value in Ride Potions (RP), event/egg, year, and demand.
+For MM2 questions, include item type (gun/knife), tier (godly), and approximate trade value.
+At the end of info, mention seller @zeop_252 (Telegram: t.me/zeop_252).
+Local reference snippet: ${localResult ? localResult.replace(/<[^>]*>/g, '') : 'No local match found.'}`;
 
         aiChatHistory.push({ role: 'user', content: query });
 
@@ -1747,6 +1762,23 @@ Here is our local pet database for reference (use these values as baseline): ${l
     function generateLocalResponse(query) {
         const langPack = translations[currentLang] || translations['en'];
         const q = query.toLowerCase().replace(/[-_]/g, ' ');
+        if (currentGame === 'mm2') {
+            const foundMM2 = mm2Godlies.filter(item => {
+                const n = item.name.toLowerCase();
+                return n.includes(q) || q.includes(n) || levenshtein(n, q) <= 3;
+            });
+            if (foundMM2.length === 0) return null;
+            const sellText = langPack.aiSeller || 'Продавець';
+            return foundMM2.slice(0, 4).map(item => {
+                return `<b>🔪 ${item.name}</b><div class="pet-info-card">` +
+                    `<div><span class="pi-label">🏷️ Type:</span> ${item.name.toLowerCase().includes('gun') ? 'Gun' : 'Godly item'}</div>` +
+                    `<div><span class="pi-label">⭐ Tier:</span> Godly</div>` +
+                    `<div><span class="pi-label">💰 Value:</span> ${getPetPriceText(item)}</div>` +
+                    `<div><span class="pi-label">🎮 Game:</span> Murder Mystery 2</div>` +
+                    `<div><span class="pi-label">👤 ${sellText}:</span> <a href="https://t.me/zeop_252" target="_blank" style="color:var(--accent-light);">@zeop_252</a></div>` +
+                    `</div>`;
+            }).join('<br>');
+        }
         const found = petDatabase.filter(p => {
             const n = p.name.toLowerCase();
             return n.includes(q) || q.includes(n) || levenshtein(n, q) <= 2;
