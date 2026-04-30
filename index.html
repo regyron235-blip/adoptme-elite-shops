@@ -1028,9 +1028,72 @@
         });
     }
 
-    function loadNews() {
-        allNews = (typeof NEWS_DATA !== 'undefined') ? NEWS_DATA : [];
+    async function loadNews() {
+        const fallback = (typeof NEWS_DATA !== 'undefined') ? NEWS_DATA : [];
+        try {
+            const official = await fetchOfficialNews();
+            allNews = official.length ? official : fallback;
+        } catch (e) {
+            allNews = fallback;
+        }
         renderNews(allNews);
+    }
+
+    async function fetchOfficialNews() {
+        const sources = [
+            "https://www.playadopt.me/news",
+            "https://r.jina.ai/http://www.playadopt.me/news"
+        ];
+        for (const url of sources) {
+            try {
+                const response = await fetch(url, { cache: "no-store" });
+                if (!response.ok) continue;
+                const raw = await response.text();
+                const parsed = parseOfficialNews(raw);
+                if (parsed.length) return parsed;
+            } catch (e) {}
+        }
+        return [];
+    }
+
+    function parseOfficialNews(raw) {
+        const lines = raw
+            .replace(/\r/g, "")
+            .split("\n")
+            .map(x => x.trim())
+            .filter(Boolean);
+
+        const ban = new Set([
+            "News Feed", "Featured", "News Feed Posts", "Search", "Show More",
+            "CategoryAll Adopt Me WorldBug FixesDeveloper TalkDevelopment UpdateGame UpdatePatch NotesPressWeekly NewsYouTube"
+        ]);
+
+        const titles = [];
+        for (const line of lines) {
+            if (ban.has(line)) continue;
+            if (line.length < 8 || line.length > 120) continue;
+            if (/^(Skip to|Open Menu|Close Menu|Our Terms|Accept|Discord|Support|Privacy|Contact Us|Visit the)/i.test(line)) continue;
+            if (/(Notes!?|Changes|Update)/i.test(line)) {
+                const clean = line.replace(/(Game Update|Patch Notes|Developer Talk|Development Update)$/i, "").trim();
+                if (clean && !titles.includes(clean)) titles.push(clean);
+            }
+        }
+
+        const now = new Date();
+        return titles.slice(0, 15).map((title, index) => {
+            const d = new Date(now);
+            d.setDate(now.getDate() - index);
+            const date = d.toISOString().slice(0, 10);
+            return {
+                date,
+                title_ua: title,
+                title_en: title,
+                title_gr: title,
+                desc_ua: "Офіційна новина з playadopt.me/news",
+                desc_en: "Official update from playadopt.me/news",
+                desc_gr: "Επίσημη ενημέρωση από playadopt.me/news"
+            };
+        });
     }
 
     function renderNews(newsData) {
