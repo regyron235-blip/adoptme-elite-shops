@@ -553,11 +553,19 @@
         <input type="text" id="searchInput" oninput="handleSearch()" placeholder="Пошук...">
     </div>
 
+    <button class="tz-sidebar-btn" onclick="openGameModal()" style="margin-bottom:12px;">
+        <div class="tz-sb-left">
+            <span class="tz-sb-flag">🎮</span>
+            <span class="tz-sb-name">Плейс</span>
+        </div>
+        <span class="tz-sb-time" id="gameSbName" style="font-size:12px;">Adopt Me</span>
+    </button>
+
     <div class="nav-link active" onclick="showTab('pets'); closeSidebar();">
         <i class="fa-solid fa-paw"></i> <span id="all-pets-text">Усі пети</span>
     </div>
 
-    <div class="nav-link" onclick="showTab('news'); closeSidebar();">
+    <div class="nav-link" id="news-nav-link" onclick="showTab('news'); closeSidebar();">
         <i class="fa-solid fa-newspaper"></i> <span id="news-text">Новини</span>
     </div>
     
@@ -756,6 +764,33 @@
     <div class="tz-grid" id="tzGrid"></div>
 </div>
 
+<div class="tz-modal-overlay" id="gameModalOverlay">
+    <div class="tz-modal-header">
+        <h1 class="tz-modal-title">Вибрати плейс</h1>
+        <i class="fa-solid fa-xmark close-btn" style="position: static; font-size: 30px;" onclick="closeGameModal()"></i>
+    </div>
+    <div class="tz-modal-hint">
+        <i class="fa-solid fa-gamepad"></i>
+        <span>Перемикай каталог між Adopt Me та Murder Mystery 2.</span>
+    </div>
+    <div class="tz-grid">
+        <div class="tz-item" id="game-item-adopt" onclick="setGame('adoptme')">
+            <div class="tz-flag">🐾</div>
+            <div class="tz-name-container">
+                <div class="tz-main-name">Adopt Me</div>
+                <div class="tz-utc-offset">Legendary pets</div>
+            </div>
+        </div>
+        <div class="tz-item" id="game-item-mm2" onclick="setGame('mm2')">
+            <div class="tz-flag">🔪</div>
+            <div class="tz-name-container">
+                <div class="tz-main-name">Murder Mystery 2</div>
+                <div class="tz-utc-offset">All Godlies</div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="currency-modal-overlay" id="currencyModalOverlay">
     <div class="currency-modal-header">
         <h1 class="currency-modal-title">Валюта</h1>
@@ -920,7 +955,32 @@
 
     ];
 
+    const adoptPets = pets;
+    const mm2Godlies = [
+        { name: "Chroma Traveler's Gun", year: "Godly", ev: "MM2", file: "https://cdn.rovalue.com/mm2/items/662a8cd9f39ba77e96bf0f19c98f17f4.png", mm2Value: "648000" },
+        { name: "Chroma Evergun", year: "Godly", ev: "MM2", file: "https://cdn.rovalue.com/mm2/items/630529f02b134838ce2842700be2b063.png", mm2Value: "291000" },
+        { name: "Chroma Evergreen", year: "Godly", ev: "MM2", file: "https://cdn.rovalue.com/mm2/items/d790a5fc28f46ea2409e51f549d91512.png", mm2Value: "140000" },
+        { name: "Chroma Vampire's Gun", year: "Godly", ev: "MM2", file: "https://cdn.rovalue.com/mm2/items/5bcf32de38b248543ae0c501f085d7ec.png", mm2Value: "118000" },
+        { name: "Chroma Watergun", year: "Godly", ev: "MM2", file: "https://cdn.rovalue.com/mm2/items/44a29f7caaf147d4a27068f62bea0719.png", mm2Value: "29180" },
+        { name: "Traveler's Gun", year: "Godly", ev: "MM2", file: "https://cdn.rovalue.com/mm2/items/876f08c3c4b4e183cd0171e26e64f44e.png", mm2Value: "24860" },
+        { name: "Evergun", year: "Godly", ev: "MM2", file: "https://cdn.rovalue.com/mm2/items/576ab3fd8c674f44006905e622bb82ee.png", mm2Value: "13500" },
+        { name: "Turkey", year: "Godly", ev: "MM2", file: "https://cdn.rovalue.com/mm2/items/02ef33f2c578d1aaff80b7fb39c3d126.png", mm2Value: "13240" },
+        { name: "Vampire's Gun", year: "Godly", ev: "MM2", file: "https://cdn.rovalue.com/mm2/items/d9c5490ed4d460798703b38f924e5346.png", mm2Value: "10080" },
+        { name: "Evergreen", year: "Godly", ev: "MM2", file: "https://cdn.rovalue.com/mm2/items/dde3680b4f017427868d089f9b6efb38.png", mm2Value: "7000" },
+        { name: "Chroma Luger", year: "Godly", ev: "MM2", file: "https://mm2.rocks/images/mm2-wiki/chroma-luger.png", mm2Value: "1130" },
+        { name: "Candleflame", year: "Godly", ev: "MM2", file: "https://mm2.rocks/images/mm2-wiki/candleflame.png", mm2Value: "970" },
+        { name: "Luger", year: "Godly", ev: "MM2", file: "https://mm2.rocks/images/mm2-items/luger.png", mm2Value: "240" },
+        { name: "Heartblade", year: "Godly", ev: "MM2", file: "https://mm2.rocks/images/mm2-wiki/heartblade.png", mm2Value: "130" },
+        { name: "Chroma Heat", year: "Godly", ev: "MM2", file: "https://mm2.rocks/images/mm2-wiki/chroma-heat.png", mm2Value: "95" },
+        { name: "Chroma Laser", year: "Godly", ev: "MM2", file: "https://mm2.rocks/images/mm2-wiki/chroma-laser.png", mm2Value: "90" },
+        { name: "Chroma Darkbringer", year: "Godly", ev: "MM2", file: "https://mm2.rocks/images/mm2-items/chroma-darkbringer.png", mm2Value: "85" },
+        { name: "Chroma Lightbringer", year: "Godly", ev: "MM2", file: "https://mm2.rocks/images/mm2-items/chroma-lightbringer.png", mm2Value: "85" },
+        { name: "Chroma Elderwood Blade", year: "Godly", ev: "MM2", file: "https://mm2.rocks/images/mm2-items/c-elderwood-blade.png", mm2Value: "57" },
+        { name: "Chroma Swirly Gun", year: "Godly", ev: "MM2", file: "https://mm2.rocks/images/mm2-items/c-swirly-gun.png", mm2Value: "57" }
+    ];
+
     let currentLang = localStorage.getItem('elite_lang') || 'ua';
+    let currentGame = localStorage.getItem('elite_game') || 'adoptme';
     let currentTimezone = localStorage.getItem('elite_tz') || 'Europe/Kyiv';
     let selectedCurrency = localStorage.getItem('elite_currency') || 'USD';
     let allNews = [];
@@ -942,11 +1002,63 @@
         updateTzClock();
         setInterval(updateTzClock, 1000);
         initCurrencyControls();
-        render(pets);
+        applyGameMode();
+        render(getActiveCatalog());
         loadNews();
     };
 
+    function getActiveCatalog() {
+        return currentGame === 'mm2' ? mm2Godlies : adoptPets;
+    }
+
+    function applyGameMode() {
+        const isMM2 = currentGame === 'mm2';
+        const gameName = isMM2 ? 'Murder Mystery 2' : 'Adopt Me';
+        const gameSbName = document.getElementById('gameSbName');
+        if (gameSbName) gameSbName.innerText = gameName;
+        const allPetsText = document.getElementById('all-pets-text');
+        if (allPetsText) allPetsText.innerText = isMM2 ? 'Усі годлі' : 'Усі пети';
+        const newsNav = document.getElementById('news-nav-link');
+        const newsTab = document.getElementById('news-tab');
+        if (newsNav) newsNav.style.display = isMM2 ? 'none' : 'flex';
+        if (newsTab) newsTab.style.display = isMM2 ? 'none' : '';
+        const adoptItem = document.getElementById('game-item-adopt');
+        const mm2Item = document.getElementById('game-item-mm2');
+        if (adoptItem) adoptItem.classList.toggle('active-choice', !isMM2);
+        if (mm2Item) mm2Item.classList.toggle('active-choice', isMM2);
+    }
+
+    function setGame(game) {
+        currentGame = game;
+        localStorage.setItem('elite_game', game);
+        applyGameMode();
+        document.getElementById('searchInput').value = '';
+        render(getActiveCatalog());
+        if (game === 'mm2') {
+            allNews = [];
+            renderNews(allNews);
+            showTab('pets');
+        } else {
+            loadNews();
+        }
+        closeGameModal();
+    }
+
+    function openGameModal() {
+        applyGameMode();
+        document.getElementById('gameModalOverlay').style.display = 'flex';
+        setTimeout(() => document.getElementById('gameModalOverlay').classList.add('open'), 10);
+    }
+
+    function closeGameModal() {
+        document.getElementById('gameModalOverlay').classList.remove('open');
+        setTimeout(() => document.getElementById('gameModalOverlay').style.display = 'none', 500);
+    }
+
     function getPetPriceText(pet) {
+        if (currentGame === 'mm2') {
+            return pet.mm2Value ? `Value: ${pet.mm2Value}` : '-';
+        }
         if (typeof petDatabase === 'undefined' || !Array.isArray(petDatabase)) return '-';
         const dbPet = petDatabase.find(x => x.name === pet.name && x.rarity === 'Legendary');
         if (!dbPet || !dbPet.value) return '-';
@@ -1029,6 +1141,11 @@
     }
 
     async function loadNews() {
+        if (currentGame === 'mm2') {
+            allNews = [];
+            renderNews(allNews);
+            return;
+        }
         const fallback = (typeof NEWS_DATA !== 'undefined') ? NEWS_DATA : [];
         try {
             const official = await fetchOfficialNews();
@@ -1474,7 +1591,7 @@
         currentLang = code;
         localStorage.setItem('elite_lang', code);
         updateStaticTexts();
-        render(pets);
+        render(getActiveCatalog());
         renderNews(allNews);
         setQuickLangButtons();
         closeSidebar();
@@ -1531,7 +1648,7 @@
 
     function handleSearch() {
         const v = document.getElementById('searchInput').value.toLowerCase().trim();
-        const filtered = pets.filter(p => 
+        const filtered = getActiveCatalog().filter(p => 
             p.name.toLowerCase().includes(v) || 
             (p[currentLang] && p[currentLang].toLowerCase().includes(v))
         );
