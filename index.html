@@ -100,6 +100,19 @@
         .tz-sidebar-btn .tz-sb-flag { font-size: 16px; }
         .tz-sidebar-btn .tz-sb-name { font-size: 12px; font-weight: 700; }
         .tz-sidebar-btn .tz-sb-time { font-size: 14px; font-weight: 900; color: var(--accent-light); font-variant-numeric: tabular-nums; }
+        .currency-sidebar-wrap { margin-bottom: 12px; }
+        .currency-sidebar-btn {
+            width: 100%; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--glass-border);
+            background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(108,92,231,0.05) 100%);
+            color: var(--text-main); cursor: pointer; display: flex; align-items: center; justify-content: space-between;
+            gap: 8px; transition: all 0.3s ease; font-family: inherit; margin-bottom: 8px;
+        }
+        .currency-sidebar-btn:hover { border-color: var(--accent-solid); background: rgba(108, 92, 231, 0.1); }
+        .currency-sidebar-select {
+            width: 100%; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--glass-border);
+            background: #111722; color: var(--text-main); font-family: inherit; font-size: 13px;
+        }
+        .pet-price-line { margin: 8px 0 12px; font-size: 12px; color: var(--accent-light); font-weight: 800; }
 
         .tz-modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999;
@@ -545,6 +558,16 @@
         <i class="fa-solid fa-circle-info"></i> <span id="about-text">Про сайт</span>
     </div>
 
+    <div class="currency-sidebar-wrap">
+        <button class="currency-sidebar-btn" type="button" id="currency-menu-btn">
+            <span><i class="fa-solid fa-coins"></i> Валюта</span>
+            <span id="currency-label">USD</span>
+        </button>
+        <select id="currency-select" class="currency-sidebar-select">
+            <option>USD</option><option>UAH</option><option>EUR</option><option>RUB</option><option>GBP</option><option>PLN</option><option>TRY</option><option>KZT</option><option>CHF</option><option>JPY</option><option>CAD</option><option>AUD</option><option>CNY</option><option>SEK</option><option>NOK</option><option>DKK</option><option>INR</option><option>ILS</option><option>HUF</option><option>CZK</option><option>ZAR</option><option>SGD</option><option>HKD</option><option>MXN</option><option>BRL</option><option>SAR</option><option>AED</option><option>THB</option><option>MYR</option><option>IDR</option>
+        </select>
+    </div>
+
     <button class="tz-sidebar-btn" onclick="openTzModal()">
         <div class="tz-sb-left">
             <span class="tz-sb-flag" id="tzSbFlag">🇺🇦</span>
@@ -867,7 +890,14 @@
 
     let currentLang = localStorage.getItem('elite_lang') || 'ua';
     let currentTimezone = localStorage.getItem('elite_tz') || 'Europe/Kyiv';
+    let selectedCurrency = localStorage.getItem('elite_currency') || 'USD';
     let allNews = [];
+    const fxRates = {
+        USD: 1, UAH: 40, EUR: 0.93, RUB: 92, GBP: 0.79, PLN: 3.98, TRY: 32.4, KZT: 447,
+        CHF: 0.9, JPY: 156.2, CAD: 1.37, AUD: 1.52, CNY: 7.25, SEK: 10.6, NOK: 10.8, DKK: 6.95,
+        INR: 83.2, ILS: 3.7, HUF: 365, CZK: 23.2, ZAR: 18.6, SGD: 1.35, HKD: 7.82, MXN: 16.8,
+        BRL: 5.1, SAR: 3.75, AED: 3.67, THB: 36.5, MYR: 4.72, IDR: 16100
+    };
 
     window.onload = () => {
         applyTheme();
@@ -878,9 +908,39 @@
         updateTimezoneTheme();
         updateTzClock();
         setInterval(updateTzClock, 1000);
+        initCurrencyControls();
         render(pets);
         loadNews();
     };
+
+    function getPetPriceText(pet) {
+        if (typeof petDatabase === 'undefined' || !Array.isArray(petDatabase)) return '-';
+        const dbPet = petDatabase.find(x => x.name === pet.name && x.rarity === 'Legendary');
+        if (!dbPet || !dbPet.value) return '-';
+        const rp = parseFloat(String(dbPet.value).replace(' RP', '').trim());
+        if (Number.isNaN(rp)) return '-';
+        const usd = rp * 0.6;
+        const rate = fxRates[selectedCurrency] || 1;
+        const converted = usd * rate;
+        const decimals = ['JPY', 'RUB', 'IDR'].includes(selectedCurrency) ? 0 : 2;
+        return `${converted.toFixed(decimals)} ${selectedCurrency}`;
+    }
+
+    function initCurrencyControls() {
+        const select = document.getElementById('currency-select');
+        const label = document.getElementById('currency-label');
+        const btn = document.getElementById('currency-menu-btn');
+        if (!select || !label || !btn) return;
+        select.value = selectedCurrency;
+        label.innerText = selectedCurrency;
+        select.onchange = () => {
+            selectedCurrency = select.value;
+            localStorage.setItem('elite_currency', selectedCurrency);
+            label.innerText = selectedCurrency;
+            render(pets);
+        };
+        btn.onclick = () => select.focus();
+    }
 
     function render(data) {
         const c = document.getElementById('catalog');
@@ -901,6 +961,7 @@
                 </div>
                 <img src="${p.file}" onerror="this.src='https://via.placeholder.com/130/161b22/fff?text=PET'">
                 <div class="pet-name">${petName}</div>
+                <div class="pet-price-line">${getPetPriceText(p)}</div>
                 <a href="https://t.me/zeop_252" target="_blank" class="tg-btn" onclick="event.stopPropagation()">
                     <i class="fa-brands fa-telegram"></i> <span>${langPack.sell}</span>
                 </a>
